@@ -3,208 +3,214 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>6차시: 조건문 응용 - 실력 확인 퀴즈 (TTS)</title>
+    <title>파이썬 퀴즈 - 파이썬 조건문</title>
     <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Malgun Gothic', sans-serif; line-height: 1.8; padding: 20px; background-color: #f8f9fa; color: #212529; }
-        .container { max-width: 800px; margin: auto; background: white; padding: 25px; border-radius: 10px; box-shadow: 0 0 15px rgba(0,0,0,0.1); }
-        h1, h2 { border-bottom: 2px solid #007bff; padding-bottom: 10px; color: #0056b3; text-align: center; }
-        .quiz-item { margin-bottom: 25px; padding: 15px; border-left: 5px solid #ffc107; background-color: #fffaf0; }
-        .quiz-item p { display: flex; justify-content: space-between; align-items: center; font-weight: bold; margin: 0 0 10px 0; }
-        .user-info { text-align: center; margin: 20px 0; padding: 15px; background: #f1f3f5; border-radius: 8px; }
-        input[type="text"] { padding: 8px; margin: 5px; width: 150px; border: 1px solid #ccc; border-radius: 4px; }
-        button { background-color: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Malgun Gothic", "맑은 고딕", sans-serif; line-height: 1.6; padding: 20px; margin: 0; background-color: #f0f2f5; }
+        h1, h2 { border-bottom: 2px solid #dee2e6; padding-bottom: 10px; }
+        #quizContainer { max-width: 800px; margin: 20px auto; background-color: #ffffff; padding: 30px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        .info-group, .question-container { margin-bottom: 25px; }
+        label { font-weight: bold; }
+        input[type="text"] { width: 100%; box-sizing: border-box; padding: 10px; border: 1px solid #ced4da; border-radius: 4px; font-size: 1em; }
+        .question-text { font-size: 1.1em; margin-bottom: 15px; font-family: Consolas, "Courier New", monospace; white-space: pre-wrap; background-color: #f8f9fa; padding: 15px; border-radius: 5px; border: 1px solid #e9ecef; }
+        .options label { font-weight: normal; margin-right: 15px; display: block; padding: 8px; border-radius: 4px; cursor: pointer; }
+        .options label:hover { background-color: #e9ecef; }
+        .options input[type="radio"] { margin-right: 10px; }
+        button { background-color: #007bff; color: white; padding: 12px 25px; border: none; border-radius: 5px; cursor: pointer; font-size: 1.1em; width: 100%; }
         button:hover { background-color: #0056b3; }
-        #submitQuizBtn { background-color: #28a745; font-size: 18px; padding: 12px 30px; }
-        #submitQuizBtn:hover { background-color: #218838; }
-        #result { margin-top: 30px; padding: 20px; border: 1px solid #ddd; border-radius: 5px; background-color: #fff; display: none; }
-        .correct { color: #155724; background-color: #d4edda; }
-        .incorrect { color: #721c24; background-color: #f8d7da; }
-        .explanation { font-size: 0.9em; color: #555; margin-top: 10px; padding: 10px; background-color: #f9f9f9; border-top: 1px dashed #ccc; }
-        label { display: block; margin-bottom: 8px; cursor: pointer; padding: 10px; border-radius: 4px; }
-        label:hover { background-color: #f0f0f0; }
-        .tts-btn { background: none; border: none; font-size: 1.2em; cursor: pointer; color: #555; }
-        .tts-btn:hover { color: #000; }
+        #results { margin-top: 30px; border-top: 2px solid #dee2e6; padding-top: 20px; }
+        .result-item { padding: 15px; margin-bottom: 10px; border-radius: 5px; }
+        .correct { background-color: #d1e7dd; border-left: 5px solid #198754; }
+        .incorrect { background-color: #f8d7da; border-left: 5px solid #dc3545; }
+        .explanation { margin-top: 10px; padding: 10px; background: #e9ecef; border-radius: 4px; }
+        code { background-color: #e9ecef; padding: 2px 4px; border-radius: 3px; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>6차시: 조건문 응용 - 실력 확인 퀴즈</h1>
-        <div class="user-info">
-            <input type="text" id="studentSchool" placeholder="학교">
-            <input type="text" id="studentId" placeholder="학번">
-            <input type="text" id="studentName" placeholder="이름">
-        </div>
 
-        <form id="quizForm">
-            <h3>O/X 퀴즈</h3>
-            <div class="quiz-item" id="q1"><p><span>1. `if a > 10 and a < 20:`은 a가 10보다 크고 20보다 작을 때 '참'이 된다.</span><button type="button" class="tts-btn" onclick="speak(this.parentElement.innerText)">🔊</button></p><label><input type="radio" name="q1" value="O"> O</label> <label><input type="radio" name="q1" value="X"> X</label></div>
-            <div class="quiz-item" id="q2"><p><span>2. `if a == 1 or a == 2:` 조건문에서 a가 1이면, `a == 2` 조건은 검사하지 않는다.</span><button type="button" class="tts-btn" onclick="speak(this.parentElement.innerText)">🔊</button></p><label><input type="radio" name="q2" value="O"> O</label> <label><input type="radio" name="q2" value="X"> X</label></div>
-            <div class="quiz-item" id="q3"><p><span>3. `if`문 안에 또 다른 `if`문을 사용하는 것을 '반복 조건문'이라고 한다.</span><button type="button" class="tts-btn" onclick="speak(this.parentElement.innerText)">🔊</button></p><label><input type="radio" name="q3" value="O"> O</label> <label><input type="radio" name="q3" value="X"> X</label></div>
-            <div class="quiz-item" id="q4"><p><span>4. `x % 2 == 1` 코드는 변수 x가 홀수인지 판별하는 조건으로 사용할 수 있다.</span><button type="button" class="tts-btn" onclick="speak(this.parentElement.innerText)">🔊</button></p><label><input type="radio" name="q4" value="O"> O</label> <label><input type="radio" name="q4" value="X"> X</label></div>
-            <div class="quiz-item" id="q5"><p><span>5. 파이썬에서 `10 <= age < 20`와 같은 형태의 비교 연산은 불가능하다.</span><button type="button" class="tts-btn" onclick="speak(this.parentElement.innerText)">🔊</button></p><label><input type="radio" name="q5" value="O"> O</label> <label><input type="radio" name="q5" value="X"> X</label></div>
-            <div class="quiz-item" id="q6"><p><span>6. `elif`는 단독으로 사용할 수 없고, 반드시 `if`문 뒤에 와야 한다.</span><button type="button" class="tts-btn" onclick="speak(this.parentElement.innerText)">🔊</button></p><label><input type="radio" name="q6" value="O"> O</label> <label><input type="radio" name="q6" value="X"> X</label></div>
-            <div class="quiz-item" id="q7"><p><span>7. 리스트 `a = [1, 2, 3]`이 있을 때, `if 4 in a:`는 '참(True)'이 된다.</span><button type="button" class="tts-btn" onclick="speak(this.parentElement.innerText)">🔊</button></p><label><input type="radio" name="q7" value="O"> O</label> <label><input type="radio" name="q7" value="X"> X</label></div>
-            <div class="quiz-item" id="q8"><p><span>8. `if True:` 다음 줄의 코드는 항상 실행된다.</span><button type="button" class="tts-btn" onclick="speak(this.parentElement.innerText)">🔊</button></p><label><input type="radio" name="q8" value="O"> O</label> <label><input type="radio" name="q8" value="X"> X</label></div>
-            <div class="quiz-item" id="q9"><p><span>9. `if x != 0:` 코드는 x가 0이 아닐 때 참이 되는 조건문이다.</span><button type="button" class="tts-btn" onclick="speak(this.parentElement.innerText)">🔊</button></p><label><input type="radio" name="q9" value="O"> O</label> <label><input type="radio" name="q9" value="X"> X</label></div>
-            <div class="quiz-item" id="q10"><p><span>10. `if-elif-else` 구조에서 `if`와 `elif` 조건이 모두 참일 경우, 두 블록의 코드가 모두 실행된다.</span><button type="button" class="tts-btn" onclick="speak(this.parentElement.innerText)">🔊</button></p><label><input type="radio" name="q10" value="O"> O</label> <label><input type="radio" name="q10" value="X"> X</label></div>
+    <div id="quizContainer">
+        <h1>6차시: 파이썬 조건문 퀴즈</h1>
 
-            <h3>5지선다형 퀴즈</h3>
-            <div class="quiz-item" id="q11"><p><span>11. 다음 중 '윤년'을 판별하는 조건으로 가장 올바른 것은?</span><button type="button" class="tts-btn" onclick="speak(this.parentElement.innerText)">🔊</button></p><label><input type="radio" name="q11" value="1"> ① 4의 배수인 해</label><label><input type="radio" name="q11" value="2"> ② 100의 배수가 아닌 해</label><label><input type="radio" name="q11" value="3"> ③ 400의 배수인 해</label><label><input type="radio" name="q11" value="4"> ④ (4의 배수이고 100의 배수가 아님) 또는 (400의 배수)</label></div>
-            <div class="quiz-item" id="q12"><p><span>12. '점수가 80점 이상 90점 미만'인 조건을 파이썬 코드로 올바르게 표현한 것은?</span><button type="button" class="tts-btn" onclick="speak(this.parentElement.innerText)">🔊</button></p><label><input type="radio" name="q12" value="1"> ① `if score >= 80 or score < 90:`</label><label><input type="radio" name="q12" value="2"> ② `if score > 80 and score < 90:`</label><label><input type="radio" name="q12" value="3"> ③ `if 80 <= score < 90:`</label><label><input type="radio" name="q12" value="4"> ④ `if 80 < score <= 90:`</label></div>
-            <div class="quiz-item" id="q13"><p><span>13. 간단한 로그인 프로그램에서 '아이디는 맞지만 비밀번호는 틀린 경우'를 처리하기 위해 가장 적절한 구문은?</span><button type="button" class="tts-btn" onclick="speak(this.parentElement.innerText)">🔊</button></p><label><input type="radio" name="q13" value="1"> ① `if`</label><label><input type="radio" name="q13" value="2"> ② `elif`</label><label><input type="radio" name="q13" value="3"> ③ `else`</label><label><input type="radio" name="q13" value="4"> ④ `for`</label></div>
-            <div class="quiz-item" id="q14"><p><span>14. 다음 코드의 실행 결과는 무엇인가?
-<code>score = 75
-if score >= 80:
-  print("A")
-elif score >= 70:
-  print("B")
-else:
-  print("C")</code></span><button type="button" class="tts-btn" onclick="speak(this.parentElement.innerText)">🔊</button></p><label><input type="radio" name="q14" value="1"> ① A</label><label><input type="radio" name="q14" value="2"> ② B</label><label><input type="radio" name="q14" value="3"> ③ C</label><label><input type="radio" name="q14" value="4"> ④ 아무것도 출력되지 않음</label></div>
-            <div class="quiz-item" id="q15"><p><span>15. `if-elif-else` 구조에 대한 설명으로 가장 옳지 않은 것은?</span><button type="button" class="tts-btn" onclick="speak(this.parentElement.innerText)">🔊</button></p><label><input type="radio" name="q15" value="1"> ① 여러 조건 중 하나만 만족해도 실행된다.</label><label><input type="radio" name="q15" value="2"> ② 조건은 위에서부터 순서대로 검사된다.</label><label><input type="radio" name="q15" value="3"> ③ `if` 조건이 참이면, 아래 `elif`나 `else`는 검사하지 않는다.</label><label><input type="radio" name="q15" value="4"> ④ `else`는 모든 `if`와 `elif` 조건이 거짓일 때 실행된다.</label></div>
+        <form id="quizForm" onsubmit="submitQuiz(event)">
+            <h2>인적사항 입력</h2>
+            <div class="info-group">
+                <label for="school">학교:</label>
+                <input type="text" id="school" required>
+            </div>
+            <div class="info-group">
+                <label for="studentId">학번:</label>
+                <input type="text" id="studentId" required>
+            </div>
+            <div class="info-group">
+                <label for="name">이름:</label>
+                <input type="text" id="name" required>
+            </div>
+
+            <hr style="margin: 30px 0;">
+
+            <h2>OX 퀴즈 (10문항)</h2>
+            <div id="ox-questions"></div>
+
+            <hr style="margin: 30px 0;">
+
+            <h2>5지선다형 퀴즈 (10문항)</h2>
+            <div id="mc-questions"></div>
+            
+            <button type="submit">채점 및 결과 저장</button>
         </form>
 
-        <div style="text-align: center; margin-top: 30px;">
-            <button id="submitQuizBtn">제출 및 결과 확인</button>
-        </div>
-        
-        <div id="result">
-            <h2>퀴즈 결과</h2>
-            <div id="result-details"></div>
-        </div>
+        <div id="results"></div>
     </div>
 
-    <script>
-        const quizData = [
-            { id: 'q1', type: 'ox', question: "`if a > 10 and a < 20:`은 a가 10보다 크고 20보다 작을 때 '참'이 된다.", answer: "O", explanation: "해설: `and` 연산자는 두 조건이 모두 참일 때만 전체를 참으로 판단합니다. 따라서 a가 10과 20 사이에 있을 때 참이 됩니다." },
-            { id: 'q2', type: 'ox', question: "`if a == 1 or a == 2:` 조건문에서 a가 1이면, `a == 2` 조건은 검사하지 않는다.", answer: "O", explanation: "해설: `or` 연산자는 앞의 조건이 참이면 뒤의 조건은 검사하지 않고 바로 전체를 참으로 판단합니다. 이를 '단락 평가(short-circuit evaluation)'라고 합니다." },
-            { id: 'q3', type: 'ox', question: "`if`문 안에 또 다른 `if`문을 사용하는 것을 '반복 조건문'이라고 한다.", answer: "X", explanation: "해설: `if`문 안에 `if`문을 사용하는 것은 '중첩 조건문(nested if)'이라고 합니다. '반복'은 `for`나 `while`문을 의미합니다." },
-            { id: 'q4', type: 'ox', question: "`x % 2 == 1` 코드는 변수 x가 홀수인지 판별하는 조건으로 사용할 수 있다.", answer: "O", explanation: "해설: 나머지 연산자 `%`를 사용하여 2로 나눈 나머지가 1이면 홀수, 0이면 짝수입니다. 따라서 올바른 조건입니다." },
-            { id: 'q5', type: 'ox', question: "파이썬에서 `10 <= age < 20`와 같은 형태의 비교 연산은 불가능하다.", answer: "X", explanation: "해설: 파이썬은 다른 언어와 달리 `10 <= age < 20`와 같이 수학적인 부등식 표현을 그대로 사용할 수 있는 편리한 기능을 제공합니다." },
-            { id: 'q6', type: 'ox', question: "`elif`는 단독으로 사용할 수 없고, 반드시 `if`문 뒤에 와야 한다.", answer: "O", explanation: "해설: `elif`는 'else if'의 줄임말로, 앞선 `if` 조건이 거짓일 때 새로운 조건을 검사하는 역할을 하므로, `if`문 없이는 사용할 수 없습니다." },
-            { id: 'q7', type: 'ox', question: "리스트 `a = [1, 2, 3]`이 있을 때, `if 4 in a:`는 '참(True)'이 된다.", answer: "X", explanation: "해설: `in` 연산자는 리스트 안에 특정 요소가 '포함되어 있는지'를 확인합니다. 리스트 a에는 4가 없으므로 이 조건은 '거짓(False)'이 됩니다." },
-            { id: 'q8', type: 'ox', question: "`if True:` 다음 줄의 코드는 항상 실행된다.", answer: "O", explanation: "해설: `if`문의 조건이 항상 '참(True)'이므로, 그 아래의 코드 블록은 무조건 실행됩니다." },
-            { id: 'q9', type: 'ox', question: "`if x != 0:` 코드는 x가 0이 아닐 때 참이 되는 조건문이다.", answer: "O", explanation: "해설: `!=`는 '같지 않다'를 의미하는 비교 연산자입니다. 따라서 x가 0이 아닌 모든 경우에 참이 됩니다." },
-            { id: 'q10', type: 'ox', question: "`if-elif-else` 구조에서 `if`와 `elif` 조건이 모두 참일 경우, 두 블록의 코드가 모두 실행된다.", answer: "X", explanation: "해설: `if-elif-else` 구조에서는 위에서부터 순서대로 조건을 검사하다가, 처음으로 참이 되는 조건의 코드 블록 '하나만' 실행하고 전체 구조를 빠져나옵니다." },
-            { id: 'q11', type: 'mc', question: "다음 중 '윤년'을 판별하는 조건으로 가장 올바른 것은?", options: ["4의 배수인 해", "100의 배수가 아닌 해", "400의 배수인 해", "(4의 배수이고 100의 배수가 아님) 또는 (400의 배수)"], answer: "(4의 배수이고 100의 배수가 아님) 또는 (400의 배수)", explanation: "해설: 윤년의 정확한 규칙은 ① 4로 나누어떨어지면서(&&) 100으로 나누어떨어지지 않거나(||), ② 400으로 나누어떨어지는 해입니다. 이 복합적인 논리 연산이 필요합니다." },
-            { id: 'q12', type: 'mc', question: "'점수가 80점 이상 90점 미만'인 조건을 파이썬 코드로 올바르게 표현한 것은?", options: ["`if score >= 80 or score < 90:`", "`if score > 80 and score < 90:`", "`if 80 <= score < 90:`", "`if 80 < score <= 90:`"], answer: "`if 80 <= score < 90:`", explanation: "해설: ③번은 '80점 이상'(`<=`)과 '90점 미만'(`<`)을 정확히 표현하며, 파이썬의 편리한 비교 연산자 체이닝 문법입니다. `score >= 80 and score < 90`과 동일합니다." },
-            { id: 'q13', type: 'mc', question: "간단한 로그인 프로그램에서 '아이디는 맞지만 비밀번호는 틀린 경우'를 처리하기 위해 가장 적절한 구문은?", options: ["`if`", "`elif`", "`else`", "`for`"], answer: "`elif`", explanation: "해설: 첫 번째 `if`문에서 '아이디와 비밀번호가 모두 맞는 경우'를 검사한 후, 그 다음으로 '아이디만 맞는 경우'를 추가로 검사해야 하므로 `elif` (else if)를 사용하는 것이 가장 논리적인 구조입니다." },
-            { id: 'q14', type: 'mc', question: "다음 코드의 실행 결과는 무엇인가?\n<code>score = 75\nif score >= 80:\n  print(\"A\")\nelif score >= 70:\n  print(\"B\")\nelse:\n  print(\"C\")</code>", options: ["A", "B", "C", "아무것도 출력되지 않음"], answer: "B", explanation: "해설: 1. `score >= 80` (75 >= 80)은 거짓입니다. 2. 다음 `elif score >= 70` (75 >= 70)은 참입니다. 3. 따라서 'B'를 출력하고 `if-elif-else` 구조 전체를 빠져나옵니다." },
-            { id: 'q15', type: 'mc', question: "`if-elif-else` 구조에 대한 설명으로 가장 옳지 않은 것은?", options: ["여러 조건 중 하나만 만족해도 실행된다.", "조건은 위에서부터 순서대로 검사된다.", "`if` 조건이 참이면, 아래 `elif`나 `else`는 검사하지 않는다.", "`else`는 모든 `if`와 `elif` 조건이 거짓일 때 실행된다."], answer: "여러 조건 중 하나만 만족해도 실행된다.", explanation: "해설: '여러 조건 중 하나만'이 아니라, '여러 조건 중 위에서부터 가장 먼저 참이 되는 조건 하나만' 실행됩니다. 예를 들어, `if`와 `elif` 조건이 둘 다 참이더라도 `if` 블록만 실행됩니다." }
-        ];
-
-        // 이하 JavaScript 코드는 이전 답변과 동일하게 작동하므로 생략하지 않고 모두 포함합니다.
-        function speak(text) {
-            const cleanText = text.replace(/🔊/g, '').trim();
-            if ('speechSynthesis' in window) {
-                const utterance = new SpeechSynthesisUtterance(cleanText);
-                utterance.lang = 'ko-KR';
-                window.speechSynthesis.cancel();
-                window.speechSynthesis.speak(utterance);
-            } else { alert('죄송합니다. 사용자의 브라우저가 음성 합성을 지원하지 않습니다.'); }
+<script>
+    // 변수명을 questions로 통일했습니다.
+    const questions = [
+        { type: 'ox', text: '`if a > 10 and a < 20:`은 a가 10보다 크고 20보다 작을 때 \'참\'이 된다.', answer: 'O', explanation: 'and 연산자는 양쪽의 조건이 모두 참일 때만 전체 결과를 참으로 반환합니다.' },
+        { type: 'ox', text: '`if a == 1 or a == 2:` 조건문에서 a가 1이면, `a == 2` 조건은 검사하지 않는다.', answer: 'O', explanation: '단락 평가(Short-circuit evaluation)에 의해, or 연산에서 앞의 조건이 참이면 뒤의 조건은 확인하지 않고 참을 반환합니다.' },
+        { type: 'ox', text: '`if`문 안에 또 다른 `if`문을 사용하는 것을 \'반복 조건문\'이라고 한다.', answer: 'X', explanation: 'if문 안에 또 다른 if문을 사용하는 것은 \'중첩 조건문\'이라고 부릅니다.' },
+        { type: 'ox', text: '`x % 2 == 1` 코드는 변수 x가 홀수인지 판별하는 조건으로 사용할 수 있다.', answer: 'O', explanation: '어떤 수를 2로 나눈 나머지가 1이면 그 수는 홀수임을 의미합니다.' },
+        { type: 'ox', text: '파이썬에서 `10 <= age < 20`와 같은 형태의 비교 연산은 불가능하다.', answer: 'X', explanation: '파이썬은 다른 언어와 달리 `10 <= age < 20`과 같은 직관적인 연속 비교 표현을 지원합니다.' },
+        { type: 'ox', text: '`elif`는 단독으로 사용할 수 없고, 반드시 `if`문 뒤에 와야 한다.', answer: 'O', explanation: 'elif와 else는 반드시 if문이 먼저 선언된 후에만 추가적인 조건을 판별하기 위해 사용될 수 있습니다.' },
+        { type: 'ox', text: '리스트 `a = [1, 2, 3]`이 있을 때, `if 4 in a:`는 \'참(True)\'이 된다.', answer: 'X', explanation: 'in 연산자는 해당 요소가 리스트 안에 있을 때 참이 됩니다. 4는 리스트 a에 없으므로 거짓(False)이 됩니다.' },
+        { type: 'ox', text: '`if True:` 다음 줄의 코드는 항상 실행된다.', answer: 'O', explanation: '조건식 자리에 True가 오면 조건이 항상 참이 되므로 해당 블록은 무조건 실행됩니다.' },
+        { type: 'ox', text: '`if x != 0:` 코드는 x가 0이 아닐 때 참이 되는 조건문이다.', answer: 'O', explanation: '!= 연산자는 두 값이 "같지 않음"을 비교하는 연산자입니다.' },
+        { type: 'ox', text: '`if-elif-else` 구조에서 `if`와 `elif` 조건이 모두 참일 경우, 두 블록의 코드가 모두 실행된다.', answer: 'X', explanation: 'if-elif-else 구조에서는 위에서부터 검사하여 가장 먼저 참이 되는 단 하나의 블록만 실행하고 나머지는 건너뜁니다.' },
+        { 
+            type: 'mc', 
+            text: '다음 중 \'윤년\'을 판별하는 조건으로 가장 올바른 것은?', 
+            options: ['4의 배수인 해', '100의 배수가 아닌 해', '400의 배수인 해', '(4의 배수이고 100의 배수가 아님) 또는 (400의 배수)'], 
+            answer: '(4의 배수이고 100의 배수가 아님) 또는 (400의 배수)', 
+            explanation: '윤년은 4의 배수이면서 100의 배수가 아니어야 하며, 혹은 400의 배수일 때 성립합니다.' 
+        },
+        { 
+            type: 'mc', 
+            text: '\'점수가 80점 이상 90점 미만\'인 조건을 파이썬 코드로 올바르게 표현한 것은?', 
+            options: ['if score >= 80 or score < 90:', 'if score > 80 and score < 90:', 'if 80 <= score < 90:', 'if 80 < score <= 90:'], 
+            answer: 'if 80 <= score < 90:', 
+            explanation: '파이썬에서는 `a <= x < b` 형태를 사용하여 범위를 직관적으로 표현할 수 있습니다.' 
+        },
+        { 
+            type: 'mc', 
+            text: '간단한 로그인 프로그램에서 \'아이디는 맞지만 비밀번호는 틀린 경우\'를 처리하기 위해 가장 적절한 구문은?', 
+            options: ['if', 'elif', 'else', 'for'], 
+            answer: 'elif', 
+            explanation: '이미 아이디 체크(if)를 통과한 상태에서 비밀번호라는 추가적인 다른 조건을 검사할 때 elif가 적절합니다.' 
+        },
+        { 
+            type: 'mc', 
+            text: '다음 코드의 실행 결과는 무엇인가?\nscore = 75\nif score >= 80:\n  print("A")\nelif score >= 70:\n  print("B")\nelse:\n  print("C")', 
+            options: ['A', 'B', 'C', '아무것도 출력되지 않음'], 
+            answer: 'B', 
+            explanation: 'score가 75이므로 첫 번째 if(80 이상)는 거짓이고, 두 번째 elif(70 이상) 조건이 참이 되어 "B"가 출력됩니다.' 
+        },
+        { 
+            type: 'mc', 
+            text: '`if-elif-else` 구조에 대한 설명으로 가장 옳지 않은 것은?', 
+            options: ['여러 조건 중 하나만 만족해도 실행된다.', '조건은 위에서부터 순서대로 검사된다.', 'if 조건이 참이면, 아래 elif나 else는 검사하지 않는다.', 'else는 모든 if와 elif 조건이 거짓일 때 실행된다.'], 
+            answer: '여러 조건 중 하나만 만족해도 실행된다.', 
+            explanation: '여러 조건이 동시에 참일 수 있더라도, 구조상 가장 먼저 만나는 참인 조건의 블록 하나만 실행됩니다.' 
         }
+    ];
 
-        function createQuiz() {
-            const form = document.getElementById('quizForm');
-            let oxHtml = '<h3>O/X 퀴즈</h3>';
-            let mcHtml = '<h3>5지선다형 퀴즈</h3>';
+    function renderQuestions() {
+        const oxContainer = document.getElementById('ox-questions');
+        const mcContainer = document.getElementById('mc-questions');
+        let questionNumber = 1;
 
-            quizData.forEach((q, index) => {
-                let itemHtml = `<div class="quiz-item" id="${q.id}"><p><span>${index + 1}. ${q.question}</span><button type="button" class="tts-btn" onclick="speak(this.parentElement.innerText)">🔊</button></p>`;
-                if (q.type === 'ox') {
-                    itemHtml += `<label><input type="radio" name="${q.id}" value="O"> O</label> <label><input type="radio" name="${q.id}" value="X"> X</label>`;
-                    oxHtml += itemHtml + '</div>';
-                } else {
-                    q.options.forEach((opt, i) => {
-                        itemHtml += `<label><input type="radio" name="${q.id}" value="${opt}"> ${String.fromCharCode(9312 + i)} ${opt}</label>`;
-                    });
-                    mcHtml += itemHtml + '</div>';
-                }
-            });
-            form.innerHTML = oxHtml + mcHtml;
-        }
-
-        function submitQuiz() {
-            const studentId = document.getElementById('studentId').value;
-            const studentName = document.getElementById('studentName').value;
-            const studentSchool = document.getElementById('studentSchool').value;
-
-            if (!studentId || !studentName || !studentSchool) {
-                alert('학교, 학번, 이름을 모두 입력해주세요.');
-                return;
+        questions.forEach(q => {
+            const qDiv = document.createElement('div');
+            qDiv.className = 'question-container';
+            const qText = document.createElement('div');
+            qText.className = 'question-text';
+            qText.innerHTML = `${questionNumber}. ${q.text.replace(/`([^`]+)`/g, '<code>$1</code>')}`;
+            qDiv.appendChild(qText);
+            const optionsDiv = document.createElement('div');
+            optionsDiv.className = 'options';
+            if (q.type === 'ox') {
+                ['O', 'X'].forEach(opt => {
+                    const label = document.createElement('label');
+                    const radio = document.createElement('input');
+                    radio.type = 'radio'; radio.name = `q${questionNumber}`; radio.value = opt; radio.required = true;
+                    label.appendChild(radio); label.append(` ${opt}`);
+                    optionsDiv.appendChild(label);
+                });
+            } else if (q.type === 'mc') {
+                q.options.forEach(opt => {
+                    const label = document.createElement('label');
+                    const radio = document.createElement('input');
+                    radio.type = 'radio'; radio.name = `q${questionNumber}`; radio.value = opt; radio.required = true;
+                    label.appendChild(radio);
+                    label.innerHTML += ` ${opt.replace(/`([^`]+)`/g, '<code>$1</code>')}`;
+                    optionsDiv.appendChild(label);
+                });
             }
-
-            const form = document.getElementById('quizForm');
-            const resultDiv = document.getElementById('result-details');
-            resultDiv.innerHTML = '';
-            let score = 0;
-            let resultTextForFile = '';
-            
-            quizData.forEach((q, index) => {
-                const selected = form.elements[q.id];
-                let userAnswer = null;
-                if (selected) {
-                    for(const radio of selected){
-                        if(radio.checked){
-                            userAnswer = radio.value;
-                            break;
-                        }
-                    }
-                }
-
-                const isCorrect = userAnswer === q.answer;
-                
-                let detail = `<div class="quiz-item ${isCorrect ? 'correct' : 'incorrect'}">`;
-                detail += `<p><b>${index + 1}번 문제.</b> ${q.question}</p>`;
-                detail += `<p><strong>제출 답안:</strong> ${userAnswer || '미선택'}</p>`;
-                
-                if (isCorrect) {
-                    score++;
-                    detail += `<p class="correct"><strong>결과: 정답입니다!</strong></p>`;
-                } else {
-                    detail += `<p class="incorrect"><strong>결과: 오답입니다. (정답: ${q.answer})</strong></p>`;
-                }
-                detail += `<div class="explanation">${q.explanation}</div>`;
-                detail += `</div>`;
-                resultDiv.innerHTML += detail;
-                
-                resultTextForFile += `[문제 ${index + 1}] ${q.question}\n`;
-                resultTextForFile += `  - 제출 답안: ${userAnswer || '미선택'}\n`;
-                resultTextForFile += `  - 정      답: ${q.answer}\n`;
-                resultTextForFile += `  - 결      과: ${isCorrect ? '정답' : '오답'}\n`;
-                resultTextForFile += `  - ${q.explanation}\n\n`;
-            });
-            
-            const finalScore = (score / quizData.length) * 100;
-            const now = new Date();
-            const timestamp = now.getFullYear() + '' + (now.getMonth()+1).toString().padStart(2, '0') + '' + now.getDate().toString().padStart(2, '0') + '_' + now.getHours().toString().padStart(2, '0') + '' + now.getMinutes().toString().padStart(2, '0');
-
-            let summary = `<h2>퀴즈 결과: ${finalScore.toFixed(0)}점</h2><p><b>총 ${quizData.length}문제 중 ${score}개를 맞추셨습니다.</b></p><hr>`;
-            resultDiv.innerHTML = summary + resultDiv.innerHTML;
-            
-            document.getElementById('result').style.display = 'block';
-            window.scrollTo(0, document.getElementById('submitQuizBtn').offsetTop);
-
-            const fileContent = `학교: ${studentSchool}\n학번: ${studentId}\n이름: ${studentName}\n단원명: 프로그램 구조 설계\n득점: ${finalScore.toFixed(0)}점\n응시 시각: ${new Date().toLocaleString('ko-KR')}\n\n--- 문항별 정오답 및 상세 풀이 ---\n\n${resultTextForFile}`;
-            const fileName = `${studentId}_${studentName}_프로그램구조설계_${finalScore.toFixed(0)}점_${timestamp}.txt`;
-            
-            download(fileName, fileContent);
-            alert(`'${fileName}' 파일이 저장되었습니다.`);
-        }
-
-        function download(filename, text) {
-            const element = document.createElement('a');
-            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
-            element.setAttribute('download', filename);
-            element.style.display = 'none';
-            document.body.appendChild(element);
-            element.click();
-            document.body.removeChild(element);
-        }
-
-        document.addEventListener('DOMContentLoaded', function(){
-            createQuiz();
-            document.getElementById('submitQuizBtn').addEventListener('click', submitQuiz);
+            qDiv.appendChild(optionsDiv);
+            if (q.type === 'ox') {
+                oxContainer.appendChild(qDiv);
+            } else {
+                mcContainer.appendChild(qDiv);
+            }
+            questionNumber++;
         });
-    </script>
+    }
+
+    function submitQuiz(event) {
+        event.preventDefault();
+        const school = document.getElementById('school').value;
+        const studentId = document.getElementById('studentId').value;
+        const name = document.getElementById('name').value;
+        let score = 0;
+        let fileContent = "";
+        const resultsContainer = document.getElementById('results');
+        resultsContainer.innerHTML = '<h2>채점 결과</h2>';
+        
+        for (let i = 0; i < questions.length; i++) {
+            const qNumber = i + 1;
+            const selectedOption = document.querySelector(`input[name="q${qNumber}"]:checked`);
+            const questionData = questions[i];
+            const resultItem = document.createElement('div');
+            resultItem.classList.add('result-item');
+            let resultText = `<strong>[${qNumber}번 문항]</strong><br>`;
+            
+            if (selectedOption && selectedOption.value === questionData.answer) {
+                score++;
+                resultItem.classList.add('correct');
+                resultText += `<strong>결과: 정답!</strong>`;
+            } else {
+                resultItem.classList.add('incorrect');
+                resultText += `<strong>결과: 오답!</strong> (선택: ${selectedOption ? selectedOption.value : '미선택'}, 정답: ${questionData.answer})`;
+            }
+            
+            const explanation = document.createElement('div');
+            explanation.className = 'explanation';
+            explanation.innerHTML = `<strong>상세 풀이:</strong> ${questionData.explanation.replace(/`([^`]+)`/g, '<code>$1</code>')}`;
+            resultItem.innerHTML = resultText;
+            resultItem.appendChild(explanation);
+            resultsContainer.appendChild(resultItem);
+            
+            fileContent += `[${qNumber}번 문항]\n문제: ${questionData.text}\n결과: ${selectedOption && selectedOption.value === questionData.answer ? '정답' : '오답'}\n\n`;
+        }
+        
+        const totalScore = (score / questions.length) * 100;
+        const summary = document.createElement('p');
+        summary.innerHTML = `<strong>총점: ${totalScore.toFixed(0)}점 (${questions.length}개 중 ${score}개 정답)</strong>`;
+        resultsContainer.prepend(summary);
+        
+        const fileName = `${school}_${studentId}_${name}_${totalScore.toFixed(0)}점.txt`;
+        download(fileName, fileContent);
+    }
+
+    function download(filename, text) {
+        const element = document.createElement('a');
+        element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+        element.setAttribute('download', filename);
+        element.style.display = 'none';
+        document.body.appendChild(element);
+        element.click();
+        document.body.removeChild(element);
+    }
+
+    window.onload = renderQuestions;
+</script>
+
 </body>
 </html>
