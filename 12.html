@@ -3,115 +3,169 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>12차시: 파이썬 문자열 처리 마스터</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <title>12차시: 파이썬 문자열 처리 학습 패키지</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
     <style>
-        :root { --primary-color: #e84393; --secondary-color: #fd79a8; --bg-color: #fff5f8; --dark-text: #2d3436; }
-        body { font-family: 'Pretendard', sans-serif; background-color: #f7f1f3; padding: 40px 20px; line-height: 1.8; color: var(--dark-text); }
-        .container { max-width: 900px; margin: 0 auto; background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
-        
-        header { text-align: center; margin-bottom: 50px; border-bottom: 4px solid var(--primary-color); padding-bottom: 20px; }
-        h1 { font-size: 2.2rem; color: var(--primary-color); margin-bottom: 10px; }
-        
-        .section-box { background: var(--bg-color); border-radius: 15px; padding: 30px; margin-bottom: 40px; border: 1px solid #fab1a0; }
-        .section-title { display: inline-block; background: var(--primary-color); color: white; padding: 6px 20px; border-radius: 50px; font-weight: bold; margin-bottom: 20px; font-size: 0.95rem; }
-
-        h3 { color: #d63031; margin-top: 25px; display: flex; align-items: center; }
-        h3::before { content: '🔤'; margin-right: 10px; }
-
-        .method-tag { background: #ffeaa7; color: #d35400; padding: 2px 8px; border-radius: 4px; font-family: monospace; font-weight: bold; }
-        .info-card { background: white; border-left: 5px solid var(--secondary-color); padding: 15px; margin: 15px 0; font-size: 0.95rem; border-radius: 0 8px 8px 0; box-shadow: 2px 2px 5px rgba(0,0,0,0.02); }
-        
-        pre { border-radius: 12px !important; font-size: 0.95rem !important; margin: 20px 0 !important; }
-        code { font-family: 'Fira Code', 'Consolas', monospace !important; }
-
-        .highlight { color: var(--primary-color); font-weight: bold; }
-        
-        .btn-area { text-align: center; margin-top: 50px; }
-        .btn-test { background: var(--primary-color); color: white; padding: 15px 50px; border: none; border-radius: 10px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 15px rgba(232, 67, 147, 0.3); }
-        .btn-test:hover { background: #c23616; transform: translateY(-2px); }
+        body { font-family: 'Pretendard', sans-serif; line-height: 1.7; color: #333; max-width: 900px; margin: 0 auto; padding: 20px; background-color: #f8f9fa; }
+        h1 { color: #2c3e50; border-bottom: 3px solid #3498db; padding-bottom: 10px; text-align: center; }
+        h2 { color: #e67e22; margin-top: 40px; border-left: 6px solid #e67e22; padding-left: 15px; background: #fff; padding-top: 10px; padding-bottom: 10px; }
+        h3 { color: #2980b9; margin-top: 30px; }
+        h4 { color: #2c3e50; background: #eee; padding: 5px 10px; border-radius: 4px; display: inline-block; margin-top: 15px; }
+        .intro { background-color: #ffffff; padding: 20px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-bottom: 30px; border-top: 4px solid #3498db; }
+        code { font-family: 'Consolas', monospace; }
+        .note { font-size: 0.95em; color: #666; margin-bottom: 10px; }
+        section { background: white; padding: 20px; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
     </style>
 </head>
 <body>
 
-<div class="container">
     <header>
-        <h1>12차시: 문자열 처리(String) 마스터</h1>
-        <p>텍스트 데이터를 자유자재로 다루는 <strong>파이썬의 강력한 문자열 기술</strong>을 배웁니다.</p>
+        <h1>12차시: 문자열 처리 학습 패키지</h1>
+        <div class="intro">
+            <p>안녕하세요! 이번 시간에는 파이썬에서 텍스트 데이터를 다루는 핵심, <strong>문자열(String) 처리</strong>에 대해 집중적으로 학습해 보겠습니다. 문자열을 자르고, 붙이고, 검색하고, 원하는 형태로 바꾸는 다양한 기술들을 예제 코드를 통해 익혀보세요!</p>
+        </div>
     </header>
 
-    <div class="section-box">
-        <div class="section-title">기초: 생성과 슬라이싱</div>
-        <p>문자열의 길이를 구하고, 원하는 부분만 추출하는 기본 기술입니다.</p>
-
+    <main>
+        <h2>1. 파이썬 예제 코드: 문자열 처리</h2>
         
+        <section>
+            <h3>1.1. 기초 파이썬 예시 코드 (5개)</h3>
+            <p class="note">기초 예제는 문자열을 만들고, 길이를 재거나, 특정 문자에 접근하는 가장 기본적인 방법을 다룹니다.</p>
 
-        <h3>1.1 인덱싱과 슬라이싱</h3>
-        <div class="info-card">슬라이싱 <code>[시작:끝]</code>에서 <span class="highlight">끝 인덱스는 포함되지 않음</span>을 항상 기억하세요!</div>
-        <pre><code class="language-python">text = "Python Programming"
+            <h4>1. 문자열 생성과 인덱싱</h4>
+            <p class="note"># 작은따옴표, 큰따옴표, 세 개짜리 따옴표 모두 사용 가능합니다.</p>
+            <pre><code class="language-python">s1 = 'Hello'
+s2 = "Python"
+s3 = """이것은
+여러 줄에 걸친
+문자열입니다."""
 
-# 슬라이싱: 0번부터 5번 인덱스까지 (6번 미포함)
-print(text[0:6])    # "Python"
-# 뒤에서부터 추출
-print(text[-11:])   # "Programming"
-# 거꾸로 뒤집기
-print(text[::-1])   # "gnimmargorP nohtyP"</code></pre>
-    </div>
+print(s1)
+print("s2의 첫 번째 글자:", s2[0])    # 'P'
+print("s2의 마지막 글자:", s2[-1])   # 'n'</code></pre>
 
-    <div class="section-box">
-        <div class="section-title">응용: 핵심 문자열 메서드</div>
-        <p>자주 사용되는 내장 함수들을 통해 데이터를 정제하는 방법을 익힙니다.</p>
+            <h4>2. 문자열 연결(+)과 반복(*)</h4>
+            <pre><code class="language-python">first = "파이썬은 "
+second = "재미있다!"
 
-        <h3>2.1 결합과 분리</h3>
-        <div class="info-card"><span class="method-tag">.split()</span>은 리스트로 쪼개고, <span class="method-tag">.join()</span>은 문자열로 합칩니다.</div>
-        <pre><code class="language-python"># 문자열 쪼개기
-data = "apple,banana,cherry"
-fruits = data.split(",") # ['apple', 'banana', 'cherry']
+# 문자열 연결
+sentence = first + second
+print(sentence)
 
-# 문자열 합치기
-new_data = "-".join(fruits)
-print(new_data) # "apple-banana-cherry"</code></pre>
+# 문자열 반복
+laugh = "하" * 5
+print(laugh)</code></pre>
 
-        <h3>2.2 검색 및 검사</h3>
-        <pre><code class="language-python">filename = "report.pdf"
+            <h4>3. 문자열 길이 구하기 (len())</h4>
+            <p class="note"># len() 함수는 공백을 포함한 전체 문자 수를 반환합니다.</p>
+            <pre><code class="language-python">text = "안녕하세요, 인수샘입니다."
+print(f"문자열 길이: {len(text)}")</code></pre>
 
-# 특정 문자로 끝나는지 확인 (확장자 체크)
+            <h4>4. 문자열 슬라이싱 (Slicing)</h4>
+            <p class="note"># [시작:끝] 형식을 사용하여 문자열의 일부분을 추출합니다.</p>
+            <pre><code class="language-python">jumin = "990101-1234567"
+gender = jumin[7] # 성별 구분 숫자
+birthday = jumin[:6] # 생년월일 앞 6자리
+
+print("생년월일:", birthday)
+print("성별 코드:", gender)</code></pre>
+
+            <h4>5. 대소문자 변환 (upper, lower)</h4>
+            <pre><code class="language-python">word = "Python is Good"
+print("대문자로:", word.upper())
+print("소문자로:", word.lower())</code></pre>
+        </section>
+
+        <section>
+            <h3>1.2. 응용 파이썬 예시 코드 (5개)</h3>
+            <p class="note">응용 예제는 문자열을 쪼개고 합치거나, 공백을 제거하는 등 실질적인 데이터 정제 방법을 다룹니다.</p>
+
+            <h4>1. 문자열 나누기 (.split())</h4>
+            <p class="note"># 특정 구분자를 기준으로 문자열을 리스트로 나눕니다.</p>
+            <pre><code class="language-python">data = "홍길동,구운몽,인수샘"
+names = data.split(",") # 쉼표를 기준으로 나눔
+print(names)
+
+address = "서울시 강남구 역삼동"
+parts = address.split() # 공백을 기준으로 나눔
+print(parts)</code></pre>
+
+            <h4>2. 문자열 바꾸기 (.replace())</h4>
+            <p class="note"># 특정 문자열을 찾아 다른 문자열로 변경합니다.</p>
+            <pre><code class="language-python">sentence = "I like Java. Java is fun."
+new_sentence = sentence.replace("Java", "Python")
+print(new_sentence)</code></pre>
+
+            <h4>3. 공백 제거하기 (.strip())</h4>
+            <p class="note"># 문자열 양옆의 불필요한 공백이나 줄바꿈을 제거합니다.</p>
+            <pre><code class="language-python">user_input = "   인수샘   "
+print(f"원본: '{user_input}'")
+print(f"제거: '{user_input.strip()}'")</code></pre>
+
+            <h4>4. 문자열 포매팅 (f-string)</h4>
+            <p class="note"># 변수를 문자열 안에 직관적으로 삽입합니다.</p>
+            <pre><code class="language-python">name = "홍길동"
+age = 25
+print(f"제 이름은 {name}이고, 나이는 {age}세입니다.")</code></pre>
+
+            <h4>5. 문자열 개수 세기 (.count())</h4>
+            <p class="note"># 특정 문자나 단어가 몇 번 등장하는지 확인합니다.</p>
+            <pre><code class="language-python">poem = "동해물과 백두산이 마르고 닳도록"
+print("백두산 등장 횟수:", poem.count("백두산"))</code></pre>
+        </section>
+
+        <section>
+            <h3>1.3. 심화 파이썬 예시 코드 (4개)</h3>
+            <p class="note">심화 예제는 문자열 검색, 검증, 고급 결합 기법 등을 다룹니다.</p>
+
+            <h4>1. 리스트를 문자열로 합치기 (.join())</h4>
+            <p class="note"># 리스트의 요소들을 하나의 문자열로 합칩니다.</p>
+            <pre><code class="language-python">words = ["Life", "is", "too", "short"]
+
+# " " (공백)을 구분자로 하여 합치기
+sentence = " ".join(words)
+print(sentence)
+
+# "-"을 구분자로 하여 합치기
+date_parts = ["2026", "03", "21"]
+date_string = "-".join(date_parts)
+print(date_string)</code></pre>
+
+            <h4>2. 위치 찾기 (.find() vs .index())</h4>
+            <p class="note"># 특정 부분 문자열이 시작되는 첫 번째 인덱스를 찾습니다.</p>
+            <pre><code class="language-python">text = "apple, banana"
+
+# .find(): 찾는 문자열이 없으면 -1을 반환합니다.
+print("banana의 위치:", text.find("banana"))
+print("orange의 위치:", text.find("orange")) # -1
+
+# .index(): 찾는 문자열이 없으면 ValueError 오류를 발생시킵니다.
+print("apple의 위치:", text.index("apple"))
+# print(text.index("orange")) # 이 코드는 오류를 발생시킴</code></pre>
+
+            <h4>3. 시작/끝 문자열 확인 (.startswith(), .endswith())</h4>
+            <p class="note"># 파일 확장자를 확인하거나, 특정 프로토콜로 시작하는지 검사할 때 유용합니다.</p>
+            <pre><code class="language-python">filename = "report.pdf"
+url = "https://www.google.com"
+
 if filename.endswith(".pdf"):
-    print("PDF 파일이 맞습니다.")
+    print("PDF 파일입니다.")
 
-# 문자 위치 찾기 (없으면 -1 반환)
-print(filename.find("port")) # 2</code></pre>
-    </div>
+if url.startswith("https://"):
+    print("안전한 HTTPS 프로토콜입니다.")</code></pre>
 
-    <div class="section-box">
-        <div class="section-title">심화: 포매팅과 정규표현식</div>
-        <p>가독성 높은 출력 방법인 <strong>f-string</strong>과 복잡한 패턴 매칭을 다룹니다.</p>
+            <h4>4. 문자열 구성 확인 (.isdigit(), .isalpha())</h4>
+            <p class="note"># 문자열이 숫자로만 혹은 문자로만 이루어져 있는지 검사합니다.</p>
+            <pre><code class="language-python">s1 = "12345"
+s2 = "Python"
 
-        <h3>3.1 f-string (Python 3.6+)</h3>
-        <div class="info-card">변수뿐만 아니라 함수 호출이나 연산도 문자열 안에서 직접 수행할 수 있습니다.</div>
-        <pre><code class="language-python">name = "이재명"
-score = 95
-print(f"[{name}]님의 점수는 {score}점이며, 등급은 {'A' if score >= 90 else 'B'}입니다.")</code></pre>
+print(f"'{s1}'는 숫자입니까? {s1.isdigit()}")
+print(f"'{s2}'는 문자로만 되어 있습니까? {s2.isalpha()}")</code></pre>
+        </section>
+    </main>
 
-        <h3>3.2 정규표현식 (re 모듈)</h3>
-        <pre><code class="language-python">import re
-
-text = "문의사항은 010-1234-5678로 연락주세요."
-# 전화번호 패턴 매칭
-phone_pattern = r"\d{3}-\d{3,4}-\d{4}"
-phone = re.search(phone_pattern, text)
-
-if phone:
-    print(f"찾은 번호: {phone.group()}")</code></pre>
-    </div>
-
-    <div class="btn-area">
-        <button class="btn-test" onclick="alert('12차시 문자열 처리 학습을 완료했습니다!')">학습 완료 및 테스트</button>
-    </div>
-</div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
 </body>
 </html>
