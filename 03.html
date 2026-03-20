@@ -3,112 +3,189 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3차시: 파이썬 입출력 함수 학습</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <title>3차시: 파이썬 입출력 함수 학습 패키지</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
     <style>
-        body { font-family: 'Pretendard', -apple-system, sans-serif; line-height: 1.8; color: #34495e; max-width: 900px; margin: 0 auto; padding: 40px 20px; background-color: #f0f4f8; }
-        .container { background: white; padding: 40px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
-        header { text-align: center; margin-bottom: 40px; }
-        h1 { color: #2c3e50; font-size: 2.4em; margin-bottom: 10px; }
-        .badge { background: #3498db; color: white; padding: 5px 15px; border-radius: 20px; font-size: 0.9em; vertical-align: middle; }
-        h2 { border-left: 6px solid #2980b9; padding-left: 15px; margin-top: 50px; color: #2980b9; }
-        h3 { color: #16a085; margin-top: 30px; display: flex; align-items: center; }
-        h3::before { content: '💡'; margin-right: 10px; }
-        .desc { background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 15px; font-size: 0.95em; color: #666; border: 1px solid #e9ecef; }
-        pre { border-radius: 8px !important; margin-bottom: 25px !important; }
-        code { font-family: 'Fira Code', 'Consolas', monospace !important; }
-        .note { font-size: 0.85em; color: #e74c3c; margin-top: -15px; margin-bottom: 20px; }
+        body { font-family: 'Pretendard', sans-serif; line-height: 1.7; color: #333; max-width: 900px; margin: 0 auto; padding: 20px; background-color: #f8f9fa; }
+        h1 { color: #2c3e50; border-bottom: 3px solid #3498db; padding-bottom: 10px; text-align: center; }
+        h2 { color: #e67e22; margin-top: 40px; border-left: 6px solid #e67e22; padding-left: 15px; background: #fff; padding-top: 10px; padding-bottom: 10px; }
+        h3 { color: #2980b9; margin-top: 30px; }
+        h4 { color: #2c3e50; background: #eee; padding: 5px 10px; border-radius: 4px; display: inline-block; }
+        .intro { background-color: #ffffff; padding: 20px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-bottom: 30px; border-top: 4px solid #3498db; }
+        code { font-family: 'Consolas', monospace; }
+        .note { font-size: 0.95em; color: #666; margin-bottom: 10px; }
+        section { background: white; padding: 20px; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
     </style>
 </head>
 <body>
 
-<div class="container">
     <header>
-        <h1>3차시: 파이썬 입출력 함수 <span class="badge">학습 패키지</span></h1>
-        <p>데이터의 '입력'과 '출력' 및 파일 처리의 핵심 예제를 학습합니다.</p>
+        <h1>3차시: 파이썬 입출력 함수 학습 패키지</h1>
+        <div class="intro">
+            <p>안녕하세요! 파이썬 프로그래밍의 기본 중의 기본인 데이터 '입력'과 '출력'에 대해 학습할 수 있는 예제 코드와, 학습 내용을 점검해볼 수 있는 OX 및 5지선다형 HTML 퀴즈를 준비했습니다.</p>
+        </div>
     </header>
 
-    <h2>1. 기초 파이썬 예제</h2>
-    <p class="desc">사용자와 상호작용하고 기본적인 파일 읽기/쓰기를 다룹니다.</p>
+    <main>
+        <h2>1. 파이썬 예제 코드: 입출력 함수</h2>
+        
+        <section>
+            <h3>1.1. 기초 파이썬 예시 코드 (5개)</h3>
+            <p class="note">기초 예제는 사용자와 상호작용하고, 기본적인 파일에 데이터를 쓰고 읽는 방법을 다룹니다.</p>
 
-    <h3>1. 화면 출력과 사용자 입력</h3>
-    <p class="desc">print()로 출력하고 input()으로 데이터를 입력받습니다. 입력값은 항상 문자열임을 주의하세요.</p>
-    <pre><code class="language-python"># 화면 출력
-print("Hello, Python!")
+            <h4>1. print() 함수로 화면에 출력하기</h4>
+            <p class="note"># print()는 가장 기본적인 출력 함수입니다.</p>
+            <pre><code class="language-python">print("Hello, Python!")
 
-# 사용자 입력 (항상 문자열로 반환됨)
-name = input("이름을 입력하세요: ")
-print(f"안녕하세요, {name}님!")
+name = "인수샘"
+age = 30
+print("이름:", name, ", 나이:", age)</code></pre>
 
-# 숫자형으로 변환 후 계산
-year_int = int(input("태어난 연도를 입력하세요: "))
+            <h4>2. input() 함수로 사용자 입력받기</h4>
+            <p class="note"># input() 함수는 사용자로부터 키보드 입력을 문자열(string) 형태로 받습니다.</p>
+            <pre><code class="language-python">name = input("이름을 입력하세요: ")
+print(f"안녕하세요, {name}님!")</code></pre>
+
+            <h4>3. 입력받은 문자열을 숫자로 변환하기</h4>
+            <p class="note"># input()으로 받은 값은 항상 문자열이므로, 계산을 위해서는 숫자형으로 변환해야 합니다.</p>
+            <pre><code class="language-python">year_str = input("태어난 연도를 입력하세요: ")
+year_int = int(year_str) # 정수(int)로 변환
+
 age = 2026 - year_int + 1
 print(f"당신의 한국 나이는 {age}세입니다.")</code></pre>
 
-    <h3>2. 기본적인 파일 처리 (w/r 모드)</h3>
-    <p class="desc">'w' 모드는 덮어쓰기, 'r' 모드는 읽기 전용입니다. 작업 후에는 반드시 .close()를 호출해야 합니다.</p>
-    <pre><code class="language-python"># 파일 쓰기 (w)
-f = open("memo.txt", "w", encoding="utf-8")
-f.write("파이썬으로 파일 쓰기 연습\n첫 번째 줄입니다.")
-f.close() 
+            <h4>4. 간단한 파일 쓰기 (w 모드)</h4>
+            <p class="note"># 'w' 모드는 파일에 내용을 쓸 때 사용합니다. 파일이 이미 존재하면 내용을 덮어씁니다.</p>
+            <pre><code class="language-python">f = open("memo.txt", "w", encoding="utf-8")
+f.write("파이썬으로 파일 쓰기 연습\n")
+f.write("첫 번째 줄입니다.")
+f.close() # 파일을 열었으면 반드시 닫아야 합니다.
 
-# 파일 읽기 (r)
-f = open("memo.txt", "r", encoding="utf-8")
-content = f.read()
+print("memo.txt 파일 쓰기 완료!")</code></pre>
+
+            <h4>5. 간단한 파일 읽기 (r 모드)</h4>
+            <p class="note"># 'r' 모드는 파일의 내용을 읽을 때 사용합니다.</p>
+            <pre><code class="language-python">f = open("memo.txt", "r", encoding="utf-8")
+content = f.read() # 파일 전체 내용을 하나의 문자열로 읽어옵니다.
 f.close()
+
+print("--- memo.txt 파일 내용 ---")
 print(content)</code></pre>
+        </section>
 
-    <h2>2. 응용 파이썬 예제</h2>
-    <p class="desc">더 안전한 파일 처리와 효율적인 출력 옵션을 다룹니다.</p>
+        <section>
+            <h3>1.2. 응용 파이썬 예시 코드 (5개)</h3>
+            <p class="note">응용 예제는 더 안전하고 효율적인 파일 처리 방법과 다양한 출력 옵션을 다룹니다.</p>
 
-    <h3>1. with 구문을 이용한 안전한 파일 처리</h3>
-    <p class="desc">with 블록을 사용하면 close()를 직접 호출하지 않아도 자동으로 파일이 닫힙니다.</p>
-    <pre><code class="language-python">with open("memo_with.txt", "w", encoding="utf-8") as f:
-    f.write("with 구문은 자동으로 파일을 닫아주어 안전합니다.")
+            <h4>1. with 구문을 사용하여 안전하게 파일 다루기</h4>
+            <p class="note"># with 구문을 사용하면 블록이 끝나면 항상 자동으로 파일을 닫아줍니다. close()를 호출할 필요가 없어 안전합니다.</p>
+            <pre><code class="language-python">with open("memo_with.txt", "w", encoding="utf-8") as f:
+    f.write("with 구문은 매우 유용합니다.\n")
+    f.write("자동으로 파일을 닫아줍니다.")
 
-# 대용량 파일은 한 줄씩 읽는 것이 효율적입니다.
+print("with 구문을 사용한 파일 쓰기 완료!")</code></pre>
+
+            <h4>2. 파일 내용 한 줄씩 읽기</h4>
+            <p class="note"># 대용량 파일을 처리할 때 효율적입니다. for문을 이용해 한 줄씩 읽습니다.</p>
+            <pre><code class="language-python">print("--- memo_with.txt 한 줄씩 읽기 ---")
 with open("memo_with.txt", "r", encoding="utf-8") as f:
     for line in f:
+        # .strip()으로 줄바꿈 문자(\n)를 제거해줍니다.
         print(line.strip())</code></pre>
 
-    <h3>2. print() 함수의 세부 옵션</h3>
-    <p class="desc">sep(구분자)와 end(끝 문자) 옵션을 통해 출력 형식을 제어할 수 있습니다.</p>
-    <pre><code class="language-python"># sep: 여러 항목 사이의 문자 지정 (기본: 공백)
-print("사과", "바나나", "딸기", sep=", ")
+            <h4>3. 파일에 내용 추가하기 (a 모드)</h4>
+            <p class="note"># 'a' (append) 모드는 기존 파일의 끝에 새로운 내용을 추가합니다.</p>
+            <pre><code class="language-python">from datetime import datetime
 
-# end: 출력 마지막 문자 지정 (기본: 줄바꿈)
-print("첫 번째 줄", end=" --- ")
+with open("log.txt", "a", encoding="utf-8") as f:
+    timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    f.write(f"[{timestamp}] 프로그램이 실행되었습니다.\n")
+
+print("log.txt에 현재 시각 기록 완료!")</code></pre>
+
+            <h4>4. print() 함수의 sep과 end 옵션</h4>
+            <p class="note"># sep: 구분자 지정 (기본값 공백), end: 마지막 출력 문자 지정 (기본값 줄바꿈)</p>
+            <pre><code class="language-python">print("사과", "바나나", "딸기")
+print("사과", "바나나", "딸기", sep=", ") # 쉼표와 공백으로 구분
+
+print("첫 번째 줄", end=" --- ") # 줄바꿈 대신 " --- "를 출력
 print("두 번째 줄")</code></pre>
 
-    <h2>3. 심화 파이썬 예제</h2>
-    <p class="desc">CSV, JSON 형식의 데이터 처리와 표준 오류 스트림을 다룹니다.</p>
+            <h4>5. .readlines()로 파일 전체를 리스트로 읽기</h4>
+            <p class="note"># 모든 줄을 각각의 문자열 요소로 갖는 리스트를 반환합니다.</p>
+            <pre><code class="language-python">with open("log.txt", "r", encoding="utf-8") as f:
+    lines = f.readlines()
+    if len(lines) > 1:
+        print("log.txt의 1번 인덱스 내용:", lines[1].strip())
+    print(f"총 {len(lines)}개의 로그가 있습니다.")</code></pre>
+        </section>
 
-    <h3>1. CSV 및 JSON 데이터 처리</h3>
-    <p class="desc">엑셀과 호환되는 CSV 형식과 웹 표준인 JSON 형식을 저장하고 불러옵니다.</p>
-    <pre><code class="language-python">import csv
-import json
+        <section>
+            <h3>1.3. 심화 파이썬 예시 코드 (5개)</h3>
+            <p class="note">심화 예제는 CSV, JSON 형식의 파일을 다루거나 표준 입출력 스트림을 제어하는 방법을 다룹니다.</p>
 
-# CSV 파일 쓰기
-data = [["이름", "부서"], ["홍길동", "개발팀"]]
+            <h4>1. csv 모듈로 CSV 파일 쓰기</h4>
+            <p class="note"># CSV (Comma-Separated Values) 형식을 다루기 위한 표준 모듈입니다.</p>
+            <pre><code class="language-python">import csv
+
+data = [
+    ["이름", "부서", "직급"],
+    ["인수샘", "개발팀", "팀장"],
+    ["홍길동", "기획팀", "사원"],
+    ["구운몽", "영업팀", "대리"]
+]
+
 with open("company.csv", "w", newline="", encoding="utf-8-sig") as f:
     writer = csv.writer(f)
     writer.writerows(data)
 
-# JSON 데이터 저장 (딕셔너리 구조)
-my_data = {"name": "홍길동", "skills": ["Python", "AI"]}
+print("company.csv 파일 생성 완료!")</code></pre>
+
+            <h4>2. csv 모듈로 CSV 파일 읽기</h4>
+            <pre><code class="language-python">import csv
+
+with open("company.csv", "r", encoding="utf-8-sig") as f:
+    reader = csv.reader(f)
+    next(reader) # 헤더(첫 번째 줄) 건너뛰기
+    for row in reader:
+        print(f"{row[0]}님의 부서는 {row[1]}입니다.")</code></pre>
+
+            <h4>3. json 모듈로 딕셔너리를 JSON 파일로 저장</h4>
+            <p class="note"># JSON은 웹에서 데이터를 주고받을 때 널리 사용되는 형식입니다.</p>
+            <pre><code class="language-python">import json
+
+my_data = {
+    "name": "인수샘",
+    "age": 30,
+    "city": "Seoul",
+    "skills": ["Python", "AI", "Data Analysis"]
+}
+
 with open("profile.json", "w", encoding="utf-8") as f:
-    json.dump(my_data, f, indent=4, ensure_ascii=False)</code></pre>
+    # indent=4: 들여쓰기 적용, ensure_ascii=False: 한글 그대로 저장
+    json.dump(my_data, f, indent=4, ensure_ascii=False)
 
-    <h3>2. 표준 오류(stderr) 출력</h3>
-    <p class="desc">중요한 오류 메시지는 일반 출력과 분리하여 표준 오류 스트림으로 보냅니다.</p>
-    <pre><code class="language-python">import sys
+print("profile.json 파일 생성 완료!")</code></pre>
 
-print("일반 정보 메시지") # 표준 출력 (stdout)
-print("치명적인 오류 발생!", file=sys.stderr) # 표준 오류 (stderr)</code></pre>
-</div>
+            <h4>4. JSON 파일을 읽어 딕셔너리로 변환</h4>
+            <pre><code class="language-python">import json
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+with open("profile.json", "r", encoding="utf-8") as f:
+    profile_data = json.load(f)
 
+print("이름:", profile_data["name"])
+print("보유 기술 중 첫 번째:", profile_data["skills"][0])</code></pre>
+
+            <h4>5. 표준 오류(stderr) 스트림에 출력하기</h4>
+            <p class="note"># 일반 정보는 stdout으로, 오류 메시지는 stderr로 보내는 것이 관례입니다.</p>
+            <pre><code class="language-python">import sys
+
+print("이것은 일반적인 정보 메시지입니다.") # stdout
+print("치명적인 오류가 발생했습니다!", file=sys.stderr) # stderr</code></pre>
+        </section>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
 </body>
 </html>
