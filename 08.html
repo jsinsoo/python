@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>8차시: 파이썬 while 반복문 학습 패키지</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <style>
+        :root { --primary-color: #f39c12; --secondary-color: #e67e22; --bg-color: #fffaf0; }
+        body { font-family: 'Pretendard', sans-serif; background-color: #f7f1e3; padding: 40px 20px; line-height: 1.8; color: #2c3e50; }
+        .container { max-width: 850px; margin: 0 auto; background: white; padding: 40px; border-radius: 20px; box-shadow: 0 12px 30px rgba(0,0,0,0.1); }
+        
+        header { text-align: center; margin-bottom: 50px; border-bottom: 4px solid var(--primary-color); padding-bottom: 20px; }
+        h1 { font-size: 2.2rem; color: #d35400; margin-bottom: 10px; }
+        
+        .section-card { background: var(--bg-color); border-radius: 15px; padding: 30px; margin-bottom: 40px; border: 1px solid #ffeaa7; }
+        .section-badge { display: inline-block; background: var(--primary-color); color: white; padding: 5px 20px; border-radius: 50px; font-weight: bold; margin-bottom: 20px; }
+
+        h3 { color: #e67e22; margin-top: 25px; display: flex; align-items: center; }
+        h3::before { content: '🔄'; margin-right: 10px; }
+
+        .tip-box { background: #fff; border-left: 5px solid var(--primary-color); padding: 15px; margin: 15px 0; font-size: 0.95rem; box-shadow: 2px 2px 5px rgba(0,0,0,0.05); }
+        
+        pre { border-radius: 12px !important; font-size: 0.95rem !important; margin: 20px 0 !important; }
+        code { font-family: 'Fira Code', 'Consolas', monospace !important; }
+
+        .warning { color: #e74c3c; font-weight: bold; border-bottom: 1px solid #e74c3c; }
+        
+        .footer-action { text-align: center; margin-top: 50px; }
+        .btn-check { background: #d35400; color: white; padding: 15px 40px; border: none; border-radius: 8px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .btn-check:hover { background: #e67e22; transform: translateY(-3px); }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>8차시: while 반복문 마스터</h1>
+        <p>조건이 참(True)인 동안 멈추지 않는 <strong>강력한 제어 흐름</strong>을 배웁니다.</p>
+    </header>
+
+    <div class="section-card">
+        <div class="section-badge">1. 기초: while문의 구조</div>
+        <p>for 문이 '횟수' 중심이라면, while 문은 <span class="warning">'상태(조건)'</span> 중심입니다.</p>
+
+        
+
+[Image of while loop flowchart in programming]
+
+
+        <h3>1.1 기본적인 카운터</h3>
+        <div class="tip-box">반복할 때마다 조건을 변화시켜 <span class="warning">무한 루프</span>에 빠지지 않게 주의해야 합니다.</div>
+        <pre><code class="language-python">count = 1
+while count <= 5:
+    print(f"{count}번째 실행 중...")
+    count += 1 # 이 코드가 없으면 무한히 실행됩니다!</code></pre>
+
+        <h3>1.2 특정 입력까지 반복</h3>
+        <pre><code class="language-python">prompt = "종료하려면 'exit'를 입력하세요: "
+message = ""
+
+while message.lower() != 'exit':
+    message = input(prompt)
+    print(f"입력값: {message}")</code></pre>
+    </div>
+
+    <div class="section-card">
+        <div class="section-badge">2. 응용: 흐름 제어(break, continue)</div>
+        <p>반복문 내부에서 실행 흐름을 강제로 바꾸는 기법들을 학습합니다.</p>
+
+        <h3>2.1 break를 이용한 무한 루프 탈출</h3>
+        <div class="tip-box"><code>while True</code>는 의도적인 무한 루프를 만들 때 사용하며, <code>break</code>로 탈출구를 만듭니다.</div>
+        <pre><code class="language-python">while True:
+    num = int(input("숫자를 입력하세요 (0을 입력하면 종료): "))
+    if num == 0:
+        print("프로그램을 종료합니다.")
+        break
+    print(f"입력한 숫자의 제곱: {num**2}")</code></pre>
+    </div>
+
+    <div class="section-card">
+        <div class="section-badge">3. 심화: 견고한 프로그래밍</div>
+        <p>알고리즘 구현 및 예외 처리를 결합한 실전적인 while문 사용법입니다.</p>
+
+        <h3>3.1 유클리드 호제법 (최대공약수)</h3>
+        <pre><code class="language-python">a, b = 48, 18
+temp_a, temp_b = a, b
+
+while temp_b != 0:
+    temp_a, temp_b = temp_b, temp_a % temp_b
+
+print(f"{a}와 {b}의 최대공약수: {temp_a}")</code></pre>
+
+        <h3>3.2 예외 처리와 결합 (try-except)</h3>
+        <div class="tip-box">사용자가 올바른 값을 입력할 때까지 무한히 재요청하는 패턴입니다.</div>
+        <pre><code class="language-python">while True:
+    try:
+        age = int(input("나이를 숫자로만 입력하세요: "))
+        break # 정수 변환 성공 시 루프 탈출
+    except ValueError:
+        print("잘못된 입력입니다. 다시 시도하세요.")</code></pre>
+    </div>
+
+    <div class="footer-action">
+        <button class="btn-check" onclick="alert('8차시 학습이 완료되었습니다!')">학습 완료 및 다음 단계로</button>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+
+</body>
+</html>

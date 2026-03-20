@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>12차시: 파이썬 문자열 처리 마스터</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <style>
+        :root { --primary-color: #e84393; --secondary-color: #fd79a8; --bg-color: #fff5f8; --dark-text: #2d3436; }
+        body { font-family: 'Pretendard', sans-serif; background-color: #f7f1f3; padding: 40px 20px; line-height: 1.8; color: var(--dark-text); }
+        .container { max-width: 900px; margin: 0 auto; background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        
+        header { text-align: center; margin-bottom: 50px; border-bottom: 4px solid var(--primary-color); padding-bottom: 20px; }
+        h1 { font-size: 2.2rem; color: var(--primary-color); margin-bottom: 10px; }
+        
+        .section-box { background: var(--bg-color); border-radius: 15px; padding: 30px; margin-bottom: 40px; border: 1px solid #fab1a0; }
+        .section-title { display: inline-block; background: var(--primary-color); color: white; padding: 6px 20px; border-radius: 50px; font-weight: bold; margin-bottom: 20px; font-size: 0.95rem; }
+
+        h3 { color: #d63031; margin-top: 25px; display: flex; align-items: center; }
+        h3::before { content: '🔤'; margin-right: 10px; }
+
+        .method-tag { background: #ffeaa7; color: #d35400; padding: 2px 8px; border-radius: 4px; font-family: monospace; font-weight: bold; }
+        .info-card { background: white; border-left: 5px solid var(--secondary-color); padding: 15px; margin: 15px 0; font-size: 0.95rem; border-radius: 0 8px 8px 0; box-shadow: 2px 2px 5px rgba(0,0,0,0.02); }
+        
+        pre { border-radius: 12px !important; font-size: 0.95rem !important; margin: 20px 0 !important; }
+        code { font-family: 'Fira Code', 'Consolas', monospace !important; }
+
+        .highlight { color: var(--primary-color); font-weight: bold; }
+        
+        .btn-area { text-align: center; margin-top: 50px; }
+        .btn-test { background: var(--primary-color); color: white; padding: 15px 50px; border: none; border-radius: 10px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 15px rgba(232, 67, 147, 0.3); }
+        .btn-test:hover { background: #c23616; transform: translateY(-2px); }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>12차시: 문자열 처리(String) 마스터</h1>
+        <p>텍스트 데이터를 자유자재로 다루는 <strong>파이썬의 강력한 문자열 기술</strong>을 배웁니다.</p>
+    </header>
+
+    <div class="section-box">
+        <div class="section-title">기초: 생성과 슬라이싱</div>
+        <p>문자열의 길이를 구하고, 원하는 부분만 추출하는 기본 기술입니다.</p>
+
+        
+
+        <h3>1.1 인덱싱과 슬라이싱</h3>
+        <div class="info-card">슬라이싱 <code>[시작:끝]</code>에서 <span class="highlight">끝 인덱스는 포함되지 않음</span>을 항상 기억하세요!</div>
+        <pre><code class="language-python">text = "Python Programming"
+
+# 슬라이싱: 0번부터 5번 인덱스까지 (6번 미포함)
+print(text[0:6])    # "Python"
+# 뒤에서부터 추출
+print(text[-11:])   # "Programming"
+# 거꾸로 뒤집기
+print(text[::-1])   # "gnimmargorP nohtyP"</code></pre>
+    </div>
+
+    <div class="section-box">
+        <div class="section-title">응용: 핵심 문자열 메서드</div>
+        <p>자주 사용되는 내장 함수들을 통해 데이터를 정제하는 방법을 익힙니다.</p>
+
+        <h3>2.1 결합과 분리</h3>
+        <div class="info-card"><span class="method-tag">.split()</span>은 리스트로 쪼개고, <span class="method-tag">.join()</span>은 문자열로 합칩니다.</div>
+        <pre><code class="language-python"># 문자열 쪼개기
+data = "apple,banana,cherry"
+fruits = data.split(",") # ['apple', 'banana', 'cherry']
+
+# 문자열 합치기
+new_data = "-".join(fruits)
+print(new_data) # "apple-banana-cherry"</code></pre>
+
+        <h3>2.2 검색 및 검사</h3>
+        <pre><code class="language-python">filename = "report.pdf"
+
+# 특정 문자로 끝나는지 확인 (확장자 체크)
+if filename.endswith(".pdf"):
+    print("PDF 파일이 맞습니다.")
+
+# 문자 위치 찾기 (없으면 -1 반환)
+print(filename.find("port")) # 2</code></pre>
+    </div>
+
+    <div class="section-box">
+        <div class="section-title">심화: 포매팅과 정규표현식</div>
+        <p>가독성 높은 출력 방법인 <strong>f-string</strong>과 복잡한 패턴 매칭을 다룹니다.</p>
+
+        <h3>3.1 f-string (Python 3.6+)</h3>
+        <div class="info-card">변수뿐만 아니라 함수 호출이나 연산도 문자열 안에서 직접 수행할 수 있습니다.</div>
+        <pre><code class="language-python">name = "이재명"
+score = 95
+print(f"[{name}]님의 점수는 {score}점이며, 등급은 {'A' if score >= 90 else 'B'}입니다.")</code></pre>
+
+        <h3>3.2 정규표현식 (re 모듈)</h3>
+        <pre><code class="language-python">import re
+
+text = "문의사항은 010-1234-5678로 연락주세요."
+# 전화번호 패턴 매칭
+phone_pattern = r"\d{3}-\d{3,4}-\d{4}"
+phone = re.search(phone_pattern, text)
+
+if phone:
+    print(f"찾은 번호: {phone.group()}")</code></pre>
+    </div>
+
+    <div class="btn-area">
+        <button class="btn-test" onclick="alert('12차시 문자열 처리 학습을 완료했습니다!')">학습 완료 및 테스트</button>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+
+</body>
+</html>

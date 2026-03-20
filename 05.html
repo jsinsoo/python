@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>5차시: 파이썬 조건문 학습 패키지</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <style>
+        :root { --primary-color: #27ae60; --accent-color: #2ecc71; --bg-color: #f9f9f9; }
+        body { font-family: 'Pretendard', sans-serif; background-color: #ecf0f1; padding: 40px 20px; line-height: 1.7; color: #2c3e50; }
+        .container { max-width: 850px; margin: 0 auto; background: white; padding: 40px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        
+        header { border-bottom: 2px solid var(--primary-color); margin-bottom: 30px; padding-bottom: 20px; text-align: center; }
+        h1 { font-size: 2.2rem; color: var(--primary-color); margin-bottom: 10px; }
+        
+        .section-header { background: var(--primary-color); color: white; padding: 10px 20px; border-radius: 5px; margin: 40px 0 20px; font-size: 1.25rem; font-weight: bold; }
+        
+        h3 { color: #16a085; border-bottom: 2px dashed #16a085; display: inline-block; margin-top: 30px; margin-bottom: 15px; }
+        .desc-box { background: #fdfefe; border: 1px solid #d1d8e0; border-left: 5px solid var(--accent-color); padding: 15px; border-radius: 4px; margin-bottom: 20px; font-size: 0.95rem; }
+        
+        pre { border-radius: 10px !important; margin-bottom: 25px !important; }
+        .highlight { color: #e74c3c; font-weight: bold; }
+        
+        .quiz-btn { width: 100%; padding: 18px; background-color: var(--primary-color); color: white; border: none; border-radius: 8px; font-size: 1.1rem; font-weight: bold; cursor: pointer; margin-top: 50px; transition: 0.3s; }
+        .quiz-btn:hover { background-color: #1e8449; transform: translateY(-2px); }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>5차시: 파이썬 조건문 학습 패키지</h1>
+        <p>프로그램의 판단 기준을 만드는 <strong>제어문</strong>의 핵심, 조건문을 마스터합니다.</p>
+    </header>
+
+    <div class="section-header">1. 기초 파이썬 예제</div>
+    <div class="desc-box">조건문의 가장 기본이 되는 if, if-else, if-elif-else 구조를 학습합니다. </div>
+
+    <h3>1.1 기본적인 if / if-else 문</h3>
+    <div class="desc-box">조건이 참(True)일 때만 실행하거나, 참과 거짓일 때 각각 다른 코드를 실행합니다. </div>
+    <pre><code class="language-python"># 기본적인 if 문
+money = 10000
+if money >= 5000:
+    print("택시를 탈 수 있습니다.")
+
+# if-else 문
+age = 18
+if age >= 20:
+    print("성인입니다.")
+else:
+    print("미성년자입니다.")</code></pre>
+
+    <h3>1.2 다중 조건: if-elif-else</h3>
+    <div class="desc-box">여러 조건을 순서대로 확인하여 가장 처음 참이 되는 블록 하나만 실행합니다. </div>
+    <pre><code class="language-python">score = 85
+
+if score >= 90:
+    print("A 등급입니다.")
+elif score >= 80:
+    print("B 등급입니다.")
+elif score >= 70:
+    print("C 등급입니다.")
+else:
+    print("F 등급입니다.")</code></pre>
+
+    <div class="section-header">2. 응용 및 심화 예제</div>
+    <div class="desc-box">파이썬의 특징을 살린 효율적인 조건문 작성 기법을 다룹니다. </div>
+
+    <h3>2.1 조건부 표현식 (삼항 연산자)</h3>
+    <div class="desc-box">간단한 조건문을 한 줄로 작성하여 코드의 가독성을 높입니다. <br>형식: <code>[참일 때 값] if [조건] else [거짓일 때 값]</code> </div>
+    <pre><code class="language-python">score = 88
+message = "합격" if score >= 80 else "불합격"
+print(message) # "합격" 출력</code></pre>
+
+    <h3>2.2 Truthy와 Falsy 개념</h3>
+    <div class="desc-box">
+        파이썬은 값의 존재 여부에 따라 자동으로 True/False를 판단합니다. <br>
+        - <span class="highlight">Falsy:</span> 0, "", [], {}, None 등<br>
+        - <span class="highlight">Truthy:</span> 값이 있는 모든 상태
+    </div>
+    <pre><code class="language-python">my_list = []
+if not my_list: 
+    print("리스트가 비어있습니다.") # Falsy 활용
+
+name = "이재명"
+if name:
+    print(f"환영합니다, {name}님!") # Truthy 활용</code></pre>
+
+    <h3>2.3 조건문과 리스트 컴프리헨션</h3>
+    <div class="desc-box">리스트를 생성하는 동시에 조건을 걸어 원하는 데이터만 필터링합니다. </div>
+    <pre><code class="language-python">numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+# 짝수만 추출하여 새로운 리스트 생성
+even_numbers = [num for num in numbers if num % 2 == 0]
+print(even_numbers) # [2, 4, 6, 8, 10]</code></pre>
+
+    <button class="quiz-btn" onclick="alert('퀴즈 모듈이 준비 중입니다!')">5차시 학습 완료 및 퀴즈 풀기</button>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+
+</body>
+</html>

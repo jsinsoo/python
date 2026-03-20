@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>18차시: 파이썬 실전 프로젝트 마스터</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <style>
+        :root { --pro-color: #6c5ce7; --success-color: #00b894; --bg-dark: #2d3436; --card-bg: #ffffff; }
+        body { font-family: 'Pretendard', sans-serif; background-color: #f1f2f6; padding: 40px 20px; line-height: 1.8; color: #2d3436; }
+        .container { max-width: 1100px; margin: 0 auto; }
+        
+        header { text-align: center; margin-bottom: 60px; background: var(--pro-color); color: white; padding: 60px 20px; border-radius: 20px; box-shadow: 0 10px 30px rgba(108, 92, 231, 0.3); }
+        header h1 { font-size: 2.8rem; margin-bottom: 15px; }
+        header p { font-size: 1.2rem; opacity: 0.9; }
+
+        .project-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 40px; }
+        @media (max-width: 850px) { .project-grid { grid-template-columns: 1fr; } }
+
+        .project-card { background: var(--card-bg); border-radius: 15px; padding: 30px; border: 1px solid #dfe6e9; transition: 0.3s; position: relative; overflow: hidden; }
+        .project-card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+        .project-card::before { content: ""; position: absolute; top: 0; left: 0; width: 6px; height: 100%; background: var(--pro-color); }
+
+        .project-tag { background: #ffeaa7; color: #d63031; padding: 3px 12px; border-radius: 5px; font-size: 0.8rem; font-weight: bold; margin-bottom: 15px; display: inline-block; }
+        
+        h3 { margin-top: 0; color: var(--pro-color); font-size: 1.5rem; display: flex; align-items: center; }
+        h3::before { content: '🚀'; margin-right: 10px; }
+
+        .feature-list { margin: 15px 0; padding-left: 20px; font-size: 0.95rem; color: #636e72; }
+        
+        pre { border-radius: 10px !important; font-size: 0.85rem !important; max-height: 400px; }
+        
+        .setup-guide { background: #e1f5fe; border: 1px solid #b3e5fc; padding: 15px; border-radius: 8px; font-size: 0.9rem; margin: 15px 0; }
+        .setup-guide code { color: #d63031; font-weight: bold; }
+
+        .completion-zone { text-align: center; margin-top: 80px; padding: 40px; background: white; border-radius: 20px; border: 2px dashed var(--pro-color); }
+        .btn-cert { background: var(--success-color); color: white; padding: 20px 80px; border: none; border-radius: 50px; font-size: 1.3rem; font-weight: bold; cursor: pointer; transition: 0.3s; box-shadow: 0 5px 15px rgba(0, 184, 148, 0.4); }
+        .btn-cert:hover { background: #00947a; transform: scale(1.05); }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>18차시: 파이썬 프로젝트 마스터</h1>
+        <p>기초 문법부터 라이브러리 활용까지, <strong>나만의 실전 프로그램</strong>을 만들어봅니다.</p>
+    </header>
+
+    <div class="project-grid">
+        <div class="project-card">
+            <span class="project-tag">LEVEL 1: BASIC</span>
+            <h3>숫자 맞추기 게임</h3>
+            <ul class="feature-list">
+                <li>random 모듈을 활용한 난수 생성</li>
+                <li>while 루프와 조건문을 통한 반복 피드백</li>
+                <li>try-except를 이용한 예외 처리(입력 오류 방지)</li>
+            </ul>
+            <pre><code class="language-python">import random
+secret = random.randint(1, 100)
+
+while True:
+    guess = int(input("1~100 사이 숫자 입력: "))
+    if guess < secret: print("더 크게!")
+    elif guess > secret: print("더 작게!")
+    else:
+        print("정답입니다!"); break</code></pre>
+        </div>
+
+        <div class="project-card">
+            <span class="project-tag">LEVEL 1: BASIC</span>
+            <h3>심플 함수 계산기</h3>
+            <ul class="feature-list">
+                <li>함수 정의를 통한 로직 분리</li>
+                <li>연산자별 조건 처리</li>
+                <li>사용자 입력 데이터의 연산 수행</li>
+            </ul>
+            <pre><code class="language-python">def calculate(x, op, y):
+    if op == '+': return x + y
+    elif op == '-': return x - y
+    elif op == '*': return x * y
+    elif op == '/': return x / y if y != 0 else "Error"
+
+# 실행 로직 생략</code></pre>
+        </div>
+
+        <div class="project-card">
+            <span class="project-tag">LEVEL 2: EXTERNAL LIB</span>
+            <h3>유튜브 영상 다운로더</h3>
+            <div class="setup-guide">필수 설치: <code>pip install pytube</code></div>
+            <ul class="feature-list">
+                <li>외부 라이브러리(pytube) 활용</li>
+                <li>영상 URL 분석 및 최고 화질 추출</li>
+                <li>로컬 PC로 파일 스트리밍 다운로드</li>
+            </ul>
+            <pre><code class="language-python">from pytube import YouTube
+
+url = input("유튜브 URL: ")
+yt = YouTube(url)
+stream = yt.streams.get_highest_resolution()
+stream.download()
+print(f"[{yt.title}] 다운로드 완료!")</code></pre>
+        </div>
+
+        <div class="project-card">
+            <span class="project-tag">LEVEL 3: ADVANCED</span>
+            <h3>이미지 텍스트 추출 (OCR)</h3>
+            <div class="setup-guide">설치: <code>pip install pytesseract pillow</code></div>
+            <ul class="feature-list">
+                <li>Pillow를 이용한 이미지 로딩</li>
+                <li>Tesseract 엔진 기반 문자 인식</li>
+                <li>비정형 데이터(이미지)의 텍스트화</li>
+            </ul>
+            <pre><code class="language-python">from PIL import Image
+import pytesseract
+
+img = Image.open('sample_text.png')
+text = pytesseract.image_to_string(img, lang='kor')
+print("인식 결과:", text)</code></pre>
+        </div>
+    </div>
+
+    <div class="completion-zone">
+        <h2>🎉 파이썬 마스터 과정 수료</h2>
+        <p>1차시부터 18차시까지 모든 과정을 마쳤습니다.<br>이제 여러분은 파이썬으로 무엇이든 만들 수 있는 준비가 되었습니다!</p>
+        <button class="btn-cert" onclick="confettiEffect()">과정 수료하기</button>
+    </div>
+</div>
+
+<script>
+    function confettiEffect() {
+        alert('축하합니다! 파이썬 기초 및 실전 활용 과정을 모두 이수하셨습니다. 이제 나만의 프로젝트를 시작해보세요!');
+    }
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+
+</body>
+</html>

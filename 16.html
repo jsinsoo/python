@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>16차시: Numpy 수치 계산 마스터</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <style>
+        :root { --numpy-blue: #013220; --numpy-accent: #4d77cf; --bg-light: #f1f3f9; --math-color: #2c3e50; }
+        body { font-family: 'Pretendard', sans-serif; background-color: #e0e4eb; padding: 40px 20px; line-height: 1.8; color: var(--math-color); }
+        .container { max-width: 1000px; margin: 0 auto; background: white; padding: 50px; border-radius: 12px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
+        
+        header { text-align: center; margin-bottom: 50px; border-bottom: 4px solid var(--numpy-accent); padding-bottom: 30px; }
+        h1 { font-size: 2.4rem; color: var(--numpy-accent); margin-bottom: 10px; }
+        .install-badge { background: #2d3436; color: #00cec9; padding: 8px 20px; border-radius: 5px; font-family: 'Courier New', monospace; font-weight: bold; }
+
+        .topic-card { background: var(--bg-light); border-radius: 15px; padding: 35px; margin-bottom: 45px; border-left: 8px solid var(--numpy-accent); }
+        .topic-header { display: flex; align-items: center; margin-bottom: 20px; }
+        .topic-number { background: var(--numpy-accent); color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 15px; font-weight: bold; }
+
+        h3 { color: #0984e3; margin: 0; font-size: 1.5rem; }
+        
+        .matrix-visual { display: flex; justify-content: center; gap: 20px; margin: 25px 0; font-family: monospace; }
+        .matrix-box { border: 2px solid #636e72; padding: 10px; position: relative; display: grid; grid-template-columns: repeat(3, 40px); gap: 5px; text-align: center; }
+        .matrix-box::before, .matrix-box::after { content: ''; position: absolute; width: 10px; height: 100%; border: 2px solid #636e72; top: -2px; }
+        .matrix-box::before { left: -10px; border-right: none; }
+        .matrix-box::after { right: -10px; border-left: none; }
+
+        .important-note { background: #fffbe6; border: 1px dashed #ffe58f; padding: 20px; margin: 20px 0; border-radius: 8px; font-size: 0.95rem; }
+        
+        pre { border-radius: 10px !important; font-size: 0.9rem !important; margin: 25px 0 !important; }
+        code { font-family: 'Fira Code', monospace !important; }
+
+        .highlight { color: #d63031; font-weight: bold; }
+        
+        .btn-wrapper { text-align: center; margin-top: 60px; }
+        .btn-numpy { background: var(--numpy-accent); color: white; padding: 18px 60px; border: none; border-radius: 8px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 15px rgba(77, 119, 207, 0.4); }
+        .btn-numpy:hover { background: #34495e; transform: translateY(-3px); }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>16차시: Numpy 수치 계산 마스터</h1>
+        <p>대규모 다차원 배열을 빠르고 효율적으로 처리하는 <strong>데이터 분석의 기초 엔진</strong></p>
+        <div class="install-badge">pip install numpy</div>
+    </header>
+
+    <div class="topic-card">
+        <div class="topic-header">
+            <div class="topic-number">1</div>
+            <h3>Numpy 배열(ndarray) 기초</h3>
+        </div>
+        <p>Numpy의 핵심은 동일한 자료형을 담는 <span class="highlight">ndarray</span> 객체입니다. 파이썬 리스트보다 훨씬 적은 메모리를 사용하며 연산 속도가 압도적입니다.</p>
+
+        <div class="matrix-visual">
+            <div class="matrix-box">
+                <div>1</div><div>2</div><div>3</div>
+                <div>4</div><div>5</div><div>6</div>
+            </div>
+        </div>
+        
+
+        <pre><code class="language-python">import numpy as np
+
+# 2차원 배열 생성 (행렬)
+matrix = np.array([[1, 2, 3], [4, 5, 6]])
+
+print(f"차원(ndim): {matrix.ndim}")
+print(f"형태(shape): {matrix.shape}") # (2, 3)
+print(f"데이터 타입: {matrix.dtype}")</code></pre>
+    </div>
+
+    <div class="topic-card">
+        <div class="topic-header">
+            <div class="topic-number">2</div>
+            <h3>브로드캐스팅 (Broadcasting)</h3>
+        </div>
+        <p>크기가 다른 배열 간의 연산을 가능하게 하는 강력한 기능입니다. 작은 배열이 큰 배열의 형태에 맞춰 <span class="highlight">확장</span>되어 연산됩니다.</p>
+
+        
+
+        <pre><code class="language-python"># (2, 3) 배열 + 스칼라(10)
+arr = np.array([[1, 2, 3], [4, 5, 6]])
+result = arr + 10 
+
+# 모든 요소에 10이 더해짐
+# [[11, 12, 13], [14, 15, 16]]</code></pre>
+
+        <div class="important-note">
+            <strong>💡 연산 성능:</strong> Numpy 연산은 내부적으로 C로 구현된 루프를 사용하기 때문에, 일반적인 파이썬 for문보다 수백 배 이상 빠릅니다.
+        </div>
+    </div>
+
+    <div class="topic-card">
+        <div class="topic-header">
+            <div class="topic-number">3</div>
+            <h3>고급 연산 기법</h3>
+        </div>
+        <p>조건에 따른 값 할당(<span class="highlight">np.where</span>)과 수학적 행렬 곱셈(<span class="highlight">@</span>)을 다룹니다.</p>
+
+        <pre><code class="language-python"># 1. 조건부 값 할당 (if-else의 벡터화)
+scores = np.array([55, 92, 78, 40])
+result = np.where(scores >= 60, "Pass", "Fail")
+print(result) # ['Fail' 'Pass' 'Pass' 'Fail']
+
+# 2. 행렬 곱셈 (Dot Product)
+mat1 = np.array([[1, 2], [3, 4]])
+mat2 = np.array([[5, 6], [7, 8]])
+dot_res = mat1 @ mat2 # Python 3.5 이상 권장 방식</code></pre>
+    </div>
+
+    <div class="btn-wrapper">
+        <button class="btn-numpy" onclick="alert('Numpy 기초 과정을 완료했습니다! 이제 머신러닝의 세계로 나아갈 준비가 되었습니다.')">학습 완료</button>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+
+</body>
+</html>

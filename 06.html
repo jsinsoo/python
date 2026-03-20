@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>6차시: 파이썬 조건문 응용 학습</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <style>
+        :root { --primary-color: #34495e; --point-color: #e67e22; --bg-light: #fdfdfd; }
+        body { font-family: 'Pretendard', sans-serif; background-color: #f1f2f6; padding: 40px 20px; line-height: 1.8; color: #2f3542; }
+        .container { max-width: 900px; margin: 0 auto; background: white; padding: 40px; border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.05); }
+        
+        header { text-align: center; margin-bottom: 50px; padding-bottom: 30px; border-bottom: 2px solid #eee; }
+        h1 { font-size: 2.3rem; color: var(--primary-color); margin-bottom: 10px; }
+        .subtitle { color: #747d8c; font-size: 1.1rem; }
+
+        .section-title { font-size: 1.5rem; color: #fff; background: var(--primary-color); padding: 10px 25px; border-radius: 50px; display: inline-block; margin: 40px 0 20px; }
+        
+        .example-card { background: var(--bg-light); border: 1px solid #edeff2; padding: 30px; border-radius: 12px; margin-bottom: 35px; position: relative; }
+        .example-card h3 { margin-top: 0; color: var(--point-color); font-size: 1.3rem; display: flex; align-items: center; }
+        .example-card h3::before { content: '🚀'; margin-right: 10px; }
+
+        .core-concept { background: #fff3e0; border-left: 4px solid var(--point-color); padding: 15px; margin-top: 15px; border-radius: 0 8px 8px 0; font-size: 0.95rem; }
+        .core-concept strong { color: #d35400; }
+
+        pre { border-radius: 10px !important; margin: 20px 0 !important; font-size: 0.95rem !important; }
+        code { font-family: 'Fira Code', 'Consolas', monospace !important; }
+
+        footer { text-align: center; margin-top: 50px; color: #a4b0be; font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>6차시: 조건문 응용 마스터</h1>
+        <p class="subtitle">실생활 문제를 해결하는 10가지 파이썬 조건문 시나리오</p>
+    </header>
+
+    <div class="section-title">기초 응용 예제 (5개)</div>
+
+    <div class="example-card">
+        <h3>1. 놀이공원 입장료 계산기</h3>
+        <pre><code class="language-python">age = int(input("나이를 입력하세요: "))
+price = 0
+
+if age < 8 or age >= 65:
+    price = 0
+elif age < 14:
+    price = 5000
+elif age < 20:
+    price = 8000
+else:
+    price = 10000
+
+print(f"입장료는 {price}원입니다.")</code></pre>
+        <div class="core-concept">
+            <strong>핵심:</strong> <code>or</code> 논리 연산자와 여러 개의 <code>elif</code>를 조합하여 복잡한 연령대별 요금 체계를 간단히 구현합니다.
+        </div>
+    </div>
+
+    <div class="example-card">
+        <h3>2. 로그인 프로그램</h3>
+        <pre><code class="language-python">saved_id = "python"
+saved_pw = "1234"
+
+user_id = input("아이디: ")
+user_pw = input("비밀번호: ")
+
+if user_id == saved_id and user_pw == saved_pw:
+    print("로그인 성공!")
+elif user_id == saved_id:
+    print("비밀번호가 틀렸습니다.")
+else:
+    print("존재하지 않는 아이디입니다.")</code></pre>
+        <div class="core-concept">
+            <strong>핵심:</strong> <code>and</code> 연산자로 두 조건을 동시에 확인하고, <code>elif</code>를 통해 단계별 오류 메시지를 제공합니다.
+        </div>
+    </div>
+
+    <div class="section-title">심화 응용 예제 (5개)</div>
+
+    <div class="example-card">
+        <h3>8. 간단한 사칙연산 계산기</h3>
+        <pre><code class="language-python">num1 = float(input("첫 번째 숫자: "))
+op = input("연산자(+, -, *, /): ")
+num2 = float(input("두 번째 숫자: "))
+
+if op == '+':
+    result = num1 + num2
+elif op == '/':
+    if num2 == 0:
+        print("오류: 0으로 나눌 수 없습니다.")
+    else:
+        result = num1 / num2
+# ... (생략)</code></pre>
+        <div class="core-concept">
+            <strong>핵심:</strong> <strong>중첩 조건문</strong>을 활용하여 나눗셈 시 분모가 0이 되는 예외 상황을 안전하게 처리합니다.
+        </div>
+    </div>
+
+    <div class="example-card">
+        <h3>9. 리스트 내 요소 존재 여부</h3>
+        <pre><code class="language-python">fruits = ["사과", "바나나", "딸기"]
+my_fruit = input("좋아하는 과일은? ")
+
+if my_fruit in fruits:
+    print(f"와! 저도 {my_fruit}를 좋아해요.")
+else:
+    print("아쉽네요, 목록에 없는 과일입니다.")</code></pre>
+        <div class="core-concept">
+            <strong>핵심:</strong> <code>in</code> 멤버십 연산자를 활용하여 데이터 집합에 특정 값이 포함되어 있는지 간결하게 판단합니다.
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 영재교육 | 6차시 조건문 응용</p>
+    </footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+
+</body>
+</html>

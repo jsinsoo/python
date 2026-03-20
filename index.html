@@ -2,35 +2,193 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>Smart Files Link List</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 마스터 코스: 통합 대시보드</title>
     <style>
-        body { font-family: sans-serif; padding: 20px; line-height: 1.6; }
-        .link-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
-        a { text-decoration: none; color: #007bff; border: 1px solid #ddd; padding: 10px; text-align: center; border-radius: 5px; }
-        a:hover { background-color: #f0f0f0; }
+        :root {
+            --primary: #4834d4;
+            --secondary: #686de0;
+            --accent: #eb4d4b;
+            --bg: #f0f2f5;
+            --text: #2f3542;
+        }
+
+        body {
+            font-family: 'Pretendard', -apple-system, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        header p {
+            color: #57606f;
+            font-size: 1.1rem;
+        }
+
+        /* 그리드 레이아웃 */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+        }
+
+        /* 학습 카드 스타일 */
+        .course-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #e1e4e8;
+        }
+
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--bg);
+            padding-bottom: 15px;
+        }
+
+        .chapter-num {
+            background: var(--primary);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .chapter-title {
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: var(--text);
+        }
+
+        /* 버튼 그룹 */
+        .button-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px;
+            border-radius: 8px;
+            text-decoration: none;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: 0.3s;
+        }
+
+        .btn-study {
+            background-color: #f1f2f6;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+
+        .btn-study:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-quiz {
+            background-color: var(--accent);
+            color: white;
+            border: 1px solid var(--accent);
+        }
+
+        .btn-quiz:hover {
+            background-color: #c0392b;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            color: #a4b0be;
+            font-size: 0.9rem;
+        }
     </style>
 </head>
 <body>
 
-    <h2>Smart 파일 목록 (01-18)</h2>
-    <div class="link-container" id="linkBox">
+<div class="container">
+    <header>
+        <h1>🐍 Python Basic to Advanced</h1>
+        <p>기초 학습부터 실무 프로젝트, 진단평가까지 한 번에 완료하세요.</p>
+    </header>
+
+    <div class="grid-container" id="cardBox">
         </div>
 
-    <script>
-        const container = document.getElementById('linkBox');
-        for (let i = 1; i <= 18; i++) {
-            // 숫자를 두 자리 문자열로 변환 (예: 1 -> 01)
-            let num = i.toString().padStart(2, '0');
-            let fileName = `smart${num}.html`;
-            
-            let anchor = document.createElement('a');
-            anchor.href = fileName;
-            anchor.target = "_blank"; // 새 탭에서 열기
-            anchor.innerText = fileName;
-            
-            container.appendChild(anchor);
-        }
-    </script>
+    <footer>
+        &copy; 2026 파이썬 마스터 코스 교육 프로그램(전북과학고등학교) | All Rights Reserved.
+    </footer>
+</div>
+
+<script>
+    const titles = [
+        "파이썬 설치 및 환경설정", "변수와 자료형", "입출력 함수", "다양한 연산자", 
+        "조건문의 기초", "조건문 응용 실습", "for 반복문 마스터", "while 반복문과 제어", 
+        "리스트 자료구조", "딕셔너리와 집합", "함수의 정의와 활용", "문자열 처리 기법", 
+        "파일 읽고 쓰기", "객체지향(OOP) 기초", "Pandas 데이터 분석", 
+        "Numpy 수치 계산", "Matplotlib 시각화", "실전 프로젝트 예제"
+    ];
+
+    const container = document.getElementById('cardBox');
+
+    for (let i = 1; i <= 18; i++) {
+        // 숫자 포맷팅 (1 -> 01, 2 -> 02)
+        let num = i.toString().padStart(2, '0');
+        
+        // 파일명 정의
+        let studyFile = `${num}.html`;
+        let quizFile = `smart${num}.html`;
+        
+        // 카드 엘리먼트 생성
+        let card = document.createElement('div');
+        card.className = 'course-card';
+        
+        card.innerHTML = `
+            <div class="card-header">
+                <span class="chapter-num">STEP ${num}</span>
+                <span class="chapter-title">${titles[i-1]}</span>
+            </div>
+            <div class="button-group">
+                <a href="${studyFile}" class="btn btn-study" target="_blank">📖 기초 학습</a>
+                <a href="${quizFile}" class="btn btn-quiz" target="_blank">✍️ 진단 평가</a>
+            </div>
+        `;
+        
+        container.appendChild(card);
+    }
+</script>
 
 </body>
 </html>

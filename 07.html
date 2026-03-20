@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>7차시: 파이썬 for 반복문 학습 패키지</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <style>
+        :root { --primary-color: #6c5ce7; --secondary-color: #a29bfe; --bg-color: #f9f9fb; }
+        body { font-family: 'Pretendard', sans-serif; background-color: #dfe6e9; padding: 40px 20px; line-height: 1.8; color: #2d3436; }
+        .container { max-width: 850px; margin: 0 auto; background: white; padding: 40px; border-radius: 20px; box-shadow: 0 12px 40px rgba(0,0,0,0.1); }
+        
+        header { text-align: center; margin-bottom: 50px; border-bottom: 3px solid var(--primary-color); padding-bottom: 20px; }
+        h1 { font-size: 2.2rem; color: var(--primary-color); margin-bottom: 10px; }
+        
+        .chapter-box { background: var(--bg-color); border-radius: 12px; padding: 25px; margin-bottom: 40px; border: 1px solid #e1e4e8; }
+        .chapter-title { display: inline-block; background: var(--primary-color); color: white; padding: 5px 20px; border-radius: 50px; font-weight: bold; margin-bottom: 20px; }
+
+        h3 { color: #4834d4; margin-top: 25px; display: flex; align-items: center; }
+        h3::before { content: '🔄'; margin-right: 10px; }
+
+        .concept-note { background: #f0f2f5; border-left: 5px solid var(--secondary-color); padding: 15px; margin: 15px 0; font-size: 0.95rem; border-radius: 0 8px 8px 0; }
+        
+        pre { border-radius: 12px !important; font-size: 0.95rem !important; margin: 20px 0 !important; }
+        code { font-family: 'Fira Code', 'Consolas', monospace !important; }
+
+        .point { color: #d63031; font-weight: bold; }
+        
+        .action-area { text-align: center; margin-top: 50px; }
+        .btn-quiz { background: var(--primary-color); color: white; padding: 15px 40px; border: none; border-radius: 50px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .btn-quiz:hover { background: #4834d4; transform: scale(1.05); }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>7차시: for 반복문 마스터</h1>
+        <p>동일한 작업을 효율적으로 수행하는 <strong>컴퓨터의 핵심 능력</strong>을 배웁니다.</p>
+    </header>
+
+    <div class="chapter-box">
+        <div class="chapter-title">1. 기초 반복문 (range & 시퀀스)</div>
+        <p>정해진 횟수만큼 실행하거나, 데이터 꾸러미(리스트, 문자열)를 하나씩 꺼내어 처리합니다.</p>
+
+        
+
+[Image of for loop flow diagram in python]
+
+
+        <h3>1.1 range() 함수 활용</h3>
+        <div class="concept-note"><code>range(5)</code>는 0부터 4까지 총 5번의 숫자를 생성합니다.</div>
+        <pre><code class="language-python"># 0부터 4까지 반복
+for i in range(5):
+    print(f"{i+1}번째 안녕, 파이썬!")</code></pre>
+
+        <h3>1.2 리스트 요소 순회</h3>
+        <pre><code class="language-python">fruits = ["사과", "바나나", "딸기", "오렌지"]
+for fruit in fruits:
+    print(f"내가 좋아하는 과일: {fruit}")</code></pre>
+    </div>
+
+    <div class="chapter-box">
+        <div class="chapter-title">2. 응용 반복문 (데이터 가공)</div>
+        <p>반복문 내부에 조건문을 넣어 특정 데이터를 필터링하거나 누적 계산을 수행합니다.</p>
+
+        <h3>2.1 조건문과 결합 (짝수만 처리)</h3>
+        <div class="concept-note">리스트에서 특정 조건(<span class="point">% 2 == 0</span>)을 만족하는 요소만 골라낼 수 있습니다.</div>
+        <pre><code class="language-python">original = [1, 2, 3, 4, 5, 6, 7, 8]
+doubled_evens = []
+for n in original:
+    if n % 2 == 0:
+        doubled_evens.append(n * 2)
+print(f"짝수를 2배한 결과: {doubled_evens}")</code></pre>
+    </div>
+
+    <div class="chapter-box">
+        <div class="chapter-title">3. 심화 기법 (효율적인 코드)</div>
+        <p>파이썬스러운(Pythonic) 코드 작성법과 반복문 제어 기법입니다.</p>
+
+        <h3>3.1 리스트 컴프리헨션</h3>
+        <div class="concept-note">여러 줄의 코드를 한 줄로 압축하여 성능과 가독성을 모두 잡습니다.</div>
+        <pre><code class="language-python"># [표현식 for 항목 in 반복가능객체 if 조건]
+original = [1, 2, 3, 4, 5, 6, 7, 8]
+result = [n * 2 for n in original if n % 2 == 0]
+print(f"한 줄 코드 결과: {result}")</code></pre>
+
+        <h3>3.2 break를 이용한 조기 종료</h3>
+        <pre><code class="language-python">numbers = [3, 9, 2, 15, 7, 8]
+# 처음으로 발견되는 5보다 큰 짝수를 찾으면 즉시 멈춤
+for num in numbers:
+    if num > 5 and num % 2 == 0:
+        print(f"찾았다: {num}")
+        break</code></pre>
+    </div>
+
+    <div class="action-area">
+        <button class="btn-quiz">7차시 퀴즈 도전하기</button>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+
+</body>
+</html>

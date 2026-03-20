@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>17차시: Matplotlib 데이터 시각화 마스터</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <style>
+        :root { --plt-blue: #1f77b4; --plt-orange: #ff7f0e; --plt-green: #2ca02c; --bg-gray: #f8f9fa; }
+        body { font-family: 'Pretendard', sans-serif; background-color: #f0f2f5; padding: 40px 20px; line-height: 1.8; color: #333; }
+        .container { max-width: 1000px; margin: 0 auto; background: white; padding: 50px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
+        
+        header { text-align: center; margin-bottom: 60px; border-bottom: 4px solid var(--plt-blue); padding-bottom: 30px; }
+        h1 { font-size: 2.5rem; color: var(--plt-blue); margin-bottom: 10px; }
+        .install-info { display: inline-block; background: #2d3436; color: #fab1a0; padding: 10px 25px; border-radius: 8px; font-family: 'Fira Code', monospace; font-weight: bold; margin-top: 15px; }
+
+        .chart-section { background: var(--bg-gray); border-radius: 15px; padding: 35px; margin-bottom: 50px; border: 1px solid #e1e4e8; }
+        .chart-tag { display: inline-block; background: var(--plt-green); color: white; padding: 5px 15px; border-radius: 20px; font-size: 0.85rem; font-weight: bold; margin-bottom: 20px; }
+
+        h3 { color: #2c3e50; margin-top: 0; display: flex; align-items: center; font-size: 1.5rem; }
+        h3::before { content: '📈'; margin-right: 12px; }
+
+        .viz-concept { background: white; border: 1px solid #ddd; border-radius: 12px; padding: 20px; margin: 25px 0; text-align: center; }
+        .viz-desc { font-size: 0.95rem; color: #666; margin-top: 10px; }
+
+        .code-note { background: #e3f2fd; border-left: 5px solid var(--plt-blue); padding: 15px; margin: 20px 0; border-radius: 0 8px 8px 0; }
+        
+        pre { border-radius: 10px !important; font-size: 0.9rem !important; margin: 25px 0 !important; }
+        code { font-family: 'Fira Code', monospace !important; }
+
+        .highlight { color: #d63031; font-weight: bold; }
+        
+        .footer { text-align: center; margin-top: 60px; }
+        .btn-draw { background: var(--plt-blue); color: white; padding: 18px 60px; border: none; border-radius: 10px; font-size: 1.2rem; font-weight: bold; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 15px rgba(31, 119, 180, 0.3); }
+        .btn-draw:hover { background: #155a8a; transform: translateY(-3px); }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>17차시: Matplotlib 데이터 시각화</h1>
+        <p>"백문이 불여일견", 데이터를 그림으로 표현하여 <strong>인사이트를 발견하는 기술</strong></p>
+        <div class="install-info">pip install matplotlib</div>
+    </header>
+
+    <div class="chart-section">
+        <div class="chart-tag">BASIC PLOT</div>
+        <h3>기본 그래프와 환경 설정</h3>
+        <p>가장 기본이 되는 <span class="highlight">선 그래프(Line Plot)</span>와 한글 폰트 설정 방법을 학습합니다.</p>
+
+        <div class="viz-concept">
+            
+            <div class="viz-desc">그래프의 주요 구성 요소: 제목, 축 레이블, 그리드</div>
+        </div>
+
+        <div class="code-note">
+            <strong>⚠️ 한글 깨짐 방지:</strong> Matplotlib은 기본적으로 한글을 지원하지 않으므로 <code>rcParams</code>를 통해 나눔고딕이나 맑은 고딕 등을 설정해야 합니다.
+        </div>
+
+        <pre><code class="language-python">import matplotlib.pyplot as plt
+
+# 데이터 준비
+x = [1, 2, 3, 4, 5]
+y = [10, 25, 18, 32, 28]
+
+# 그래프 설정
+plt.plot(x, y, marker='o', linestyle='--', color='b', label='성적 추이')
+plt.title('월별 성적 변화', fontsize=15)
+plt.xlabel('월')
+plt.ylabel('점수')
+plt.legend() # 범례 표시
+plt.grid(True)
+plt.show()</code></pre>
+    </div>
+
+    <div class="chart-section">
+        <div class="chart-tag">VISUAL GALLERY</div>
+        <h3>데이터 특성에 따른 그래프 선택</h3>
+        <p>비교에는 <span class="highlight">막대 그래프</span>, 분포에는 <span class="highlight">히스토그램</span>, 관계에는 <span class="highlight">산점도</span>를 사용합니다.</p>
+
+        
+
+        <pre><code class="language-python"># 1. 막대 그래프 (Bar Chart) - 범주별 비교
+categories = ['A', 'B', 'C']
+values = [100, 150, 120]
+plt.bar(categories, values, color=['red', 'green', 'blue'])
+
+# 2. 산점도 (Scatter Plot) - 변수 간 상관관계
+import numpy as np
+x = np.random.rand(50)
+y = np.random.rand(50)
+plt.scatter(x, y, alpha=0.5, s=100) # s는 점의 크기</code></pre>
+    </div>
+
+    <div class="chart-section">
+        <div class="chart-tag">ADVANCED VIZ</div>
+        <h3>주석 추가와 3D 시각화</h3>
+        <p>특정 지점을 강조하는 <span class="highlight">Annotation</span>과 입체적인 <span class="highlight">3D Plot</span>을 다룹니다.</p>
+
+        <pre><code class="language-python"># 주석(Annotation) 추가하기
+plt.plot([1, 2, 3], [10, 20, 30])
+plt.annotate('중요 지점', xy=(2, 20), xytext=(2.5, 25),
+             arrowprops=dict(facecolor='black', shrink=0.05))
+
+# 서브플롯 (여러 그래프 동시에 그리기)
+fig, axes = plt.subplots(1, 2, figsize=(10, 4))
+axes[0].plot([1,2,3], [1,4,9])
+axes[1].bar(['X', 'Y'], [10, 20])</code></pre>
+    </div>
+
+    <div class="footer">
+        <button class="btn-draw" onclick="alert('데이터 시각화 학습을 완료했습니다! 이제 데이터를 멋진 그래프로 그려보세요.')">학습 완료</button>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+
+</body>
+</html>

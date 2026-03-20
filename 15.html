@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>15차시: Pandas 데이터 분석 마스터</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <style>
+        :root { --pandas-color: #150458; --secondary-color: #30ba8f; --bg-light: #f8f9fa; --border-color: #dee2e6; }
+        body { font-family: 'Pretendard', -apple-system, sans-serif; background-color: #e9ecef; padding: 40px 20px; line-height: 1.7; color: #343a40; }
+        .container { max-width: 1000px; margin: 0 auto; background: white; padding: 50px; border-radius: 15px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        
+        header { text-align: center; margin-bottom: 60px; border-bottom: 3px solid var(--pandas-color); padding-bottom: 30px; }
+        h1 { font-size: 2.5rem; color: var(--pandas-color); margin-bottom: 15px; }
+        .install-box { background: #343a40; color: #f8f9fa; padding: 15px; border-radius: 8px; font-family: monospace; display: inline-block; margin-top: 10px; }
+
+        .content-section { margin-bottom: 50px; padding: 30px; border: 1px solid var(--border-color); border-radius: 12px; transition: 0.3s; }
+        .content-section:hover { border-color: var(--secondary-color); box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .section-tag { background: var(--secondary-color); color: white; padding: 4px 15px; border-radius: 4px; font-weight: 600; font-size: 0.85rem; text-transform: uppercase; margin-bottom: 15px; display: inline-block; }
+
+        h3 { color: var(--pandas-color); margin-top: 0; display: flex; align-items: center; }
+        h3::before { content: '📊'; margin-right: 12px; }
+
+        .table-visual { width: 100%; margin: 20px 0; border-collapse: collapse; background: var(--bg-light); border-radius: 8px; overflow: hidden; }
+        .table-visual th { background: #ced4da; padding: 10px; font-size: 0.9rem; }
+        .table-visual td { border: 1px solid #dee2e6; padding: 10px; text-align: center; font-family: monospace; }
+
+        .tip-banner { background: #fff4e6; border-left: 5px solid #fd7e14; padding: 20px; margin: 25px 0; border-radius: 0 8px 8px 0; font-size: 0.95rem; }
+        
+        pre { border-radius: 10px !important; font-size: 0.9rem !important; margin: 25px 0 !important; }
+        code { font-family: 'Fira Code', monospace !important; }
+
+        .highlight { color: #e83e8c; font-weight: bold; }
+        
+        .footer { text-align: center; margin-top: 70px; }
+        .btn-analyze { background: var(--pandas-color); color: white; padding: 20px 80px; border: none; border-radius: 50px; font-size: 1.2rem; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .btn-analyze:hover { background: #0a0230; transform: scale(1.05); }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>15차시: Pandas 데이터 분석 마스터</h1>
+        <p>파이썬으로 엑셀처럼 데이터를 자유자재로 다루는 <strong>데이터 과학의 필수 도구</strong></p>
+        <div class="install-box">pip install pandas</div>
+    </header>
+
+    <div class="content-section">
+        <div class="section-tag">Basics</div>
+        <h3>데이터 구조의 이해</h3>
+        <p>Pandas는 1차원 배열 형태인 <span class="highlight">Series</span>와 2차원 표 형태인 <span class="highlight">DataFrame</span>을 사용합니다.</p>
+
+        
+
+        <table class="table-visual">
+            <thead>
+                <tr>
+                    <th>Index</th>
+                    <th>Column 1 (Series)</th>
+                    <th>Column 2</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>0</td><td>Data A</td><td>Value 1</td></tr>
+                <tr><td>1</td><td>Data B</td><td>Value 2</td></tr>
+            </tbody>
+        </table>
+
+        <pre><code class="language-python">import pandas as pd
+
+# DataFrame 생성 (딕셔너리 활용)
+data = {
+    '이름': ['홍길동', '윤봉길', '안중근'],
+    '점수': [95, 88, 92]
+}
+df = pd.DataFrame(data)
+print(df.head(2)) # 상위 2개 행 확인</code></pre>
+    </div>
+
+    <div class="content-section">
+        <div class="section-tag">Intermediate</div>
+        <h3>데이터 필터링 및 그룹화</h3>
+        <p>조건에 맞는 데이터를 추출하거나 특정 기준(Group)으로 통계량을 계산합니다.</p>
+
+        <pre><code class="language-python"># 1. 조건 필터링: 점수가 90점 이상인 사람만
+high_scorers = df[df['점수'] >= 90]
+
+# 2. 그룹화: 도시별 평균 온도 계산
+df_city = pd.DataFrame({
+    '도시': ['서울', '부산', '서울', '부산'],
+    '온도': [25, 28, 26, 29]
+})
+avg_temp = df_city.groupby('도시')['온도'].mean()
+print(avg_temp)</code></pre>
+
+        <div class="tip-banner">
+            <strong>💡 Pivot Table 활용:</strong> 엑셀의 피벗 테이블처럼 데이터를 재구조화하여 다차원 분석을 수행할 수 있습니다.
+        </div>
+    </div>
+
+    <div class="content-section">
+        <div class="section-tag">Advanced</div>
+        <h3>함수 적용과 데이터 가공</h3>
+        <p><span class="highlight">.apply()</span>와 <span class="highlight">lambda</span>를 사용하여 복잡한 계산 로직을 모든 행에 일괄 적용합니다.</p>
+
+        <pre><code class="language-python"># 새로운 열 추가: 점수에 따른 등급 부여
+def get_grade(score):
+    if score >= 90: return 'A'
+    else: return 'B'
+
+df['등급'] = df['점수'].apply(get_grade)
+
+# 람다(lambda) 함수로 간결하게 처리
+df['평균대비'] = df['점수'].apply(lambda x: x - df['점수'].mean())
+print(df)</code></pre>
+    </div>
+
+    <div class="footer">
+        <button class="btn-analyze" onclick="alert('Pandas 데이터 분석 기초 과정을 성공적으로 마쳤습니다!')">학습 완료 및 데이터 분석 시작</button>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+
+</body>
+</html>

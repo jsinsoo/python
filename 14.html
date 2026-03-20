@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>14차시: 파이썬 객체지향 프로그래밍(OOP) 마스터</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <style>
+        :root { --primary-color: #273c75; --secondary-color: #192a56; --bg-color: #f5f6fa; --accent-color: #44bd32; }
+        body { font-family: 'Pretendard', sans-serif; background-color: #dcdde1; padding: 40px 20px; line-height: 1.8; color: #2f3640; }
+        .container { max-width: 950px; margin: 0 auto; background: white; padding: 45px; border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.15); }
+        
+        header { text-align: center; margin-bottom: 50px; border-bottom: 5px solid var(--primary-color); padding-bottom: 25px; }
+        h1 { font-size: 2.3rem; color: var(--primary-color); margin-bottom: 10px; }
+        
+        .concept-card { background: var(--bg-color); border-radius: 15px; padding: 35px; margin-bottom: 40px; border: 1px solid #dcdde1; position: relative; }
+        .concept-label { position: absolute; top: -15px; left: 30px; background: var(--primary-color); color: white; padding: 5px 25px; border-radius: 50px; font-weight: bold; font-size: 0.9rem; }
+
+        h3 { color: var(--secondary-color); margin-top: 0; display: flex; align-items: center; }
+        h3::before { content: '🏗️'; margin-right: 12px; }
+
+        .blueprint-box { background: #fff; border: 2px solid #7f8fa6; border-radius: 10px; padding: 20px; margin: 20px 0; display: flex; align-items: center; justify-content: space-around; }
+        .item { text-align: center; flex: 1; }
+        .arrow { font-size: 2rem; color: var(--accent-color); flex: 0.5; text-align: center; }
+
+        .pro-tip { background: #e1f5fe; border-left: 6px solid #03a9f4; padding: 18px; margin: 20px 0; border-radius: 0 10px 10px 0; font-size: 0.95rem; }
+        
+        pre { border-radius: 12px !important; font-size: 0.95rem !important; margin: 25px 0 !important; }
+        code { font-family: 'Fira Code', 'Consolas', monospace !important; }
+
+        .keyword { color: #c23616; font-weight: bold; }
+        
+        .footer { text-align: center; margin-top: 60px; }
+        .btn-finish { background: var(--primary-color); color: white; padding: 18px 70px; border: none; border-radius: 12px; font-size: 1.2rem; font-weight: bold; cursor: pointer; transition: 0.4s; box-shadow: 0 8px 20px rgba(39, 60, 117, 0.3); }
+        .btn-finish:hover { background: var(--secondary-color); transform: translateY(-5px); }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>14차시: 객체지향 프로그래밍(OOP) 마스터</h1>
+        <p>데이터와 행동을 하나로 묶어 관리하는 <strong>현대 소프트웨어 설계의 정수</strong>를 배웁니다.</p>
+    </header>
+
+    <div class="concept-card">
+        <div class="concept-label">STEP 1. 핵심 개념</div>
+        <h3>클래스(Class)와 객체(Object)</h3>
+        <p>클래스는 무언가를 만들기 위한 <span class="keyword">'설계도'</span>이고, 객체는 그 설계도로 만든 <span class="keyword">'실체'</span>입니다.</p>
+
+        
+
+        <div class="blueprint-box">
+            <div class="item"><strong>Class</strong><br><small>(설계도: 붕어빵 틀)</small></div>
+            <div class="arrow">➔</div>
+            <div class="item"><strong>Instance / Object</strong><br><small>(실체: 팥 붕어빵, 슈크림 붕어빵)</small></div>
+        </div>
+
+        <pre><code class="language-python">class Person:
+    # 생성자: 객체가 만들어질 때 초기 속성 부여
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def introduce(self):
+        print(f"안녕하세요, 저는 {self.name}이고 {self.age}살입니다.")
+
+# 객체 생성 (인스턴스화)
+p1 = Person("홍길동", 30)
+p1.introduce()</code></pre>
+    </div>
+
+    <div class="concept-card">
+        <div class="concept-label">STEP 2. 코드 재사용</div>
+        <h3>상속 (Inheritance)</h3>
+        <p>기존 클래스의 기능을 그대로 물려받아 새로운 기능을 추가하거나 기존 기능을 수정(<span class="keyword">오버라이딩</span>)할 수 있습니다.</p>
+
+        <pre><code class="language-python">class Animal:
+    def speak(self):
+        print("소리를 냅니다.")
+
+# Animal 클래스를 상속받는 Dog 클래스
+class Dog(Animal):
+    def speak(self): # 메서드 오버라이딩
+        print("멍멍!")
+
+my_dog = Dog()
+my_dog.speak() # "멍멍!" 출력</code></pre>
+
+        <div class="pro-tip">
+            <strong>💡 super() 활용:</strong> 자식 클래스에서 부모 클래스의 메서드를 호출하고 싶을 때는 <code>super().메서드이름()</code>을 사용합니다.
+        </div>
+    </div>
+
+    <div class="concept-card">
+        <div class="concept-label">STEP 3. 고급 기술</div>
+        <h3>다형성(Polymorphism)과 정보 은닉</h3>
+        <p>같은 이름의 메서드가 객체에 따라 다르게 동작하게 하거나, 중요한 데이터를 외부에서 함부로 바꾸지 못하게 보호합니다.</p>
+
+        <pre><code class="language-python">class BankAccount:
+    def __init__(self, balance):
+        self.__balance = balance # __를 붙여 프라이빗(Private) 변수로 설정
+
+    def get_balance(self): # 접근 제어 (Getter)
+        return self.__balance
+
+# 다형성 예시
+class Cat:
+    def speak(self): return "야옹~"
+
+class Sheep:
+    def speak(self): return "매에~"
+
+def make_sound(animal):
+    print(animal.speak())
+
+make_sound(Cat())   # 야옹~
+make_sound(Sheep()) # 매에~</code></pre>
+    </div>
+
+    <div class="footer">
+        <button class="btn-finish" onclick="alert('축하합니다! 14차시까지 모든 파이썬 기초 과정을 마스터하셨습니다!')">학습 완료 및 수료</button>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+
+</body>
+</html>
