@@ -3,137 +3,240 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>18차시: 파이썬 실전 프로젝트 마스터</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <title>18차시: 파이썬 프로젝트 예제 마스터하기</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
     <style>
-        :root { --pro-color: #6c5ce7; --success-color: #00b894; --bg-dark: #2d3436; --card-bg: #ffffff; }
-        body { font-family: 'Pretendard', sans-serif; background-color: #f1f2f6; padding: 40px 20px; line-height: 1.8; color: #2d3436; }
-        .container { max-width: 1100px; margin: 0 auto; }
-        
-        header { text-align: center; margin-bottom: 60px; background: var(--pro-color); color: white; padding: 60px 20px; border-radius: 20px; box-shadow: 0 10px 30px rgba(108, 92, 231, 0.3); }
-        header h1 { font-size: 2.8rem; margin-bottom: 15px; }
-        header p { font-size: 1.2rem; opacity: 0.9; }
-
-        .project-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 40px; }
-        @media (max-width: 850px) { .project-grid { grid-template-columns: 1fr; } }
-
-        .project-card { background: var(--card-bg); border-radius: 15px; padding: 30px; border: 1px solid #dfe6e9; transition: 0.3s; position: relative; overflow: hidden; }
-        .project-card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
-        .project-card::before { content: ""; position: absolute; top: 0; left: 0; width: 6px; height: 100%; background: var(--pro-color); }
-
-        .project-tag { background: #ffeaa7; color: #d63031; padding: 3px 12px; border-radius: 5px; font-size: 0.8rem; font-weight: bold; margin-bottom: 15px; display: inline-block; }
-        
-        h3 { margin-top: 0; color: var(--pro-color); font-size: 1.5rem; display: flex; align-items: center; }
-        h3::before { content: '🚀'; margin-right: 10px; }
-
-        .feature-list { margin: 15px 0; padding-left: 20px; font-size: 0.95rem; color: #636e72; }
-        
-        pre { border-radius: 10px !important; font-size: 0.85rem !important; max-height: 400px; }
-        
-        .setup-guide { background: #e1f5fe; border: 1px solid #b3e5fc; padding: 15px; border-radius: 8px; font-size: 0.9rem; margin: 15px 0; }
-        .setup-guide code { color: #d63031; font-weight: bold; }
-
-        .completion-zone { text-align: center; margin-top: 80px; padding: 40px; background: white; border-radius: 20px; border: 2px dashed var(--pro-color); }
-        .btn-cert { background: var(--success-color); color: white; padding: 20px 80px; border: none; border-radius: 50px; font-size: 1.3rem; font-weight: bold; cursor: pointer; transition: 0.3s; box-shadow: 0 5px 15px rgba(0, 184, 148, 0.4); }
-        .btn-cert:hover { background: #00947a; transform: scale(1.05); }
+        body { font-family: 'Pretendard', sans-serif; line-height: 1.7; color: #333; max-width: 900px; margin: 0 auto; padding: 20px; background-color: #f8f9fa; }
+        h1 { color: #2c3e50; border-bottom: 3px solid #3498db; padding-bottom: 10px; text-align: center; }
+        h2 { color: #e67e22; margin-top: 40px; border-left: 6px solid #e67e22; padding-left: 15px; background: #fff; padding-top: 10px; padding-bottom: 10px; }
+        h3 { color: #2980b9; margin-top: 30px; }
+        h4 { color: #2c3e50; background: #eee; padding: 5px 10px; border-radius: 4px; display: inline-block; margin-top: 15px; }
+        .intro { background-color: #ffffff; padding: 20px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-bottom: 30px; border-top: 4px solid #3498db; }
+        code { font-family: 'Consolas', monospace; }
+        .note { font-size: 0.95em; color: #666; margin-bottom: 10px; }
+        section { background: white; padding: 20px; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+        .warning { background-color: #fff3cd; border-left: 5px solid #ffecb5; padding: 15px; margin-bottom: 20px; border-radius: 4px; }
     </style>
 </head>
 <body>
 
-<div class="container">
     <header>
-        <h1>18차시: 파이썬 프로젝트 마스터</h1>
-        <p>기초 문법부터 라이브러리 활용까지, <strong>나만의 실전 프로그램</strong>을 만들어봅니다.</p>
+        <h1>18차시: 파이썬 프로젝트 예제 학습 패키지</h1>
+        <div class="intro">
+            <p>안녕하세요! 지금까지 배운 파이썬 기초 문법과 라이브러리 활용법을 총동원하여, 실제로 동작하는 프로그램을 만들어보는 프로젝트 예제 시간입니다. 간단한 스크립트부터 데이터 분석, 웹 개발의 맛보기까지 다양한 프로젝트를 통해 프로그래밍의 재미를 느껴보세요.</p>
+        </div>
     </header>
 
-    <div class="project-grid">
-        <div class="project-card">
-            <span class="project-tag">LEVEL 1: BASIC</span>
-            <h3>숫자 맞추기 게임</h3>
-            <ul class="feature-list">
-                <li>random 모듈을 활용한 난수 생성</li>
-                <li>while 루프와 조건문을 통한 반복 피드백</li>
-                <li>try-except를 이용한 예외 처리(입력 오류 방지)</li>
-            </ul>
+    <main>
+        <h2>1. 파이썬 프로젝트 예제 코드</h2>
+        
+        <section>
+            <h3>1.1. 기초 파이썬 프로젝트 예시 (5개)</h3>
+            <p class="note">기초 프로젝트는 파이썬 내장 기능만으로 만들 수 있는 간단하지만 유용한 프로그램들입니다.</p>
+
+            <h4>1. 숫자 맞추기 게임</h4>
+            <p class="note"># 컴퓨터가 생각한 숫자를 맞추는 간단한 게임입니다.</p>
             <pre><code class="language-python">import random
-secret = random.randint(1, 100)
+
+secret_number = random.randint(1, 100)
+print("1부터 100 사이의 숫자를 맞춰보세요!")
 
 while True:
-    guess = int(input("1~100 사이 숫자 입력: "))
-    if guess < secret: print("더 크게!")
-    elif guess > secret: print("더 작게!")
+    try:
+        guess = int(input("추측한 숫자: "))
+        if guess < secret_number:
+            print("더 큰 숫자입니다!")
+        elif guess > secret_number:
+            print("더 작은 숫자입니다!")
+        else:
+            print(f"정답입니다! 숫자는 {secret_number}였습니다.")
+            break
+    except ValueError:
+        print("숫자만 입력해주세요.")</code></pre>
+
+            <h4>2. 간단한 계산기</h4>
+            <p class="note"># 두 숫자와 연산자를 입력받아 결과를 출력하는 계산기입니다.</p>
+            <pre><code class="language-python">def calculate(x, operator, y):
+    if operator == '+':
+        return x + y
+    elif operator == '-':
+        return x - y
+    elif operator == '*':
+        return x * y
+    elif operator == '/':
+        if y == 0:
+            return "0으로 나눌 수 없습니다."
+        return x / y
     else:
-        print("정답입니다!"); break</code></pre>
-        </div>
+        return "잘못된 연산자입니다."
 
-        <div class="project-card">
-            <span class="project-tag">LEVEL 1: BASIC</span>
-            <h3>심플 함수 계산기</h3>
-            <ul class="feature-list">
-                <li>함수 정의를 통한 로직 분리</li>
-                <li>연산자별 조건 처리</li>
-                <li>사용자 입력 데이터의 연산 수행</li>
-            </ul>
-            <pre><code class="language-python">def calculate(x, op, y):
-    if op == '+': return x + y
-    elif op == '-': return x - y
-    elif op == '*': return x * y
-    elif op == '/': return x / y if y != 0 else "Error"
+num1 = float(input("첫 번째 숫자: "))
+op = input("연산자 (+, -, *, /): ")
+num2 = float(input("두 번째 숫자: "))
 
-# 실행 로직 생략</code></pre>
-        </div>
+result = calculate(num1, op, num2)
+print(f"결과: {result}")</code></pre>
 
-        <div class="project-card">
-            <span class="project-tag">LEVEL 2: EXTERNAL LIB</span>
-            <h3>유튜브 영상 다운로더</h3>
-            <div class="setup-guide">필수 설치: <code>pip install pytube</code></div>
-            <ul class="feature-list">
-                <li>외부 라이브러리(pytube) 활용</li>
-                <li>영상 URL 분석 및 최고 화질 추출</li>
-                <li>로컬 PC로 파일 스트리밍 다운로드</li>
-            </ul>
-            <pre><code class="language-python">from pytube import YouTube
+            <h4>3. 랜덤 비밀번호 생성기</h4>
+            <pre><code class="language-python">import random
+import string
 
-url = input("유튜브 URL: ")
-yt = YouTube(url)
-stream = yt.streams.get_highest_resolution()
-stream.download()
-print(f"[{yt.title}] 다운로드 완료!")</code></pre>
-        </div>
+def generate_password(length=12):
+    # 대소문자, 숫자, 특수문자를 포함하는 문자셋 생성
+    characters = string.ascii_letters + string.digits + string.punctuation
+    # 무작위로 문자를 선택하여 합침
+    password = "".join(random.choice(characters) for i in range(length))
+    return password
 
-        <div class="project-card">
-            <span class="project-tag">LEVEL 3: ADVANCED</span>
-            <h3>이미지 텍스트 추출 (OCR)</h3>
-            <div class="setup-guide">설치: <code>pip install pytesseract pillow</code></div>
-            <ul class="feature-list">
-                <li>Pillow를 이용한 이미지 로딩</li>
-                <li>Tesseract 엔진 기반 문자 인식</li>
-                <li>비정형 데이터(이미지)의 텍스트화</li>
-            </ul>
-            <pre><code class="language-python">from PIL import Image
-import pytesseract
+pw_length = int(input("생성할 비밀번호의 길이를 입력하세요: "))
+new_password = generate_password(pw_length)
+print(f"생성된 비밀번호: {new_password}")</code></pre>
 
-img = Image.open('sample_text.png')
-text = pytesseract.image_to_string(img, lang='kor')
-print("인식 결과:", text)</code></pre>
-        </div>
-    </div>
+            <h4>4. 텍스트 파일 단어 수 세기</h4>
+            <pre><code class="language-python"># 실행 전에 'my_text.txt' 파일을 생성해야 합니다.
+def count_words_in_file(filename):
+    try:
+        with open(filename, 'r', encoding='utf-8') as f:
+            content = f.read()
+            words = content.split()
+            return len(words)
+    except FileNotFoundError:
+        return f"'{filename}' 파일을 찾을 수 없습니다."
 
-    <div class="completion-zone">
-        <h2>🎉 파이썬 마스터 과정 수료</h2>
-        <p>1차시부터 18차시까지 모든 과정을 마쳤습니다.<br>이제 여러분은 파이썬으로 무엇이든 만들 수 있는 준비가 되었습니다!</p>
-        <button class="btn-cert" onclick="confettiEffect()">과정 수료하기</button>
-    </div>
-</div>
+# 파일 생성 예시
+with open('my_text.txt', 'w', encoding='utf-8') as f:
+    f.write("Life is too short, You need Python. 인수샘과 함께 공부해요.")
 
-<script>
-    function confettiEffect() {
-        alert('축하합니다! 파이썬 기초 및 실전 활용 과정을 모두 이수하셨습니다. 이제 나만의 프로젝트를 시작해보세요!');
-    }
-</script>
+word_count = count_words_in_file('my_text.txt')
+print(f"파일의 단어 수: {word_count}")</code></pre>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+            <h4>5. 간단한 연락처 관리</h4>
+            <pre><code class="language-python">contacts = {}
 
+def add_contact():
+    name = input("이름: ")
+    phone = input("전화번호: ")
+    contacts[name] = phone
+    print(f"'{name}'님의 연락처가 저장되었습니다.")
+
+def search_contact():
+    name = input("검색할 이름: ")
+    phone = contacts.get(name, "연락처에 없습니다.")
+    print(f"결과: {phone}")
+
+while True:
+    choice = input("\n1: 추가, 2: 검색, 3: 종료\n선택: ")
+    if choice == '1':
+        add_contact()
+    elif choice == '2':
+        search_contact()
+    elif choice == '3':
+        print("프로그램을 종료합니다.")
+        break</code></pre>
+        </section>
+
+        <section>
+            <h3>1.2. 응용 파이썬 프로젝트 예시 (5개)</h3>
+            <div class="warning">
+                <strong>설치 필요:</strong> <code>pip install requests beautifulsoup4 qrcode</code>
+            </div>
+
+            <h4>1. 환율 정보 가져오기 (API 활용)</h4>
+            <pre><code class="language-python">import requests
+
+def get_exchange_rate(base_currency='USD'):
+    try:
+        url = f"https://open.er-api.com/v6/latest/{base_currency}"
+        response = requests.get(url)
+        data = response.json()
+        
+        if data['result'] == 'success':
+            krw_rate = data['rates']['KRW']
+            print(f"기준 통화: {base_currency}")
+            print(f"현재 원/달러 환율: 1 {base_currency} = {krw_rate:.2f} KRW")
+    except Exception as e:
+        print(f"환율 정보를 가져오는 데 실패했습니다: {e}")
+
+get_exchange_rate('USD')</code></pre>
+
+            <h4>2. 웹사이트 제목 크롤링</h4>
+            <pre><code class="language-python">import requests
+from bs4 import BeautifulSoup
+
+def get_website_title(url):
+    try:
+        response = requests.get(url)
+        soup = BeautifulSoup(response.content, 'html.parser')
+        title = soup.title.string
+        print(f"웹사이트 '{url}'의 제목: {title.strip()}")
+    except Exception as e:
+        print(f"제목을 가져오는 데 실패했습니다: {e}")
+
+get_website_title("https://www.google.com")</code></pre>
+
+            <h4>3. QR 코드 생성기</h4>
+            <pre><code class="language-python">import qrcode
+
+def create_qr_code(data, filename="my_qrcode.png"):
+    img = qrcode.make(data)
+    img.save(filename)
+    print(f"'{data}'에 대한 QR 코드가 '{filename}'으로 저장되었습니다.")
+
+url_to_encode = input("QR 코드로 만들 URL이나 텍스트를 입력하세요: ")
+create_qr_code(url_to_encode)</code></pre>
+
+            <h4>4. 파일 확장자별 정리 프로그램</h4>
+            <p class="note"># 홍길동의 다운로드 폴더를 정리하는 시나리오입니다.</p>
+            <pre><code class="language-python">import os
+import shutil
+
+def organize_folder(target_dir):
+    if not os.path.exists(target_dir):
+        print("폴더가 존재하지 않습니다.")
+        return
+
+    for filename in os.listdir(target_dir):
+        filepath = os.path.join(target_dir, filename)
+        if os.path.isfile(filepath):
+            ext = filename.split('.')[-1]
+            ext_dir = os.path.join(target_dir, ext)
+            
+            if not os.path.exists(ext_dir):
+                os.makedirs(ext_dir)
+            
+            shutil.move(filepath, os.path.join(ext_dir, filename))
+    print("정리가 완료되었습니다.")
+
+# 사용 전 주의: 실제 존재하는 폴더 경로를 입력하세요.</code></pre>
+
+            <h4>5. 간단한 GUI 메모장 (Tkinter)</h4>
+            <p class="note"># 구운몽의 비밀 일기장 컨셉의 간단한 창 프로그램입니다.</p>
+            <pre><code class="language-python">import tkinter as tk
+from tkinter import filedialog
+
+def save_file():
+    content = text_area.get(1.0, tk.END)
+    file_path = filedialog.asksaveasfilename(defaultextension=".txt")
+    if file_path:
+        with open(file_path, 'w', encoding='utf-8') as f:
+            f.write(content)
+
+root = tk.Tk()
+root.title("인수샘의 초간단 메모장")
+text_area = tk.Text(root)
+text_area.pack(expand=True, fill='both')
+
+menu = tk.Menu(root)
+root.config(menu=menu)
+file_menu = tk.Menu(menu)
+menu.add_cascade(label="파일", menu=file_menu)
+file_menu.add_command(label="저장", command=save_file)
+
+root.mainloop()</code></pre>
+        </section>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
 </body>
 </html>
