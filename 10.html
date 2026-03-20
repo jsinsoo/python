@@ -3,128 +3,161 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>10차시: 파이썬 딕셔너리(Dictionary) 마스터</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <title>10차시: 파이썬 딕셔너리(Dictionary) 마스터하기</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
     <style>
-        :root { --primary-color: #8e44ad; --secondary-color: #9b59b6; --bg-color: #f5f0f9; --key-color: #e67e22; }
-        body { font-family: 'Pretendard', sans-serif; background-color: #efefef; padding: 40px 20px; line-height: 1.8; color: #2c3e50; }
-        .container { max-width: 900px; margin: 0 auto; background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
-        
-        header { text-align: center; margin-bottom: 50px; border-bottom: 4px solid var(--primary-color); padding-bottom: 20px; }
-        h1 { font-size: 2.2rem; color: var(--primary-color); margin-bottom: 10px; }
-        
-        .section-card { background: var(--bg-color); border-radius: 15px; padding: 30px; margin-bottom: 40px; border: 1px solid #dcdde1; }
-        .section-header { display: flex; align-items: center; margin-bottom: 20px; }
-        .step-badge { background: var(--primary-color); color: white; padding: 5px 15px; border-radius: 5px; font-weight: bold; margin-right: 15px; }
-
-        h3 { color: #2c3e50; margin-top: 0; }
-        .key-value-box { background: white; border: 2px dashed var(--key-color); padding: 15px; border-radius: 10px; margin: 15px 0; display: flex; justify-content: space-around; align-items: center; }
-        .kv-item { text-align: center; }
-        .kv-arrow { font-size: 1.5rem; color: var(--key-color); }
-
-        .tip-panel { background: #fff; border-left: 5px solid var(--key-color); padding: 15px; margin: 15px 0; font-size: 0.95rem; border-radius: 0 8px 8px 0; box-shadow: 2px 2px 10px rgba(0,0,0,0.05); }
-        
-        pre { border-radius: 12px !important; font-size: 0.95rem !important; margin: 20px 0 !important; }
-        code { font-family: 'Fira Code', 'Consolas', monospace !important; }
-
-        .highlight { color: var(--primary-color); font-weight: bold; }
-        
-        .footer-nav { text-align: center; margin-top: 50px; }
-        .btn-finish { background: var(--primary-color); color: white; padding: 15px 60px; border: none; border-radius: 50px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: 0.3s; }
-        .btn-finish:hover { background: #6c3483; transform: translateY(-3px); }
+        body { font-family: 'Pretendard', sans-serif; line-height: 1.7; color: #333; max-width: 900px; margin: 0 auto; padding: 20px; background-color: #f8f9fa; }
+        h1 { color: #2c3e50; border-bottom: 3px solid #3498db; padding-bottom: 10px; text-align: center; }
+        h2 { color: #e67e22; margin-top: 40px; border-left: 6px solid #e67e22; padding-left: 15px; background: #fff; padding-top: 10px; padding-bottom: 10px; }
+        h3 { color: #2980b9; margin-top: 30px; }
+        h4 { color: #2c3e50; background: #eee; padding: 5px 10px; border-radius: 4px; display: inline-block; margin-top: 15px; }
+        .intro { background-color: #ffffff; padding: 20px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-bottom: 30px; border-top: 4px solid #3498db; }
+        code { font-family: 'Consolas', monospace; }
+        .note { font-size: 0.95em; color: #666; margin-bottom: 10px; }
+        section { background: white; padding: 20px; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
     </style>
 </head>
 <body>
 
-<div class="container">
     <header>
-        <h1>10차시: 딕셔너리(Dictionary) 마스터</h1>
-        <p>데이터에 '이름'을 붙여 관리하는 <strong>Key-Value 구조</strong>를 완벽히 이해합니다.</p>
+        <h1>10차시: 딕셔너리(Dictionary) 마스터하기</h1>
+        <div class="intro">
+            <p>딕셔너리는 키(Key)와 값(Value)을 한 쌍으로 묶어 저장하는 매우 유용한 자료구조입니다. Python 3.7 버전부터는 입력한 순서가 유지되는 특성을 가집니다. 기초부터 심화까지 단계별 예제를 통해 딕셔너리를 완전히 정복해 봅시다.</p>
+        </div>
     </header>
 
-    <div class="section-card">
-        <div class="section-header">
-            <span class="step-badge">기초</span>
-            <h3>딕셔너리 생성 및 접근</h3>
-        </div>
-        <p>딕셔너리는 중괄호 <code>{}</code>를 사용하며, 각 요소는 <code>키: 값</code>의 형태를 가집니다.</p>
+    <main>
+        <section>
+            <h2>1. 기초 파이썬 예시 코드 (5개)</h2>
+            <p class="note">딕셔너리의 기본적인 생성, 접근, 수정, 삭제 방법을 익힙니다.</p>
 
-        <div class="key-value-box">
-            <div class="kv-item"><strong>Key</strong><br><small>(이름, ID 등)</small></div>
-            <div class="kv-arrow">➔</div>
-            <div class="kv-item"><strong>Value</strong><br><small>(실제 데이터)</small></div>
-        </div>
-
-        <pre><code class="language-python"># 학생 정보 딕셔너리
-student = {
+            <h4>1) 딕셔너리 생성 및 값 접근</h4>
+            <p class="note"># 학생 정보를 담은 딕셔너리를 생성하고 키를 이용해 값을 가져옵니다.</p>
+            <pre><code class="language-python">student = {
     "name": "홍길동",
     "id": 202301,
     "major": "컴퓨터공학"
 }
 
-# 값 가져오기
-print(student["name"]) 
-# 안전하게 가져오기 (키가 없어도 에러 발생 안 함)
-print(student.get("age", "정보 없음")) </code></pre>
-    </div>
+# 'name' 키를 이용해 값에 접근
+print(f"학생 이름: {student['name']}")
 
-    <div class="section-card">
-        <div class="section-header">
-            <span class="step-badge">응용</span>
-            <h3>데이터 조작 및 순회</h3>
-        </div>
-        <p>딕셔너리의 데이터를 추가, 수정, 삭제하고 반복문을 통해 모든 데이터를 확인합니다.</p>
+# get() 메서드 활용 (키가 없어도 오류 없이 기본값 반환 가능)
+print(f"학생 학년: {student.get('grade', '정보 없음')}")</code></pre>
 
-        <pre><code class="language-python">person = {"name": "김철수"}
+            <h4>2) 새 키-값 쌍 추가 및 수정</h4>
+            <p class="note"># 비어있는 딕셔너리에 데이터를 추가하고 기존 값을 수정합니다.</p>
+            <pre><code class="language-python">person = {}
 
-# 추가 및 수정
-person["age"] = 30
-person["age"] = 31 # 기존 값 덮어쓰기
+# 데이터 추가
+person['name'] = '인수샘'
+person['age'] = 30
+print(f"추가 후: {person}")
 
-# 모든 키-값 확인하기
-for key, value in person.items():
-    print(f"{key}: {value}")
+# 기존 값 수정
+person['age'] = 31
+print(f"수정 후: {person}")</code></pre>
 
-# 특정 키 존재 여부 확인
-if "name" in person:
-    print("이름 정보가 있습니다.")</code></pre>
-    </div>
+            <h4>3) 딕셔너리 요소 삭제</h4>
+            <p class="note"># del 키워드와 pop() 메서드를 사용하여 요소를 삭제합니다.</p>
+            <pre><code class="language-python">car = {"brand": "현대", "model": "아이오닉", "year": 2024}
 
-    <div class="section-card">
-        <div class="section-header">
-            <span class="step-badge">심화</span>
-            <h3>복합 구조 및 정렬</h3>
-        </div>
-        <p>실제 API 데이터와 유사한 <span class="highlight">중첩 구조</span>와 데이터를 정렬하는 방법을 다룹니다.</p>
+# 'year' 키와 해당 값 삭제
+del car['year']
+print(f"del 후: {car}")
 
-        <div class="tip-panel">
-            <strong>💡 실무 팁:</strong> 딕셔너리와 리스트를 조합하면 JSON과 같은 복잡한 계층형 데이터를 자유자재로 다룰 수 있습니다.
-        </div>
+# pop()을 사용하여 값을 꺼내오면서 삭제
+model_name = car.pop('model')
+print(f"삭제된 모델: {model_name}, 현재 딕셔너리: {car}")</code></pre>
 
-        <pre><code class="language-python"># 중첩된 데이터 구조
-api_response = {
+            <h4>4) 모든 키(Key)와 값(Value) 순회</h4>
+            <p class="note"># keys(), values(), items() 메서드를 활용하여 데이터를 확인합니다.</p>
+            <pre><code class="language-python">inventory = {"apple": 10, "banana": 5, "cherry": 20}
+
+print(f"모든 품목: {list(inventory.keys())}")
+print(f"모든 수량: {list(inventory.values())}")
+
+# 키와 값을 동시에 순회
+for item, count in inventory.items():
+    print(f"{item}의 재고는 {count}개입니다.")</code></pre>
+
+            <h4>5) 딕셔너리 비우기 및 확인</h4>
+            <p class="note"># clear()로 내용을 삭제하고 'in' 키워드로 특정 키의 존재 여부를 확인합니다.</p>
+            <pre><code class="language-python">user = {"id": "user01", "status": "active"}
+
+print("status 키가 있나요?", 'status' in user)
+
+user.clear()
+print(f"비운 후 결과: {user}")</code></pre>
+        </section>
+
+        <section>
+            <h2>2. 응용 파이썬 예시 코드 (4개)</h2>
+            <p class="note">실무에서 자주 쓰이는 딕셔너리 활용 기법을 다룹니다.</p>
+
+            <h4>1) 딕셔너리 컴프리헨션</h4>
+            <p class="note"># 기존 리스트를 바탕으로 조건이 포함된 딕셔너리를 생성합니다.</p>
+            <pre><code class="language-python">users = ["인수샘", "홍길동", "구운몽"]
+# 이름의 길이를 값으로 갖는 딕셔너리 생성
+name_lengths = {name: len(name) for name in users}
+
+print(f"이름 길이 정보: {name_lengths}")</code></pre>
+
+            <h4>2) 딕셔너리 정렬</h4>
+            <p class="note"># 값을 기준으로 딕셔너리를 정렬합니다.</p>
+            <pre><code class="language-python">scores = {"수학": 100, "영어": 80, "국어": 95, "과학": 85}
+
+# 값을 기준으로 내림차순 정렬 (람다 함수 활용)
+sorted_scores = sorted(scores.items(), key=lambda item: item[1], reverse=True)
+
+print(f"점수 내림차순 정렬: {sorted_scores}")</code></pre>
+
+            <h4>3) 복잡한 데이터 구조화 (JSON 유사 구조)</h4>
+            <p class="note"># 딕셔너리와 리스트를 조합하여 복잡한 데이터를 표현합니다.</p>
+            <pre><code class="language-python">api_response = {
+    "status": "success",
+    "count": 2,
     "data": [
-        {"id": 101, "name": "상품A", "tags": ["전자", "IT"]},
-        {"id": 102, "name": "상품B", "tags": ["가구"]}
+        {"id": 101, "name": "상품A", "tags": ["전자기기", "컴퓨터"]},
+        {"id": 102, "name": "상품B", "tags": ["가구", "인테리어"]}
     ]
 }
 
-# 값 추출
-first_tag = api_response["data"][0]["tags"][1] # "IT"
+# 첫 번째 상품의 두 번째 태그 가져오기
+first_product_second_tag = api_response["data"][0]["tags"][1]
+print(f"첫 번째 상품의 두 번째 태그: {first_product_second_tag}")</code></pre>
 
-# 값(Value) 기준으로 정렬하기
-scores = {"수학": 100, "영어": 80, "국어": 95}
-sorted_res = sorted(scores.items(), key=lambda x: x[1], reverse=True)
-print(sorted_res) # [('수학', 100), ('국어', 95), ('영어', 80)]</code></pre>
-    </div>
+            <h4>4) setdefault() 메서드 활용</h4>
+            <p class="note"># 키가 없을 경우 기본값을 설정하고 바로 반환합니다. 데이터 그룹화에 유용합니다.</p>
+            <pre><code class="language-python">students = [('John', 'A'), ('Jane', 'B'), ('Dave', 'A'), ('Sarah', 'C')]
+grades = {}
 
-    <div class="footer-nav">
-        <button class="btn-finish" onclick="alert('축하합니다! 10차시 딕셔너리 학습을 모두 마쳤습니다.')">학습 완료</button>
-    </div>
-</div>
+for name, grade in students:
+    # 해당 성적(grade) 리스트가 없으면 빈 리스트를 만들고 이름을 추가
+    grades.setdefault(grade, []).append(name)
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+print(f"성적별 학생 분류: {grades}")</code></pre>
+        </section>
 
+        <section>
+            <h2>3. 심화 파이썬 예시 코드 (1개)</h2>
+            
+            <h4>1) 두 딕셔너리 병합 (Merge)</h4>
+            <p class="note"># Python 3.9 이상에서 사용 가능한 병합 연산자(|)를 소개합니다.</p>
+            <pre><code class="language-python">base_info = {"name": "구운몽", "age": 25}
+extra_info = {"major": "국문학", "city": "서울"}
+
+# 병합 연산자 | 사용
+full_profile = base_info | extra_info
+print(f"병합된 프로필: {full_profile}")
+
+# 업데이트 연산자 |= 사용 (원본 수정)
+base_info |= {"status": "졸업"}
+print(f"업데이트된 원본: {base_info}")</code></pre>
+        </section>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
 </body>
 </html>
