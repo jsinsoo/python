@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>파이썬 퀴즈 - 조건문 응용</title>
+    <title>파이썬 퀴즈 - 파이썬 입문</title>
     <style>
         body { font-family: -apple-system, BlinkMacSystemFont, "Malgun Gothic", "맑은 고딕", sans-serif; line-height: 1.6; padding: 20px; margin: 0; background-color: #f0f2f5; }
         h1, h2 { border-bottom: 2px solid #dee2e6; padding-bottom: 10px; }
@@ -28,7 +28,7 @@
 <body>
 
     <div id="quizContainer">
-        <h1>5차시: 파이썬 조건문 응용 퀴즈</h1>
+        <h1>1차시: 파이썬 입문 퀴즈</h1>
 
         <form id="quizForm" onsubmit="submitQuiz(event)">
             <h2>인적사항 입력</h2>
@@ -62,7 +62,8 @@
     </div>
 
     <script>
-        const questions = [
+
+   const questions = [
             // OX 퀴즈 (1-10)
             { type: 'ox', text: '파이썬에서 변수를 선언할 때 `int a = 10;`과 같이 자료형을 명시해야 한다.', answer: 'X', explanation: '파이썬은 동적 타이핑 언어로, 변수에 값을 할당할 때 자료형을 명시하지 않아도 자동으로 결정됩니다. `a = 10`과 같이 사용합니다.' },
             { type: 'ox', text: '`print()` 함수는 문자열, 숫자, 변수 등 다양한 값을 화면에 출력할 수 있다.', answer: 'O', explanation: '`print()`는 파이썬의 내장 함수로, 인자로 전달된 다양한 타입의 데이터를 콘솔에 출력하는 역할을 합니다.' },
@@ -87,6 +88,7 @@
             { type: 'mc', text: '객체 지향 프로그래밍에서, 부모 클래스의 속성이나 메소드를 자식 클래스가 물려받는 특성을 무엇이라고 하는가?', options: ['캡슐화(Encapsulation)', '상속(Inheritance)', '다형성(Polymorphism)', '추상화(Abstraction)', '오버로딩(Overloading)'], answer: '상속(Inheritance)', explanation: '상속은 코드의 재사용성을 높이고 클래스 간의 관계를 설정하는 객체 지향의 핵심 개념 중 하나입니다.' },
             { type: 'mc', text: '다음 중 파일 열기(open) 모드에 대한 설명이 **잘못된** 것은?', options: ['`r`: 읽기 모드 (기본값)', '`w`: 쓰기 모드 (파일이 있으면 덮어씀)', '`a`: 추가 모드 (파일 끝에 내용을 추가)', '`x`: 생성 모드 (파일이 있으면 오류 발생)', '`r+`: 읽기 및 추가 모드'], answer: '`r+`: 읽기 및 추가 모드', explanation: '`r+`는 읽기 및 쓰기 모드입니다. 파일의 처음부터 데이터를 덮어쓸 수 있습니다. 추가(append)와는 다릅니다. 추가 모드는 `a+` 입니다.' },
         ];
+
 
         function renderQuestions() {
             const oxContainer = document.getElementById('ox-questions');
