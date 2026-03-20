@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 퀴즈 - 입출력 함수</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Malgun Gothic", "맑은 고딕", sans-serif; line-height: 1.6; padding: 20px; margin: 0; background-color: #f0f2f5; }
+        h1, h2 { border-bottom: 2px solid #dee2e6; padding-bottom: 10px; }
+        #quizContainer { max-width: 800px; margin: 20px auto; background-color: #ffffff; padding: 30px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        .info-group, .question-container { margin-bottom: 25px; }
+        label { font-weight: bold; }
+        input[type="text"] { width: 100%; box-sizing: border-box; padding: 10px; border: 1px solid #ced4da; border-radius: 4px; font-size: 1em; }
+        .question-text { font-size: 1.1em; margin-bottom: 15px; font-family: Consolas, "Courier New", monospace; white-space: pre-wrap; background-color: #f8f9fa; padding: 15px; border-radius: 5px; border: 1px solid #e9ecef; }
+        .options label { font-weight: normal; margin-right: 15px; display: block; padding: 8px; border-radius: 4px; cursor: pointer; }
+        .options label:hover { background-color: #e9ecef; }
+        .options input[type="radio"] { margin-right: 10px; }
+        button { background-color: #007bff; color: white; padding: 12px 25px; border: none; border-radius: 5px; cursor: pointer; font-size: 1.1em; width: 100%; }
+        button:hover { background-color: #0056b3; }
+        #results { margin-top: 30px; border-top: 2px solid #dee2e6; padding-top: 20px; }
+        .result-item { padding: 15px; margin-bottom: 10px; border-radius: 5px; }
+        .correct { background-color: #d1e7dd; border-left: 5px solid #198754; }
+        .incorrect { background-color: #f8d7da; border-left: 5px solid #dc3545; }
+        .explanation { margin-top: 10px; padding: 10px; background: #e9ecef; border-radius: 4px; }
+        code { background-color: #e9ecef; padding: 2px 4px; border-radius: 3px; }
+    </style>
+</head>
+<body>
+
+    <div id="quizContainer">
+        <h1>3차시: 파이썬 입출력 함수 퀴즈</h1>
+
+        <form id="quizForm" onsubmit="submitQuiz(event)">
+            <h2>인적사항 입력</h2>
+            <div class="info-group">
+                <label for="school">학교:</label>
+                <input type="text" id="school" required>
+            </div>
+            <div class="info-group">
+                <label for="studentId">학번:</label>
+                <input type="text" id="studentId" required>
+            </div>
+            <div class="info-group">
+                <label for="name">이름:</label>
+                <input type="text" id="name" required>
+            </div>
+
+            <hr style="margin: 30px 0;">
+
+            <h2>OX 퀴즈 (10문항)</h2>
+            <div id="ox-questions"></div>
+
+            <hr style="margin: 30px 0;">
+
+            <h2>5지선다형 퀴즈 (10문항)</h2>
+            <div id="mc-questions"></div>
+            
+            <button type="submit">채점 및 결과 저장</button>
+        </form>
+
+        <div id="results"></div>
+    </div>
+
+    <script>
+        const questions = [
+            // OX 퀴즈 (1-10)
+            { type: 'ox', text: '`input()` 함수로 입력받은 값의 기본 자료형은 정수(int)이다.', answer: 'X', explanation: '`input()` 함수는 모든 입력을 문자열(string)로 받습니다. 숫자 계산을 위해서는 `int()`나 `float()`로 형 변환을 해야 합니다.' },
+            { type: 'ox', text: '파일을 열 때 `with open(...)` 구문을 사용하면 `close()`를 따로 호출하지 않아도 된다.', answer: 'O', explanation: '`with` 블록이 끝나면 파이썬이 자동으로 파일을 닫아주므로, 리소스를 안전하게 관리할 수 있습니다.' },
+            { type: 'ox', text: '파일 열기 모드에서 `w`는 파일이 없을 경우 새로 생성하고, 파일이 있으면 내용을 덮어쓴다.', answer: 'O', explanation: '`w`(write) 모드는 파일을 쓰기용으로 열며, 기존 내용은 모두 사라지므로 주의해야 합니다.' },
+            { type: 'ox', text: '`print("a", "b", "c")`의 결과는 "abc"이다.', answer: 'X', explanation: '`print()` 함수는 여러 인자를 쉼표로 연결하면 기본적으로 공백을 구분자(separator)로 사용하여 "a b c"를 출력합니다.' },
+            { type: 'ox', text: '`f.read()`는 파일의 모든 내용을 하나의 문자열로 읽어온다.', answer: 'O', explanation: '`f.read()`는 파일 포인터의 현재 위치부터 파일 끝까지의 모든 내용을 읽습니다. 파일이 크면 메모리 사용에 주의해야 합니다.' },
+            { type: 'ox', text: '파일 열기 모드 `a`는 파일의 맨 앞에 내용을 추가한다.', answer: 'X', explanation: '`a`(append) 모드는 파일의 맨 끝에 내용을 추가합니다. 기존 내용을 유지하면서 로그를 남기는 등의 작업에 사용됩니다.' },
+            { type: 'ox', text: '`f.readlines()`는 파일의 각 줄을 요소로 하는 튜플(tuple)을 반환한다.', answer: 'X', explanation: '`f.readlines()`는 각 줄을 요소로 하는 리스트(list)를 반환합니다. 튜플은 변경 불가능하지만 리스트는 변경 가능합니다.' },
+            { type: 'ox', text: '`import json` 후, `json.load()` 함수는 JSON 형식의 파일을 파이썬 딕셔너리나 리스트로 변환한다.', answer: 'O', explanation: '`json.load()`는 파일 객체를 인자로 받아 파일의 JSON 데이터를 파이썬 객체로 역직렬화(deserializing)합니다.' },
+            { type: 'ox', text: '`print("Error!", file=sys.stderr)` 코드는 화면에 아무것도 출력하지 않는다.', answer: 'X', explanation: '기본적으로 표준 오류(stderr)도 터미널 화면에 출력됩니다. 다만, 프로그램의 정상 출력(stdout)과 스트림이 분리되어 있어 별도로 처리(리다이렉션 등)할 수 있습니다.' },
+            { type: 'ox', text: 'CSV 파일은 쉼표 대신 탭(tab)으로 값을 구분할 수도 있다.', answer: 'O', explanation: 'CSV는 "쉼표로 구분된 값"이지만, 넓은 의미에서 탭, 세미콜론 등 다른 구분자를 사용하는 파일(TSV 등)도 포함하여 다루기도 합니다. `csv` 모듈에서 구분자를 지정할 수 있습니다.' },
+
+            // 5지선다형 퀴즈 (11-20)
+            { type: 'mc', text: '파일의 기존 내용은 그대로 두고, 맨 뒤에 새로운 내용을 추가하고 싶을 때 사용해야 하는 파일 열기 모드는?', options: ['r', 'w', 'a', 'r+', 'w+'], answer: 'a', explanation: '`a`(append) 모드는 파일 포인터를 파일의 끝으로 이동시킨 후 쓰기 작업을 시작하여 기존 내용을 보존하면서 새로운 내용을 추가합니다.' },
+            { type: 'mc', text: '`print("안녕", "하세요", sep="*")` 코드의 실행 결과는?', options: ['안녕*하세요', '안녕 하세요', '안녕하세요', '안녕\n*하세요', '오류 발생'], answer: '안녕*하세요', explanation: '`sep` 파라미터는 `print` 함수에 전달된 여러 값들 사이에 들어갈 구분자를 지정합니다. 기본값은 공백(" ")입니다.' },
+            { type: 'mc', text: '`input()` 함수로 받은 두 숫자 `a`와 `b`를 더하기 위한 올바른 코드는?', options: ['`a + b`', '`str(a) + str(b)`', '`int(a + b)`', '`int(a) + int(b)`', '`input(a+b)`'], answer: '`int(a) + int(b)`', explanation: '`input()`으로 받은 `a`와 `b`는 문자열이므로, 덧셈 연산을 하면 문자열 연결(`"3"+"5"` -> `"35"`)이 됩니다. 따라서 먼저 각각을 `int()`로 변환한 후 더해야 합니다.' },
+            { type: 'mc', text: '파일을 열 때 `encoding="utf-8"`을 지정하는 주된 이유는?', options: ['파일 처리 속도를 높이기 위해', '파일을 압축하기 위해', '한글이나 다른 비-ASCII 문자가 깨지지 않도록 하기 위해', '파일을 암호화하기 위해', '모든 컴퓨터에서 동일하게 보이도록 하기 위해'], answer: '한글이나 다른 비-ASCII 문자가 깨지지 않도록 하기 위해', explanation: '운영체제마다 기본 인코딩이 다를 수 있습니다. UTF-8은 전 세계 거의 모든 문자를 지원하는 보편적인 인코딩 방식으로, 한글 등이 포함된 파일을 다룰 때 깨짐 현상을 방지하기 위해 명시하는 것이 좋습니다.' },
+            { type: 'mc', text: '다음 중 파일을 열고 자동으로 닫아주는 가장 안전하고 권장되는 방법은?', options: ['`try...finally` 구문 안에 `open()`과 `close()` 사용', '`open()` 후 바로 `close()` 호출', '`with open(...) as ...` 구문 사용', '`while` 루프 안에서 파일 처리', '함수로 만들어 `return` 시 닫기'], answer: '`with open(...) as ...` 구문 사용', explanation: '`with` 문은 \'컨텍스트 관리자\'를 이용하여 코드 블록이 시작될 때 파일을 열고, 블록이 어떤 이유로든 종료될 때(정상 종료, 오류 발생 등) 파일을 자동으로 닫아주므로 가장 안전하고 간결한 방법입니다.' },
+            { type: 'mc', text: '파일이 존재하지 않을 때 `FileNotFoundError`를 발생시키는 파일 열기 모드는?', options: ['r', 'w', 'a', 'x', 'r+'], answer: 'r', explanation: '`r`(읽기) 모드나 `r+`(읽기/쓰기) 모드는 파일이 존재해야만 열 수 있습니다. `w`(쓰기), `a`(추가), `x`(생성) 모드는 파일이 없으면 새로 생성합니다.' },
+            { type: 'mc', text: '파이썬 딕셔너리 객체를 JSON 형식의 문자열로 변환하는 함수는?', options: ['`json.load()`', '`json.dump()`', '`json.loads()`', '`json.dumps()`', '`json.convert()`'], answer: '`json.dumps()`', explanation: '`json.dumps()`는 파이썬 객체를 JSON 형식의 **문자열(string)**로 변환하고, `json.dump()`는 파이썬 객체를 JSON 형식으로 **파일에** 씁니다. (s가 있고 없고의 차이)' },
+            { type: 'mc', text: '`print()` 함수가 출력을 마친 후, 줄바꿈(newline) 대신 다른 문자를 출력하고 싶을 때 사용하는 파라미터는?', options: ['`sep`', '`end`', '`file`', '`flush`', '`newline`'], answer: '`end`', explanation: '`end` 파라미터의 기본값은 `\'\\n\'`(줄바꿈 문자)입니다. 이 값을 다른 문자열로 변경하면 줄바꿈 대신 해당 문자열이 출력됩니다. (예: `end=""`)' },
+            { type: 'mc', text: '`f.readline()`과 `f.readlines()`의 차이에 대한 설명으로 올바른 것은?', options: ['`readline`은 한 글자, `readlines`는 한 줄을 읽는다.', '`readline`은 한 줄, `readlines`는 모든 줄을 리스트로 읽는다.', '`readline`은 모든 줄, `readlines`는 한 줄을 읽는다.', '둘은 기능이 완전히 동일하다.', '`readline`은 문자열, `readlines`는 튜플을 반환한다.'], answer: '`readline`은 한 줄, `readlines`는 모든 줄을 리스트로 읽는다.', explanation: '`readline()`은 파일에서 한 줄만 읽어와 문자열로 반환하고, `readlines()`는 파일의 모든 줄을 읽어와 각 줄을 요소로 하는 리스트로 반환합니다.' },
+            { type: 'mc', text: '다음 중 `sys` 모듈에 대한 설명으로 가장 적절한 것은?', options: ['수학 계산을 위한 함수 모음이다.', 'CSV 파일을 다루는 모듈이다.', '파이썬 인터프리터가 제공하는 변수와 함수를 직접 제어할 수 있게 해주는 모듈이다.', '날짜와 시간 관련 기능을 제공한다.', '랜덤 숫자를 생성하는 모듈이다.'], answer: '파이썬 인터프리터가 제공하는 변수와 함수를 직접 제어할 수 있게 해주는 모듈이다.', explanation: '`sys` 모듈은 파이썬 스크립트가 실행되는 시스템(인터프리터)과 관련된 정보를 다룹니다. 명령행 인수(`sys.argv`), 표준 입출력 스트림(`sys.stdin`, `sys.stdout`), 프로그램 강제 종료(`sys.exit`) 등의 기능을 제공합니다.' }
+        ];
+
+        function renderQuestions() {
+            const oxContainer = document.getElementById('ox-questions');
+            const mcContainer = document.getElementById('mc-questions');
+            let questionNumber = 1;
+
+            questions.forEach(q => {
+                const qDiv = document.createElement('div');
+                qDiv.className = 'question-container';
+                const qText = document.createElement('div');
+                qText.className = 'question-text';
+                qText.innerHTML = `${questionNumber}. ${q.text.replace(/`([^`]+)`/g, '<code>$1</code>').replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')}`;
+                qDiv.appendChild(qText);
+                const optionsDiv = document.createElement('div');
+                optionsDiv.className = 'options';
+                if (q.type === 'ox') {
+                    ['O', 'X'].forEach(opt => {
+                        const label = document.createElement('label');
+                        const radio = document.createElement('input');
+                        radio.type = 'radio';
+                        radio.name = `q${questionNumber}`;
+                        radio.value = opt;
+                        radio.required = true;
+                        label.appendChild(radio);
+                        label.append(` ${opt}`);
+                        optionsDiv.appendChild(label);
+                    });
+                } else if (q.type === 'mc') {
+                    q.options.forEach(opt => {
+                        const label = document.createElement('label');
+                        const radio = document.createElement('input');
+                        radio.type = 'radio';
+                        radio.name = `q${questionNumber}`;
+                        radio.value = opt;
+                        radio.required = true;
+                        label.appendChild(radio);
+                        label.innerHTML += ` ${opt.replace(/`([^`]+)`/g, '<code>$1</code>')}`;
+                        optionsDiv.appendChild(label);
+                    });
+                }
+                qDiv.appendChild(optionsDiv);
+                if (q.type === 'ox') {
+                    oxContainer.appendChild(qDiv);
+                } else {
+                    mcContainer.appendChild(qDiv);
+                }
+                questionNumber++;
+            });
+        }
+
+        function submitQuiz(event) {
+            event.preventDefault();
+            const school = document.getElementById('school').value;
+            const studentId = document.getElementById('studentId').value;
+            const name = document.getElementById('name').value;
+            let score = 0;
+            let fileContent = "";
+            const resultsContainer = document.getElementById('results');
+            resultsContainer.innerHTML = '<h2>채점 결과</h2>';
+            for (let i = 0; i < questions.length; i++) {
+                const qNumber = i + 1;
+                const selectedOption = document.querySelector(`input[name="q${qNumber}"]:checked`);
+                const questionData = questions[i];
+                const resultItem = document.createElement('div');
+                resultItem.classList.add('result-item');
+                let resultText = `<strong>[${qNumber}번 문항]</strong>
+`;
+                if (selectedOption && selectedOption.value === questionData.answer) {
+                    score++;
+                    resultItem.classList.add('correct');
+                    resultText += `<strong>결과: 정답!</strong>`;
+                } else {
+                    resultItem.classList.add('incorrect');
+                    resultText += `<strong>결과: 오답!</strong> (선택: ${selectedOption ? selectedOption.value : '미선택'}, 정답: ${questionData.answer})`;
+                }
+                const explanation = document.createElement('div');
+                explanation.className = 'explanation';
+                explanation.innerHTML = `<strong>상세 풀이:</strong> ${questionData.explanation.replace(/`([^`]+)`/g, '<code>$1</code>')}`;
+                resultItem.innerHTML = resultText;
+                resultItem.appendChild(explanation);
+                resultsContainer.appendChild(resultItem);
+                
+                const plainTextForFile = questionData.text.replace(/<[^>]*>/g, '').replace(/`([^`]+)`/g, '$1');
+                fileContent += `[${qNumber}번 문항]\n`;
+                fileContent += `문제: ${plainTextForFile}\n`;
+                fileContent += `선택한 답: ${selectedOption ? selectedOption.value : '미선택'}\n`;
+                fileContent += `정답: ${questionData.answer}\n`;
+                fileContent += `결과: ${selectedOption && selectedOption.value === questionData.answer ? '정답' : '오답'}\n`;
+                fileContent += `풀이: ${questionData.explanation.replace(/<[^>]*>/g, '').replace(/`([^`]+)`/g, '$1')}\n\n`;
+            }
+            const totalScore = (score / questions.length) * 100;
+            const now = new Date();
+            const timestamp = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}시${String(now.getMinutes()).padStart(2, '0')}분`;
+            const summary = document.createElement('p');
+            summary.innerHTML = `<strong>총점: ${totalScore.toFixed(0)}점 (${questions.length}개 중 ${score}개 정답)</strong>`;
+            resultsContainer.prepend(summary);
+            const fileHeader = `학교: ${school}\n학번: ${studentId}\n이름: ${name}\n응시 시각: ${timestamp}\n총점: ${totalScore.toFixed(0)}점\n\n---\n\n`;
+            fileContent = fileHeader + fileContent;
+            const fileNameTimestamp = now.toISOString().replace(/:/g, '-').slice(0, 19);
+            const fileName = `${school}_${studentId}_${name}_${totalScore.toFixed(0)}점_${fileNameTimestamp}.txt`;
+            download(fileName, fileContent);
+        }
+
+        function download(filename, text) {
+            const element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+            element.setAttribute('download', filename);
+            element.style.display = 'none';
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+        }
+
+        window.onload = renderQuestions;
+    </script>
+</body>
+</html>

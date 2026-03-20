@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 퀴즈 - for 반복문</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Malgun Gothic", "맑은 고딕", sans-serif; line-height: 1.6; padding: 20px; margin: 0; background-color: #f0f2f5; }
+        h1, h2 { border-bottom: 2px solid #dee2e6; padding-bottom: 10px; }
+        #quizContainer { max-width: 800px; margin: 20px auto; background-color: #ffffff; padding: 30px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        .info-group, .question-container { margin-bottom: 25px; }
+        label { font-weight: bold; }
+        input[type="text"] { width: 100%; box-sizing: border-box; padding: 10px; border: 1px solid #ced4da; border-radius: 4px; font-size: 1em; }
+        .question-text { font-size: 1.1em; margin-bottom: 15px; font-family: Consolas, "Courier New", monospace; white-space: pre-wrap; background-color: #f8f9fa; padding: 15px; border-radius: 5px; border: 1px solid #e9ecef; }
+        .options label { font-weight: normal; margin-right: 15px; display: block; padding: 8px; border-radius: 4px; cursor: pointer; }
+        .options label:hover { background-color: #e9ecef; }
+        .options input[type="radio"] { margin-right: 10px; }
+        button { background-color: #007bff; color: white; padding: 12px 25px; border: none; border-radius: 5px; cursor: pointer; font-size: 1.1em; width: 100%; }
+        button:hover { background-color: #0056b3; }
+        #results { margin-top: 30px; border-top: 2px solid #dee2e6; padding-top: 20px; }
+        .result-item { padding: 15px; margin-bottom: 10px; border-radius: 5px; }
+        .correct { background-color: #d1e7dd; border-left: 5px solid #198754; }
+        .incorrect { background-color: #f8d7da; border-left: 5px solid #dc3545; }
+        .explanation { margin-top: 10px; padding: 10px; background: #e9ecef; border-radius: 4px; }
+        code { background-color: #e9ecef; padding: 2px 4px; border-radius: 3px; }
+    </style>
+</head>
+<body>
+
+    <div id="quizContainer">
+        <h1>7차시: 파이썬 for 반복문 퀴즈</h1>
+
+        <form id="quizForm" onsubmit="submitQuiz(event)">
+            <h2>인적사항 입력</h2>
+            <div class="info-group">
+                <label for="school">학교:</label>
+                <input type="text" id="school" required>
+            </div>
+            <div class="info-group">
+                <label for="studentId">학번:</label>
+                <input type="text" id="studentId" required>
+            </div>
+            <div class="info-group">
+                <label for="name">이름:</label>
+                <input type="text" id="name" required>
+            </div>
+
+            <hr style="margin: 30px 0;">
+
+            <h2>OX 퀴즈 (10문항)</h2>
+            <div id="ox-questions"></div>
+
+            <hr style="margin: 30px 0;">
+
+            <h2>5지선다형 퀴즈 (10문항)</h2>
+            <div id="mc-questions"></div>
+            
+            <button type="submit">채점 및 결과 저장</button>
+        </form>
+
+        <div id="results"></div>
+    </div>
+
+    <script>
+ const questions = [
+            // OX 퀴즈 (1-10)
+            { type: 'ox', text: '`for i in range(5):`는 변수 `i`에 1, 2, 3, 4, 5를 차례로 할당하며 반복한다.', answer: 'X', explanation: '`range(5)`는 0부터 시작하여 5 직전까지의 숫자(0, 1, 2, 3, 4)를 생성합니다. 총 5번 반복하는 것은 맞지만, `i`의 값은 0부터 시작합니다.' },
+            { type: 'ox', text: '`continue` 문을 만나면 반복문 전체가 즉시 종료된다.', answer: 'X', explanation: '`continue`는 현재 진행 중인 반복만 건너뛰고 바로 다음 반복을 시작합니다. 반복문 전체를 종료하는 키워드는 `break`입니다.' },
+            { type: 'ox', text: '`for` 문 끝에는 항상 콜론(`:`)을 붙여야 한다.', answer: 'O', explanation: '`for ... in ...:` 과 같이 콜론은 `for` 문법의 일부이며, 뒤이어 올 들여쓰기 된 코드 블록의 시작을 알립니다.' },
+            { type: 'ox', text: '`for` 문에 `else` 블록을 사용할 수 있으며, 이 `else` 블록은 반복문이 `break`로 중단될 때 실행된다.', answer: 'X', explanation: '`for` 문의 `else` 블록은 반복문이 `break` 없이 모든 반복을 정상적으로 마쳤을 때만 실행됩니다.' },
+            { type: 'ox', text: '`enumerate()` 함수를 사용하면 리스트의 인덱스와 값을 동시에 얻을 수 있다.', answer: 'O', explanation: '`for index, value in enumerate(my_list):` 와 같이 사용하면 각 항목의 순서(인덱스)와 실제 값을 함께 사용할 수 있어 편리합니다.' },
+            { type: 'ox', text: '`for` 문은 튜플(tuple) 자료형의 요소를 순회하는 데 사용할 수 없다.', answer: 'X', explanation: '`for` 문은 리스트, 튜플, 문자열, 딕셔너리 등 반복 가능한(iterable) 모든 객체의 요소를 순회할 수 있습니다.' },
+            { type: 'ox', text: '리스트 컴프리헨션은 `for` 문을 더 길고 복잡하게 만드는 방법이다.', answer: 'X', explanation: '리스트 컴프리헨션은 `for` 문과 (선택적으로) `if` 문을 한 줄로 압축하여 더 간결하고 "파이썬스러운" 코드를 작성하게 해주는 기능입니다.' },
+            { type: 'ox', text: '`zip()` 함수를 사용하면 길이가 다른 여러 리스트를 동시에 순회할 수 있다.', answer: 'O', explanation: '`zip()`은 여러 리스트를 묶어주며, 가장 짧은 리스트의 길이를 기준으로 반복이 종료됩니다. 긴 리스트의 나머지 항목들은 무시됩니다.' },
+            { type: 'ox', text: '`for key in my_dict:` 와 같이 반복하면 딕셔너리의 키(key)와 값(value)이 모두 변수 `key`에 할당된다.', answer: 'X', explanation: '딕셔너리를 대상으로 기본 `for` 문을 사용하면 키(key)만 순회합니다. 값 또는 둘 다 순회하려면 `.values()` 또는 `.items()` 메소드를 사용해야 합니다.' },
+            { type: 'ox', text: '`range(10, 1, -2)`는 유효한 `range` 함수 사용법이다.', answer: 'O', explanation: '시작값이 끝값보다 크고, 증가값(step)이 음수이면 역순으로 반복할 수 있습니다. 이 경우 10, 8, 6, 4, 2를 생성합니다.' },
+
+// 5지선다형 퀴즈 (11-20)
+            { type: 'mc', text: '`for i in range(1, 10, 3): print(i, end=" ")` 코드의 실행 결과는?', options: ['1 2 3', '1 4 7 10', '1 4 7', '1 3 6 9', '3 6 9'], answer: '1 4 7', explanation: '1에서 시작하여 10 직전까지 3씩 증가합니다. 따라서 1, 4, 7이 차례로 출력됩니다.' },
+            { type: 'mc', text: '반복문 내에서 현재 반복을 즉시 중단하고 다음 반복으로 넘어가게 하는 키워드는?', options: ['`break`', '`pass`', '`return`', '`exit`', '`continue`'], answer: '`continue`', explanation: '`continue`는 현재 반복의 남은 부분을 건너뛰고 즉시 다음 아이템으로 넘어가 반복을 계속합니다.' },
+            { type: 'mc', text: '다음 코드의 출력 결과는?\n`for i in "python":`\n`  if i == "h": break`\n`  print(i, end="")`', options: ['`python`', '`pyton`', '`pyt`', '`py`', '`p`'], answer: '`pyt`', explanation: 'p, y, t를 차례로 출력한 후, i가 "h"가 되면 `break` 문을 만나 `for` 반복문 전체가 종료됩니다.' },
+            { type: 'mc', text: '딕셔너리의 `키`와 `값`을 모두 사용하여 반복하고 싶을 때 가장 적절한 방법은?', options: ['`for k, v in my_dict:`', '`for k, v in my_dict.get():`', '`for k, v in my_dict.all():`', '`for k, v in my_dict.items():`', '`for k, v in enumerate(my_dict):`'], answer: '`for k, v in my_dict.items():`', explanation: '`.items()` 메소드는 딕셔너리의 (키, 값) 쌍을 튜플로 묶어서 반환해주므로, `for` 문에서 두 개의 변수로 받아 편리하게 사용할 수 있습니다.' },
+            { type: 'mc', text: '`for i in range(5):` 와 동일한 결과를 내는 코드는?', options: ['`for i in [1, 2, 3, 4, 5]:`', '`for i in range(0, 5):`', '`for i in range(1, 5):`', '`for i in range(5, 0, -1):`', '`for i in (1, 2, 3, 4, 5):`'], answer: '`for i in range(0, 5):`', explanation: '`range()` 함수에 인자를 하나만 넣으면 0부터 시작하여 해당 숫자 직전까지를 의미합니다. 따라서 `range(5)`는 `range(0, 5)`와 같습니다.' },
+            { type: 'mc', text: '다음 중 "파이썬스러운(Pythonic)" 방식의 코드 변환으로 가장 적절한 것은?', options: ['`if`문을 `for`문으로 바꾸는 것', '긴 변수명을 짧게 바꾸는 것', '복잡한 `for`문을 리스트 컴프리헨션으로 바꾸는 것', '`print`문을 `input`문으로 바꾸는 것', '모든 변수에 타입을 명시하는 것'], answer: '복잡한 `for`문을 리스트 컴프리헨션으로 바꾸는 것', explanation: '리스트를 만들기 위한 단순한 구조의 `for` 문은, 한 줄로 간결하게 표현할 수 있는 리스트 컴프리헨션으로 작성하는 것이 더 효율적이고 가독성이 높다고 여겨집니다.' },
+            { type: 'mc', text: '다음 코드의 출력 결과는?\n`numbers = [1, 5, 10]`\n`for num in numbers:`\n`  if num < 5: continue`\n`  if num > 5: break`\n`  print(num)`', options: ['1 5 10', '1 5', '5 10', '5', '10'], answer: '5', explanation: '첫 번째 `num`=1일 때 `continue`로 건너뜁니다. 두 번째 `num`=5일 때 두 `if`문 모두 거짓이므로 `print(5)`가 실행됩니다. 세 번째 `num`=10일 때 `break`를 만나 반복문이 종료됩니다.' },
+
+            { type: 'mc', text: '두 리스트 `a = [1, 2]`, `b = ["x", "y"]`에 대해 `zip(a, b)`를 순회한 결과는?', options: ['`(1, 2, "x", "y")`', '`(1, "x")` 와 `(2, "y")`', '`(1, "y")` 와 `(2, "x")`', '`[1, "x", 2, "y"]`', '오류 발생'], answer: '`(1, "x")` 와 `(2, "y")`', explanation: '`zip` 함수는 각 리스트의 동일한 인덱스에 있는 요소들을 튜플로 묶어줍니다. 첫 번째 반복에서는 `(1, "x")`를, 두 번째 반복에서는 `(2, "y")`를 반환합니다.' },
+            { type: 'mc', text: '`for _ in range(3):` 에서 밑줄(`_`)의 의미로 가장 적절한 것은?', options: ['임시로 모든 값을 저장하는 특별한 변수', '반복 변수의 값을 사용하지 않겠다는 관례적 표현', '이전 반복의 값을 저장하는 변수', '전역 변수를 의미하는 키워드', '문법 오류이며 사용할 수 없음'], answer: '반복 변수의 값을 사용하지 않겠다는 관례적 표현', explanation: '`for` 문법상 변수가 필요하지만, 반복 블록 내에서 `i`와 같은 반복 변수의 값을 실제로 사용하지 않을 경우, "이 변수는 무시해도 좋다"는 의미로 밑줄(`_`)을 사용하는 것이 파이썬 프로그래머들 사이의 일반적인 관례입니다.' },
+{ 
+  type: 'mc', 
+  text: '`for...else` 구문에서 `else` 블록이 실행되는 조건은?', 
+  options: ['`for`문이 시작되기 전', '`for`문이 `break`로 중단되었을 때', '`for`문이 모든 반복을 정상적으로 마쳤을 때', '`for`문 안에서 오류가 발생했을 때', '`for`문이 `continue`를 만났을 때'], 
+  answer: '`for`문이 모든 반복을 정상적으로 마쳤을 때', 
+  explanation: '`else` 블록은 반복문이 어떤 이유로든 \'중도 하차\'하지 않고, 예정된 모든 반복을 끝까지 수행했을 때만 실행되는 \'완주 보너스\'와 같습니다.' 
+}
+
+        ];
+
+        function renderQuestions() {
+            const oxContainer = document.getElementById('ox-questions');
+            const mcContainer = document.getElementById('mc-questions');
+            let questionNumber = 1;
+
+            questions.forEach(q => {
+                const qDiv = document.createElement('div');
+                qDiv.className = 'question-container';
+                const qText = document.createElement('div');
+                qText.className = 'question-text';
+                qText.innerHTML = `${questionNumber}. ${q.text.replace(/`([^`]+)`/g, '<code>$1</code>')}`;
+                qDiv.appendChild(qText);
+                const optionsDiv = document.createElement('div');
+                optionsDiv.className = 'options';
+                if (q.type === 'ox') {
+                    ['O', 'X'].forEach(opt => {
+                        const label = document.createElement('label');
+                        const radio = document.createElement('input');
+                        radio.type = 'radio'; radio.name = `q${questionNumber}`; radio.value = opt; radio.required = true;
+                        label.appendChild(radio); label.append(` ${opt}`);
+                        optionsDiv.appendChild(label);
+                    });
+                } else if (q.type === 'mc') {
+                    q.options.forEach(opt => {
+                        const label = document.createElement('label');
+                        const radio = document.createElement('input');
+                        radio.type = 'radio'; radio.name = `q${questionNumber}`; radio.value = opt; radio.required = true;
+                        label.appendChild(radio);
+                        label.innerHTML += ` ${opt.replace(/`([^`]+)`/g, '<code>$1</code>')}`;
+                        optionsDiv.appendChild(label);
+                    });
+                }
+                qDiv.appendChild(optionsDiv);
+                if (q.type === 'ox') {
+                    oxContainer.appendChild(qDiv);
+                } else {
+                    mcContainer.appendChild(qDiv);
+                }
+                questionNumber++;
+            });
+        }
+
+        function submitQuiz(event) {
+            event.preventDefault();
+            const school = document.getElementById('school').value;
+            const studentId = document.getElementById('studentId').value;
+            const name = document.getElementById('name').value;
+            let score = 0;
+            let fileContent = "";
+            const resultsContainer = document.getElementById('results');
+            resultsContainer.innerHTML = '<h2>채점 결과</h2>';
+            for (let i = 0; i < questions.length; i++) {
+                const qNumber = i + 1;
+                const selectedOption = document.querySelector(`input[name="q${qNumber}"]:checked`);
+                const questionData = questions[i];
+                const resultItem = document.createElement('div');
+                resultItem.classList.add('result-item');
+                let resultText = `<strong>[${qNumber}번 문항]</strong>
+`;
+                if (selectedOption && selectedOption.value === questionData.answer) {
+                    score++;
+                    resultItem.classList.add('correct');
+                    resultText += `<strong>결과: 정답!</strong>`;
+                } else {
+                    resultItem.classList.add('incorrect');
+                    resultText += `<strong>결과: 오답!</strong> (선택: ${selectedOption ? selectedOption.value : '미선택'}, 정답: ${questionData.answer})`;
+                }
+                const explanation = document.createElement('div');
+                explanation.className = 'explanation';
+                explanation.innerHTML = `<strong>상세 풀이:</strong> ${questionData.explanation.replace(/`([^`]+)`/g, '<code>$1</code>')}`;
+                resultItem.innerHTML = resultText;
+                resultItem.appendChild(explanation);
+                resultsContainer.appendChild(resultItem);
+                
+                const plainTextForFile = questionData.text.replace(/<[^>]*>/g, '').replace(/`([^`]+)`/g, '$1');
+                fileContent += `[${qNumber}번 문항]\n`;
+                fileContent += `문제: ${plainTextForFile}\n`;
+                fileContent += `선택한 답: ${selectedOption ? selectedOption.value : '미선택'}\n`;
+                fileContent += `정답: ${questionData.answer}\n`;
+                fileContent += `결과: ${selectedOption && selectedOption.value === questionData.answer ? '정답' : '오답'}\n`;
+                fileContent += `풀이: ${questionData.explanation.replace(/<[^>]*>/g, '').replace(/`([^`]+)`/g, '$1')}\n\n`;
+            }
+            const totalScore = (score / questions.length) * 100;
+            const now = new Date();
+            const timestamp = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}시${String(now.getMinutes()).padStart(2, '0')}분`;
+            const summary = document.createElement('p');
+            summary.innerHTML = `<strong>총점: ${totalScore.toFixed(0)}점 (${questions.length}개 중 ${score}개 정답)</strong>`;
+            resultsContainer.prepend(summary);
+            const fileHeader = `학교: ${school}\n학번: ${studentId}\n이름: ${name}\n응시 시각: ${timestamp}\n총점: ${totalScore.toFixed(0)}점\n\n---\n\n`;
+            fileContent = fileHeader + fileContent;
+            const fileNameTimestamp = now.toISOString().replace(/:/g, '-').slice(0, 19);
+            const fileName = `${school}_${studentId}_${name}_${totalScore.toFixed(0)}점_${fileNameTimestamp}.txt`;
+            download(fileName, fileContent);
+        }
+
+        function download(filename, text) {
+            const element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+            element.setAttribute('download', filename);
+            element.style.display = 'none';
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+        }
+
+        window.onload = renderQuestions;
+    </script>
+</body>
+</html>

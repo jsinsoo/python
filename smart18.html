@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 퀴즈 - 프로젝트</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Malgun Gothic", "맑은 고딕", sans-serif; line-height: 1.6; padding: 20px; margin: 0; background-color: #f0f2f5; }
+        h1, h2 { border-bottom: 2px solid #dee2e6; padding-bottom: 10px; }
+        #quizContainer { max-width: 800px; margin: 20px auto; background-color: #ffffff; padding: 30px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        .info-group, .question-container { margin-bottom: 25px; }
+        label { font-weight: bold; }
+        input[type="text"] { width: 100%; box-sizing: border-box; padding: 10px; border: 1px solid #ced4da; border-radius: 4px; font-size: 1em; }
+        .question-text { font-size: 1.1em; margin-bottom: 15px; font-family: Consolas, "Courier New", monospace; white-space: pre-wrap; background-color: #f8f9fa; padding: 15px; border-radius: 5px; border: 1px solid #e9ecef; }
+        .options label { font-weight: normal; margin-right: 15px; display: block; padding: 8px; border-radius: 4px; cursor: pointer; }
+        .options label:hover { background-color: #e9ecef; }
+        .options input[type="radio"] { margin-right: 10px; }
+        button { background-color: #007bff; color: white; padding: 12px 25px; border: none; border-radius: 5px; cursor: pointer; font-size: 1.1em; width: 100%; }
+        button:hover { background-color: #0056b3; }
+        #results { margin-top: 30px; border-top: 2px solid #dee2e6; padding-top: 20px; }
+        .result-item { padding: 15px; margin-bottom: 10px; border-radius: 5px; }
+        .correct { background-color: #d1e7dd; border-left: 5px solid #198754; }
+        .incorrect { background-color: #f8d7da; border-left: 5px solid #dc3545; }
+        .explanation { margin-top: 10px; padding: 10px; background: #e9ecef; border-radius: 4px; }
+        code { background-color: #e9ecef; padding: 2px 4px; border-radius: 3px; }
+    </style>
+</head>
+<body>
+
+    <div id="quizContainer">
+        <h1>18차시: 파이썬 프로젝트 퀴즈</h1>
+
+        <form id="quizForm" onsubmit="submitQuiz(event)">
+            <h2>인적사항 입력</h2>
+            <div class="info-group">
+                <label for="school">학교:</label>
+                <input type="text" id="school" required>
+            </div>
+            <div class="info-group">
+                <label for="studentId">학번:</label>
+                <input type="text" id="studentId" required>
+            </div>
+            <div class="info-group">
+                <label for="name">이름:</label>
+                <input type="text" id="name" required>
+            </div>
+
+            <hr style="margin: 30px 0;">
+
+            <h2>OX 퀴즈 (10문항)</h2>
+            <div id="ox-questions"></div>
+
+            <hr style="margin: 30px 0;">
+
+            <h2>5지선다형 퀴즈 (10문항)</h2>
+            <div id="mc-questions"></div>
+            
+            <button type="submit">채점 및 결과 저장</button>
+        </form>
+
+        <div id="results"></div>
+    </div>
+
+    <script>
+const questions = [
+    // OX 퀴즈 (1-10)
+    { type: 'ox', text: '파이썬 프로젝트를 시작할 때, 각 프로젝트마다 독립된 실행 환경을 만들어주는 가상환경(virtual environment)을 사용하는 것이 좋다.', answer: 'O', explanation: '가상환경은 프로젝트별로 라이브러리 버전을 격리하여 관리할 수 있게 해주어 충돌을 방지합니다.' },
+    { type: 'ox', text: '`pip`는 파이썬에 내장된 표준 함수를 불러오는 명령어이다.', answer: 'X', explanation: '`pip`는 외부 라이브러리(패키지)를 설치하고 관리하는 파이썬의 공식 패키지 관리자입니다.' },
+    { type: 'ox', text: '`requirements.txt` 파일은 프로젝트에 대한 설명을 적는 일반적인 문서 파일이다.', answer: 'X', explanation: '해당 프로젝트가 의존하는 외부 라이브러리 목록과 버전을 기록하여 환경 복구에 사용되는 파일입니다.' },
+    { type: 'ox', text: 'API Key와 같은 민감한 정보는 소스 코드에 직접 작성하여 GitHub에 공개하는 것이 일반적이다.', answer: 'X', explanation: '보안을 위해 민감 정보는 환경 변수나 별도의 설정 파일로 관리하며 절대 공개 저장소에 올리면 안 됩니다.' },
+    { type: 'ox', text: 'Flask는 파이썬으로 데이터 분석을 수행하는 대표적인 라이브러리이다.', answer: 'X', explanation: 'Flask는 웹 애플리케이션을 만드는 마이크로 웹 프레임워크입니다.' },
+    { type: 'ox', text: '웹 스크레이핑(크롤링)은 웹 페이지의 HTML 구조를 분석하여 원하는 데이터를 추출하는 기술이다.', answer: 'O', explanation: '`requests`로 정보를 가져오고 `BeautifulSoup` 등으로 데이터를 파싱하여 추출합니다.' },
+    { type: 'ox', text: 'Tkinter는 파이썬에서 GUI(그래픽 사용자 인터페이스) 애플리케이션을 만들기 위한 표준 라이브러리이다.', answer: 'O', explanation: '파이썬 설치 시 기본 포함되어 있어 별도 설치 없이 간단한 창 프로그램을 만들 수 있습니다.' },
+    { type: 'ox', text: '`if __name__ == "__main__":` 블록 안의 코드는 다른 파일에서 이 파일을 `import`할 때 실행된다.', answer: 'X', explanation: '해당 블록은 파일이 직접 실행될 때만 동작하며, `import`될 때는 실행되지 않습니다.' },
+    { type: 'ox', text: '`try-except` 구문은 실행 중 발생할 수 있는 예외를 처리하여 프로그램의 비정상 종료를 막는다.', answer: 'O', explanation: '오류 발생 시 대처 방안을 마련하여 프로그램의 안정성을 높이는 핵심 구문입니다.' },
+    { type: 'ox', text: 'Pandas 라이브러리의 `DataFrame`은 파이썬의 기본 딕셔너리와 기능적으로 완전히 동일하다.', answer: 'X', explanation: '`DataFrame`은 딕셔너리보다 훨씬 강력한 데이터 분석 및 통계 기능을 제공하는 2차원 테이블 구조입니다.' },
+
+    // 5지선다형 퀴즈 (11-20)
+    { type: 'mc', text: '외부 라이브러리인 `requests`를 설치하기 위한 올바른 명령어는?', options: ['python install requests', 'pip get requests', 'install package requests', 'pip install requests', 'py -m install requests'], answer: 'pip install requests', explanation: '`pip install [패키지명]`이 표준 설치 명령어입니다.' },
+    { type: 'mc', text: '프로젝트에 사용된 라이브러리 목록을 `requirements.txt` 파일로 생성하는 명령어는?', options: ['pip freeze > requirements.txt', 'pip list > requirements.txt', 'pip save > requirements.txt', 'pip export > requirements.txt', 'pip requirements > requirements.txt'], answer: 'pip freeze > requirements.txt', explanation: '`pip freeze` 결과물을 리다이렉션(`>`)하여 파일로 저장합니다.' },
+    { type: 'mc', text: '웹 페이지의 HTML 소스를 가져오기 위해 주로 사용하는 라이브러리는?', options: ['BeautifulSoup', 'Flask', 'requests', 'pytube', 'Tkinter'], answer: 'requests', explanation: '`requests`는 HTTP 요청을 담당하고, `BeautifulSoup`은 가져온 HTML을 분석합니다.' },
+    { type: 'mc', text: '파이썬으로 웹 서버를 개발할 때 사용하는 "마이크로 웹 프레임워크"는?', options: ['Django', 'Flask', 'Numpy', 'FastAPI', 'Pyramid'], answer: 'Flask', explanation: '가볍고 빠르게 시작할 수 있는 대표적인 마이크로 프레임워크입니다.' },
+    { type: 'mc', text: '스크립트 파일을 직접 실행했을 때만 특정 코드를 동작하게 하는 조건문은?', options: ['if __file__ == "__main__"', 'if __name__ == "__main__"', 'if script == "main"', 'if __main__:', 'if __name__ is "__main__"'], answer: 'if __name__ == "__main__"', explanation: '직접 실행 시 `__name__` 변수에 `__main__`이 할당되는 원리를 이용합니다.' },
+    { type: 'mc', text: 'API 응답 결과를 JSON에서 파이썬 객체(딕셔너리 등)로 변환하는 메소드는?', options: ['.text()', '.content()', '.dict()', '.json()', '.parse()'], answer: '.json()', explanation: '`requests` 응답 객체의 `.json()` 메소드는 JSON 데이터를 파이썬 형식으로 자동 변환합니다.' },
+    { type: 'mc', text: '함수나 클래스의 사용법을 설명하기 위해 작성하는 문자열을 무엇이라 하는가?', options: ['변수', '문자열', '독스트링(Docstring)', '메타데이터', '컴파일러 지시어'], answer: '독스트링(Docstring)', explanation: '`"""..."""` 사이에 작성하며 도움말 정보로 사용됩니다.' },
+    { type: 'mc', text: '다음 중 데스크톱 GUI 애플리케이션 개발에 사용되는 라이브러리는?', options: ['requests', 'pytesseract', 'Pandas', 'Tkinter', 'BeautifulSoup'], answer: 'Tkinter', explanation: '창, 버튼 등을 구성할 수 있는 파이썬 표준 GUI 라이브러리입니다.' },
+    { type: 'mc', text: '프로젝트 파일 구조를 폴더별로 나누어 관리하는 주된 이유는?', options: ['파일 개수 증대', '처리 속도 향상', '유지보수성과 가독성 향상', '해킹 방지', '파이썬 필수 사항'], answer: '유지보수성과 가독성 향상', explanation: '구조화된 프로젝트는 협업과 기능 확장에 유리합니다.' },
+    { type: 'mc', text: '공개 API 사용 시 사용자를 식별하기 위해 발급받는 고유한 문자열은?', options: ['비밀번호', 'SSH 키', 'API 키 (API Key)', '공인인증서', 'JWT'], answer: 'API 키 (API Key)', explanation: 'API 제공자가 사용 권한과 사용량을 관리하기 위해 발급하는 고유 키입니다.' }
+];
+
+        function renderQuestions() {
+            const oxContainer = document.getElementById('ox-questions');
+            const mcContainer = document.getElementById('mc-questions');
+            let questionNumber = 1;
+
+            questions.forEach(q => {
+                const qDiv = document.createElement('div');
+                qDiv.className = 'question-container';
+                const qText = document.createElement('div');
+                qText.className = 'question-text';
+                qText.innerHTML = `${questionNumber}. ${q.text.replace(/`([^`]+)`/g, '<code>$1</code>')}`;
+                qDiv.appendChild(qText);
+                const optionsDiv = document.createElement('div');
+                optionsDiv.className = 'options';
+                if (q.type === 'ox') {
+                    ['O', 'X'].forEach(opt => {
+                        const label = document.createElement('label');
+                        const radio = document.createElement('input');
+                        radio.type = 'radio'; radio.name = `q${questionNumber}`; radio.value = opt; radio.required = true;
+                        label.appendChild(radio); label.append(` ${opt}`);
+                        optionsDiv.appendChild(label);
+                    });
+                } else if (q.type === 'mc') {
+                    q.options.forEach(opt => {
+                        const label = document.createElement('label');
+                        const radio = document.createElement('input');
+                        radio.type = 'radio'; radio.name = `q${questionNumber}`; radio.value = opt; radio.required = true;
+                        label.appendChild(radio);
+                        label.innerHTML += ` ${opt.replace(/`([^`]+)`/g, '<code>$1</code>')}`;
+                        optionsDiv.appendChild(label);
+                    });
+                }
+                qDiv.appendChild(optionsDiv);
+                if (q.type === 'ox') {
+                    oxContainer.appendChild(qDiv);
+                } else {
+                    mcContainer.appendChild(qDiv);
+                }
+                questionNumber++;
+            });
+        }
+
+        function submitQuiz(event) {
+            event.preventDefault();
+            const school = document.getElementById('school').value;
+            const studentId = document.getElementById('studentId').value;
+            const name = document.getElementById('name').value;
+            let score = 0;
+            let fileContent = "";
+            const resultsContainer = document.getElementById('results');
+            resultsContainer.innerHTML = '<h2>채점 결과</h2>';
+            for (let i = 0; i < questions.length; i++) {
+                const qNumber = i + 1;
+                const selectedOption = document.querySelector(`input[name="q${qNumber}"]:checked`);
+                const questionData = questions[i];
+                const resultItem = document.createElement('div');
+                resultItem.classList.add('result-item');
+                let resultText = `<strong>[${qNumber}번 문항]</strong>
+`;
+                if (selectedOption && selectedOption.value === questionData.answer) {
+                    score++;
+                    resultItem.classList.add('correct');
+                    resultText += `<strong>결과: 정답!</strong>`;
+                } else {
+                    resultItem.classList.add('incorrect');
+                    resultText += `<strong>결과: 오답!</strong> (선택: ${selectedOption ? selectedOption.value : '미선택'}, 정답: ${questionData.answer})`;
+                }
+                const explanation = document.createElement('div');
+                explanation.className = 'explanation';
+                explanation.innerHTML = `<strong>상세 풀이:</strong> ${questionData.explanation.replace(/`([^`]+)`/g, '<code>$1</code>')}`;
+                resultItem.innerHTML = resultText;
+                resultItem.appendChild(explanation);
+                resultsContainer.appendChild(resultItem);
+                
+                const plainTextForFile = questionData.text.replace(/<[^>]*>/g, '').replace(/`([^`]+)`/g, '$1');
+                fileContent += `[${qNumber}번 문항]\n`;
+                fileContent += `문제: ${plainTextForFile}\n`;
+                fileContent += `선택한 답: ${selectedOption ? selectedOption.value : '미선택'}\n`;
+                fileContent += `정답: ${questionData.answer}\n`;
+                fileContent += `결과: ${selectedOption && selectedOption.value === questionData.answer ? '정답' : '오답'}\n`;
+                fileContent += `풀이: ${questionData.explanation.replace(/<[^>]*>/g, '').replace(/`([^`]+)`/g, '$1')}\n\n`;
+            }
+            const totalScore = (score / questions.length) * 100;
+            const now = new Date();
+            const timestamp = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}시${String(now.getMinutes()).padStart(2, '0')}분`;
+            const summary = document.createElement('p');
+            summary.innerHTML = `<strong>총점: ${totalScore.toFixed(0)}점 (${questions.length}개 중 ${score}개 정답)</strong>`;
+            resultsContainer.prepend(summary);
+            const fileHeader = `학교: ${school}\n학번: ${studentId}\n이름: ${name}\n응시 시각: ${timestamp}\n총점: ${totalScore.toFixed(0)}점\n\n---\n\n`;
+            fileContent = fileHeader + fileContent;
+            const fileNameTimestamp = now.toISOString().replace(/:/g, '-').slice(0, 19);
+            const fileName = `${school}_${studentId}_${name}_${totalScore.toFixed(0)}점_${fileNameTimestamp}.txt`;
+            download(fileName, fileContent);
+        }
+
+        function download(filename, text) {
+            const element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+            element.setAttribute('download', filename);
+            element.style.display = 'none';
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+        }
+
+        window.onload = renderQuestions;
+    </script>
+</body>
+</html>

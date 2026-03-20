@@ -1,0 +1,156 @@
+3차시: 파이썬 입출력 함수 학습 패키지
+안녕하세요! 파이썬 프로그래밍의 기본 중의 기본인 데이터 '입력'과 '출력'에 대해 학습할 수 있는 예제 코드와, 학습 내용을 점검해볼 수 있는 OX 및 5지선다형 HTML 퀴즈를 준비했습니다.
+
+1. 파이썬 예제 코드: 입출력 함수
+1.1. 기초 파이썬 예시 코드 (5개)
+기초 예제는 사용자와 상호작용하고, 기본적인 파일에 데이터를 쓰고 읽는 방법을 다룹니다.
+
+1. print() 함수로 화면에 출력하기
+
+# print()는 가장 기본적인 출력 함수입니다.
+print("Hello, Python!")
+
+name = "이재명"
+age = 30
+print("이름:", name, ", 나이:", age)
+2. input() 함수로 사용자 입력받기
+
+# input() 함수는 사용자로부터 키보드 입력을 문자열(string) 형태로 받습니다.
+name = input("이름을 입력하세요: ")
+print(f"안녕하세요, {name}님!")
+3. 입력받은 문자열을 숫자로 변환하기
+
+# input()으로 받은 값은 항상 문자열이므로, 계산을 위해서는 숫자형으로 변환해야 합니다.
+year_str = input("태어난 연도를 입력하세요: ")
+year_int = int(year_str) # 정수(int)로 변환
+
+age = 2026 - year_int + 1
+print(f"당신의 한국 나이는 {age}세입니다.")
+4. 간단한 파일 쓰기 (w 모드)
+
+# 'w' 모드는 파일에 내용을 쓸 때 사용합니다. 파일이 이미 존재하면 내용을 덮어씁니다.
+f = open("memo.txt", "w", encoding="utf-8")
+f.write("파이썬으로 파일 쓰기 연습\n")
+f.write("첫 번째 줄입니다.")
+f.close() # 파일을 열었으면 반드시 닫아야 합니다.
+
+print("memo.txt 파일 쓰기 완료!")
+5. 간단한 파일 읽기 (r 모드)
+
+# 'r' 모드는 파일의 내용을 읽을 때 사용합니다.
+f = open("memo.txt", "r", encoding="utf-8")
+content = f.read() # 파일 전체 내용을 하나의 문자열로 읽어옵니다.
+f.close()
+
+print("--- memo.txt 파일 내용 ---")
+print(content)
+1.2. 응용 파이썬 예시 코드 (5개)
+응용 예제는 더 안전하고 효율적인 파일 처리 방법과 다양한 출력 옵션을 다룹니다.
+
+1. with 구문을 사용하여 안전하게 파일 다루기
+
+# with 구문을 사용하면 파일 처리 중 오류가 발생해도, 블록이 끝나면 항상 자동으로 파일을 닫아줍니다.
+# close()를 명시적으로 호출할 필요가 없어 안전하고 편리합니다.
+
+with open("memo_with.txt", "w", encoding="utf-8") as f:
+    f.write("with 구문은 매우 유용합니다.\n")
+    f.write("자동으로 파일을 닫아줍니다.")
+
+print("with 구문을 사용한 파일 쓰기 완료!")
+2. 파일 내용 한 줄씩 읽기
+
+# 대용량 파일을 처리할 때, .read()로 한번에 읽으면 메모리 문제가 발생할 수 있습니다.
+# for문을 이용해 한 줄씩 읽는 것이 효율적입니다.
+print("--- memo_with.txt 한 줄씩 읽기 ---")
+with open("memo_with.txt", "r", encoding="utf-8") as f:
+    for line in f:
+        # line 변수에는 줄바꿈 문자(\n)가 포함되어 있으므로 .strip()으로 제거해줍니다.
+        print(line.strip()) 
+3. 파일에 내용 추가하기 (a 모드)
+
+# 'a' (append) 모드는 기존 파일의 끝에 새로운 내용을 추가합니다.
+with open("log.txt", "a", encoding="utf-8") as f:
+    from datetime import datetime
+    timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    f.write(f"[{timestamp}] 프로그램이 실행되었습니다.\n")
+
+print("log.txt에 현재 시각 기록 완료!")
+4. print() 함수의 sep과 end 옵션
+
+# sep: 여러 항목을 출력할 때 사용할 구분자를 지정합니다. (기본값: 공백 ' ')
+# end: print() 함수가 출력을 마친 뒤 마지막에 추가할 문자를 지정합니다. (기본값: 줄바꿈 '\n')
+
+print("사과", "바나나", "딸기")
+print("사과", "바나나", "딸기", sep=", ") # 쉼표와 공백으로 구분
+
+print("첫 번째 줄", end=" --- ") # 줄바꿈 대신 " --- "를 출력
+print("두 번째 줄")
+5. .readlines()로 파일 전체를 리스트로 읽기
+
+# .readlines()는 파일의 모든 줄을 각각의 문자열 요소로 갖는 리스트를 반환합니다.
+with open("log.txt", "r", encoding="utf-8") as f:
+    lines = f.readlines()
+    print("log.txt의 1번 인덱스 내용:", lines[1].strip())
+    print(f"총 {len(lines)}개의 로그가 있습니다.")
+1.3. 심화 파이썬 예시 코드 (5개)
+심화 예제는 CSV, JSON 형식의 파일을 다루거나 표준 입출력 스트림을 제어하는 방법을 다룹니다.
+
+1. csv 모듈로 CSV 파일 쓰기
+
+# CSV (Comma-Separated Values) 형식의 파일을 다루기 위한 표준 모듈입니다.
+import csv
+
+data = [
+    ["이름", "부서", "직급"],
+    ["이재명", "개발팀", "팀장"],
+    ["김동연", "기획팀", "사원"],
+    ["이낙연", "영업팀", "대리"]
+]
+
+with open("company.csv", "w", newline="", encoding="utf-8-sig") as f:
+    writer = csv.writer(f)
+    writer.writerows(data)
+
+print("company.csv 파일 생성 완료!")
+2. csv 모듈로 CSV 파일 읽기
+
+import csv
+
+with open("company.csv", "r", encoding="utf-8-sig") as f:
+    reader = csv.reader(f)
+    next(reader) # 헤더(첫 번째 줄) 건너뛰기
+    for row in reader:
+        print(f"{row[0]}님의 부서는 {row[1]}입니다.")
+3. json 모듈로 딕셔너리를 JSON 파일로 저장
+
+# JSON은 웹에서 데이터를 주고받을 때 널리 사용되는 형식입니다.
+import json
+
+my_data = {
+    "name": "이재명",
+    "age": 30,
+    "city": "Seoul",
+    "skills": ["Python", "AI", "Data Analysis"]
+}
+
+with open("profile.json", "w", encoding="utf-8") as f:
+    # indent=4: 예쁘게 들여쓰기, ensure_ascii=False: 한글을 유니코드 대신 그대로 저장
+    json.dump(my_data, f, indent=4, ensure_ascii=False)
+
+print("profile.json 파일 생성 완료!")
+4. JSON 파일을 읽어 딕셔너리로 변환
+
+import json
+
+with open("profile.json", "r", encoding="utf-8") as f:
+    profile_data = json.load(f)
+
+print("이름:", profile_data["name"])
+print("보유 기술 중 첫 번째:", profile_data["skills"][0])
+5. 표준 오류(stderr) 스트림에 출력하기
+
+# 일반적인 출력은 표준 출력(stdout)으로, 오류 메시지는 표준 오류(stderr)로 보내는 것이 좋습니다.
+import sys
+
+print("이것은 일반적인 정보 메시지입니다.") # stdout
+print("치명적인 오류가 발생했습니다!", file=sys.stderr) # stderr

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 퀴즈 - 딕셔너리</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Malgun Gothic", "맑은 고딕", sans-serif; line-height: 1.6; padding: 20px; margin: 0; background-color: #f0f2f5; }
+        h1, h2 { border-bottom: 2px solid #dee2e6; padding-bottom: 10px; }
+        #quizContainer { max-width: 800px; margin: 20px auto; background-color: #ffffff; padding: 30px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        .info-group, .question-container { margin-bottom: 25px; }
+        label { font-weight: bold; }
+        input[type="text"] { width: 100%; box-sizing: border-box; padding: 10px; border: 1px solid #ced4da; border-radius: 4px; font-size: 1em; }
+        .question-text { font-size: 1.1em; margin-bottom: 15px; font-family: Consolas, "Courier New", monospace; white-space: pre-wrap; background-color: #f8f9fa; padding: 15px; border-radius: 5px; border: 1px solid #e9ecef; }
+        .options label { font-weight: normal; margin-right: 15px; display: block; padding: 8px; border-radius: 4px; cursor: pointer; }
+        .options label:hover { background-color: #e9ecef; }
+        .options input[type="radio"] { margin-right: 10px; }
+        button { background-color: #007bff; color: white; padding: 12px 25px; border: none; border-radius: 5px; cursor: pointer; font-size: 1.1em; width: 100%; }
+        button:hover { background-color: #0056b3; }
+        #results { margin-top: 30px; border-top: 2px solid #dee2e6; padding-top: 20px; }
+        .result-item { padding: 15px; margin-bottom: 10px; border-radius: 5px; }
+        .correct { background-color: #d1e7dd; border-left: 5px solid #198754; }
+        .incorrect { background-color: #f8d7da; border-left: 5px solid #dc3545; }
+        .explanation { margin-top: 10px; padding: 10px; background: #e9ecef; border-radius: 4px; }
+        code { background-color: #e9ecef; padding: 2px 4px; border-radius: 3px; }
+    </style>
+</head>
+<body>
+
+    <div id="quizContainer">
+        <h1>10차시: 파이썬 딕셔너리 퀴즈</h1>
+
+        <form id="quizForm" onsubmit="submitQuiz(event)">
+            <h2>인적사항 입력</h2>
+            <div class="info-group">
+                <label for="school">학교:</label>
+                <input type="text" id="school" required>
+            </div>
+            <div class="info-group">
+                <label for="studentId">학번:</label>
+                <input type="text" id="studentId" required>
+            </div>
+            <div class="info-group">
+                <label for="name">이름:</label>
+                <input type="text" id="name" required>
+            </div>
+
+            <hr style="margin: 30px 0;">
+
+            <h2>OX 퀴즈 (10문항)</h2>
+            <div id="ox-questions"></div>
+
+            <hr style="margin: 30px 0;">
+
+            <h2>5지선다형 퀴즈 (10문항)</h2>
+            <div id="mc-questions"></div>
+            
+            <button type="submit">채점 및 결과 저장</button>
+        </form>
+
+        <div id="results"></div>
+    </div>
+
+    <script>
+
+const questions = [
+    // 딕셔너리 OX 퀴즈 (1-10)
+    { type: 'ox', text: '파이썬 딕셔너리는 순서가 없는(unordered) 자료구조이다.', answer: 'X', explanation: 'Python 3.7 버전부터 딕셔너리는 입력된 순서를 유지하는(ordered) 자료구조가 되었습니다. 그 이전 버전에서는 순서를 보장하지 않았습니다.' },
+    { type: 'ox', text: '딕셔너리의 키(key)는 중복될 수 없다.', answer: 'O', explanation: '딕셔너리의 키는 고유해야 합니다. 만약 중복된 키를 사용해 값을 할당하면, 기존의 값은 새로운 값으로 덮어써집니다.' },
+    { type: 'ox', text: '딕셔너리의 값(value)으로는 리스트나 다른 딕셔너리를 사용할 수 있다.', answer: 'O', explanation: '딕셔너리의 값으로는 정수, 문자열, 리스트, 튜플, 다른 딕셔너리 등 어떠한 파이썬 객체라도 올 수 있습니다.' },
+    { type: 'ox', text: '`my_dict[\'key\']` 와 `my_dict.get(\'key\')`는 존재하지 않는 키에 접근할 때 동일하게 KeyError를 발생시킨다.', answer: 'X', explanation: '`my_dict[\'key\']`는 키가 없으면 KeyError를 발생시키지만, `my_dict.get(\'key\')`는 기본값인 None을 반환하여 오류를 방지합니다.' },
+    { type: 'ox', text: '`del my_dict[\'key\']`는 딕셔너리에서 특정 키-값 쌍을 삭제하는 명령어이다.', answer: 'O', explanation: '`del` 키워드는 딕셔너리에서 지정된 키에 해당하는 아이템(키와 값)을 영구적으로 제거합니다.' },
+    { type: 'ox', text: '딕셔너리의 키(key)로는 가변(mutable) 객체인 리스트를 사용할 수 있다.', answer: 'X', explanation: '딕셔너리의 키는 해시 가능(hashable)해야 하므로, 불변(immutable) 객체만 사용할 수 있습니다. 리스트는 가변 객체이므로 키가 될 수 없습니다.' },
+    { type: 'ox', text: '`my_dict.keys()` 메서드는 딕셔너리의 모든 키를 포함하는 튜플을 반환한다.', answer: 'X', explanation: '`keys()` 메서드는 딕셔너리의 키들을 포함하는 \'뷰(view) 객체\'를 반환합니다. 튜플로 사용하려면 `tuple()` 형 변환이 필요합니다.' },
+    { type: 'ox', text: '`dict1.update(dict2)`는 `dict1`에 `dict2`의 내용을 병합하며, 중복된 키가 있으면 `dict2`의 값으로 덮어쓴다.', answer: 'O', explanation: '`update()` 메서드는 호출한 딕셔너리를 직접 수정하여 다른 딕셔너리의 내용을 병합하는 역할을 합니다.' },
+    { type: 'ox', text: '딕셔너리 컴프리헨션(Comprehension)은 리스트 컴프리헨션보다 항상 실행 속도가 빠르다.', answer: 'X', explanation: '실행 속도는 데이터 크기나 복잡도에 따라 다르며 항상 빠르지는 않습니다. 다만 코드를 더 간결하고 파이썬답게 만들어줍니다.' },
+    { type: 'ox', text: '`pop()` 메서드를 사용하여 딕셔너리에서 아이템을 제거하면, 제거된 아이템의 값이 반환된다.', answer: 'O', explanation: '`my_dict.pop(\'key\')`는 해당 키의 아이템을 제거하고 그 아이템의 \'값(value)\'을 반환하여 활용할 수 있게 해줍니다.' },
+
+    // 딕셔너리 5지선다형 (11-20)
+    { type: 'mc', text: '다음 중 딕셔너리를 생성하는 방법으로 올바르지 않은 것은?', options: ['d = {}', 'd = {\'a\': 1}', 'd = dict(a=1, b=2)', 'd = dict([(\'a\', 1), (\'b\', 2)])', 'd = {\'a\', 1, \'b\', 2}'], answer: 'd = {\'a\', 1, \'b\', 2}', explanation: '{\'a\', 1, \'b\', 2}는 세트(set)를 생성하는 문법입니다. 딕셔너리는 반드시 키와 값의 쌍(:)으로 구성되어야 합니다.' },
+    { type: 'mc', text: '코드 `d = {\'a\': 100, \'b\': 200}; print(d.get(\'c\', 0))`의 실행 결과는?', options: ['100', '200', 'None', '0', 'KeyError'], answer: '0', explanation: '`get()` 메서드는 키가 없을 때 두 번째 인자로 준 기본값(0)을 반환합니다.' },
+    { type: 'mc', text: '다음 코드의 실행 결과는?\n`d = {\'a\': 1}; d[\'b\'] = 2; d[\'a\': 3]; print(len(d))`', options: ['1', '2', '3', '4', '오류 발생'], answer: '2', explanation: '키 \'a\'를 3으로 수정해도 새로운 키가 추가되는 것은 아니므로, 전체 키의 개수(len)는 2입니다.' },
+    { type: 'mc', text: '딕셔너리의 모든 값을 리스트로 얻기 위한 올바른 코드는?', options: ['list(d.items())', 'd.values()', 'list(d.values())', 'list(d.keys())', 'd.getall()'], answer: 'list(d.values())', explanation: '`d.values()`가 반환하는 뷰 객체를 리스트로 변환하기 위해 `list()` 함수를 사용해야 합니다.' },
+    { type: 'mc', text: '다음 중 딕셔너리의 키(key)로 사용할 수 없는 자료형은?', options: ['int', 'float', 'str', 'tuple', 'list'], answer: 'list', explanation: '리스트는 가변(mutable) 자료형이므로 딕셔너리의 키로 사용할 수 없습니다.' },
+    { type: 'mc', text: '코드 `d = {\'a\': 1, \'b\': 2}; d.pop(\'a\'); print(d)`의 실행 결과는?', options: ['{\'a\': 1}', '{\'b\': 2}', '1', '2', '오류 발생'], answer: '{\'b\': 2}', explanation: '`pop(\'a\')` 호출 후 딕셔너리에서는 키 \'a\'에 해당하는 쌍이 제거됩니다.' },
+    { type: 'mc', text: '두 딕셔너리 `d1={\'a\':1}, d2={\'b\':2}`를 병합하는 방법으로 틀린 것은?', options: ['d1.update(d2)', '{**d1, **d2}', 'd1 | d2 (Python 3.9+)', 'd1 + d2', '모두 맞다'], answer: 'd1 + d2', explanation: '딕셔너리는 `+` 연산자를 지원하지 않습니다. 대신 `update()`나 `|` 연산자를 사용합니다.' },
+    { type: 'mc', text: '코드 `d = {\'x\': 10, \'y\': 20}; print(\'x\' in d)`의 실행 결과는?', options: ['True', 'False', '10', '20', '오류 발생'], answer: 'True', explanation: '`in` 연산자는 딕셔너리의 키 존재 여부를 확인합니다.' },
+    { type: 'mc', text: '다음 코드의 실행 결과는?\n`d = {x: x*x for x in range(3)}; print(d)`', options: ['{0: 0, 1: 1, 2: 4}', '{1, 4, 9}', '{0, 1, 2, 3, 4}', '{0:0, 1:1, 2:2}', '오류 발생'], answer: '{0: 0, 1: 1, 2: 4}', explanation: 'range(3)은 0, 1, 2를 생성하므로 각 숫자의 제곱이 값으로 들어간 딕셔너리가 생성됩니다.' },
+    { type: 'mc', text: '`d.setdefault(\'a\', [])`의 동작에 대한 설명으로 가장 정확한 것은?', options: ['\'a\' 키가 있으면 값을 []로 바꾼다.', '\'a\' 키의 값을 반환하고 없으면 KeyError 발생', '\'a\' 키가 없으면 `d[\'a\'] = []` 를 실행하고 현재 값을 반환', '\'a\' 키와 값으로 []를 무조건 추가', '\'a\' 키를 제거'], answer: '\'a\' 키가 없으면 `d[\'a\'] = []` 를 실행하고 현재 값을 반환', explanation: '`setdefault`는 키가 없을 때만 기본값을 설정하는 안전한 방법입니다.' },
+
+];
+
+        function renderQuestions() {
+            const oxContainer = document.getElementById('ox-questions');
+            const mcContainer = document.getElementById('mc-questions');
+            let questionNumber = 1;
+
+            questions.forEach(q => {
+                const qDiv = document.createElement('div');
+                qDiv.className = 'question-container';
+                const qText = document.createElement('div');
+                qText.className = 'question-text';
+                qText.innerHTML = `${questionNumber}. ${q.text.replace(/`([^`]+)`/g, '<code>$1</code>')}`;
+                qDiv.appendChild(qText);
+                const optionsDiv = document.createElement('div');
+                optionsDiv.className = 'options';
+                if (q.type === 'ox') {
+                    ['O', 'X'].forEach(opt => {
+                        const label = document.createElement('label');
+                        const radio = document.createElement('input');
+                        radio.type = 'radio'; radio.name = `q${questionNumber}`; radio.value = opt; radio.required = true;
+                        label.appendChild(radio); label.append(` ${opt}`);
+                        optionsDiv.appendChild(label);
+                    });
+                } else if (q.type === 'mc') {
+                    q.options.forEach(opt => {
+                        const label = document.createElement('label');
+                        const radio = document.createElement('input');
+                        radio.type = 'radio'; radio.name = `q${questionNumber}`; radio.value = opt; radio.required = true;
+                        label.appendChild(radio);
+                        label.innerHTML += ` ${opt.replace(/`([^`]+)`/g, '<code>$1</code>')}`;
+                        optionsDiv.appendChild(label);
+                    });
+                }
+                qDiv.appendChild(optionsDiv);
+                if (q.type === 'ox') {
+                    oxContainer.appendChild(qDiv);
+                } else {
+                    mcContainer.appendChild(qDiv);
+                }
+                questionNumber++;
+            });
+        }
+
+        function submitQuiz(event) {
+            event.preventDefault();
+            const school = document.getElementById('school').value;
+            const studentId = document.getElementById('studentId').value;
+            const name = document.getElementById('name').value;
+            let score = 0;
+            let fileContent = "";
+            const resultsContainer = document.getElementById('results');
+            resultsContainer.innerHTML = '<h2>채점 결과</h2>';
+            for (let i = 0; i < questions.length; i++) {
+                const qNumber = i + 1;
+                const selectedOption = document.querySelector(`input[name="q${qNumber}"]:checked`);
+                const questionData = questions[i];
+                const resultItem = document.createElement('div');
+                resultItem.classList.add('result-item');
+                let resultText = `<strong>[${qNumber}번 문항]</strong>
+`;
+                if (selectedOption && selectedOption.value === questionData.answer) {
+                    score++;
+                    resultItem.classList.add('correct');
+                    resultText += `<strong>결과: 정답!</strong>`;
+                } else {
+                    resultItem.classList.add('incorrect');
+                    resultText += `<strong>결과: 오답!</strong> (선택: ${selectedOption ? selectedOption.value : '미선택'}, 정답: ${questionData.answer})`;
+                }
+                const explanation = document.createElement('div');
+                explanation.className = 'explanation';
+                explanation.innerHTML = `<strong>상세 풀이:</strong> ${questionData.explanation.replace(/`([^`]+)`/g, '<code>$1</code>')}`;
+                resultItem.innerHTML = resultText;
+                resultItem.appendChild(explanation);
+                resultsContainer.appendChild(resultItem);
+                
+                const plainTextForFile = questionData.text.replace(/<[^>]*>/g, '').replace(/`([^`]+)`/g, '$1');
+                fileContent += `[${qNumber}번 문항]\n`;
+                fileContent += `문제: ${plainTextForFile}\n`;
+                fileContent += `선택한 답: ${selectedOption ? selectedOption.value : '미선택'}\n`;
+                fileContent += `정답: ${questionData.answer}\n`;
+                fileContent += `결과: ${selectedOption && selectedOption.value === questionData.answer ? '정답' : '오답'}\n`;
+                fileContent += `풀이: ${questionData.explanation.replace(/<[^>]*>/g, '').replace(/`([^`]+)`/g, '$1')}\n\n`;
+            }
+            const totalScore = (score / questions.length) * 100;
+            const now = new Date();
+            const timestamp = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}시${String(now.getMinutes()).padStart(2, '0')}분`;
+            const summary = document.createElement('p');
+            summary.innerHTML = `<strong>총점: ${totalScore.toFixed(0)}점 (${questions.length}개 중 ${score}개 정답)</strong>`;
+            resultsContainer.prepend(summary);
+            const fileHeader = `학교: ${school}\n학번: ${studentId}\n이름: ${name}\n응시 시각: ${timestamp}\n총점: ${totalScore.toFixed(0)}점\n\n---\n\n`;
+            fileContent = fileHeader + fileContent;
+            const fileNameTimestamp = now.toISOString().replace(/:/g, '-').slice(0, 19);
+            const fileName = `${school}_${studentId}_${name}_${totalScore.toFixed(0)}점_${fileNameTimestamp}.txt`;
+            download(fileName, fileContent);
+        }
+
+        function download(filename, text) {
+            const element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+            element.setAttribute('download', filename);
+            element.style.display = 'none';
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+        }
+
+        window.onload = renderQuestions;
+    </script>
+</body>
+</html>

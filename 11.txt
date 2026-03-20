@@ -1,0 +1,187 @@
+11차시: 함수 (Functions)
+1. 파이썬 예시 코드
+함수는 특정 작업을 수행하는 코드 블록으로, 반복적인 작업을 효율적으로 처리하고 코드의 가독성을 높이는 데 필수적입니다.
+
+가. 기초 예시 코드 (5개)
+1. 가장 기본적인 함수 정의 및 호출
+
+# 매개변수와 반환값이 없는 함수
+def say_hello():
+  """'안녕하세요!'를 출력하는 함수"""
+  print("안녕하세요!")
+
+# 함수 호출
+say_hello()
+2. 매개변수(Parameter)를 받는 함수
+
+def greet(name):
+  """이름을 받아 인사하는 함수"""
+  print(f"반갑습니다, {name}님!")
+
+# 함수 호출
+greet("홍길동")
+3. 반환 값(Return Value)이 있는 함수
+
+def add(a, b):
+  """두 숫자를 더한 결과를 반환하는 함수"""
+  return a + b
+
+# 함수 호출 및 결과 저장
+result = add(10, 5)
+print(f"10 + 5 = {result}")
+4. 여러 개의 매개변수와 반환 값
+
+def calculate_rectangle(width, height):
+  """사각형의 넓이와 둘레를 계산하여 반환하는 함수"""
+  area = width * height
+  perimeter = 2 * (width + height)
+  return area, perimeter
+
+# 함수 호출 및 결과 저장 (튜플로 반환됨)
+rect_area, rect_perimeter = calculate_rectangle(5, 4)
+print(f"넓이: {rect_area}, 둘레: {rect_perimeter}")
+5. 기본(Default) 매개변수 값 설정
+
+def power(base, exponent=2):
+  """거듭제곱을 계산하는 함수 (지수의 기본값은 2)"""
+  return base ** exponent
+
+# exponent 값을 주지 않으면 기본값 2로 계산
+print(f"10의 제곱: {power(10)}")
+
+# exponent 값을 지정하면 해당 값으로 계산
+print(f"2의 5제곱: {power(2, 5)}")
+나. 응용 예시 코드 (5개)
+1. 가변 인자 리스트 *args 사용
+
+def sum_all(*numbers):
+  """입력된 모든 숫자의 합계를 반환하는 함수"""
+  total = 0
+  for num in numbers:
+    total += num
+  return total
+
+print(f"1, 2, 3의 합: {sum_all(1, 2, 3)}")
+print(f"10, 20, 30, 40, 50의 합: {sum_all(10, 20, 30, 40, 50)}")
+2. 키워드 가변 인자 **kwargs 사용
+
+def print_user_info(**user_data):
+  """사용자의 정보를 키-값 쌍으로 받아 출력하는 함수"""
+  print("--- 사용자 정보 ---")
+  for key, value in user_data.items():
+    print(f"{key}: {value}")
+  print("--------------------")
+
+
+print_user_info(name="이순신", age=45, city="서울")
+print_user_info(name="유관순", email="yu@example.com")
+3. 람다(Lambda) 표현식: 이름 없는 한 줄 함수
+
+# 일반 함수
+def multiply(x, y):
+  return x * y
+
+# 람다 표현식
+lambda_multiply = lambda x, y: x * y
+
+print(f"일반 함수 결과: {multiply(4, 5)}")
+print(f"람다 표현식 결과: {lambda_multiply(4, 5)}")
+
+# 함수의 인자로 람다 사용 (sorted의 key)
+points = [(1, 5), (3, 2), (5, 8)]
+# y좌표 기준으로 정렬
+sorted_points = sorted(points, key=lambda point: point[1])
+print(f"y좌표 기준 정렬: {sorted_points}")
+4. 변수의 범위 (Scope): 지역 변수와 전역 변수
+
+global_var = 100  # 전역 변수
+
+def scope_test():
+  local_var = 10  # 지역 변수
+  print(f"함수 안 - 지역 변수: {local_var}")
+  print(f"함수 안 - 전역 변수: {global_var}")
+
+scope_test()
+print(f"함수 밖 - 전역 변수: {global_var}")
+# print(f"함수 밖 - 지역 변수: {local_var}")  # NameError 발생
+5. 타입 힌트(Type Hinting)를 사용한 함수
+
+def get_full_name(first_name: str, last_name: str) -> str:
+  """성과 이름을 받아 전체 이름을 만들어 반환 (타입 힌트 사용)"""
+  return f"{last_name}{first_name}"
+
+full_name = get_full_name("길동", "홍")
+print(full_name)
+다. 심화 예시 코드 (5개)
+1. 재귀 함수 (Recursive Function)
+
+def factorial(n: int) -> int:
+  """팩토리얼을 계산하는 재귀 함수"""
+  if n == 0 or n == 1:
+    return 1
+  else:
+    return n * factorial(n - 1)
+
+print(f"5! = {factorial(5)}")
+2. 클로저 (Closure)
+
+def outer_func(base_num):
+  """바깥 함수: 기준 숫자를 기억"""
+  def inner_func(x):
+    """안쪽 함수: 기준 숫자와 자신의 인자를 곱함"""
+    return base_num * x
+  return inner_func
+
+# outer_func가 실행된 후에도 base_num(5)를 기억하는 inner_func가 반환됨
+multiplier_by_5 = outer_func(5)
+multiplier_by_10 = outer_func(10)
+
+print(f"5 * 3 = {multiplier_by_5(3)}")
+print(f"10 * 3 = {multiplier_by_10(3)}")
+3. 데코레이터 (Decorator)
+
+import time
+
+def timer_decorator(original_func):
+  """함수의 실행 시간을 측정하는 데코레이터"""
+  def wrapper(*args, **kwargs):
+    start_time = time.time()
+    result = original_func(*args, **kwargs)
+    end_time = time.time()
+    print(f"'{original_func.__name__}' 함수 실행 시간: {end_time - start_time:.5f}초")
+    return result
+  return wrapper
+
+@timer_decorator
+def long_running_task(n):
+  """시간이 오래 걸리는 작업을 시뮬레이션하는 함수"""
+  sum = 0
+  for i in range(n):
+    sum += i
+  return sum
+
+long_running_task(1000000)
+4. 제너레이터 (Generator)와 yield
+
+def fibonacci_generator(count):
+  """피보나치 수열을 생성하는 제너레이터"""
+  a, b = 0, 1
+  for _ in range(count):
+    yield a
+    a, b = b, a + b
+
+# 제너레이터는 호출 시 바로 실행되지 않고, 반복문 등에서 하나씩 값을 생성함
+print("피보나치 수열 (10개):")
+for num in fibonacci_generator(10):
+  print(num, end=" ")
+5. map, filter 함수와 함께 사용
+
+numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+# map: 각 요소에 함수를 적용
+squared_numbers = list(map(lambda x: x**2, numbers))
+print(f"\n제곱된 숫자들: {squared_numbers}")
+
+# filter: 특정 조건(함수 결과가 True)을 만족하는 요소만 필터링
+even_numbers = list(filter(lambda x: x % 2 == 0, numbers))
+print(f"짝수들: {even_numbers}")

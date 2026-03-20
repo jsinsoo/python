@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 퀴즈 - Numpy 데이터 분석</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Malgun Gothic", "맑은 고딕", sans-serif; line-height: 1.6; padding: 20px; margin: 0; background-color: #f0f2f5; }
+        h1, h2 { border-bottom: 2px solid #dee2e6; padding-bottom: 10px; }
+        #quizContainer { max-width: 800px; margin: 20px auto; background-color: #ffffff; padding: 30px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        .info-group, .question-container { margin-bottom: 25px; }
+        label { font-weight: bold; }
+        input[type="text"] { width: 100%; box-sizing: border-box; padding: 10px; border: 1px solid #ced4da; border-radius: 4px; font-size: 1em; }
+        .question-text { font-size: 1.1em; margin-bottom: 15px; font-family: Consolas, "Courier New", monospace; white-space: pre-wrap; background-color: #f8f9fa; padding: 15px; border-radius: 5px; border: 1px solid #e9ecef; }
+        .options label { font-weight: normal; margin-right: 15px; display: block; padding: 8px; border-radius: 4px; cursor: pointer; }
+        .options label:hover { background-color: #e9ecef; }
+        .options input[type="radio"] { margin-right: 10px; }
+        button { background-color: #007bff; color: white; padding: 12px 25px; border: none; border-radius: 5px; cursor: pointer; font-size: 1.1em; width: 100%; margin-top: 20px; }
+        button:hover { background-color: #0056b3; }
+        #results { margin-top: 30px; border-top: 2px solid #dee2e6; padding-top: 20px; }
+        .result-item { padding: 15px; margin-bottom: 10px; border-radius: 5px; }
+        .correct { background-color: #d1e7dd; border-left: 5px solid #198754; }
+        .incorrect { background-color: #f8d7da; border-left: 5px solid #dc3545; }
+        .explanation { margin-top: 10px; padding: 10px; background: #e9ecef; border-radius: 4px; font-size: 0.95em; }
+        code { background-color: #e2e6ea; padding: 2px 4px; border-radius: 3px; font-family: Consolas, monospace; }
+    </style>
+</head>
+<body>
+
+    <div id="quizContainer">
+        <h1>16차시: 파이썬 Numpy 데이터 분석 퀴즈</h1>
+
+        <form id="quizForm" onsubmit="submitQuiz(event)">
+            <h2>인적사항 입력</h2>
+            <div class="info-group">
+                <label for="school">학교:</label>
+                <input type="text" id="school" required>
+            </div>
+            <div class="info-group">
+                <label for="studentId">학번:</label>
+                <input type="text" id="studentId" required>
+            </div>
+            <div class="info-group">
+                <label for="name">이름:</label>
+                <input type="text" id="name" required>
+            </div>
+
+            <hr style="margin: 30px 0;">
+
+            <h2>OX 퀴즈 (10문항)</h2>
+            <div id="ox-questions"></div>
+
+            <hr style="margin: 30px 0;">
+
+            <h2>5지선다형 퀴즈 (10문항)</h2>
+            <div id="mc-questions"></div>
+            
+            <button type="submit">채점 및 결과 저장</button>
+        </form>
+
+        <div id="results"></div>
+    </div>
+
+    <script>
+        const questions = [
+            // OX 퀴즈
+            { type: 'ox', text: 'Numpy는 "Numerical Python"의 약자이며, 파이썬의 표준 라이브러리이다.', answer: 'X', explanation: 'Numpy는 파이썬 과학 컴퓨팅의 핵심 라이브러리이지만, 표준 라이브러리가 아니므로 별도로 설치해야 합니다.' },
+            { type: 'ox', text: 'Numpy 배열의 모든 요소는 같은 자료형(dtype)을 가져야 한다.', answer: 'O', explanation: 'Numpy 배열은 동종(homogeneous) 데이터 타입입니다. 이 특징 덕분에 연산이 매우 빠릅니다.' },
+            { type: 'ox', text: '`arr.shape` 속성은 배열에 있는 요소의 총 개수를 반환한다.', answer: 'X', explanation: '`arr.shape`는 차원의 크기를 튜플로 반환합니다. 총 개수는 `arr.size`입니다.' },
+            { type: 'ox', text: '`np.arange(5)`는 `[1, 2, 3, 4, 5]` 배열을 생성한다.', answer: 'X', explanation: '`np.arange(5)`는 0부터 4까지 `[0, 1, 2, 3, 4]`를 생성합니다.' },
+            { type: 'ox', text: 'Numpy 배열 간의 `+` 연산은 요소별(element-wise) 덧셈을 수행한다.', answer: 'O', explanation: '배열의 같은 위치에 있는 요소끼리 연산을 수행하는 것이 기본입니다.' },
+            { type: 'ox', text: '`arr.T`는 원본 배열 `arr`의 행과 열을 바꾼 전치 배열을 반환한다.', answer: 'O', explanation: '`.T` 속성은 Transpose(전치)를 수행합니다.' },
+            { type: 'ox', text: 'Numpy에서 행렬 곱셈은 `*` 연산자를 사용한다.', answer: 'X', explanation: '`*`는 요소별 곱이며, 행렬 곱은 `@` 또는 `np.dot()`을 사용합니다.' },
+            { type: 'ox', text: '브로드캐스팅(Broadcasting)은 형태가 같은 배열끼리만 연산할 수 있게 하는 기능이다.', answer: 'X', explanation: '브로드캐스팅은 형태가 다른 배열끼리도 연산이 가능하도록 맞춰주는 기능입니다.' },
+            { type: 'ox', text: '`arr.sum(axis=1)`은 배열의 각 열(column)의 합계를 구한다.', answer: 'X', explanation: '`axis=1`은 행(row) 방향의 합계를 구합니다. 열은 `axis=0`입니다.' },
+            { type: 'ox', text: '`np.zeros((3, 2))`는 모든 요소가 0인 3행 2열의 배열을 생성한다.', answer: 'O', explanation: '지정한 형태(3x2)의 0으로 채워진 배열을 생성합니다.' },
+
+            // 5지선다형
+            { type: 'mc', text: 'Numpy 라이브러리를 임포트하는 가장 일반적인 관례는?', options: ['import numpy', 'import numpy as n', 'import numpy as np', 'import numpy as num', 'import numpypy as np'], answer: 'import numpy as np', explanation: '`as np`로 별칭을 사용하는 것이 표준 관례입니다.' },
+            { type: 'mc', text: '`arr = np.arange(12).reshape(3, 4)`일 때, `arr[1, 2]`의 값은?', options: ['5', '6', '7', '9', '10'], answer: '6', explanation: '1행 2열의 값은 6입니다. (0부터 시작하므로 두 번째 행, 세 번째 열)' },
+            { type: 'mc', text: '배열의 모든 요소에 제곱근을 적용하는 Numpy 함수는?', options: ['np.square()', 'np.pow()', 'np.root()', 'np.sqrt()', 'np.log()'], answer: 'np.sqrt()', explanation: 'sqrt는 Square Root(제곱근)의 약자입니다.' },
+            { type: 'mc', text: '`arr > 10` 이라는 조건에 맞는 요소만 추출하는 불리언 인덱싱 코드는?', options: ['arr.filter(arr > 10)', 'arr.select(arr > 10)', 'arr[arr > 10]', 'arr.where(arr > 10)', 'np.extract(arr > 10, arr)'], answer: 'arr[arr > 10]', explanation: '대괄호 내에 조건식을 넣어 해당 요소만 필터링합니다.' },
+            { type: 'mc', text: '배열 `arr`의 평균값을 구하는 방법으로 틀린 것은?', options: ['arr.mean()', 'np.mean(arr)', 'arr.sum() / arr.size', 'np.average(arr)', 'arr.avg()'], answer: 'arr.avg()', explanation: 'Numpy에는 `.avg()`라는 메서드가 존재하지 않습니다.' },
+            { type: 'mc', text: '`arr = np.array([[1, 2], [3, 4]])`일 때, `arr.sum(axis=0)`의 결과는?', options: ['10', '[3, 7]', '[4, 6]', '[5, 5]', '오류 발생'], answer: '[4, 6]', explanation: '열 방향 합계(1+3=4, 2+4=6) 결과입니다.' },
+            { type: 'mc', text: 'Python 리스트에 비해 Numpy 배열이 가지는 장점으로 틀린 것은?', options: ['적은 메모리 사용', '빠른 속도', '수학 함수 제공', '서로 다른 자료형 저장 가능', '다차원 처리 용이'], answer: '서로 다른 자료형 저장 가능', explanation: 'Numpy 배열은 모든 요소가 동일한 자료형이어야 합니다.' },
+            { type: 'mc', text: '조건에 따라 배열의 요소를 선택적으로 변경하는 함수는?', options: ['np.select()', 'np.filter()', 'np.where()', 'np.choose()', 'np.replace()'], answer: 'np.where()', explanation: 'np.where(조건, 참일때값, 거짓일때값) 구조로 사용합니다.' },
+            { type: 'mc', text: '1부터 100 사이의 정수 난수 10개를 생성하는 코드는?', options: ['np.random.rand(1, 101, 10)', 'np.random.randint(1, 101, 10)', 'np.random.randn(1, 100, 10)', 'np.arange(1, 101, 10)', 'np.random.choice(100, 10)'], answer: 'np.random.randint(1, 101, 10)', explanation: 'randint는 지정 범위 내의 정수 난수를 생성합니다.' },
+            { type: 'mc', text: '`mat = np.arange(4).reshape(2, 2)`일 때, `mat @ mat`의 결과는?', options: ['[[0, 1], [4, 9]]', '[[0, 1], [2, 3]]', '[[2, 3], [6, 11]]', '[[1, 4], [9, 16]]', '[[0, 2], [6, 10]]'], answer: '[[2, 3], [6, 11]]', explanation: '행렬 곱셈 연산 결과입니다.' }
+        ];
+
+        function renderQuestions() {
+            const oxContainer = document.getElementById('ox-questions');
+            const mcContainer = document.getElementById('mc-questions');
+            let questionNumber = 1;
+
+            questions.forEach(q => {
+                const qDiv = document.createElement('div');
+                qDiv.className = 'question-container';
+                const qText = document.createElement('div');
+                qText.className = 'question-text';
+                qText.innerHTML = `${questionNumber}. ${q.text.replace(/`([^`]+)`/g, '<code>$1</code>')}`;
+                qDiv.appendChild(qText);
+
+                const optionsDiv = document.createElement('div');
+                optionsDiv.className = 'options';
+
+                if (q.type === 'ox') {
+                    ['O', 'X'].forEach(opt => {
+                        const label = document.createElement('label');
+                        label.innerHTML = `<input type="radio" name="q${questionNumber}" value="${opt}" required> ${opt}`;
+                        optionsDiv.appendChild(label);
+                    });
+                } else {
+                    q.options.forEach(opt => {
+                        const label = document.createElement('label');
+                        label.innerHTML = `<input type="radio" name="q${questionNumber}" value="${opt}" required> ${opt.replace(/`([^`]+)`/g, '<code>$1</code>')}`;
+                        optionsDiv.appendChild(label);
+                    });
+                }
+                qDiv.appendChild(optionsDiv);
+                (q.type === 'ox' ? oxContainer : mcContainer).appendChild(qDiv);
+                questionNumber++;
+            });
+        }
+
+        function submitQuiz(event) {
+            event.preventDefault();
+            const school = document.getElementById('school').value;
+            const studentId = document.getElementById('studentId').value;
+            const name = document.getElementById('name').value;
+
+            let score = 0;
+            let fileContent = `학교: ${school}\n학번: ${studentId}\n이름: ${name}\n\n`;
+            const resultsContainer = document.getElementById('results');
+            resultsContainer.innerHTML = '<h2>채점 결과</h2>';
+
+            questions.forEach((q, i) => {
+                const num = i + 1;
+                const selected = document.querySelector(`input[name="q${num}"]:checked`).value;
+                const isCorrect = selected === q.answer;
+                if(isCorrect) score++;
+
+                const resDiv = document.createElement('div');
+                resDiv.className = `result-item ${isCorrect ? 'correct' : 'incorrect'}`;
+                resDiv.innerHTML = `<strong>${num}번: ${isCorrect ? '정답' : '오답'}</strong> (정답: ${q.answer})<div class="explanation">${q.explanation}</div>`;
+                resultsContainer.appendChild(resDiv);
+
+                fileContent += `[${num}번] 선택: ${selected} / 정답: ${q.answer} (${isCorrect ? 'O' : 'X'})\n`;
+            });
+
+            const totalScore = (score / questions.length) * 100;
+            const summary = `총점: ${totalScore}점 (${score}/${questions.length})`;
+            resultsContainer.insertAdjacentHTML('afterbegin', `<h3>${summary}</h3>`);
+            
+            download(`${studentId}_${name}.txt`, fileContent + `\n${summary}`);
+        }
+
+        function download(filename, text) {
+            const element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+            element.setAttribute('download', filename);
+            element.style.display = 'none';
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+        }
+
+        window.onload = renderQuestions;
+    </script>
+</body>
+</html>

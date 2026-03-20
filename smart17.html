@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 퀴즈 - Matplotlib 데이터 분석</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Malgun Gothic", "맑은 고딕", sans-serif; line-height: 1.6; padding: 20px; margin: 0; background-color: #f0f2f5; }
+        h1, h2 { border-bottom: 2px solid #dee2e6; padding-bottom: 10px; }
+        #quizContainer { max-width: 800px; margin: 20px auto; background-color: #ffffff; padding: 30px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        .info-group, .question-container { margin-bottom: 25px; }
+        label { font-weight: bold; }
+        input[type="text"] { width: 100%; box-sizing: border-box; padding: 10px; border: 1px solid #ced4da; border-radius: 4px; font-size: 1em; }
+        .question-text { font-size: 1.1em; margin-bottom: 15px; font-family: Consolas, "Courier New", monospace; white-space: pre-wrap; background-color: #f8f9fa; padding: 15px; border-radius: 5px; border: 1px solid #e9ecef; }
+        .options label { font-weight: normal; margin-right: 15px; display: block; padding: 8px; border-radius: 4px; cursor: pointer; }
+        .options label:hover { background-color: #e9ecef; }
+        .options input[type="radio"] { margin-right: 10px; }
+        button { background-color: #007bff; color: white; padding: 12px 25px; border: none; border-radius: 5px; cursor: pointer; font-size: 1.1em; width: 100%; }
+        button:hover { background-color: #0056b3; }
+        #results { margin-top: 30px; border-top: 2px solid #dee2e6; padding-top: 20px; }
+        .result-item { padding: 15px; margin-bottom: 10px; border-radius: 5px; }
+        .correct { background-color: #d1e7dd; border-left: 5px solid #198754; }
+        .incorrect { background-color: #f8d7da; border-left: 5px solid #dc3545; }
+        .explanation { margin-top: 10px; padding: 10px; background: #e9ecef; border-radius: 4px; }
+        code { background-color: #e9ecef; padding: 2px 4px; border-radius: 3px; }
+    </style>
+</head>
+<body>
+
+    <div id="quizContainer">
+        <h1>17차시: 파이썬 Matplotlib 데이터 분석 퀴즈</h1>
+
+        <form id="quizForm" onsubmit="submitQuiz(event)">
+            <h2>인적사항 입력</h2>
+            <div class="info-group">
+                <label for="school">학교:</label>
+                <input type="text" id="school" required>
+            </div>
+            <div class="info-group">
+                <label for="studentId">학번:</label>
+                <input type="text" id="studentId" required>
+            </div>
+            <div class="info-group">
+                <label for="name">이름:</label>
+                <input type="text" id="name" required>
+            </div>
+
+            <hr style="margin: 30px 0;">
+
+            <h2>OX 퀴즈 (10문항)</h2>
+            <div id="ox-questions"></div>
+
+            <hr style="margin: 30px 0;">
+
+            <h2>5지선다형 퀴즈 (10문항)</h2>
+            <div id="mc-questions"></div>
+            
+            <button type="submit">채점 및 결과 저장</button>
+        </form>
+
+        <div id="results"></div>
+    </div>
+
+    <script>
+       const questions = [
+            // OX 퀴즈 (1-10)
+            { type: 'ox', text: 'Matplotlib는 파이썬에 기본적으로 내장된 표준 라이브러리이다.', answer: 'X', explanation: 'Matplotlib는 `pip install matplotlib`를 통해 별도로 설치해야 하는 외부 라이브러리입니다.' },
+            { type: 'ox', text: '`plt.plot()` 함수로 그래프를 그린 후, 실제로 화면에 표시하려면 `plt.show()`를 호출해야 한다.', answer: 'O', explanation: '스크립트 환경에서는 `plt.plot()` 등은 그래프를 메모리에 그리는 과정이며, `plt.show()`를 만나야 화면에 창이 뜨면서 그래프가 나타납니다. (Jupyter 등 일부 환경 제외)' },
+            { type: 'ox', text: '`plt.xlabel("X축")`은 그래프의 제목을 "X축"으로 설정하는 코드이다.', answer: 'X', explanation: '그래프의 제목은 `plt.title()`로 설정합니다. `plt.xlabel()`은 x축의 이름(레이블)을 설정하는 함수입니다.' },
+            { type: 'ox', text: '하나의 그래프 영역에 여러 개의 `plt.plot()`을 호출하면 여러 개의 선이 함께 그려진다.', answer: 'O', explanation: '`plt.show()`가 호출되기 전까지의 `plt.plot()` 호출은 모두 같은 그래프 영역에 누적되어 그려집니다.' },
+            { type: 'ox', text: '`plt.bar()` 함수는 데이터의 분포를 확인하기 위한 히스토그램을 그린다.', answer: 'X', explanation: '`plt.bar()`는 막대 그래프를 그리는 함수입니다. 데이터의 분포를 나타내는 히스토그램은 `plt.hist()` 함수를 사용합니다.' },
+            { type: 'ox', text: '그래프에 범례를 표시하려면 `plt.plot()`에 `label` 인자를 지정하고 `plt.legend()`를 호출해야 한다.', answer: 'O', explanation: '`label`로 각 선의 이름을 정해주고, `plt.legend()`로 그 이름들을 모아 범례 상자를 화면에 표시합니다.' },
+            { type: 'ox', text: '`plt.savefig()`는 반드시 `plt.show()`보다 나중에 호출해야 한다.', answer: 'X', explanation: '`plt.show()`는 그래프를 화면에 표시한 후 내부 그림(figure) 객체를 비웁니다. 따라서 파일을 저장하려면 `plt.savefig()`를 `plt.show()`보다 먼저 호출해야 합니다.' },
+            { type: 'ox', text: 'Pandas DataFrame 객체는 `.plot()` 메소드를 내장하고 있어 Matplotlib 그래프를 직접 그릴 수 있다.', answer: 'O', explanation: 'Pandas는 Matplotlib를 기반으로 하여 `.plot()`과 같은 편리한 시각화 메소드를 내장하고 있습니다. (예: `df.plot(kind="bar")`)' },
+            { type: 'ox', text: '`plt.scatter()`는 두 변수 간의 관계를 점으로 표현하는 산점도를 그리는 함수이다.', answer: 'O', explanation: '산점도는 각 데이터 포인트를 x, y 좌표상의 점으로 나타내어 두 변수의 상관 관계 등을 파악하는 데 사용됩니다.' },
+            { type: 'ox', text: '`plt.subplots()`는 여러 개의 하위 그래프(axes)를 하나의 그림(figure) 안에 배치할 때 사용한다.', answer: 'O', explanation: '`fig, axes = plt.subplots(nrows, ncols)`와 같이 사용하여 전체 그림과 각 하위 그래프 객체를 반환받아 개별적으로 제어할 수 있습니다.' },
+
+            // 5지선다형 퀴즈 (11-20)
+            { type: 'mc', text: 'Matplotlib 라이브러리에서 그래프를 그리고 꾸미는 대부분의 함수가 포함된 모듈의 일반적인 별칭(alias)은?', options: ['`mat`', '`mpl`', '`plot`', '`plt`', '`graph`'], answer: '`plt`', explanation: '`import matplotlib.pyplot as plt`와 같이 `pyplot` 모듈을 `plt`라는 별칭으로 임포트하여 사용하는 것이 전 세계적인 관례입니다.' },
+            { type: 'mc', text: '데이터의 분포(빈도수)를 시각적으로 표현하는 데 가장 적합한 그래프는?', options: ['선 그래프 (Line plot)', '산점도 (Scatter plot)', '파이 차트 (Pie chart)', '막대 그래프 (Bar chart)', '히스토그램 (Histogram)'], answer: '히스토그램 (Histogram)', explanation: '히스토그램은 특정 구간(bin)에 데이터가 몇 개나 속하는지를 막대의 높이로 표현하여 데이터의 전체적인 분포 형태를 보여줍니다.' },
+            { type: 'mc', text: '`plt.plot(x, y, "r--*")` 코드에서 "r--*"가 의미하는 것은?', options: ['빨간색 점선과 별표 마커', '오른쪽 정렬, 점선, 굵게', '빨간색 실선과 원형 마커', '재시도(retry), 점선, 모든 데이터', '등록된(registered) 스타일'], answer: '빨간색 점선과 별표 마커', explanation: '색상(`r`), 선 스타일(`--`), 마커 모양(`*`)을 순서대로 조합하여 그래프의 스타일을 간편하게 지정하는 축약 방식입니다.' },
+            { type: 'mc', text: '여러 개의 그래프를 격자 형태로 배열할 때 사용하는 함수는?', options: ['`plt.figure()`', '`plt.axes()`', '`plt.subplot2grid()`', '`plt.subplots()`', '`plt.grid()`'], answer: '`plt.subplots()`', explanation: '`plt.subplots(행 개수, 열 개수)`는 figure 객체와 axes 객체들의 배열을 반환하여 여러 그래프를 편리하게 관리할 수 있게 해줍니다.' },
+            { type: 'mc', text: '그래프를 이미지 파일로 저장하는 함수는?', options: ['`plt.save()`', '`plt.export()`', '`plt.write()`', '`plt.savefig()`', '`plt.dump()`'], answer: '`plt.savefig()`', explanation: '`plt.savefig("filename.png")`와 같이 사용하여 현재 그려진 그래프를 파일로 저장할 수 있습니다.' },
+            { type: 'mc', text: '전체 항목에 대한 각 부분의 비율을 부채꼴 모양으로 나타내는 그래프는?', options: ['도넛 차트 (Doughnut chart)', '버블 차트 (Bubble chart)', '파이 차트 (Pie chart)', '영역 차트 (Area chart)', '트리맵 (Treemap)'], answer: '파이 차트 (Pie chart)', explanation: '파이 차트(`plt.pie()`)는 전체에 대한 각 항목의 백분율을 시각적으로 비교할 때 유용합니다.' },
+            { type: 'mc', text: 'Matplotlib에서 한글 폰트가 깨지는 현상을 해결하기 위한 방법으로 가장 적절한 것은?', options: ['컴퓨터를 재부팅한다', 'Matplotlib를 재설치한다', '`plt.rcParams["font.family"]`에 시스템에 설치된 한글 폰트 이름을 지정한다', '그래프 제목을 영어로만 쓴다', '`plt.korean(True)`를 호출한다'], answer: '`plt.rcParams["font.family"]`에 시스템에 설치된 한글 폰트 이름을 지정한다', explanation: 'Matplotlib의 기본 폰트가 한글을 지원하지 않기 때문에, `rcParams`를 통해 시스템에 설치된 한글 폰트(예: Malgun Gothic)를 사용하도록 명시적으로 설정해야 합니다.' },
+            { type: 'mc', text: '두 변수 간의 상관관계를 점들의 분포로 확인하기에 가장 적합한 그래프는?', options: ['히스토그램 (Histogram)', '막대 그래프 (Bar chart)', '박스 플롯 (Box plot)', '산점도 (Scatter plot)', '파이 차트 (Pie chart)'], answer: '산점도 (Scatter plot)', explanation: '`plt.scatter()`로 그리는 산점도는 x축 변수와 y축 변수의 관계를 점의 패턴으로 보여주어 양의 상관관계, 음의 상관관계, 무상관 등을 파악할 수 있습니다.' },
+            { type: 'mc', text: '`plt.legend()` 함수가 하는 역할은?', options: ['그래프의 제목을 설정한다', '그래프의 x축 이름을 설정한다', '`plot` 함수에 `label`로 지정된 이름들을 모아 범례를 표시한다', '그래프의 배경색을 바꾼다', '전설적인 그래프 스타일을 적용한다'], answer: '`plot` 함수에 `label`로 지정된 이름들을 모아 범례를 표시한다', explanation: '각각의 plot에 `label`을 부여한 뒤, `plt.legend()`를 호출하면 어느 선이 어떤 데이터를 의미하는지 알려주는 범례 상자가 나타납니다.' },
+            { type: 'mc', text: '`plt.style.use("ggplot")` 코드를 실행하면 어떤 변화가 생기는가?', options: ['그래프가 ggplot이라는 이름의 파일로 저장된다', '그래프의 배경, 색상, 폰트 등 전반적인 시각적 스타일이 바뀐다', '오직 기하학적(geometric) 형태의 그래프만 그릴 수 있게 된다', '그래프의 데이터 처리 속도가 빨라진다', 'R 언어 코드로 변환된다'], answer: '그래프의 배경, 색상, 폰트 등 전반적인 시각적 스타일이 바뀐다', explanation: '`plt.style.use()`는 미리 정의된 다양한 스타일 시트를 적용하여 그래프의 미적인 부분을 손쉽게 변경할 수 있게 해주는 기능입니다. "ggplot"은 유명한 스타일 중 하나입니다.' }
+        ];
+
+        function renderQuestions() {
+            const oxContainer = document.getElementById('ox-questions');
+            const mcContainer = document.getElementById('mc-questions');
+            let questionNumber = 1;
+
+            questions.forEach(q => {
+                const qDiv = document.createElement('div');
+                qDiv.className = 'question-container';
+                const qText = document.createElement('div');
+                qText.className = 'question-text';
+                qText.innerHTML = `${questionNumber}. ${q.text.replace(/`([^`]+)`/g, '<code>$1</code>')}`;
+                qDiv.appendChild(qText);
+                const optionsDiv = document.createElement('div');
+                optionsDiv.className = 'options';
+                if (q.type === 'ox') {
+                    ['O', 'X'].forEach(opt => {
+                        const label = document.createElement('label');
+                        const radio = document.createElement('input');
+                        radio.type = 'radio'; radio.name = `q${questionNumber}`; radio.value = opt; radio.required = true;
+                        label.appendChild(radio); label.append(` ${opt}`);
+                        optionsDiv.appendChild(label);
+                    });
+                } else if (q.type === 'mc') {
+                    q.options.forEach(opt => {
+                        const label = document.createElement('label');
+                        const radio = document.createElement('input');
+                        radio.type = 'radio'; radio.name = `q${questionNumber}`; radio.value = opt; radio.required = true;
+                        label.appendChild(radio);
+                        label.innerHTML += ` ${opt.replace(/`([^`]+)`/g, '<code>$1</code>')}`;
+                        optionsDiv.appendChild(label);
+                    });
+                }
+                qDiv.appendChild(optionsDiv);
+                if (q.type === 'ox') {
+                    oxContainer.appendChild(qDiv);
+                } else {
+                    mcContainer.appendChild(qDiv);
+                }
+                questionNumber++;
+            });
+        }
+
+        function submitQuiz(event) {
+            event.preventDefault();
+            const school = document.getElementById('school').value;
+            const studentId = document.getElementById('studentId').value;
+            const name = document.getElementById('name').value;
+            let score = 0;
+            let fileContent = "";
+            const resultsContainer = document.getElementById('results');
+            resultsContainer.innerHTML = '<h2>채점 결과</h2>';
+            for (let i = 0; i < questions.length; i++) {
+                const qNumber = i + 1;
+                const selectedOption = document.querySelector(`input[name="q${qNumber}"]:checked`);
+                const questionData = questions[i];
+                const resultItem = document.createElement('div');
+                resultItem.classList.add('result-item');
+                let resultText = `<strong>[${qNumber}번 문항]</strong>
+`;
+                if (selectedOption && selectedOption.value === questionData.answer) {
+                    score++;
+                    resultItem.classList.add('correct');
+                    resultText += `<strong>결과: 정답!</strong>`;
+                } else {
+                    resultItem.classList.add('incorrect');
+                    resultText += `<strong>결과: 오답!</strong> (선택: ${selectedOption ? selectedOption.value : '미선택'}, 정답: ${questionData.answer})`;
+                }
+                const explanation = document.createElement('div');
+                explanation.className = 'explanation';
+                explanation.innerHTML = `<strong>상세 풀이:</strong> ${questionData.explanation.replace(/`([^`]+)`/g, '<code>$1</code>')}`;
+                resultItem.innerHTML = resultText;
+                resultItem.appendChild(explanation);
+                resultsContainer.appendChild(resultItem);
+                
+                const plainTextForFile = questionData.text.replace(/<[^>]*>/g, '').replace(/`([^`]+)`/g, '$1');
+                fileContent += `[${qNumber}번 문항]\n`;
+                fileContent += `문제: ${plainTextForFile}\n`;
+                fileContent += `선택한 답: ${selectedOption ? selectedOption.value : '미선택'}\n`;
+                fileContent += `정답: ${questionData.answer}\n`;
+                fileContent += `결과: ${selectedOption && selectedOption.value === questionData.answer ? '정답' : '오답'}\n`;
+                fileContent += `풀이: ${questionData.explanation.replace(/<[^>]*>/g, '').replace(/`([^`]+)`/g, '$1')}\n\n`;
+            }
+            const totalScore = (score / questions.length) * 100;
+            const now = new Date();
+            const timestamp = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}시${String(now.getMinutes()).padStart(2, '0')}분`;
+            const summary = document.createElement('p');
+            summary.innerHTML = `<strong>총점: ${totalScore.toFixed(0)}점 (${questions.length}개 중 ${score}개 정답)</strong>`;
+            resultsContainer.prepend(summary);
+            const fileHeader = `학교: ${school}\n학번: ${studentId}\n이름: ${name}\n응시 시각: ${timestamp}\n총점: ${totalScore.toFixed(0)}점\n\n---\n\n`;
+            fileContent = fileHeader + fileContent;
+            const fileNameTimestamp = now.toISOString().replace(/:/g, '-').slice(0, 19);
+            const fileName = `${school}_${studentId}_${name}_${totalScore.toFixed(0)}점_${fileNameTimestamp}.txt`;
+            download(fileName, fileContent);
+        }
+
+        function download(filename, text) {
+            const element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+            element.setAttribute('download', filename);
+            element.style.display = 'none';
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+        }
+
+        window.onload = renderQuestions;
+    </script>
+</body>
+</html>

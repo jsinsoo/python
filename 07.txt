@@ -1,0 +1,118 @@
+7차시: for 반복문 학습 패키지
+안녕하세요! 프로그래밍의 가장 강력한 기능 중 하나인 '반복'을 수행하는 for 반복문에 대해 학습해 보겠습니다. 정해진 횟수나 범위만큼 코드를 반복 실행하는 for 문의 다양한 활용법을 예제 코드와 퀴즈로 익혀보세요.
+
+1. 파이썬 예제 코드: for 반복문
+1.1. 기초 파이썬 예시 코드 (5개)
+기초 예제는 for 문의 가장 기본적인 사용법인 range() 함수와 시퀀스 순회에 대해 다룹니다.
+
+1. range()로 정해진 횟수만큼 반복
+
+# 0부터 4까지, 총 5번 반복합니다.
+for i in range(5):
+    print(f"{i+1}번째 안녕, 파이썬!")
+2. 리스트(List)의 모든 요소 순회하기
+
+# 리스트에 들어있는 모든 항목을 하나씩 꺼내어 출력합니다.
+fruits = ["사과", "바나나", "딸기", "오렌지"]
+for fruit in fruits:
+    print(f"내가 좋아하는 과일: {fruit}")
+3. 문자열(String)의 모든 문자 순회하기
+
+# 문자열을 구성하는 모든 글자를 하나씩 순서대로 출력합니다.
+for char in "Hello":
+    print(char)
+4. range()에 시작과 끝 값 지정하기
+
+# 1부터 5까지의 숫자를 출력합니다. (range(start, end)에서 end는 포함되지 않음)
+total = 0
+for i in range(1, 6):
+    total += i # 1부터 5까지의 합을 구합니다.
+print(f"1부터 5까지의 합은 {total}입니다.")
+5. range()에 증가 값(step) 지정하기
+
+# 2부터 10까지 2씩 증가시키며 짝수만 출력합니다.
+for i in range(2, 11, 2):
+    print(i, end=" ") # 2 4 6 8 10 출력
+1.2. 응용 파이썬 예시 코드 (5개)
+응용 예제는 for 문을 더욱 유용하게 만들어주는 enumerate, 중첩 반복문, if 와의 결합 등을 다룹니다.
+
+1. 중첩 for 문으로 구구단 출력하기
+
+# for문 안에 또 다른 for문을 사용하여 2차원 구조를 다룰 수 있습니다.
+for i in range(2, 10): # 2단부터 9단까지
+    print(f"--- {i}단 ---")
+    for j in range(1, 10): # 각 단의 1부터 9까지 곱하기
+        print(f"{i} x {j} = {i*j}")
+2. enumerate()로 인덱스와 값 동시에 얻기
+
+# 반복 시 몇 번째 요소인지 인덱스 번호가 필요할 때 유용합니다.
+scores = [95, 88, 76, 100, 67]
+for i, score in enumerate(scores):
+    print(f"{i+1}번 학생의 점수는 {score}점입니다.")
+3. 딕셔너리(Dictionary) 순회하기 (.items())
+
+# 딕셔너리의 키(key)와 값(value)을 쌍으로 얻어와 처리합니다.
+student = {"name": "이재명", "major": "AI", "grade": 4}
+for key, value in student.items():
+    print(f"{key}: {value}")
+4. if 문과 함께 사용하여 조건에 맞는 요소 찾기
+
+# 반복문 내에서 조건문을 사용해 원하는 데이터만 필터링합니다.
+numbers = [12, 7, -5, 8, -2, 15, 9]
+for num in numbers:
+    if num > 0 and num % 2 == 0:
+        print(f"찾았다! 양의 짝수: {num}")
+5. for 문으로 새로운 리스트 만들기
+
+# 빈 리스트를 만들어 두고, 반복문을 통해 특정 조건을 만족하는 값만 추가합니다.
+original = [1, 2, 3, 4, 5, 6, 7, 8]
+doubled_evens = []
+for n in original:
+    if n % 2 == 0:
+        doubled_evens.append(n * 2)
+print(f"원본 리스트의 짝수를 2배하여 만든 리스트: {doubled_evens}")
+1.3. 심화 파이썬 예시 코드 (5개)
+심화 예제는 for 문을 더 간결하고 효율적으로 사용하는 고급 기법들을 다룹니다.
+
+1. 리스트 컴프리헨션 (List Comprehension)
+
+# 응용 예제 5번을 한 줄로 압축한 "파이썬스러운" 코드입니다.
+# [표현식 for 항목 in 반복가능객체 if 조건]
+original = [1, 2, 3, 4, 5, 6, 7, 8]
+doubled_evens = [n * 2 for n in original if n % 2 == 0]
+print(f"리스트 컴프리헨션 결과: {doubled_evens}")
+2. break로 반복문 탈출하기
+
+# 특정 조건을 만족했을 때 더 이상 반복을 진행할 필요가 없을 경우 사용합니다.
+numbers = [3, 9, 2, 15, 7, 8]
+# 리스트에서 처음으로 5보다 큰 짝수를 찾아 출력하고 종료
+for num in numbers:
+    if num > 5 and num % 2 == 0:
+        print(f"목표 발견: {num}")
+        break # break를 만나면 for문 전체가 즉시 종료됩니다.
+3. continue로 현재 반복 건너뛰기
+
+# 특정 조건일 때 현재 반복만 건너뛰고 다음 반복으로 바로 넘어갑니다.
+# 1부터 10까지의 숫자 중 3의 배수를 제외하고 출력
+for i in range(1, 11):
+    if i % 3 == 0:
+        continue # continue를 만나면 아래의 print()를 실행하지 않고 다음 i로 넘어감
+    print(i, end=" ")
+4. for-else 문
+
+# for 반복문이 중간에 break로 중단되지 않고, 끝까지 모두 실행되었을 때만 else 블록이 실행됩니다.
+items = ["사과", "바나나", "체리"]
+for item in items:
+    if item == "수박":
+        print("수박을 찾았습니다!")
+        break
+else:
+    # for문이 break 없이 끝까지 다 돌았으므로 이 블록이 실행됨
+    print("리스트 안에 수박이 없습니다.")
+5. zip()으로 여러 리스트 동시에 순회하기
+
+# 여러 개의 리스트를 같은 인덱스끼리 묶어서 병렬로 처리할 때 사용합니다.
+names = ["이재명", "김동연", "이낙연"]
+roles = ["대통령", "경제부총리", "국무총리"]
+for name, role in zip(names, roles):
+    print(f"{name} 님의 직책은 {role}입니다.")

@@ -1,0 +1,211 @@
+10차시: 딕셔너리(Dictionary) 마스터하기
+딕셔너리는 키(Key)와 값(Value)을 한 쌍으로 묶어 저장하는 매우 유용한 자료구조입니다. 순서가 없는 것이 특징이었으나, Python 3.7 버전부터는 입력한 순서가 유지됩니다. 이 특성을 활용한 다양한 예제 코드를 기초부터 심화까지 단계별로 살펴보겠습니다.
+
+1. 기초 파이썬 예시 코드 (5개)
+딕셔너리의 기본적인 생성, 접근, 수정, 삭제 방법을 익힙니다.
+
+1) 딕셔너리 생성 및 값 접근
+# 학생의 정보를 담은 딕셔너리 생성
+student = {
+    "name": "홍길동",
+    "id": 202301,
+    "major": "컴퓨터공학"
+}
+
+# 'name' 키를 이용해 값에 접근하여 출력
+print(f"학생 이름: {student['name']}")
+
+# get() 메서드를 이용해 값에 접근 (키가 없어도 오류 발생 안 함)
+print(f"학생 학년: {student.get('grade', '정보 없음')}")
+2) 새 키-값 쌍 추가 및 수정
+# 비어있는 딕셔너리 생성
+person = {}
+
+# 키-값 쌍 추가
+person['name'] = '김철수'
+person['age'] = 30
+print(f"추가 후: {person}")
+
+# 기존 키의 값 수정
+person['age'] = 31
+print(f"수정 후: {person}")
+3) 특정 키-값 쌍 삭제
+car = {
+    "brand": "현대",
+    "model": "쏘나타",
+    "year": 2024
+}
+print(f"삭제 전: {car}")
+
+# 'year' 키와 값을 삭제
+del car['year']
+print(f"삭제 후: {car}")
+4) 특정 키(Key)가 딕셔너리에 있는지 확인
+product = {
+    "name": "노트북",
+    "price": 1500000
+}
+
+# 'in' 키워드를 사용하여 키 존재 여부 확인
+if 'price' in product:
+    print(f"price 키가 존재합니다. 가격: {product['price']}")
+
+if 'stock' not in product:
+    print("stock 키가 존재하지 않습니다.")
+5) 딕셔너리의 모든 키(keys), 값(values), 아이템(items) 가져오기
+book = {
+    "title": "파이썬 정복",
+    "author": "이순신",
+    "pages": 300
+}
+
+# 모든 키 출력
+print(f"모든 키: {list(book.keys())}")
+
+# 모든 값 출력
+print(f"모든 값: {list(book.values())}")
+
+# 모든 키-값 쌍(아이템) 출력
+print(f"모든 아이템: {list(book.items())}")
+2. 응용 파이썬 예시 코드 (5개)
+딕셔너리를 활용하여 실용적인 문제를 해결하는 방법을 알아봅니다.
+
+1) 리스트에 포함된 요소들의 빈도수 계산
+fruits = ['사과', '바나나', '사과', '오렌지', '바나나', '사과']
+fruit_counts = {}
+
+for fruit in fruits:
+    # get(fruit, 0)은 fruit 키가 있으면 해당 값을, 없으면 0을 반환
+    fruit_counts[fruit] = fruit_counts.get(fruit, 0) + 1
+
+print(f"과일 빈도수: {fruit_counts}")
+# 출력 결과: 과일 빈도수: {'사과': 3, '바나나': 2, '오렌지': 1}
+2) 두 개의 딕셔너리 병합
+dict1 = {'a': 1, 'b': 2}
+dict2 = {'b': 3, 'c': 4}
+
+# update() 메서드를 이용한 병합 (dict2의 내용이 dict1을 덮어씀)
+merged_dict = dict1.copy() # 원본 보존을 위해 복사
+merged_dict.update(dict2)
+print(f"update() 병합: {merged_dict}")
+
+# Python 3.9+ 에서는 | 연산자로 병합 가능
+merged_dict_pipe = dict1 | dict2
+print(f"| 연산자 병합: {merged_dict_pipe}")
+
+# 언패킹을 이용한 병합 (가장 일반적)
+merged_dict_unpack = {**dict1, **dict2}
+print(f"언패킹 병합: {merged_dict_unpack}")
+3) 중첩 딕셔너리(Nested Dictionary) 다루기
+users = {
+    'user1': {
+        'name': '강감찬',
+        'email': 'kang@example.com',
+        'points': 150
+    },
+    'user2': {
+        'name': '을지문덕',
+        'email': 'eulji@example.com',
+        'points': 200
+    }
+}
+
+# user2의 이메일 주소에 접근
+print(f"user2의 이메일: {users['user2']['email']}")
+
+# user1의 포인트를 50 증가
+users['user1']['points'] += 50
+print(f"user1의 변경된 포인트: {users['user1']['points']}")
+4) 딕셔너리 컴프리헨션(Dictionary Comprehension)
+# 0부터 4까지의 숫자를 키로, 해당 숫자의 제곱을 값으로 하는 딕셔너리 생성
+squared_dict = {x: x**2 for x in range(5)}
+print(f"제곱 딕셔너리: {squared_dict}")
+
+# 기존 딕셔너리에서 값이 100 이상인 아이템만 추출하여 새 딕셔너리 생성
+prices = {'사과': 200, '바나나': 50, '체리': 300}
+expensive_items = {item: price for item, price in prices.items() if price >= 100}
+print(f"비싼 과일: {expensive_items}")
+5) 키와 값을 서로 뒤집기
+original = {'a': 'apple', 'b': 'banana', 'c': 'cherry'}
+inverted = {value: key for key, value in original.items()}
+
+print(f"원본 딕셔너리: {original}")
+print(f"뒤집힌 딕셔너리: {inverted}")
+
+# 주의: 값에 중복이 있으면 마지막 값의 키만 남게 됨
+original_dup = {'a': 'apple', 'b': 'banana', 'c': 'apple'}
+inverted_dup = {value: key for key, value in original_dup.items()}
+print(f"값이 중복될 경우: {inverted_dup}") # {'apple': 'c', 'banana': 'b'}
+3. 심화 파이썬 예시 코드 (5개)
+collections 모듈이나 정렬 등 고급 기술을 사용하는 예제입니다.
+
+1) collections.defaultdict 사용하기
+defaultdict는 키가 없을 경우 미리 지정한 기본값을 자동으로 생성해주어 코드를 간결하게 만듭니다.
+
+from collections import defaultdict
+
+words = ['apple', 'bat', 'apple', 'car', 'bat', 'apple']
+word_counts = defaultdict(int) # 키가 없을 때 기본값으로 int() 즉, 0을 반환
+
+for word in words:
+    word_counts[word] += 1
+
+print(f"defaultdict 사용: {word_counts}")
+2) 딕셔너리 값(value)을 기준으로 정렬하기
+sorted() 함수와 lambda를 사용하여 딕셔너리를 값에 따라 정렬합니다.
+
+scores = {'국어': 95, '영어': 80, '수학': 100, '과학': 85}
+
+# 값을 기준으로 내림차순 정렬
+# sorted()는 리스트를 반환하며, 각 요소는 (키, 값) 튜플
+sorted_scores = sorted(scores.items(), key=lambda item: item[1], reverse=True)
+
+print(f"점수 내림차순 정렬: {sorted_scores}")
+# 출력 결과: 점수 내림차순 정렬: [('수학', 100), ('국어', 95), ('과학', 85), ('영어', 80)]
+3) 복잡한 데이터 구조화 (JSON과 유사)
+딕셔너리와 리스트를 조합하여 API 응답이나 설정 파일과 같은 복잡한 데이터를 표현합니다.
+
+api_response = {
+    "status": "success",
+    "count": 2,
+    "data": [
+        {"id": 101, "name": "상품A", "tags": ["전자기기", "컴퓨터"]},
+        {"id": 102, "name": "상품B", "tags": ["가구", "인테리어"]}
+    ]
+}
+
+# 첫 번째 상품의 두 번째 태그 가져오기
+first_product_second_tag = api_response["data"][0]["tags"][1]
+print(f"첫 번째 상품의 두 번째 태그: {first_product_second_tag}")
+4) setdefault() 메서드 활용
+get()과 비슷하지만, 키가 없을 경우 기본값을 설정하고 그 값을 반환합니다. 데이터를 그룹화할 때 유용합니다.
+
+students = [
+    ('John', 'A'), ('Jane', 'B'), ('Dave', 'A'),
+    ('Emily', 'C'), ('Chris', 'B')
+]
+
+grades = {}
+for name, grade in students:
+    # grade 키가 없으면 빈 리스트 []를 설정하고, 그 리스트를 반환
+    grades.setdefault(grade, []).append(name)
+
+print(f"반별 학생 목록: {grades}")
+# 출력 결과: 반별 학생 목록: {'A': ['John', 'Dave'], 'B': ['Jane', 'Chris'], 'C': ['Emily']}
+5) 딕셔너리 언패킹을 함수 인자로 사용하기
+딕셔너리의 키-값 쌍을 함수의 키워드 인자로 바로 전달할 수 있습니다.
+
+def print_user_profile(name, email, age=None):
+    print(f"이름: {name}")
+    print(f"이메일: {email}")
+    if age is not None:
+        print(f"나이: {age}")
+
+user_data = {
+    "name": "세종대왕",
+    "email": "sejong@example.com",
+    "age": 52
+}
+
+# **를 사용하여 딕셔너리를 키워드 인자로 풀어 전달
+print_user_profile(**user_data)

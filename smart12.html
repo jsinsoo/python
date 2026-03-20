@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 퀴즈 - 문자열 처리</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Malgun Gothic", "맑은 고딕", sans-serif; line-height: 1.6; padding: 20px; margin: 0; background-color: #f0f2f5; }
+        h1, h2 { border-bottom: 2px solid #dee2e6; padding-bottom: 10px; }
+        #quizContainer { max-width: 800px; margin: 20px auto; background-color: #ffffff; padding: 30px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        .info-group, .question-container { margin-bottom: 25px; }
+        label { font-weight: bold; }
+        input[type="text"] { width: 100%; box-sizing: border-box; padding: 10px; border: 1px solid #ced4da; border-radius: 4px; font-size: 1em; }
+        .question-text { font-size: 1.1em; margin-bottom: 15px; font-family: Consolas, "Courier New", monospace; white-space: pre-wrap; background-color: #f8f9fa; padding: 15px; border-radius: 5px; border: 1px solid #e9ecef; }
+        .options label { font-weight: normal; margin-right: 15px; display: block; padding: 8px; border-radius: 4px; cursor: pointer; }
+        .options label:hover { background-color: #e9ecef; }
+        .options input[type="radio"] { margin-right: 10px; }
+        button { background-color: #007bff; color: white; padding: 12px 25px; border: none; border-radius: 5px; cursor: pointer; font-size: 1.1em; width: 100%; }
+        button:hover { background-color: #0056b3; }
+        #results { margin-top: 30px; border-top: 2px solid #dee2e6; padding-top: 20px; }
+        .result-item { padding: 15px; margin-bottom: 10px; border-radius: 5px; }
+        .correct { background-color: #d1e7dd; border-left: 5px solid #198754; }
+        .incorrect { background-color: #f8d7da; border-left: 5px solid #dc3545; }
+        .explanation { margin-top: 10px; padding: 10px; background: #e9ecef; border-radius: 4px; }
+        code { background-color: #e9ecef; padding: 2px 4px; border-radius: 3px; }
+    </style>
+</head>
+<body>
+
+    <div id="quizContainer">
+        <h1>12차시: 파이썬 문자열 처리 퀴즈</h1>
+
+        <form id="quizForm" onsubmit="submitQuiz(event)">
+            <h2>인적사항 입력</h2>
+            <div class="info-group">
+                <label for="school">학교:</label>
+                <input type="text" id="school" required>
+            </div>
+            <div class="info-group">
+                <label for="studentId">학번:</label>
+                <input type="text" id="studentId" required>
+            </div>
+            <div class="info-group">
+                <label for="name">이름:</label>
+                <input type="text" id="name" required>
+            </div>
+
+            <hr style="margin: 30px 0;">
+
+            <h2>OX 퀴즈 (10문항)</h2>
+            <div id="ox-questions"></div>
+
+            <hr style="margin: 30px 0;">
+
+            <h2>5지선다형 퀴즈 (10문항)</h2>
+            <div id="mc-questions"></div>
+            
+            <button type="submit">채점 및 결과 저장</button>
+        </form>
+
+        <div id="results"></div>
+    </div>
+
+    <script>
+
+const questions = [
+    // OX 퀴즈 (1-10)
+    { type: 'ox', text: '파이썬에서 문자열은 한 번 생성되면 그 내용을 직접 수정할 수 없다 (immutable).', answer: 'O', explanation: '문자열은 변경 불가능한 자료형입니다. `.replace()` 같은 메소드는 새로운 문자열을 반환할 뿐, 원본을 바꾸지 않습니다.' },
+    { type: 'ox', text: '`s = "abc"`일 때, `s[1] = "B"`와 같이 특정 문자를 변경할 수 있다.', answer: 'X', explanation: '문자열은 변경 불가능(immutable)하므로, 인덱스를 통해 특정 문자를 직접 수정하려고 하면 `TypeError`가 발생합니다.' },
+    { type: 'ox', text: '`"apple".split("p")`의 결과는 `["a", "", "le"]` 이다.', answer: 'O', explanation: '구분자("p")가 연속으로 나올 경우 그 사이에는 빈 문자열(`""`)이 생성됩니다. `apple` -> `a` | `p` | `p` | `le` -> `[\'a\', \'\', \'le\']`' },
+    { type: 'ox', text: '`len("안녕하세요")`의 결과는 5이다.', answer: 'O', explanation: '`len()` 함수는 문자열을 구성하는 문자의 개수를 반환합니다.' },
+    { type: 'ox', text: '`" python ".strip()`은 원본 문자열 자체를 변경한다.', answer: 'X', explanation: '문자열 메소드들은 대부분 원본을 변경하지 않고, 변경된 새로운 문자열을 반환합니다. `a = a.strip()`과 같이 다시 할당해야 합니다.' },
+    { type: 'ox', text: '`s.find("a")`는 문자열 `s`에 "a"가 없으면 `-1`을 반환한다.', answer: 'O', explanation: '`.find()`는 찾는 문자열이 없을 경우 오류 대신 `-1`을 반환하여 프로그램이 멈추지 않게 합니다.' },
+    { type: 'ox', text: '`s.index("a")`는 문자열 `s`에 "a"가 없으면 `-1`을 반환한다.', answer: 'X', explanation: '`.index()`는 찾는 문자열이 없을 경우 `-1`이 아닌 `ValueError` 오류를 발생시킵니다.' },
+    { type: 'ox', text: '`"1,2,3".split()` 코드의 결과는 `["1", "2", "3"]`이다.', answer: 'X', explanation: '`.split()`에 구분자를 지정하지 않으면 공백을 기준으로 나눕니다. 쉼표로 나누려면 `.split(",")`을 사용해야 하므로, 위 코드의 결과는 `["1,2,3"]` 입니다.' },
+    { type: 'ox', text: '`"*".join(["a", "b", "c"])`의 결과는 `"*a*b*c"`이다.', answer: 'X', explanation: '`.join()`은 리스트의 요소들 *사이*에 구분자를 넣어 합칩니다. 따라서 결과는 `"a*b*c"`가 됩니다.' },
+    { type: 'ox', text: 'f-string은 Python 3.6 버전부터 사용할 수 있는 기능이다.', answer: 'O', explanation: 'f-string(`f"..."`)은 Python 3.6에 도입된 현대적이고 가독성 높은 문자열 포매팅 방법입니다.' },
+
+    // 5지선다형 퀴즈 (11-20)
+    { type: 'mc', text: '`s = "Hello, world!"`일 때, `s[7:12]`의 결과는?', options: ['`"world"`', '`"world!"`', '`" worl"`', '`"orld"`', '`"orld!"`'], answer: '`"world"`', explanation: '슬라이싱은 `[7:12]`일 때 7번 인덱스부터 11번 인덱스까지 추출합니다. 따라서 `"world"`가 정답입니다.' },
+    { type: 'mc', text: '다음 중 문자열 양쪽의 공백을 제거하는 메소드는?', options: ['`.remove()`', '`.delete()`', '`.cut()`', '`.trim()`', '`.strip()`'], answer: '`.strip()`', explanation: '`.strip()`은 문자열의 시작과 끝에 있는 공백을 제거합니다. `.trim()`은 자바스크립트 등 타 언어에서 주로 쓰입니다.' },
+    { type: 'mc', text: '`s = "python"`일 때, `s.replace("p", "P")`의 결과는?', options: ['`"Python"`', '`"python"`', '`None`', '`True`', '오류 발생'], answer: '`"Python"`', explanation: '`.replace()` 메소드는 지정한 문자를 새로운 문자로 교체한 새 문자열을 반환합니다.' },
+    { type: 'mc', text: '`["Life", "is", "short"]` 리스트를 `"Life is short"` 문자열로 만들고 싶을 때, 올바른 코드는?', options: ['`" ".split(["Life", "is", "short"])`', '`" ".join(["Life", "is", "short"])`', '`" ".connect(["Life", "is", "short"])`', '`str.join(" ", ["Life", "is", "short"])`', '`["Life", "is", "short"].join(" ")`'], answer: '`" ".join(["Life", "is", "short"])`', explanation: '`"구분자".join(리스트)` 형식을 사용하여 리스트 요소들을 하나로 합칩니다.' },
+    { type: 'mc', text: '`s = "abcde"`일 때, `s[::-1]` 코드의 결과는?', options: ['`"edcba"`', '`"abcde"`', '`"ace"`', '`"a"`', '오류 발생'], answer: '`"edcba"`', explanation: '슬라이싱 `[::-1]`은 전체 문자열을 뒤집어 반환하는 파이썬의 관용적인 표현입니다.' },
+    { type: 'mc', text: '변수 `name`과 `age`를 `f"제 이름은 {name}이고, 나이는 {age}입니다."`와 같이 포매팅하는 방법을 무엇이라고 하는가?', options: ['C-style 포매팅', '`.format()` 메소드', 'f-string (formatted string literal)', '문자열 연결', '템플릿 문자열'], answer: 'f-string (formatted string literal)', explanation: '문자열 앞에 f를 붙여 변수를 직접 삽입하는 방식은 f-string이라고 불립니다.' },
+    { type: 'mc', text: '`"image.jpg".startswith("image")`의 결과는?', options: ['`True`', '`False`', '`0`', '`1`', '`-1`'], answer: '`True`', explanation: '`.startswith()`는 문자열이 특정 문구로 시작하는지 확인하여 불리언(True/False) 값을 반환합니다.' },
+    { type: 'mc', text: '`"42".isdigit()`의 결과는?', options: ['`True`', '`False`', '`42`', '`"42"`', '오류 발생'], answer: '`True`', explanation: '`.isdigit()`은 문자열이 숫자로만 이루어져 있는지 판별합니다.' },
+    { type: 'mc', text: '`s = "abc"`일 때 `len(s)`의 결과는?', options: ['0', '1', '2', '3', '4'], answer: '3', explanation: '`len()`은 문자열의 총 길이를 반환합니다.' },
+    { type: 'mc', text: '`s.find("x")`와 `s.index("x")`의 가장 큰 차이점은?', options: ['반환하는 인덱스 값이 다르다', '`find`는 정수, `index`는 문자열을 반환한다', '실행 속도 차이가 매우 크다', '찾는 값이 없을 때 `find`는 -1을, `index`는 오류를 발생시킨다', '두 함수는 기능이 완전히 동일하다'], answer: '찾는 값이 없을 때 `find`는 -1을, `index`는 오류를 발생시킨다', explanation: '`find`는 안전하게 -1을 반환하지만, `index`는 찾는 값이 없으면 예외를 발생시키며 프로그램을 중단시킵니다.' }
+];
+
+        function renderQuestions() {
+            const oxContainer = document.getElementById('ox-questions');
+            const mcContainer = document.getElementById('mc-questions');
+            let questionNumber = 1;
+
+            questions.forEach(q => {
+                const qDiv = document.createElement('div');
+                qDiv.className = 'question-container';
+                const qText = document.createElement('div');
+                qText.className = 'question-text';
+                qText.innerHTML = `${questionNumber}. ${q.text.replace(/`([^`]+)`/g, '<code>$1</code>')}`;
+                qDiv.appendChild(qText);
+                const optionsDiv = document.createElement('div');
+                optionsDiv.className = 'options';
+                if (q.type === 'ox') {
+                    ['O', 'X'].forEach(opt => {
+                        const label = document.createElement('label');
+                        const radio = document.createElement('input');
+                        radio.type = 'radio'; radio.name = `q${questionNumber}`; radio.value = opt; radio.required = true;
+                        label.appendChild(radio); label.append(` ${opt}`);
+                        optionsDiv.appendChild(label);
+                    });
+                } else if (q.type === 'mc') {
+                    q.options.forEach(opt => {
+                        const label = document.createElement('label');
+                        const radio = document.createElement('input');
+                        radio.type = 'radio'; radio.name = `q${questionNumber}`; radio.value = opt; radio.required = true;
+                        label.appendChild(radio);
+                        label.innerHTML += ` ${opt.replace(/`([^`]+)`/g, '<code>$1</code>')}`;
+                        optionsDiv.appendChild(label);
+                    });
+                }
+                qDiv.appendChild(optionsDiv);
+                if (q.type === 'ox') {
+                    oxContainer.appendChild(qDiv);
+                } else {
+                    mcContainer.appendChild(qDiv);
+                }
+                questionNumber++;
+            });
+        }
+
+        function submitQuiz(event) {
+            event.preventDefault();
+            const school = document.getElementById('school').value;
+            const studentId = document.getElementById('studentId').value;
+            const name = document.getElementById('name').value;
+            let score = 0;
+            let fileContent = "";
+            const resultsContainer = document.getElementById('results');
+            resultsContainer.innerHTML = '<h2>채점 결과</h2>';
+            for (let i = 0; i < questions.length; i++) {
+                const qNumber = i + 1;
+                const selectedOption = document.querySelector(`input[name="q${qNumber}"]:checked`);
+                const questionData = questions[i];
+                const resultItem = document.createElement('div');
+                resultItem.classList.add('result-item');
+                let resultText = `<strong>[${qNumber}번 문항]</strong>
+`;
+                if (selectedOption && selectedOption.value === questionData.answer) {
+                    score++;
+                    resultItem.classList.add('correct');
+                    resultText += `<strong>결과: 정답!</strong>`;
+                } else {
+                    resultItem.classList.add('incorrect');
+                    resultText += `<strong>결과: 오답!</strong> (선택: ${selectedOption ? selectedOption.value : '미선택'}, 정답: ${questionData.answer})`;
+                }
+                const explanation = document.createElement('div');
+                explanation.className = 'explanation';
+                explanation.innerHTML = `<strong>상세 풀이:</strong> ${questionData.explanation.replace(/`([^`]+)`/g, '<code>$1</code>')}`;
+                resultItem.innerHTML = resultText;
+                resultItem.appendChild(explanation);
+                resultsContainer.appendChild(resultItem);
+                
+                const plainTextForFile = questionData.text.replace(/<[^>]*>/g, '').replace(/`([^`]+)`/g, '$1');
+                fileContent += `[${qNumber}번 문항]\n`;
+                fileContent += `문제: ${plainTextForFile}\n`;
+                fileContent += `선택한 답: ${selectedOption ? selectedOption.value : '미선택'}\n`;
+                fileContent += `정답: ${questionData.answer}\n`;
+                fileContent += `결과: ${selectedOption && selectedOption.value === questionData.answer ? '정답' : '오답'}\n`;
+                fileContent += `풀이: ${questionData.explanation.replace(/<[^>]*>/g, '').replace(/`([^`]+)`/g, '$1')}\n\n`;
+            }
+            const totalScore = (score / questions.length) * 100;
+            const now = new Date();
+            const timestamp = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}시${String(now.getMinutes()).padStart(2, '0')}분`;
+            const summary = document.createElement('p');
+            summary.innerHTML = `<strong>총점: ${totalScore.toFixed(0)}점 (${questions.length}개 중 ${score}개 정답)</strong>`;
+            resultsContainer.prepend(summary);
+            const fileHeader = `학교: ${school}\n학번: ${studentId}\n이름: ${name}\n응시 시각: ${timestamp}\n총점: ${totalScore.toFixed(0)}점\n\n---\n\n`;
+            fileContent = fileHeader + fileContent;
+            const fileNameTimestamp = now.toISOString().replace(/:/g, '-').slice(0, 19);
+            const fileName = `${school}_${studentId}_${name}_${totalScore.toFixed(0)}점_${fileNameTimestamp}.txt`;
+            download(fileName, fileContent);
+        }
+
+        function download(filename, text) {
+            const element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+            element.setAttribute('download', filename);
+            element.style.display = 'none';
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+        }
+
+        window.onload = renderQuestions;
+    </script>
+</body>
+</html>

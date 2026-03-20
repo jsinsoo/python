@@ -1,0 +1,162 @@
+12차시: 문자열 처리 학습 패키지
+안녕하세요! 이번 시간에는 파이썬에서 텍스트 데이터를 다루는 핵심, 문자열(String) 처리에 대해 집중적으로 학습해 보겠습니다. 문자열을 자르고, 붙이고, 검색하고, 원하는 형태로 바꾸는 다양한 기술들을 예제 코드와 퀴즈를 통해 익혀보세요!
+
+1. 파이썬 예제 코드: 문자열 처리
+1.1. 기초 파이썬 예시 코드 (5개)
+기초 예제는 문자열을 만들고, 길이를 재거나, 특정 문자에 접근하는 가장 기본적인 방법을 다룹니다.
+
+1. 문자열 생성과 인덱싱
+
+# 작은따옴표, 큰따옴표, 세 개짜리 따옴표 모두 사용 가능합니다.
+s1 = 'Hello'
+s2 = "Python"
+s3 = """
+이것은
+여러 줄에 걸친
+문자열입니다.
+"""
+
+print(s1)
+print("s2의 첫 번째 글자:", s2[0])    # 'P'
+print("s2의 마지막 글자:", s2[-1])   # 'n'
+2. 문자열 연결(+)과 반복(*)
+
+first = "파이썬은 "
+second = "재미있다!"
+
+# 문자열 연결
+sentence = first + second
+print(sentence)
+
+# 문자열 반복
+laugh = "하" * 5
+print(laugh)
+3. 문자열 길이 구하기 (len())
+
+# `len()` 함수는 문자열을 구성하는 문자의 총 개수를 반환합니다.
+greeting = "안녕하세요"
+print(f"'{greeting}'의 길이는 {len(greeting)}입니다.")
+4. in으로 부분 문자열 확인하기
+
+# 특정 문자열이 다른 문자열 안에 포함되어 있는지 확인할 수 있습니다.
+text = "Life is too short, You need Python."
+
+if "Python" in text:
+    print("이 문장에는 'Python'이 포함되어 있습니다.")
+
+if "Java" not in text:
+    print("이 문장에는 'Java'가 포함되어 있지 않습니다.")
+5. for 문으로 문자열 순회하기
+
+# 문자열의 각 글자를 하나씩 순서대로 처리합니다.
+count = 0
+for char in "apple":
+    if char == 'p':
+        count += 1
+print(f"'apple'에는 p가 {count}개 있습니다.")
+1.2. 응용 파이썬 예시 코드 (5개)
+응용 예제는 문자열을 원하는 형태로 바꾸거나, 특정 기준으로 나누는 등 실용적인 문자열 메소드들을 다룹니다.
+
+1. 문자열 슬라이싱 (Slicing)으로 자르기
+
+# 문자열의 일부를 잘라내어 새로운 문자열을 만듭니다.
+# a[start:end] -> start 인덱스부터 end-1 인덱스까지
+jumin = "990120-1234567"
+
+year = jumin[0:2]
+month = jumin[2:4]
+gender = jumin[7]
+
+print(f"출생년도: {year}, 출생월: {month}, 성별코드: {gender}")
+print("주민번호 뒷자리:", jumin[7:]) # 7번 인덱스부터 끝까지
+2. 대소문자 변경 (.upper(), .lower(), .title())
+
+text = "python is POWERFUL"
+
+print("전체 대문자로:", text.upper())
+print("전체 소문자로:", text.lower())
+print("각 단어 첫 글자만 대문자로:", text.title())
+3. 공백 제거 (.strip(), .lstrip(), .rstrip())
+
+# 문자열 양쪽, 왼쪽, 오른쪽의 불필요한 공백(또는 특정 문자)을 제거합니다.
+user_input = "   hello   "
+print(f"'{user_input}' -> strip() -> '{user_input.strip()}'")
+
+url = "www.example.com/"
+print(f"'{url}' -> rstrip('/') -> '{url.rstrip('/')}'")
+4. 문자열 나누기 (.split())
+
+# 특정 구분자를 기준으로 문자열을 나누어 리스트로 만듭니다.
+fruits = "사과,바나나,딸기,오렌지"
+fruit_list = fruits.split(',')
+print(fruit_list)
+print("두 번째 과일은", fruit_list[1], "입니다.")
+5. 문자열 바꾸기 (.replace())
+
+# 특정 문자열을 찾아 다른 문자열로 바꿉니다.
+text = "파이썬은 배우기 어렵습니다. 파이썬은 느립니다."
+new_text = text.replace("파이썬", "자바")
+print("원본:", text)
+print("변경 후:", new_text)
+1.3. 심화 파이썬 예시 코드 (5개)
+심화 예제는 리스트를 문자열로 합치거나, 정규 표현식을 사용하는 등 고급 문자열 처리 기법을 다룹니다.
+
+1. 리스트를 문자열로 합치기 (.join())
+
+# `.split()`의 반대 작업으로, 리스트의 요소들을 하나의 문자열로 합칩니다.
+words = ["Life", "is", "too", "short"]
+
+# " " (공백)을 구분자로 하여 합치기
+sentence = " ".join(words)
+print(sentence)
+
+# "-"을 구분자로 하여 합치기
+date_parts = ["2026", "03", "20"]
+date_string = "-".join(date_parts)
+print(date_string)
+2. 위치 찾기 (.find() vs .index())
+
+# 특정 부분 문자열이 시작되는 첫 번째 인덱스를 찾습니다.
+text = "apple, banana"
+
+# .find(): 찾는 문자열이 없으면 -1을 반환합니다.
+print("banana의 위치:", text.find("banana"))
+print("orange의 위치:", text.find("orange")) # -1
+
+# .index(): 찾는 문자열이 없으면 ValueError 오류를 발생시킵니다.
+print("apple의 위치:", text.index("apple"))
+# print(text.index("orange")) # 이 코드는 오류를 발생시킴
+3. 시작/끝 문자열 확인 (.startswith(), .endswith())
+
+# 파일 확장자를 확인하거나, 특정 프로토콜로 시작하는지 검사할 때 유용합니다.
+filename = "report.pdf"
+url = "https://www.google.com"
+
+if filename.endswith(".pdf"):
+    print("PDF 파일입니다.")
+
+if url.startswith("https://"):
+    print("안전한 HTTPS 프로토콜입니다.")
+4. 문자열 채우기 (.zfill(), f-string)
+
+# 특정 길이에 맞춰 앞을 0으로 채웁니다.
+number = "45"
+print(number.zfill(5)) # '00045'
+
+# f-string을 이용한 더 유연한 채우기 (Python 3.6+)
+hour = 9
+minute = 5
+print(f"현재 시각 {str(hour).zfill(2)}:{str(minute).zfill(2)}")
+print(f"현재 시각 {hour:02d}:{minute:02d}") # f-string 방식
+5. 정규 표현식(Regular Expression)으로 이메일 찾기
+
+# 복잡하고 정형화된 패턴을 찾을 때 매우 강력한 도구입니다.
+import re
+
+text = "제 이메일은 a@b.com 이고, 친구 이메일은 c@d.net 입니다. e@f 는 잘못된 주소입니다."
+
+# 이메일 형식의 패턴을 정의
+email_pattern = r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}'
+
+emails = re.findall(email_pattern, text)
+print("본문에서 찾은 유효한 이메일 주소:", emails)

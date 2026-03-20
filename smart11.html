@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 퀴즈 - 함수</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Malgun Gothic", "맑은 고딕", sans-serif; line-height: 1.6; padding: 20px; margin: 0; background-color: #f0f2f5; }
+        h1, h2 { border-bottom: 2px solid #dee2e6; padding-bottom: 10px; }
+        #quizContainer { max-width: 800px; margin: 20px auto; background-color: #ffffff; padding: 30px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        .info-group, .question-container { margin-bottom: 25px; }
+        label { font-weight: bold; }
+        input[type="text"] { width: 100%; box-sizing: border-box; padding: 10px; border: 1px solid #ced4da; border-radius: 4px; font-size: 1em; }
+        .question-text { font-size: 1.1em; margin-bottom: 15px; font-family: Consolas, "Courier New", monospace; white-space: pre-wrap; background-color: #f8f9fa; padding: 15px; border-radius: 5px; border: 1px solid #e9ecef; }
+        .options label { font-weight: normal; margin-right: 15px; display: block; padding: 8px; border-radius: 4px; cursor: pointer; }
+        .options label:hover { background-color: #e9ecef; }
+        .options input[type="radio"] { margin-right: 10px; }
+        button { background-color: #007bff; color: white; padding: 12px 25px; border: none; border-radius: 5px; cursor: pointer; font-size: 1.1em; width: 100%; }
+        button:hover { background-color: #0056b3; }
+        #results { margin-top: 30px; border-top: 2px solid #dee2e6; padding-top: 20px; }
+        .result-item { padding: 15px; margin-bottom: 10px; border-radius: 5px; }
+        .correct { background-color: #d1e7dd; border-left: 5px solid #198754; }
+        .incorrect { background-color: #f8d7da; border-left: 5px solid #dc3545; }
+        .explanation { margin-top: 10px; padding: 10px; background: #e9ecef; border-radius: 4px; }
+        code { background-color: #e9ecef; padding: 2px 4px; border-radius: 3px; }
+    </style>
+</head>
+<body>
+
+    <div id="quizContainer">
+        <h1>11차시: 파이썬 함수 퀴즈</h1>
+
+        <form id="quizForm" onsubmit="submitQuiz(event)">
+            <h2>인적사항 입력</h2>
+            <div class="info-group">
+                <label for="school">학교:</label>
+                <input type="text" id="school" required>
+            </div>
+            <div class="info-group">
+                <label for="studentId">학번:</label>
+                <input type="text" id="studentId" required>
+            </div>
+            <div class="info-group">
+                <label for="name">이름:</label>
+                <input type="text" id="name" required>
+            </div>
+
+            <hr style="margin: 30px 0;">
+
+            <h2>OX 퀴즈 (10문항)</h2>
+            <div id="ox-questions"></div>
+
+            <hr style="margin: 30px 0;">
+
+            <h2>5지선다형 퀴즈 (10문항)</h2>
+            <div id="mc-questions"></div>
+            
+            <button type="submit">채점 및 결과 저장</button>
+        </form>
+
+        <div id="results"></div>
+    </div>
+
+    <script>
+const questions = [
+    // Part 1: OX 퀴즈 (1-10)
+    { type: 'ox', text: '파이썬에서 함수를 정의할 때 `function` 키워드를 사용한다.', answer: 'X', explanation: '파이썬 함수는 `def` (define의 약자) 키워드를 사용하여 정의합니다.' },
+    { type: 'ox', text: '함수에 `return` 문이 없으면 아무 값도 반환하지 않는다 (None을 반환한다).', answer: 'O', explanation: '함수에서 `return`을 생략하면, 함수는 기본적으로 `None` 객체를 반환합니다.' },
+    { type: 'ox', text: '`*args`는 정해지지 않은 수의 \'키워드\' 인자를 딕셔너리 형태로 받는다.', answer: 'X', explanation: '`*args`는 정해지지 않은 수의 \'위치\' 인자를 튜플(tuple) 형태로 받습니다. 키워드 인자를 딕셔너리로 받는 것은 `**kwargs`입니다.' },
+    { type: 'ox', text: '람다(lambda) 표현식은 여러 줄의 코드를 포함할 수 있는 익명 함수이다.', answer: 'X', explanation: '람다 표현식은 단일 \'표현식\'으로 구성된 한 줄짜리 익명 함수입니다. 여러 줄의 코드를 포함할 수 없습니다.' },
+    { type: 'ox', text: '함수 내에서 선언된 변수(지역 변수)는 함수 밖에서도 접근할 수 있다.', answer: 'X', explanation: '함수 내에서 선언된 지역 변수는 해당 함수의 스코프(범위) 내에서만 유효하며, 함수 밖에서는 접근할 수 없습니다.' },
+    { type: 'ox', text: '`def my_func(a, b=10):` 와 같이 함수 정의 시, `b`는 기본 매개변수이다.', answer: 'O', explanation: '함수를 정의할 때 매개변수에 값을 할당해두면, 함수 호출 시 해당 인자가 전달되지 않을 경우 이 기본값이 사용됩니다.' },
+    { type: 'ox', text: '`**kwargs`는 정해지지 않은 수의 \'위치\' 인자를 튜플 형태로 받는다.', answer: 'X', explanation: '`**kwargs`는 키워드 인자를 딕셔너리 형태로 받습니다. 위치 인자를 튜플로 받는 것은 `*args`입니다.' },
+    { type: 'ox', text: '재귀 함수는 자기 자신을 다시 호출하는 함수이다.', answer: 'O', explanation: '재귀 함수는 함수 내부에서 자기 자신을 다시 호출하는 구조로, 특정 조건에서 멈추도록 설계해야 합니다.' },
+    { type: 'ox', text: '파이썬에서 함수는 다른 함수의 인자로 전달될 수 있다.', answer: 'O', explanation: '파이썬에서 함수는 일급 객체(first-class citizen)이므로 변수에 할당하거나, 다른 함수의 인자로 전달하거나, 반환 값으로 사용할 수 있습니다.' },
+    { type: 'ox', text: '`yield` 키워드를 사용하는 함수는 제너레이터(Generator)가 된다.', answer: 'O', explanation: '`yield` 키워드를 사용하면 함수는 제너레이터가 되어, 호출될 때마다 값을 하나씩 생성하여 반환합니다.' },
+
+    // Part 2: 5지선다형 퀴즈 (11-20)
+    { type: 'mc', text: '다음 중 함수를 정의하는 올바른 키워드는 무엇인가?', options: ['func', 'def', 'define', 'function', 'fun'], answer: 'def', explanation: '파이썬에서 함수를 정의하는 키워드는 `def`입니다.' },
+    { type: 'mc', text: '`def greet(name="Guest"):` 와 같이 정의된 함수를 `greet()`으로 호출했을 때 출력되는 것은?', options: ['오류가 발생한다.', 'Guest', 'name', '"" (빈 문자열)', 'None'], answer: 'Guest', explanation: '인자를 전달하지 않으면 기본값으로 설정된 \'Guest\'가 사용됩니다.' },
+    { type: 'mc', text: '가변 인자 리스트를 받아 모든 인자를 튜플로 묶는 매개변수는?', options: ['&args', '*kwargs', '**args', '#args', '*args'], answer: '*args', explanation: '`*args`는 여러 개의 위치 인자를 하나의 튜플로 묶어서 함수에 전달하는 역할을 합니다.' },
+    { type: 'mc', text: '아래 코드의 실행 결과는?\n`result = list(map(lambda x: x * 2, [1, 2, 3]))`', options: ['[1, 2, 3]', '[1, 4, 9]', '[2, 4, 6]', '[3, 4, 5]', '오류 발생'], answer: '[2, 4, 6]', explanation: '`map` 함수는 리스트의 각 요소에 `x * 2`를 적용하여 `[2, 4, 6]`을 생성합니다.' },
+    { type: 'mc', text: '함수 외부의 변수를 함수 내부에서 수정하려고 할 때 사용하는 키워드는?', options: ['global', 'outer', 'public', 'var', 'nonlocal'], answer: 'global', explanation: '`global` 키워드를 사용하면 함수 내부에서 전역 변수의 값을 직접 변경할 수 있습니다.' },
+    { type: 'mc', text: '`def func(a, b): return a+b` 함수를 `func(b=5, a=3)`와 같이 호출하는 방식을 무엇이라 하는가?', options: ['위치 인수', '키워드 인수', '기본 인수', '가변 인수', '동적 인수'], answer: '키워드 인수', explanation: '`매개변수이름=값` 형태로 인수를 전달하는 방식을 키워드 인수라고 합니다.' },
+    { type: 'mc', text: '`filter(function, iterable)`에 대한 설명으로 올바른 것은?', options: ['각 요소에 function을 적용한 결과 반환', 'function의 반환 값이 True인 것만 모아서 반환', '모든 요소를 하나의 값으로 합쳐서 반환', 'iterable을 정렬하여 반환', 'iterable을 역순으로 반환'], answer: 'function의 반환 값이 True인 것만 모아서 반환', explanation: '`filter` 함수는 조건 함수를 통과(True)하는 요소들만 걸러냅니다.' },
+    { type: 'mc', text: '함수의 설명(Docstring)을 작성하는 올바른 방법은?', options: ['# 설명', '/* 설명 */', '-- 설명', '"""설명"""', ''], answer: '"""설명"""', explanation: '큰따옴표 세 개(`"""`)를 사용하여 함수의 공식적인 설명(docstring)을 작성합니다.' },
+    { type: 'mc', text: '기존 함수의 코드를 수정하지 않고 기능을 추가할 때 사용하는 디자인 패턴은?', options: ['싱글턴', '팩토리', '빌더', '프록시', '데코레이터'], answer: '데코레이터', explanation: '데코레이터는 다른 함수를 감싸서 실행 전후에 로직을 추가하는 기능입니다.' },
+    { type: 'mc', text: '아래 코드의 실행 결과는?\n`def my_gen(): yield 1; yield 2;` \n`g = my_gen(); print(next(g))`', options: ['1', '2', '(1, 2)', '[1, 2]', '오류 발생'], answer: '1', explanation: '`next()` 호출 시 제너레이터의 첫 번째 `yield` 값인 1이 반환됩니다.' }
+];
+
+        function renderQuestions() {
+            const oxContainer = document.getElementById('ox-questions');
+            const mcContainer = document.getElementById('mc-questions');
+            let questionNumber = 1;
+
+            questions.forEach(q => {
+                const qDiv = document.createElement('div');
+                qDiv.className = 'question-container';
+                const qText = document.createElement('div');
+                qText.className = 'question-text';
+                qText.innerHTML = `${questionNumber}. ${q.text.replace(/`([^`]+)`/g, '<code>$1</code>')}`;
+                qDiv.appendChild(qText);
+                const optionsDiv = document.createElement('div');
+                optionsDiv.className = 'options';
+                if (q.type === 'ox') {
+                    ['O', 'X'].forEach(opt => {
+                        const label = document.createElement('label');
+                        const radio = document.createElement('input');
+                        radio.type = 'radio'; radio.name = `q${questionNumber}`; radio.value = opt; radio.required = true;
+                        label.appendChild(radio); label.append(` ${opt}`);
+                        optionsDiv.appendChild(label);
+                    });
+                } else if (q.type === 'mc') {
+                    q.options.forEach(opt => {
+                        const label = document.createElement('label');
+                        const radio = document.createElement('input');
+                        radio.type = 'radio'; radio.name = `q${questionNumber}`; radio.value = opt; radio.required = true;
+                        label.appendChild(radio);
+                        label.innerHTML += ` ${opt.replace(/`([^`]+)`/g, '<code>$1</code>')}`;
+                        optionsDiv.appendChild(label);
+                    });
+                }
+                qDiv.appendChild(optionsDiv);
+                if (q.type === 'ox') {
+                    oxContainer.appendChild(qDiv);
+                } else {
+                    mcContainer.appendChild(qDiv);
+                }
+                questionNumber++;
+            });
+        }
+
+        function submitQuiz(event) {
+            event.preventDefault();
+            const school = document.getElementById('school').value;
+            const studentId = document.getElementById('studentId').value;
+            const name = document.getElementById('name').value;
+            let score = 0;
+            let fileContent = "";
+            const resultsContainer = document.getElementById('results');
+            resultsContainer.innerHTML = '<h2>채점 결과</h2>';
+            for (let i = 0; i < questions.length; i++) {
+                const qNumber = i + 1;
+                const selectedOption = document.querySelector(`input[name="q${qNumber}"]:checked`);
+                const questionData = questions[i];
+                const resultItem = document.createElement('div');
+                resultItem.classList.add('result-item');
+                let resultText = `<strong>[${qNumber}번 문항]</strong>
+`;
+                if (selectedOption && selectedOption.value === questionData.answer) {
+                    score++;
+                    resultItem.classList.add('correct');
+                    resultText += `<strong>결과: 정답!</strong>`;
+                } else {
+                    resultItem.classList.add('incorrect');
+                    resultText += `<strong>결과: 오답!</strong> (선택: ${selectedOption ? selectedOption.value : '미선택'}, 정답: ${questionData.answer})`;
+                }
+                const explanation = document.createElement('div');
+                explanation.className = 'explanation';
+                explanation.innerHTML = `<strong>상세 풀이:</strong> ${questionData.explanation.replace(/`([^`]+)`/g, '<code>$1</code>')}`;
+                resultItem.innerHTML = resultText;
+                resultItem.appendChild(explanation);
+                resultsContainer.appendChild(resultItem);
+                
+                const plainTextForFile = questionData.text.replace(/<[^>]*>/g, '').replace(/`([^`]+)`/g, '$1');
+                fileContent += `[${qNumber}번 문항]\n`;
+                fileContent += `문제: ${plainTextForFile}\n`;
+                fileContent += `선택한 답: ${selectedOption ? selectedOption.value : '미선택'}\n`;
+                fileContent += `정답: ${questionData.answer}\n`;
+                fileContent += `결과: ${selectedOption && selectedOption.value === questionData.answer ? '정답' : '오답'}\n`;
+                fileContent += `풀이: ${questionData.explanation.replace(/<[^>]*>/g, '').replace(/`([^`]+)`/g, '$1')}\n\n`;
+            }
+            const totalScore = (score / questions.length) * 100;
+            const now = new Date();
+            const timestamp = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}시${String(now.getMinutes()).padStart(2, '0')}분`;
+            const summary = document.createElement('p');
+            summary.innerHTML = `<strong>총점: ${totalScore.toFixed(0)}점 (${questions.length}개 중 ${score}개 정답)</strong>`;
+            resultsContainer.prepend(summary);
+            const fileHeader = `학교: ${school}\n학번: ${studentId}\n이름: ${name}\n응시 시각: ${timestamp}\n총점: ${totalScore.toFixed(0)}점\n\n---\n\n`;
+            fileContent = fileHeader + fileContent;
+            const fileNameTimestamp = now.toISOString().replace(/:/g, '-').slice(0, 19);
+            const fileName = `${school}_${studentId}_${name}_${totalScore.toFixed(0)}점_${fileNameTimestamp}.txt`;
+            download(fileName, fileContent);
+        }
+
+        function download(filename, text) {
+            const element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+            element.setAttribute('download', filename);
+            element.style.display = 'none';
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+        }
+
+        window.onload = renderQuestions;
+    </script>
+</body>
+</html>

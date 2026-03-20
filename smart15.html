@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 퀴즈 - Pandas 데이터 분석</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Malgun Gothic", "맑은 고딕", sans-serif; line-height: 1.6; padding: 20px; margin: 0; background-color: #f0f2f5; }
+        h1, h2 { border-bottom: 2px solid #dee2e6; padding-bottom: 10px; }
+        #quizContainer { max-width: 800px; margin: 20px auto; background-color: #ffffff; padding: 30px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        .info-group, .question-container { margin-bottom: 25px; }
+        label { font-weight: bold; }
+        input[type="text"] { width: 100%; box-sizing: border-box; padding: 10px; border: 1px solid #ced4da; border-radius: 4px; font-size: 1em; }
+        .question-text { font-size: 1.1em; margin-bottom: 15px; font-family: Consolas, "Courier New", monospace; white-space: pre-wrap; background-color: #f8f9fa; padding: 15px; border-radius: 5px; border: 1px solid #e9ecef; }
+        .options label { font-weight: normal; margin-right: 15px; display: block; padding: 8px; border-radius: 4px; cursor: pointer; }
+        .options label:hover { background-color: #e9ecef; }
+        .options input[type="radio"] { margin-right: 10px; }
+        button { background-color: #007bff; color: white; padding: 12px 25px; border: none; border-radius: 5px; cursor: pointer; font-size: 1.1em; width: 100%; }
+        button:hover { background-color: #0056b3; }
+        #results { margin-top: 30px; border-top: 2px solid #dee2e6; padding-top: 20px; }
+        .result-item { padding: 15px; margin-bottom: 10px; border-radius: 5px; }
+        .correct { background-color: #d1e7dd; border-left: 5px solid #198754; }
+        .incorrect { background-color: #f8d7da; border-left: 5px solid #dc3545; }
+        .explanation { margin-top: 10px; padding: 10px; background: #e9ecef; border-radius: 4px; }
+        code { background-color: #e9ecef; padding: 2px 4px; border-radius: 3px; }
+    </style>
+</head>
+<body>
+
+    <div id="quizContainer">
+        <h1>15차시: 파이썬 Pandas 데이터 분석</h1>
+
+        <form id="quizForm" onsubmit="submitQuiz(event)">
+            <h2>인적사항 입력</h2>
+            <div class="info-group">
+                <label for="school">학교:</label>
+                <input type="text" id="school" required>
+            </div>
+            <div class="info-group">
+                <label for="studentId">학번:</label>
+                <input type="text" id="studentId" required>
+            </div>
+            <div class="info-group">
+                <label for="name">이름:</label>
+                <input type="text" id="name" required>
+            </div>
+
+            <hr style="margin: 30px 0;">
+
+            <h2>OX 퀴즈 (10문항)</h2>
+            <div id="ox-questions"></div>
+
+            <hr style="margin: 30px 0;">
+
+            <h2>5지선다형 퀴즈 (10문항)</h2>
+            <div id="mc-questions"></div>
+            
+            <button type="submit">채점 및 결과 저장</button>
+        </form>
+
+        <div id="results"></div>
+    </div>
+
+    <script>
+const questions = [
+    // OX 퀴즈 (1-10)
+    { type: 'ox', text: 'Pandas의 `Series`는 1차원 배열 형태의 자료구조이다.', answer: 'O', explanation: '`Series`는 인덱스를 가지는 1차원 데이터 구조로, Pandas의 가장 기본적인 데이터 단위입니다.' },
+    { type: 'ox', text: '`DataFrame`에서 특정 열을 선택하면 그 결과는 항상 또 다른 `DataFrame`이다.', answer: 'X', explanation: '하나의 열만 선택하면(`df["col1"]`) `Series`가 반환됩니다. 두 개 이상의 열을 선택하면(`df[["col1", "col2"]]`) `DataFrame`이 반환됩니다.' },
+    { type: 'ox', text: '`.loc`는 인덱스의 이름(label)을 사용하여 행을 선택한다.', answer: 'O', explanation: '`.loc`는 라벨 기반 인덱싱을 사용합니다. 반면, `.iloc`는 정수 위치 기반 인덱싱을 사용합니다.' },
+    { type: 'ox', text: '`df.sort_values(by="age")`는 원본 데이터프레임 `df`를 직접 수정한다.', answer: 'X', explanation: '기본적으로 새로운 데이터프레임을 반환합니다. 원본을 직접 수정하려면 `inplace=True` 옵션을 추가해야 합니다.' },
+    { type: 'ox', text: '`df.dropna()`는 결측치(NaN)가 포함된 모든 열(column)을 삭제한다.', answer: 'X', explanation: '기본적으로 `dropna()`는 결측치가 포함된 행(row)을 삭제합니다. 열을 삭제하려면 `axis=1` 옵션을 주어야 합니다.' },
+    { type: 'ox', text: '`groupby()` 메소드는 데이터를 그룹으로 묶고 각 그룹에 대한 집계 함수를 적용하는 데 사용된다.', answer: 'O', explanation: '데이터를 특정 기준으로 분할(Split)하고, 함수를 적용(Apply)한 뒤, 결과를 결합(Combine)하는 핵심 기능입니다.' },
+    { type: 'ox', text: '`pd.read_excel()` 함수는 텍스트 파일을 읽어 DataFrame으로 만드는 함수이다.', answer: 'X', explanation: '`pd.read_excel()`은 엑셀 파일을 읽는 함수입니다. 텍스트 파일(.csv 등)을 읽을 때는 `pd.read_csv()`를 사용합니다.' },
+    { type: 'ox', text: '두 개의 DataFrame을 합칠 때 사용하는 대표적인 함수는 `pd.merge()`이다.', answer: 'O', explanation: '`pd.merge()`는 SQL의 JOIN과 유사하게 공통 열을 기준으로 두 데이터프레임을 병합합니다.' },
+    { type: 'ox', text: '데이터프레임의 상위 5개 행을 확인하는 메소드는 `.top()` 이다.', answer: 'X', explanation: '상위 데이터를 확인하는 메소드는 `.head()` 입니다. 하위 데이터는 `.tail()`을 사용합니다.' },
+    { type: 'ox', text: '`df["age"] > 20` 과 같은 조건식을 `df[...]` 안에 넣으면 조건에 맞는 행만 필터링할 수 있다.', answer: 'O', explanation: '이를 불리언 인덱싱(Boolean Indexing)이라고 하며, 데이터를 필터링하는 가장 일반적인 방법입니다.' },
+
+    // 5지선다형 퀴즈 (11-20)
+    { type: 'mc', text: 'Pandas 라이브러리를 사용할 때, 일반적으로 어떤 별칭(alias)으로 임포트하는가?', options: ['`import pandas as p`', '`import pandas as pd`', '`import pandas as pan`', '`import pandas as ds`', '`import pandas`'], answer: '`import pandas as pd`', explanation: '`import pandas as pd`는 전 세계적으로 통용되는 표준 관례입니다.' },
+    { type: 'mc', text: '딕셔너리를 사용하여 DataFrame을 생성하는 올바른 코드는?', options: ['`pd.DataFrame({key: value})`', '`pd.Series({key: value})`', '`DataFrame.from_dict({key: value})`', '`pd.from_dict({key: value})`', '`pd.read_dict({key: value})`'], answer: '`pd.DataFrame({key: value})`', explanation: '`pd.DataFrame()` 생성자에 딕셔너리를 전달하면 키는 열 이름, 값은 데이터가 됩니다.' },
+    { type: 'mc', text: 'DataFrame `df`의 행과 열의 개수를 확인하는 속성(attribute)은?', options: ['`df.size`', '`df.len`', '`df.shape`', '`df.info()`', '`df.describe()`'], answer: '`df.shape`', explanation: '`df.shape`는 (행, 열) 형태의 튜플을 반환합니다.' },
+    { type: 'mc', text: 'DataFrame `df`의 0번부터 4번까지의 행을 정수 위치로 선택하는 올바른 방법은?', options: ['`df.loc[0:4]`', '`df.iloc[0:5]`', '`df.iloc[0:4]`', '`df.loc[0:5]`', '`df.get[0:5]`'], answer: '`df.iloc[0:5]`', explanation: '`.iloc`는 정수 슬라이싱 시 마지막 인덱스를 포함하지 않으므로 0:5를 사용해야 4번까지 선택됩니다.' },
+    { type: 'mc', text: '결측치를 특정 값(예: 0)으로 채우는 메소드는?', options: ['`df.dropna(0)`', '`df.remove_na(0)`', '`df.set_na(0)`', '`df.fillna(0)`', '`df.replace_na(0)`'], answer: '`df.fillna(0)`', explanation: '`fillna()`는 결측값(NaN)을 원하는 값으로 대체해줍니다.' },
+    { type: 'mc', text: '`df`의 "score" 열의 모든 값에 10을 더하여 새로운 "new_score" 열을 만드는 올바른 코드는?', options: ['`df["new_score"] = df["score"] + 10`', '`df.apply("score" + 10)`', '`df["new_score"] = df.sum("score", 10)`', '`df.add("new_score", df["score"]+10)`', '`df.loc["new_score"] = df["score"] + 10`'], answer: '`df["new_score"] = df["score"] + 10`', explanation: 'Pandas의 벡터화 연산을 통해 열 전체에 대한 계산을 한 번에 수행할 수 있습니다.' },
+    { type: 'mc', text: '`df`의 "department" 열을 기준으로 그룹화하여 각 부서의 평균 "salary"를 계산하는 코드는?', options: ['`df.groupby("salary").mean("department")`', '`df.mean("salary").groupby("department")`', '`df.pivot_table("salary", by="department")`', '`df.groupby("department")["salary"].mean()`', '`df.filter(by="department").mean("salary")`'], answer: '`df.groupby("department")["salary"].mean()`', explanation: '그룹 기준 설정 -> 대상 열 선택 -> 집계 함수 호출 순으로 작성합니다.' },
+    { type: 'mc', text: 'DataFrame의 기술 통계 정보(평균, 표준편차 등)를 한 번에 보여주는 메소드는?', options: ['`.info()`', '`.summary()`', '`.describe()`', '`.stats()`', '`.agg()`'], answer: '`.describe()`', explanation: '`.describe()`는 수치형 데이터의 주요 통계치를 요약해서 보여줍니다.' },
+    { type: 'mc', text: '다음 중 `df1`과 `df2`를 `key` 열 기준으로 합치되, `df1`의 모든 행을 유지하는 코드는?', options: ['`pd.merge(df1, df2, on="key", how="inner")`', '`pd.merge(df1, df2, on="key", how="outer")`', '`pd.merge(df1, df2, on="key", how="left")`', '`pd.merge(df1, df2, on="key", how="right")`', '`pd.concat([df1, df2], on="key")`'], answer: '`pd.merge(df1, df2, on="key", how="left")`', explanation: '`how="left"`는 왼쪽 데이터프레임의 모든 데이터를 보존하며 병합합니다.' },
+    { type: 'mc', text: '`apply` 메소드에 `lambda` 함수를 사용하는 주된 이유는?', options: ['코드 길이 연장', '간결한 익명 함수를 즉시 적용하기 위해', '일반 함수 사용 불가', '실행 속도 비약적 향상', '데이터 암호화'], answer: '간결한 익명 함수를 즉시 적용하기 위해', explanation: '복잡한 로직을 한 줄로 표현하여 데이터프레임의 각 요소에 빠르게 적용할 수 있습니다.' }
+];
+
+        function renderQuestions() {
+            const oxContainer = document.getElementById('ox-questions');
+            const mcContainer = document.getElementById('mc-questions');
+            let questionNumber = 1;
+
+            questions.forEach(q => {
+                const qDiv = document.createElement('div');
+                qDiv.className = 'question-container';
+                const qText = document.createElement('div');
+                qText.className = 'question-text';
+                qText.innerHTML = `${questionNumber}. ${q.text.replace(/`([^`]+)`/g, '<code>$1</code>')}`;
+                qDiv.appendChild(qText);
+                const optionsDiv = document.createElement('div');
+                optionsDiv.className = 'options';
+                if (q.type === 'ox') {
+                    ['O', 'X'].forEach(opt => {
+                        const label = document.createElement('label');
+                        const radio = document.createElement('input');
+                        radio.type = 'radio'; radio.name = `q${questionNumber}`; radio.value = opt; radio.required = true;
+                        label.appendChild(radio); label.append(` ${opt}`);
+                        optionsDiv.appendChild(label);
+                    });
+                } else if (q.type === 'mc') {
+                    q.options.forEach(opt => {
+                        const label = document.createElement('label');
+                        const radio = document.createElement('input');
+                        radio.type = 'radio'; radio.name = `q${questionNumber}`; radio.value = opt; radio.required = true;
+                        label.appendChild(radio);
+                        label.innerHTML += ` ${opt.replace(/`([^`]+)`/g, '<code>$1</code>')}`;
+                        optionsDiv.appendChild(label);
+                    });
+                }
+                qDiv.appendChild(optionsDiv);
+                if (q.type === 'ox') {
+                    oxContainer.appendChild(qDiv);
+                } else {
+                    mcContainer.appendChild(qDiv);
+                }
+                questionNumber++;
+            });
+        }
+
+        function submitQuiz(event) {
+            event.preventDefault();
+            const school = document.getElementById('school').value;
+            const studentId = document.getElementById('studentId').value;
+            const name = document.getElementById('name').value;
+            let score = 0;
+            let fileContent = "";
+            const resultsContainer = document.getElementById('results');
+            resultsContainer.innerHTML = '<h2>채점 결과</h2>';
+            for (let i = 0; i < questions.length; i++) {
+                const qNumber = i + 1;
+                const selectedOption = document.querySelector(`input[name="q${qNumber}"]:checked`);
+                const questionData = questions[i];
+                const resultItem = document.createElement('div');
+                resultItem.classList.add('result-item');
+                let resultText = `<strong>[${qNumber}번 문항]</strong>
+`;
+                if (selectedOption && selectedOption.value === questionData.answer) {
+                    score++;
+                    resultItem.classList.add('correct');
+                    resultText += `<strong>결과: 정답!</strong>`;
+                } else {
+                    resultItem.classList.add('incorrect');
+                    resultText += `<strong>결과: 오답!</strong> (선택: ${selectedOption ? selectedOption.value : '미선택'}, 정답: ${questionData.answer})`;
+                }
+                const explanation = document.createElement('div');
+                explanation.className = 'explanation';
+                explanation.innerHTML = `<strong>상세 풀이:</strong> ${questionData.explanation.replace(/`([^`]+)`/g, '<code>$1</code>')}`;
+                resultItem.innerHTML = resultText;
+                resultItem.appendChild(explanation);
+                resultsContainer.appendChild(resultItem);
+                
+                const plainTextForFile = questionData.text.replace(/<[^>]*>/g, '').replace(/`([^`]+)`/g, '$1');
+                fileContent += `[${qNumber}번 문항]\n`;
+                fileContent += `문제: ${plainTextForFile}\n`;
+                fileContent += `선택한 답: ${selectedOption ? selectedOption.value : '미선택'}\n`;
+                fileContent += `정답: ${questionData.answer}\n`;
+                fileContent += `결과: ${selectedOption && selectedOption.value === questionData.answer ? '정답' : '오답'}\n`;
+                fileContent += `풀이: ${questionData.explanation.replace(/<[^>]*>/g, '').replace(/`([^`]+)`/g, '$1')}\n\n`;
+            }
+            const totalScore = (score / questions.length) * 100;
+            const now = new Date();
+            const timestamp = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}시${String(now.getMinutes()).padStart(2, '0')}분`;
+            const summary = document.createElement('p');
+            summary.innerHTML = `<strong>총점: ${totalScore.toFixed(0)}점 (${questions.length}개 중 ${score}개 정답)</strong>`;
+            resultsContainer.prepend(summary);
+            const fileHeader = `학교: ${school}\n학번: ${studentId}\n이름: ${name}\n응시 시각: ${timestamp}\n총점: ${totalScore.toFixed(0)}점\n\n---\n\n`;
+            fileContent = fileHeader + fileContent;
+            const fileNameTimestamp = now.toISOString().replace(/:/g, '-').slice(0, 19);
+            const fileName = `${school}_${studentId}_${name}_${totalScore.toFixed(0)}점_${fileNameTimestamp}.txt`;
+            download(fileName, fileContent);
+        }
+
+        function download(filename, text) {
+            const element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+            element.setAttribute('download', filename);
+            element.style.display = 'none';
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+        }
+
+        window.onload = renderQuestions;
+    </script>
+</body>
+</html>
