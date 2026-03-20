@@ -29,11 +29,11 @@
 </div>
 
 <h2>1. 기초 파이썬 예제</h2>
-<p class="desc">변수 선언과 기본 자료형(숫자, 문자열, 불리언)의 사용법을 다룹니다. #[25]</p>
+<p class="desc">변수 선언과 기본 자료형(숫자, 문자열, 불리언)의 사용법을 다룹니다. </p>
 
 <div class="example-card">
     <h3>1. 다양한 자료형의 변수 선언</h3>
-    <p class="desc">정수, 실수, 문자열, 불리언을 변수에 담아 출력합니다. #[26]</p>
+    <p class="desc">정수, 실수, 문자열, 불리언을 변수에 담아 출력합니다. </p>
     <pre><code class="language-python">age = 25              # 정수(Integer)
 height = 175.5        # 실수(Float)
 name = "홍길동"        # 문자열(String)
@@ -44,7 +44,7 @@ print(name, "님의 나이는", age, "살, 키는", height, "cm, 학생 여부:"
 
 <div class="example-card">
     <h3>2. 숫자 자료형 연산</h3>
-    <p class="desc">사칙연산과 몫(//), 나머지(%), 거듭제곱(**)을 수행합니다. #[26]</p>
+    <p class="desc">사칙연산과 몫(//), 나머지(%), 거듭제곱(**)을 수행합니다. </p>
     <pre><code class="language-python">a, b = 15, 4
 print(f"{a} + {b} = {a + b}")   # 덧셈: 19
 print(f"{a} // {b} = {a // b}") # 몫: 3
@@ -54,72 +54,72 @@ print(f"{a} ** 2 = {a ** 2}")   # 거듭제곱: 225</code></pre>
 
 <div class="example-card">
     <h3>3. 자료형 확인 및 변환</h3>
-    <p class="desc">type() 함수를 이용한 확인과 int(), float(), str()을 이용한 강제 변환입니다. #[28, 29]</p>
+    <p class="desc">type() 함수를 이용한 확인과 int(), float(), str()을 이용한 강제 변환입니다. </p>
     <pre><code class="language-python"># 자료형 확인
 print(type(100))      # &lt;class 'int'&gt;
 
 # 자료형 변환 (Type Casting)
 num_str = "123"
-num_int = int(num_str) # 문자열을 정수로 변환 #[29]
+num_int = int(num_str) # 문자열을 정수로 변환 
 print(f"변환 결과: {num_int + 7}") # 130 출력</code></pre>
 </div>
 
 <h2>2. 응용 파이썬 예제</h2>
-<p class="desc">리스트, 튜플, 딕셔너리 등 컬렉션 자료형을 다룹니다. #[30]</p>
+<p class="desc">리스트, 튜플, 딕셔너리 등 컬렉션 자료형을 다룹니다. </p>
 
 <div class="example-card">
     <h3>1. 리스트(List)와 튜플(Tuple)</h3>
-    <p class="desc">수정 가능한 리스트와 수정 불가능한 튜플의 특징입니다. #[31, 33]</p>
-    <pre><code class="language-python"># 리스트 (Mutable: 변경 가능) #[32]
+    <p class="desc">수정 가능한 리스트와 수정 불가능한 튜플의 특징입니다. </p>
+    <pre><code class="language-python"># 리스트 (Mutable: 변경 가능) 
 fruits = ["사과", "바나나"]
 fruits.append("딸기") 
 
-# 튜플 (Immutable: 변경 불가능) #[33]
+# 튜플 (Immutable: 변경 불가능) 
 person = ("홍길동", 30, "서울")
-name, age, city = person # 언패킹 #[34]</code></pre>
+name, age, city = person # 언패킹 </code></pre>
 </div>
 
 <div class="example-card">
     <h3>2. 딕셔너리(Dictionary)와 집합(Set)</h3>
-    <p class="desc">키-값 쌍의 데이터 관리와 중복을 허용하지 않는 집합입니다. #[35, 36]</p>
-    <pre><code class="language-python"># 딕셔너리: Key-Value 구조 #[35]
+    <p class="desc">키-값 쌍의 데이터 관리와 중복을 허용하지 않는 집합입니다. </p>
+    <pre><code class="language-python"># 딕셔너리: Key-Value 구조 
 student = {"name": "홍길동", "major": "컴퓨터공학"}
 print(student["name"])
 
-# 집합: 중복 제거 및 집합 연산 #[36]
+# 집합: 중복 제거 및 집합 연산 
 set_a = {1, 2, 3, 4, 4} # {1, 2, 3, 4}
 set_b = {4, 5}
 print("교집합:", set_a & set_b) # {4}</code></pre>
 </div>
 
 <h2>3. 심화 파이썬 예제</h2>
-<p class="desc">특수한 자료형과 고급 개념을 다룹니다. #[38]</p>
+<p class="desc">특수한 자료형과 고급 개념을 다룹니다. </p>
 
 <div class="example-card">
     <h3>1. None 자료형과 바이트(Bytes)</h3>
-    <p class="desc">값이 없음을 뜻하는 None과 이진 데이터를 다루는 바이트입니다. #[39, 42]</p>
-    <pre><code class="language-python"># None 자료형 #[39]
+    <p class="desc">값이 없음을 뜻하는 None과 이진 데이터를 다루는 바이트입니다. </p>
+    <pre><code class="language-python"># None 자료형 
 my_var = None
 if my_var is None:
-    print("값이 할당되지 않았습니다.") #[40]
+    print("값이 할당되지 않았습니다.") 
 
-# 바이트 객체 (Immutable) #[42]
+# 바이트 객체 (Immutable) 
 my_bytes = bytes([72, 101, 108, 108, 111]) # 'Hello'
 print(my_bytes.decode('utf-8'))</code></pre>
 </div>
 
 <div class="example-card">
     <h3>2. 복소수 및 네임드튜플(Namedtuple)</h3>
-    <p class="desc">실수부와 허수부를 갖는 복소수 및 가독성을 높인 튜플입니다. #[44, 46]</p>
-    <pre><code class="language-python"># 복소수 (Complex Number) #[44]
+    <p class="desc">실수부와 허수부를 갖는 복소수 및 가독성을 높인 튜플입니다. </p>
+    <pre><code class="language-python"># 복소수 (Complex Number) 
 c1 = 3 + 4j
 print(f"실수부: {c1.real}, 허수부: {c1.imag}")
 
-# Namedtuple: 인덱스 대신 이름으로 접근 #[46]
+# Namedtuple: 인덱스 대신 이름으로 접근 
 from collections import namedtuple
 Point = namedtuple('Point', ['x', 'y'])
 p = Point(10, 20)
-print(f"x좌표: {p.x}") # p[0] 대신 p.x 사용 #[47]</code></pre>
+print(f"x좌표: {p.x}") # p[0] 대신 p.x 사용 </code></pre>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
