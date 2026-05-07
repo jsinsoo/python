@@ -79,7 +79,7 @@ const questions = [
     // 딕셔너리 5지선다형 (11-20)
     { type: 'mc', text: '다음 중 딕셔너리를 생성하는 방법으로 올바르지 않은 것은?', options: ['d = {}', 'd = {\'a\': 1}', 'd = dict(a=1, b=2)', 'd = dict([(\'a\', 1), (\'b\', 2)])', 'd = {\'a\', 1, \'b\', 2}'], answer: 'd = {\'a\', 1, \'b\', 2}', explanation: '{\'a\', 1, \'b\', 2}는 세트(set)를 생성하는 문법입니다. 딕셔너리는 반드시 키와 값의 쌍(:)으로 구성되어야 합니다.' },
     { type: 'mc', text: '코드 `d = {\'a\': 100, \'b\': 200}; print(d.get(\'c\', 0))`의 실행 결과는?', options: ['100', '200', 'None', '0', 'KeyError'], answer: '0', explanation: '`get()` 메서드는 키가 없을 때 두 번째 인자로 준 기본값(0)을 반환합니다.' },
-    { type: 'mc', text: '다음 코드의 실행 결과는?\n`d = {\'a\': 1}; d[\'b\'] = 2; d[\'a\': 3]; print(len(d))`', options: ['1', '2', '3', '4', '오류 발생'], answer: '2', explanation: '키 \'a\'를 3으로 수정해도 새로운 키가 추가되는 것은 아니므로, 전체 키의 개수(len)는 2입니다.' },
+    { type: 'mc', text: '다음 코드의 실행 결과는?\n`d = {\'a\': 1}; d[\'b\'] = 2; d[\'a\'] = 3; print(len(d))`', options: ['1', '2', '3', '4', '오류 발생'], answer: '2', explanation: '키 \'a\'를 3으로 수정해도 새로운 키가 추가되는 것은 아니므로, 전체 키의 개수(len)는 2입니다.' },
     { type: 'mc', text: '딕셔너리의 모든 값을 리스트로 얻기 위한 올바른 코드는?', options: ['list(d.items())', 'd.values()', 'list(d.values())', 'list(d.keys())', 'd.getall()'], answer: 'list(d.values())', explanation: '`d.values()`가 반환하는 뷰 객체를 리스트로 변환하기 위해 `list()` 함수를 사용해야 합니다.' },
     { type: 'mc', text: '다음 중 딕셔너리의 키(key)로 사용할 수 없는 자료형은?', options: ['int', 'float', 'str', 'tuple', 'list'], answer: 'list', explanation: '리스트는 가변(mutable) 자료형이므로 딕셔너리의 키로 사용할 수 없습니다.' },
     { type: 'mc', text: '코드 `d = {\'a\': 1, \'b\': 2}; d.pop(\'a\'); print(d)`의 실행 결과는?', options: ['{\'a\': 1}', '{\'b\': 2}', '1', '2', '오류 발생'], answer: '{\'b\': 2}', explanation: '`pop(\'a\')` 호출 후 딕셔너리에서는 키 \'a\'에 해당하는 쌍이 제거됩니다.' },
