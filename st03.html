@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>6개 정렬 알고리즘 동작원리 딕셔너리 출력</title>
+<style>
+    body {
+        margin: 0;
+        font-family: "Malgun Gothic", Arial, sans-serif;
+        background: #f4f7fb;
+        color: #222;
+        line-height: 1.7;
+    }
+    header {
+        background: linear-gradient(135deg, #263859, #3f72af);
+        color: white;
+        padding: 35px 25px;
+        text-align: center;
+    }
+    header h1 {
+        margin: 0;
+        font-size: 30px;
+    }
+    header p {
+        margin-top: 10px;
+        font-size: 16px;
+        opacity: 0.95;
+    }
+    main {
+        max-width: 1100px;
+        margin: 30px auto;
+        padding: 0 20px 50px;
+    }
+    section {
+        background: white;
+        margin-bottom: 25px;
+        border-radius: 16px;
+        padding: 25px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    }
+    h2 {
+        color: #263859;
+        border-left: 8px solid #3f72af;
+        padding-left: 12px;
+    }
+    pre {
+        background: #1e1e1e;
+        color: #f1f1f1;
+        padding: 20px;
+        border-radius: 12px;
+        overflow-x: auto;
+        font-size: 15px;
+        line-height: 1.6;
+    }
+    code {
+        font-family: Consolas, "Courier New", monospace;
+    }
+    .btn {
+        background: #3f72af;
+        color: white;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 10px;
+        font-size: 16px;
+        cursor: pointer;
+        margin: 5px;
+    }
+    .btn:hover {
+        background: #263859;
+    }
+    .output {
+        background: #eef5ff;
+        border: 2px solid #b8d8ff;
+        border-radius: 12px;
+        padding: 20px;
+        margin-top: 15px;
+        min-height: 100px;
+        white-space: pre-wrap;
+        font-family: Consolas, "Courier New", monospace;
+    }
+    .card {
+        border: 1px solid #d8e3f2;
+        border-radius: 12px;
+        padding: 15px;
+        margin: 12px 0;
+        background: #fbfdff;
+    }
+    .card h3 {
+        margin-top: 0;
+        color: #112d4e;
+    }
+    .step {
+        padding: 6px 0;
+    }
+    .num {
+        display: inline-block;
+        background: #3f72af;
+        color: white;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 28px;
+        margin-right: 8px;
+        font-weight: bold;
+    }
+</style>
+</head>
+<body>
+
+<header>
+    <h1>6개 정렬 알고리즘 동작원리 딕셔너리</h1>
+    <p>버블정렬, 선택정렬, 삽입정렬, 병합정렬, 퀵정렬, 힙정렬을 하나의 파이썬 코드로 모아서 출력하기</p>
+</header>
+
+<main>
+
+<section>
+    <h2>1. 파이썬 전체 코드</h2>
+    <pre><code>sorting_algorithms = {
+    "버블정렬": {
+        1: "앞에서부터 인접한 두 값을 비교한다.",
+        2: "왼쪽 값이 더 크면 두 값을 교환한다.",
+        3: "한 회전이 끝나면 가장 큰 값이 오른쪽 끝에 놓인다.",
+        4: "정렬된 끝부분을 제외하고 반복한다."
+    },
+    "선택정렬": {
+        1: "현재 위치 i를 정한다.",
+        2: "i 이후의 미정렬 영역에서 최솟값 위치를 찾는다.",
+        3: "현재 위치의 값과 최솟값을 교환한다.",
+        4: "정렬된 영역을 한 칸 확장한다."
+    },
+    "삽입정렬": {
+        1: "두 번째 원소부터 key로 잡는다.",
+        2: "key 왼쪽의 정렬된 영역과 비교한다.",
+        3: "key보다 큰 값은 오른쪽으로 한 칸 이동한다.",
+        4: "빈 자리에 key를 삽입한다."
+    },
+    "병합정렬": {
+        1: "배열을 반으로 나눈다.",
+        2: "각 부분 배열을 다시 반으로 나누어 길이가 1이 될 때까지 반복한다.",
+        3: "작은 값부터 비교하며 두 배열을 병합한다.",
+        4: "모든 병합이 끝나면 전체 배열이 정렬된다."
+    },
+    "퀵정렬": {
+        1: "기준값인 pivot을 선택한다.",
+        2: "pivot보다 작은 값, 같은 값, 큰 값으로 나눈다.",
+        3: "작은 값 목록과 큰 값 목록을 재귀적으로 정렬한다.",
+        4: "왼쪽 + 가운데 + 오른쪽 순서로 합친다."
+    },
+    "힙정렬": {
+        1: "리스트를 힙 구조로 바꾼다.",
+        2: "가장 작은 값을 하나 꺼낸다.",
+        3: "꺼낸 값을 결과 리스트에 넣는다.",
+        4: "힙이 빌 때까지 반복한다."
+    }
+}
+
+for sort_name, steps in sorting_algorithms.items():
+    print(f"\\n[{sort_name}]")
+    for step_number, description in steps.items():
+        print(f"{step_number}. {description}")</code></pre>
+</section>
+
+<section>
+    <h2>2. 예상 출력 결과</h2>
+    <pre><code>[버블정렬]
+1. 앞에서부터 인접한 두 값을 비교한다.
+2. 왼쪽 값이 더 크면 두 값을 교환한다.
+3. 한 회전이 끝나면 가장 큰 값이 오른쪽 끝에 놓인다.
+4. 정렬된 끝부분을 제외하고 반복한다.
+
+[선택정렬]
+1. 현재 위치 i를 정한다.
+2. i 이후의 미정렬 영역에서 최솟값 위치를 찾는다.
+3. 현재 위치의 값과 최솟값을 교환한다.
+4. 정렬된 영역을 한 칸 확장한다.
+
+[삽입정렬]
+1. 두 번째 원소부터 key로 잡는다.
+2. key 왼쪽의 정렬된 영역과 비교한다.
+3. key보다 큰 값은 오른쪽으로 한 칸 이동한다.
+4. 빈 자리에 key를 삽입한다.
+
+[병합정렬]
+1. 배열을 반으로 나눈다.
+2. 각 부분 배열을 다시 반으로 나누어 길이가 1이 될 때까지 반복한다.
+3. 작은 값부터 비교하며 두 배열을 병합한다.
+4. 모든 병합이 끝나면 전체 배열이 정렬된다.
+
+[퀵정렬]
+1. 기준값인 pivot을 선택한다.
+2. pivot보다 작은 값, 같은 값, 큰 값으로 나눈다.
+3. 작은 값 목록과 큰 값 목록을 재귀적으로 정렬한다.
+4. 왼쪽 + 가운데 + 오른쪽 순서로 합친다.
+
+[힙정렬]
+1. 리스트를 힙 구조로 바꾼다.
+2. 가장 작은 값을 하나 꺼낸다.
+3. 꺼낸 값을 결과 리스트에 넣는다.
+4. 힙이 빌 때까지 반복한다.</code></pre>
+</section>
+
+<section>
+    <h2>3. HTML에서 직접 출력해 보기</h2>
+    <button class="btn" onclick="printText()">텍스트 형태로 출력</button>
+    <button class="btn" onclick="printCards()">카드 형태로 출력</button>
+    <button class="btn" onclick="clearOutput()">출력 지우기</button>
+    <div id="output" class="output">버튼을 누르면 이곳에 출력됩니다.</div>
+</section>
+
+<section>
+    <h2>4. 코드 핵심 설명</h2>
+    <p>
+        <b>sorting_algorithms</b>는 6개의 정렬 알고리즘을 하나로 묶은 큰 딕셔너리입니다.
+        바깥쪽 딕셔너리의 키는 <b>정렬 알고리즘 이름</b>이고,
+        안쪽 딕셔너리의 키는 <b>단계 번호</b>, 값은 <b>동작원리 설명</b>입니다.
+    </p>
+    <pre><code>for sort_name, steps in sorting_algorithms.items():
+    print(f"\\n[{sort_name}]")
+    for step_number, description in steps.items():
+        print(f"{step_number}. {description}")</code></pre>
+    <p>
+        첫 번째 반복문은 정렬 알고리즘 이름을 하나씩 꺼내고,
+        두 번째 반복문은 해당 정렬 알고리즘의 단계별 설명을 하나씩 꺼내 출력합니다.
+    </p>
+</section>
+
+</main>
+
+<script>
+const sortingAlgorithms = {
+    "버블정렬": {
+        1: "앞에서부터 인접한 두 값을 비교한다.",
+        2: "왼쪽 값이 더 크면 두 값을 교환한다.",
+        3: "한 회전이 끝나면 가장 큰 값이 오른쪽 끝에 놓인다.",
+        4: "정렬된 끝부분을 제외하고 반복한다."
+    },
+    "선택정렬": {
+        1: "현재 위치 i를 정한다.",
+        2: "i 이후의 미정렬 영역에서 최솟값 위치를 찾는다.",
+        3: "현재 위치의 값과 최솟값을 교환한다.",
+        4: "정렬된 영역을 한 칸 확장한다."
+    },
+    "삽입정렬": {
+        1: "두 번째 원소부터 key로 잡는다.",
+        2: "key 왼쪽의 정렬된 영역과 비교한다.",
+        3: "key보다 큰 값은 오른쪽으로 한 칸 이동한다.",
+        4: "빈 자리에 key를 삽입한다."
+    },
+    "병합정렬": {
+        1: "배열을 반으로 나눈다.",
+        2: "각 부분 배열을 다시 반으로 나누어 길이가 1이 될 때까지 반복한다.",
+        3: "작은 값부터 비교하며 두 배열을 병합한다.",
+        4: "모든 병합이 끝나면 전체 배열이 정렬된다."
+    },
+    "퀵정렬": {
+        1: "기준값인 pivot을 선택한다.",
+        2: "pivot보다 작은 값, 같은 값, 큰 값으로 나눈다.",
+        3: "작은 값 목록과 큰 값 목록을 재귀적으로 정렬한다.",
+        4: "왼쪽 + 가운데 + 오른쪽 순서로 합친다."
+    },
+    "힙정렬": {
+        1: "리스트를 힙 구조로 바꾼다.",
+        2: "가장 작은 값을 하나 꺼낸다.",
+        3: "꺼낸 값을 결과 리스트에 넣는다.",
+        4: "힙이 빌 때까지 반복한다."
+    }
+};
+
+function printText() {
+    let text = "";
+    for (const [sortName, steps] of Object.entries(sortingAlgorithms)) {
+        text += `\n[${sortName}]\n`;
+        for (const [stepNumber, description] of Object.entries(steps)) {
+            text += `${stepNumber}. ${description}\n`;
+        }
+    }
+    document.getElementById("output").textContent = text.trim();
+}
+
+function printCards() {
+    let html = "";
+    for (const [sortName, steps] of Object.entries(sortingAlgorithms)) {
+        html += `<div class="card"><h3>${sortName}</h3>`;
+        for (const [stepNumber, description] of Object.entries(steps)) {
+            html += `<div class="step"><span class="num">${stepNumber}</span>${description}</div>`;
+        }
+        html += `</div>`;
+    }
+    document.getElementById("output").innerHTML = html;
+}
+
+function clearOutput() {
+    document.getElementById("output").textContent = "버튼을 누르면 이곳에 출력됩니다.";
+}
+</script>
+
+</body>
+</html>
