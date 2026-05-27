@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>정렬 알고리즘 동작 원리 시각화</title>
+<style>
+  *{box-sizing:border-box}body{margin:0;font-family:'Noto Sans KR','Malgun Gothic',Arial,sans-serif;background:#f4f7fb;color:#1f2937}header{background:linear-gradient(135deg,#1d4ed8,#7c3aed);color:white;padding:28px 22px;text-align:center}header h1{margin:0 0 8px;font-size:30px}header p{margin:0;opacity:.92}.wrap{display:grid;grid-template-columns:280px 1fr;min-height:calc(100vh - 114px)}nav{background:white;border-right:1px solid #e5e7eb;padding:18px;position:sticky;top:0;height:calc(100vh - 0px)}nav h2{font-size:18px;margin:0 0 14px}.navbtn{width:100%;border:0;border-radius:14px;background:#eef2ff;color:#1e3a8a;margin:6px 0;padding:13px 12px;text-align:left;font-weight:700;cursor:pointer;transition:.2s}.navbtn:hover{background:#dbeafe;transform:translateX(3px)}.navbtn.active{background:#2563eb;color:white}main{padding:24px}.card{background:white;border-radius:22px;padding:22px;margin-bottom:18px;box-shadow:0 10px 26px rgba(15,23,42,.08)}.top{display:flex;gap:14px;flex-wrap:wrap;align-items:center;justify-content:space-between}.title h2{margin:0;font-size:26px}.badge{display:inline-block;margin-top:8px;background:#ecfeff;color:#155e75;border:1px solid #a5f3fc;border-radius:999px;padding:6px 12px;font-size:13px;font-weight:700}.controls{display:flex;gap:8px;flex-wrap:wrap}.controls button{border:0;border-radius:12px;padding:10px 14px;font-weight:800;cursor:pointer}.primary{background:#2563eb;color:white}.secondary{background:#e5e7eb;color:#111827}.danger{background:#fee2e2;color:#991b1b}.slider{display:flex;align-items:center;gap:8px;margin-top:12px}.slider input{width:180px}.viz{height:300px;border:1px solid #e5e7eb;border-radius:18px;background:linear-gradient(#ffffff,#f8fafc);display:flex;align-items:flex-end;gap:8px;padding:18px;margin-top:18px;overflow:hidden}.bar{flex:1;min-width:10px;border-radius:10px 10px 0 0;background:#60a5fa;display:flex;align-items:flex-start;justify-content:center;color:white;font-size:12px;font-weight:800;padding-top:5px;transition:height .25s, background .2s, transform .2s}.bar.compare{background:#f59e0b;transform:translateY(-5px)}.bar.swap{background:#ef4444}.bar.sorted{background:#10b981}.bar.pivot{background:#8b5cf6}.info-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:18px}.info h3{margin:0 0 8px;color:#111827}.info p,.info li{line-height:1.75}.pseudo{background:#0f172a;color:#e5e7eb;border-radius:16px;padding:16px;white-space:pre-wrap;font-family:Consolas,monospace;font-size:14px;line-height:1.55;overflow:auto}.status{margin-top:14px;background:#fefce8;border:1px solid #fde68a;border-radius:14px;padding:12px;font-weight:700;color:#854d0e}.legend{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}.leg{display:flex;align-items:center;gap:6px;font-size:13px}.box{width:15px;height:15px;border-radius:4px}.b1{background:#60a5fa}.b2{background:#f59e0b}.b3{background:#ef4444}.b4{background:#10b981}.b5{background:#8b5cf6}.complex{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}.complex div{background:#f8fafc;border:1px solid #e5e7eb;border-radius:14px;padding:12px;text-align:center}.complex b{display:block;color:#1d4ed8;margin-bottom:4px}@media(max-width:850px){.wrap{grid-template-columns:1fr}nav{position:relative;height:auto;border-right:0;border-bottom:1px solid #e5e7eb}.info-grid{grid-template-columns:1fr}.viz{height:250px}.complex{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+  <h1>정렬 알고리즘과 동작 원리 시각화</h1>
+  <p>버블 정렬 · 선택 정렬 · 삽입 정렬 · 병합 정렬 · 퀵 정렬 · 힙 정렬</p>
+</header>
+<div class="wrap">
+<nav>
+  <h2>알고리즘 선택</h2>
+  <button class="navbtn active" onclick="selectAlgo('bubble')">① 버블 정렬</button>
+  <button class="navbtn" onclick="selectAlgo('selection')">② 선택 정렬</button>
+  <button class="navbtn" onclick="selectAlgo('insertion')">③ 삽입 정렬</button>
+  <button class="navbtn" onclick="selectAlgo('merge')">④ 병합 정렬</button>
+  <button class="navbtn" onclick="selectAlgo('quick')">⑤ 퀵 정렬</button>
+  <button class="navbtn" onclick="selectAlgo('heap')">⑥ 힙 정렬</button>
+</nav>
+<main>
+  <section class="card">
+    <div class="top">
+      <div class="title">
+        <h2 id="algoTitle">버블 정렬</h2>
+        <span class="badge" id="algoBadge">인접한 두 값을 비교하여 큰 값을 뒤로 보냄</span>
+      </div>
+      <div class="controls">
+        <button class="primary" onclick="play()">▶ 실행</button>
+        <button class="secondary" onclick="stepOnce()">한 단계</button>
+        <button class="secondary" onclick="shuffle()">새 배열</button>
+        <button class="danger" onclick="reset()">초기화</button>
+      </div>
+    </div>
+    <div class="slider">속도 <input id="speed" type="range" min="60" max="900" value="320"> <span id="speedText">보통</span></div>
+    <div class="viz" id="viz"></div>
+    <div class="legend">
+      <span class="leg"><span class="box b1"></span>일반</span>
+      <span class="leg"><span class="box b2"></span>비교</span>
+      <span class="leg"><span class="box b3"></span>교환/이동</span>
+      <span class="leg"><span class="box b4"></span>정렬 완료</span>
+      <span class="leg"><span class="box b5"></span>피벗/기준</span>
+    </div>
+    <div class="status" id="status">실행 버튼을 누르면 정렬 과정이 시작됩니다.</div>
+  </section>
+
+  <section class="card info-grid">
+    <div class="info">
+      <h3>동작 원리</h3>
+      <p id="desc"></p>
+      <div class="complex" id="complex"></div>
+    </div>
+    <div>
+      <h3>의사코드</h3>
+      <div class="pseudo" id="pseudo"></div>
+    </div>
+  </section>
+</main>
+</div>
+<script>
+const data = {
+ bubble:{title:'버블 정렬 Bubble Sort', badge:'인접한 두 값을 비교하여 큰 값을 뒤로 보냄',
+ desc:'왼쪽부터 오른쪽으로 이동하면서 인접한 두 원소를 비교합니다. 앞의 값이 더 크면 서로 바꾸고, 한 번의 순회가 끝나면 가장 큰 값이 맨 뒤에 자리 잡습니다. 이 과정을 반복하면 거품이 위로 올라가듯 큰 값이 뒤쪽으로 이동합니다.',
+ best:'O(n)', avg:'O(n²)', space:'O(1)', pseudo:'for i = 0 to n-1\n  for j = 0 to n-i-2\n    if A[j] > A[j+1]\n      swap A[j], A[j+1]'},
+ selection:{title:'선택 정렬 Selection Sort', badge:'가장 작은 값을 찾아 앞쪽부터 확정',
+ desc:'정렬되지 않은 구간에서 가장 작은 값을 찾습니다. 그 값을 현재 위치의 값과 바꾸어 앞쪽부터 하나씩 정렬 완료 구간을 만들어 갑니다. 비교는 많이 하지만 교환 횟수는 비교적 적습니다.',
+ best:'O(n²)', avg:'O(n²)', space:'O(1)', pseudo:'for i = 0 to n-1\n  min = i\n  for j = i+1 to n-1\n    if A[j] < A[min]\n      min = j\n  swap A[i], A[min]'},
+ insertion:{title:'삽입 정렬 Insertion Sort', badge:'앞의 정렬된 구간에 알맞은 위치로 삽입',
+ desc:'두 번째 원소부터 시작하여 현재 값을 앞쪽의 정렬된 구간과 비교합니다. 더 큰 값들을 오른쪽으로 밀고, 빈 자리에 현재 값을 삽입합니다. 거의 정렬된 데이터에서는 매우 빠르게 동작합니다.',
+ best:'O(n)', avg:'O(n²)', space:'O(1)', pseudo:'for i = 1 to n-1\n  key = A[i]\n  j = i-1\n  while j >= 0 and A[j] > key\n    A[j+1] = A[j]\n    j--\n  A[j+1] = key'},
+ merge:{title:'병합 정렬 Merge Sort', badge:'반으로 나누고 정렬하며 다시 합침',
+ desc:'배열을 계속 반으로 나누어 원소가 하나가 될 때까지 분할합니다. 이후 두 정렬된 배열을 비교하면서 작은 값부터 차례로 합칩니다. 안정적이고 시간 복잡도가 일정하지만 추가 공간이 필요합니다.',
+ best:'O(n log n)', avg:'O(n log n)', space:'O(n)', pseudo:'mergeSort(A)\n  if length(A) <= 1 return A\n  left, right = split(A)\n  return merge(mergeSort(left), mergeSort(right))'},
+ quick:{title:'퀵 정렬 Quick Sort', badge:'피벗을 기준으로 작은 값과 큰 값을 분할',
+ desc:'하나의 기준값인 피벗을 정합니다. 피벗보다 작은 값은 왼쪽, 큰 값은 오른쪽으로 보내고, 양쪽 부분 배열에 같은 과정을 재귀적으로 적용합니다. 평균적으로 매우 빠르지만 피벗 선택이 나쁘면 느려질 수 있습니다.',
+ best:'O(n log n)', avg:'O(n log n)', space:'O(log n)', pseudo:'quickSort(A, low, high)\n  if low < high\n    p = partition(A, low, high)\n    quickSort(A, low, p-1)\n    quickSort(A, p+1, high)'},
+ heap:{title:'힙 정렬 Heap Sort', badge:'최대 힙을 만들고 최댓값을 뒤로 보냄',
+ desc:'먼저 배열을 최대 힙 구조로 만듭니다. 최대 힙에서는 부모 노드가 자식 노드보다 큽니다. 루트의 최댓값을 배열 끝과 바꾸고, 남은 구간을 다시 힙으로 조정하는 과정을 반복합니다.',
+ best:'O(n log n)', avg:'O(n log n)', space:'O(1)', pseudo:'buildMaxHeap(A)\nfor end = n-1 down to 1\n  swap A[0], A[end]\n  heapify(A, 0, end)'}
+};
+let algo='bubble', original=[], arr=[], steps=[], idx=0, timer=null;
+const viz=document.getElementById('viz'), status=document.getElementById('status');
+function makeArray(){original=Array.from({length:12},()=>Math.floor(Math.random()*85)+10); arr=[...original];}
+function render(high=[], swap=[], sorted=[], pivot=-1){viz.innerHTML='';arr.forEach((v,i)=>{let b=document.createElement('div');b.className='bar';if(high.includes(i))b.classList.add('compare');if(swap.includes(i))b.classList.add('swap');if(sorted.includes(i))b.classList.add('sorted');if(i===pivot)b.classList.add('pivot');b.style.height=v*2.6+'px';b.textContent=v;viz.appendChild(b);});}
+function add(a,msg,high=[],swap=[],sorted=[],pivot=-1){steps.push({a:[...a],msg,high,swap,sorted,pivot});}
+function gen(){steps=[];let a=[...original], n=a.length;
+ if(algo==='bubble'){for(let i=0;i<n;i++){for(let j=0;j<n-i-1;j++){add(a,`${j}번과 ${j+1}번 값을 비교합니다.`,[j,j+1],[],range(n-i,n));if(a[j]>a[j+1]){[a[j],a[j+1]]=[a[j+1],a[j]];add(a,'앞의 값이 더 크므로 두 값을 교환합니다.',[],[j,j+1],range(n-i,n));}}add(a,`${n-i-1}번 위치가 확정되었습니다.`,[],[],range(n-i-1,n));}}
+ if(algo==='selection'){for(let i=0;i<n;i++){let m=i;add(a,`${i}번 위치에 들어갈 최솟값을 찾습니다.`,[i],[],range(0,i));for(let j=i+1;j<n;j++){add(a,`현재 최솟값 후보 ${m}번과 ${j}번을 비교합니다.`,[m,j],[],range(0,i));if(a[j]<a[m]){m=j;add(a,`더 작은 값 발견: ${m}번이 새 최솟값 후보입니다.`,[m],[],range(0,i));}}[a[i],a[m]]=[a[m],a[i]];add(a,`최솟값을 ${i}번 위치로 교환하여 확정합니다.`,[],[i,m],range(0,i+1));}}
+ if(algo==='insertion'){add(a,'첫 번째 값은 이미 정렬된 구간으로 봅니다.',[],[],[0]);for(let i=1;i<n;i++){let key=a[i],j=i-1;add(a,`${i}번 값을 앞의 정렬 구간에 삽입합니다.`,[i],[],range(0,i));while(j>=0&&a[j]>key){a[j+1]=a[j];add(a,`${j}번 값이 더 크므로 오른쪽으로 이동합니다.`,[j,j+1],[j+1],range(0,i));j--;}a[j+1]=key;add(a,`빈 자리에 기준값 ${key}을 삽입합니다.`,[],[j+1],range(0,i+1));}}
+ if(algo==='merge'){function ms(l,r){if(l>=r)return;let m=Math.floor((l+r)/2);ms(l,m);ms(m+1,r);let tmp=[],i=l,j=m+1;add(a,`${l}~${m} 구간과 ${m+1}~${r} 구간을 병합합니다.`,range(l,r+1));while(i<=m&&j<=r){add(a,`왼쪽 ${i}번과 오른쪽 ${j}번을 비교합니다.`,[i,j]);tmp.push(a[i]<=a[j]?a[i++]:a[j++]);}while(i<=m)tmp.push(a[i++]);while(j<=r)tmp.push(a[j++]);for(let k=0;k<tmp.length;k++){a[l+k]=tmp[k];add(a,`작은 값부터 ${l+k}번 위치에 채웁니다.`,[],[l+k]);}}ms(0,n-1);add(a,'전체 병합이 끝나 정렬 완료입니다.',[],[],range(0,n));}
+ if(algo==='quick'){function qs(l,r){if(l>=r)return;let p=a[r],i=l;add(a,`${r}번 값 ${p}을 피벗으로 선택합니다.`,[],[],[],r);for(let j=l;j<r;j++){add(a,`${j}번 값과 피벗을 비교합니다.`,[j,r],[],[],r);if(a[j]<p){[a[i],a[j]]=[a[j],a[i]];add(a,'피벗보다 작으므로 왼쪽 구간으로 보냅니다.',[],[i,j],[],r);i++;}}[a[i],a[r]]=[a[r],a[i]];add(a,`피벗을 제자리 ${i}번 위치에 놓습니다.`,[],[i,r],[i],i);qs(l,i-1);qs(i+1,r);}qs(0,n-1);add(a,'분할 정복이 끝나 정렬 완료입니다.',[],[],range(0,n));}
+ if(algo==='heap'){function heapify(size,root){let largest=root,l=2*root+1,r=2*root+2;if(l<size){add(a,`부모 ${root}번과 왼쪽 자식 ${l}번을 비교합니다.`,[root,l]);if(a[l]>a[largest])largest=l;}if(r<size){add(a,`현재 후보와 오른쪽 자식 ${r}번을 비교합니다.`,[largest,r]);if(a[r]>a[largest])largest=r;}if(largest!==root){[a[root],a[largest]]=[a[largest],a[root]];add(a,'부모보다 큰 자식과 교환하여 힙 조건을 맞춥니다.',[],[root,largest]);heapify(size,largest);}}
+ for(let i=Math.floor(n/2)-1;i>=0;i--)heapify(n,i);add(a,'최대 힙 구성이 완료되었습니다.');for(let end=n-1;end>0;end--){[a[0],a[end]]=[a[end],a[0]];add(a,`최댓값을 ${end}번 위치로 보냅니다.`,[],[0,end],range(end,n));heapify(end,0);}add(a,'힙 정렬 완료입니다.',[],[],range(0,n));}
+}
+function range(s,e){return Array.from({length:Math.max(0,e-s)},(_,i)=>s+i)}
+function stepOnce(){if(idx>=steps.length){status.textContent='정렬이 완료되었습니다.';render([],[],range(0,arr.length));clearInterval(timer);timer=null;return;}let s=steps[idx++];arr=[...s.a];render(s.high,s.swap,s.sorted,s.pivot);status.textContent=`단계 ${idx}/${steps.length}: ${s.msg}`;}
+function play(){if(timer){clearInterval(timer);timer=null;return;}timer=setInterval(stepOnce,960-Number(document.getElementById('speed').value));}
+function reset(){clearInterval(timer);timer=null;arr=[...original];idx=0;gen();render();status.textContent='초기 상태입니다. 실행 버튼을 누르면 정렬 과정이 시작됩니다.';}
+function shuffle(){makeArray();reset();}
+function selectAlgo(a){algo=a;document.querySelectorAll('.navbtn').forEach(b=>b.classList.remove('active'));event.target.classList.add('active');let d=data[algo];document.getElementById('algoTitle').textContent=d.title;document.getElementById('algoBadge').textContent=d.badge;document.getElementById('desc').textContent=d.desc;document.getElementById('pseudo').textContent=d.pseudo;document.getElementById('complex').innerHTML=`<div><b>최선</b>${d.best}</div><div><b>평균</b>${d.avg}</div><div><b>공간</b>${d.space}</div>`;shuffle();}
+document.getElementById('speed').oninput=e=>{let v=Number(e.target.value);document.getElementById('speedText').textContent=v<250?'느림':v<600?'보통':'빠름';if(timer){clearInterval(timer);timer=setInterval(stepOnce,960-v);}};
+makeArray();selectAlgo('bubble');
+</script>
+</body>
+</html>
