@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang='ko'>
+<head>
+<meta charset='UTF-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+<title>파이썬 딕셔너리(Dictionary) 학습 요소 10가지</title>
+<style>
+*{box-sizing:border-box} body{margin:0;font-family:'Malgun Gothic',Arial,sans-serif;background:#f4f7fb;color:#1f2937;line-height:1.7} header{background:linear-gradient(135deg,#1e3a8a,#2563eb);color:white;padding:36px 24px;text-align:center} header h1{margin:0;font-size:30px} header p{margin:10px 0 0;color:#dbeafe}.wrap{display:grid;grid-template-columns:260px 1fr;gap:20px;max-width:1500px;margin:0 auto;padding:20px}.nav{position:sticky;top:12px;align-self:start;background:white;border-radius:18px;padding:16px;box-shadow:0 8px 24px rgba(15,23,42,.08)}.nav a{display:block;text-decoration:none;color:#1e40af;padding:8px 10px;border-radius:10px;font-weight:700;font-size:14px}.nav a:hover{background:#dbeafe}.content{min-width:0}.card{background:white;border-radius:20px;margin-bottom:22px;padding:24px;box-shadow:0 8px 24px rgba(15,23,42,.08);border:1px solid #e5e7eb}.card h2{margin-top:0;color:#1e3a8a;border-bottom:3px solid #bfdbfe;padding-bottom:8px}.desc{background:#eff6ff;border-left:6px solid #2563eb;padding:12px 16px;border-radius:12px;margin:14px 0 20px}.example{margin:18px 0;border:1px solid #d1d5db;border-radius:16px;overflow:hidden}.example h3{margin:0;background:#f8fafc;padding:12px 16px;color:#111827}.codebox{display:grid;grid-template-columns:1fr 300px}.code,.output{margin:0;padding:16px;white-space:pre-wrap;font-family:Consolas,'D2Coding',monospace;font-size:14px;overflow:auto}.code{background:#0f172a;color:#e5e7eb}.output{background:#ecfdf5;color:#064e3b;border-left:1px solid #d1d5db}.label{font-weight:800;margin-bottom:6px;color:#facc15}.output .label{color:#047857}.summary-table{width:100%;border-collapse:collapse;background:white}.summary-table th,.summary-table td{border:1px solid #d1d5db;padding:10px}.summary-table th{background:#dbeafe;color:#1e3a8a}.badge{display:inline-block;background:#dbeafe;color:#1e40af;padding:4px 10px;border-radius:999px;font-weight:800;font-size:13px}.topbtn{position:fixed;right:18px;bottom:18px;background:#1d4ed8;color:white;text-decoration:none;padding:12px 16px;border-radius:999px;font-weight:800;box-shadow:0 6px 18px rgba(0,0,0,.2)}@media(max-width:900px){.wrap{grid-template-columns:1fr}.nav{position:relative}.codebox{grid-template-columns:1fr}.output{border-left:0;border-top:1px solid #d1d5db}}
+</style>
+</head>
+<body id='top'>
+<header>
+<h1>파이썬 딕셔너리(Dictionary) 학습 요소 10가지</h1>
+<p>각 학습 요소별 심화 예제 코드 3개 + 모든 요소를 포함한 종합 예제 코드</p>
+</header>
+<div class='wrap'>
+<aside class='nav'>
+<strong>목차</strong>
+<a href='#sec1'>1. 딕셔너리 생성</a>
+<a href='#sec2'>2. 값 조회</a>
+<a href='#sec3'>3. get() 메서드</a>
+<a href='#sec4'>4. 데이터 추가</a>
+<a href='#sec5'>5. 데이터 수정</a>
+<a href='#sec6'>6. 데이터 삭제</a>
+<a href='#sec7'>7. keys()</a>
+<a href='#sec8'>8. values()</a>
+<a href='#sec9'>9. items()</a>
+<a href='#sec10'>10. 딕셔너리 병합</a>
+<a href='#comprehensive'>종합 예제 코드</a><a href='#summary'>핵심 정리표</a></aside><main class='content'><section class='card' id='sec1'><h2>1. 딕셔너리 생성 <span class='badge'>심화 예제 3개</span></h2><div class='desc'>{} 또는 dict()를 이용하여 key:value 구조의 데이터를 만든다.</div><div class='example'><h3>예제 1. 중첩 딕셔너리 생성</h3><div class='codebox'><pre class='code'><span class='label'>Python 코드</span>
+students = {
+    &#x27;101&#x27;: {&#x27;이름&#x27;: &#x27;민수&#x27;, &#x27;점수&#x27;: 92},
+    &#x27;102&#x27;: {&#x27;이름&#x27;: &#x27;지아&#x27;, &#x27;점수&#x27;: 88},
+    &#x27;103&#x27;: {&#x27;이름&#x27;: &#x27;하준&#x27;, &#x27;점수&#x27;: 95}
+}
+
+print(students[&#x27;101&#x27;][&#x27;이름&#x27;])
+print(students[&#x27;103&#x27;][&#x27;점수&#x27;])</pre><pre class='output'><span class='label'>출력 결과</span>
+민수
+95</pre></div></div><div class='example'><h3>예제 2. dict()와 zip()으로 생성</h3><div class='codebox'><pre class='code'><span class='label'>Python 코드</span>
+keys = [&#x27;국어&#x27;, &#x27;수학&#x27;, &#x27;영어&#x27;]
+values = [90, 95, 87]
+
+score = dict(zip(keys, values))
+print(score)</pre><pre class='output'><span class='label'>출력 결과</span>
+{&#x27;국어&#x27;: 90, &#x27;수학&#x27;: 95, &#x27;영어&#x27;: 87}</pre></div></div><div class='example'><h3>예제 3. 딕셔너리 컴프리헨션</h3><div class='codebox'><pre class='code'><span class='label'>Python 코드</span>
+numbers = [1, 2, 3, 4, 5]
+squares = {n: n ** 2 for n in numbers}
+
+print(squares)</pre><pre class='output'><span class='label'>출력 결과</span>
+{1: 1, 2: 4, 3: 9, 4: 16, 5: 25}</pre></div></div></section><section class='card' id='sec2'><h2>2. 값 조회 <span class='badge'>심화 예제 3개</span></h2><div class='desc'>키를 이용해 원하는 값을 꺼낸다.</div><div class='example'><h3>예제 1. 중첩 값 조회</h3><div class='codebox'><pre class='code'><span class='label'>Python 코드</span>
+student = {
+    &#x27;이름&#x27;: &#x27;민수&#x27;,
+    &#x27;성적&#x27;: {&#x27;수학&#x27;: 95, &#x27;과학&#x27;: 98}
+}
+
+print(student[&#x27;성적&#x27;][&#x27;과학&#x27;])</pre><pre class='output'><span class='label'>출력 결과</span>
+98</pre></div></div><div class='example'><h3>예제 2. 반복문으로 특정 값 조회</h3><div class='codebox'><pre class='code'><span class='label'>Python 코드</span>
+scores = {&#x27;민수&#x27;: 92, &#x27;지아&#x27;: 88, &#x27;하준&#x27;: 95}
+
+for name in scores:
+    print(name, scores[name])</pre><pre class='output'><span class='label'>출력 결과</span>
+민수 92
+지아 88
+하준 95</pre></div></div><div class='example'><h3>예제 3. 조건에 맞는 값 조회</h3><div class='codebox'><pre class='code'><span class='label'>Python 코드</span>
+scores = {&#x27;민수&#x27;: 92, &#x27;지아&#x27;: 88, &#x27;하준&#x27;: 95}
+
+for name, score in scores.items():
+    if score &gt;= 90:
+        print(name, score)</pre><pre class='output'><span class='label'>출력 결과</span>
+민수 92
+하준 95</pre></div></div></section><section class='card' id='sec3'><h2>3. get() 메서드 <span class='badge'>심화 예제 3개</span></h2><div class='desc'>존재하지 않는 키를 조회할 때 오류 대신 기본값을 반환하게 한다.</div><div class='example'><h3>예제 1. 기본값 지정</h3><div class='codebox'><pre class='code'><span class='label'>Python 코드</span>
+student = {&#x27;이름&#x27;: &#x27;민수&#x27;, &#x27;나이&#x27;: 17}
+
+print(student.get(&#x27;학교&#x27;, &#x27;정보 없음&#x27;))</pre><pre class='output'><span class='label'>출력 결과</span>
+정보 없음</pre></div></div><div class='example'><h3>예제 2. 누적 계산에 get() 사용</h3><div class='codebox'><pre class='code'><span class='label'>Python 코드</span>
+words = [&#x27;apple&#x27;, &#x27;banana&#x27;, &#x27;apple&#x27;, &#x27;orange&#x27;, &#x27;banana&#x27;, &#x27;apple&#x27;]
+count = {}
+
+for word in words:
+    count[word] = count.get(word, 0) + 1
+
+print(count)</pre><pre class='output'><span class='label'>출력 결과</span>
+{&#x27;apple&#x27;: 3, &#x27;banana&#x27;: 2, &#x27;orange&#x27;: 1}</pre></div></div><div class='example'><h3>예제 3. 중첩 딕셔너리 안전 조회</h3><div class='codebox'><pre class='code'><span class='label'>Python 코드</span>
+data = {&#x27;user&#x27;: {&#x27;name&#x27;: &#x27;민수&#x27;}}
+
+user = data.get(&#x27;user&#x27;, {})
+print(user.get(&#x27;name&#x27;, &#x27;이름 없음&#x27;))
+print(user.get(&#x27;age&#x27;, &#x27;나이 없음&#x27;))</pre><pre class='output'><span class='label'>출력 결과</span>
+민수
+나이 없음</pre></div></div></section><section class='card' id='sec4'><h2>4. 데이터 추가 <span class='badge'>심화 예제 3개</span></h2><div class='desc'>새로운 키와 값을 딕셔너리에 넣는다.</div><div class='example'><h3>예제 1. 학생 정보 추가</h3><div class='codebox'><pre class='code'><span class='label'>Python 코드</span>
+student = {&#x27;이름&#x27;: &#x27;민수&#x27;}
+student[&#x27;학년&#x27;] = 2
+student[&#x27;반&#x27;] = 1
+
+print(student)</pre><pre class='output'><span class='label'>출력 결과</span>
+{&#x27;이름&#x27;: &#x27;민수&#x27;, &#x27;학년&#x27;: 2, &#x27;반&#x27;: 1}</pre></div></div><div class='example'><h3>예제 2. 반복문으로 여러 값 추가</h3><div class='codebox'><pre class='code'><span class='label'>Python 코드</span>
+subjects = [&#x27;국어&#x27;, &#x27;수학&#x27;, &#x27;영어&#x27;]
+scores = {}
+
+for subject in subjects:
+    scores[subject] = 100
+
+print(scores)</pre><pre class='output'><span class='label'>출력 결과</span>
+{&#x27;국어&#x27;: 100, &#x27;수학&#x27;: 100, &#x27;영어&#x27;: 100}</pre></div></div><div class='example'><h3>예제 3. 중첩 딕셔너리에 항목 추가</h3><div class='codebox'><pre class='code'><span class='label'>Python 코드</span>
+classes = {&#x27;1반&#x27;: {&#x27;민수&#x27;: 90}}
+classes[&#x27;1반&#x27;][&#x27;지아&#x27;] = 95
+classes[&#x27;2반&#x27;] = {&#x27;하준&#x27;: 88}
+
+print(classes)</pre><pre class='output'><span class='label'>출력 결과</span>
+{&#x27;1반&#x27;: {&#x27;민수&#x27;: 90, &#x27;지아&#x27;: 95}, &#x27;2반&#x27;: {&#x27;하준&#x27;: 88}}</pre></div></div></section><section class='card' id='sec5'><h2>5. 데이터 수정 <span class='badge'>심화 예제 3개</span></h2><div class='desc'>이미 존재하는 키의 값을 새 값으로 바꾼다.</div><div class='example'><h3>예제 1. 단일 값 수정</h3><div class='codebox'><pre class='code'><span class='label'>Python 코드</span>
+student = {&#x27;이름&#x27;: &#x27;민수&#x27;, &#x27;점수&#x27;: 80}
+student[&#x27;점수&#x27;] = 95
+
+print(student)</pre><pre class='output'><span class='label'>출력 결과</span>
+{&#x27;이름&#x27;: &#x27;민수&#x27;, &#x27;점수&#x27;: 95}</pre></div></div><div class='example'><h3>예제 2. 조건에 따라 값 수정</h3><div class='codebox'><pre class='code'><span class='label'>Python 코드</span>
+scores = {&#x27;민수&#x27;: 92, &#x27;지아&#x27;: 58, &#x27;하준&#x27;: 75}
+
+for name in scores:
+    if scores[name] &lt; 60:
+        scores[name] = 60
+
+print(scores)</pre><pre class='output'><span class='label'>출력 결과</span>
+{&#x27;민수&#x27;: 92, &#x27;지아&#x27;: 60, &#x27;하준&#x27;: 75}</pre></div></div><div class='example'><h3>예제 3. 중첩 딕셔너리 값 수정</h3><div class='codebox'><pre class='code'><span class='label'>Python 코드</span>
+student = {&#x27;이름&#x27;: &#x27;민수&#x27;, &#x27;성적&#x27;: {&#x27;수학&#x27;: 80, &#x27;과학&#x27;: 90}}
+student[&#x27;성적&#x27;][&#x27;수학&#x27;] += 10
+
+print(student)</pre><pre class='output'><span class='label'>출력 결과</span>
+{&#x27;이름&#x27;: &#x27;민수&#x27;, &#x27;성적&#x27;: {&#x27;수학&#x27;: 90, &#x27;과학&#x27;: 90}}</pre></div></div></section><section class='card' id='sec6'><h2>6. 데이터 삭제 <span class='badge'>심화 예제 3개</span></h2><div class='desc'>del, pop(), clear() 등을 사용해 데이터를 제거한다.</div><div class='example'><h3>예제 1. del로 삭제</h3><div class='codebox'><pre class='code'><span class='label'>Python 코드</span>
+student = {&#x27;이름&#x27;: &#x27;민수&#x27;, &#x27;나이&#x27;: 17, &#x27;학교&#x27;: &#x27;과학고&#x27;}
+del student[&#x27;나이&#x27;]
+
+print(student)</pre><pre class='output'><span class='label'>출력 결과</span>
+{&#x27;이름&#x27;: &#x27;민수&#x27;, &#x27;학교&#x27;: &#x27;과학고&#x27;}</pre></div></div><div class='example'><h3>예제 2. pop()으로 삭제하며 값 받기</h3><div class='codebox'><pre class='code'><span class='label'>Python 코드</span>
+student = {&#x27;이름&#x27;: &#x27;민수&#x27;, &#x27;점수&#x27;: 92}
+removed = student.pop(&#x27;점수&#x27;)
+
+print(removed)
+print(student)</pre><pre class='output'><span class='label'>출력 결과</span>
+92
+{&#x27;이름&#x27;: &#x27;민수&#x27;}</pre></div></div><div class='example'><h3>예제 3. 조건에 맞는 항목 삭제</h3><div class='codebox'><pre class='code'><span class='label'>Python 코드</span>
+scores = {&#x27;민수&#x27;: 92, &#x27;지아&#x27;: 58, &#x27;하준&#x27;: 75}
+low_students = [name for name, score in scores.items() if score &lt; 60]
+
+for name in low_students:
+    del scores[name]
+
+print(scores)</pre><pre class='output'><span class='label'>출력 결과</span>
+{&#x27;민수&#x27;: 92, &#x27;하준&#x27;: 75}</pre></div></div></section><section class='card' id='sec7'><h2>7. keys() <span class='badge'>심화 예제 3개</span></h2><div class='desc'>딕셔너리의 모든 키를 확인한다.</div><div class='example'><h3>예제 1. 키 목록 출력</h3><div class='codebox'><pre class='code'><span class='label'>Python 코드</span>
+student = {&#x27;이름&#x27;: &#x27;민수&#x27;, &#x27;나이&#x27;: 17, &#x27;학교&#x27;: &#x27;과학고&#x27;}
+
+for key in student.keys():
+    print(key)</pre><pre class='output'><span class='label'>출력 결과</span>
+이름
+나이
+학교</pre></div></div><div class='example'><h3>예제 2. 키 존재 여부 확인</h3><div class='codebox'><pre class='code'><span class='label'>Python 코드</span>
+student = {&#x27;이름&#x27;: &#x27;민수&#x27;, &#x27;나이&#x27;: 17}
+
+if &#x27;나이&#x27; in student.keys():
+    print(&#x27;나이 정보 있음&#x27;)</pre><pre class='output'><span class='label'>출력 결과</span>
+나이 정보 있음</pre></div></div><div class='example'><h3>예제 3. 키를 리스트로 변환</h3><div class='codebox'><pre class='code'><span class='label'>Python 코드</span>
+score = {&#x27;국어&#x27;: 90, &#x27;수학&#x27;: 95, &#x27;영어&#x27;: 87}
+subjects = list(score.keys())
+
+print(subjects)
+print(subjects[0])</pre><pre class='output'><span class='label'>출력 결과</span>
+[&#x27;국어&#x27;, &#x27;수학&#x27;, &#x27;영어&#x27;]
+국어</pre></div></div></section><section class='card' id='sec8'><h2>8. values() <span class='badge'>심화 예제 3개</span></h2><div class='desc'>딕셔너리의 모든 값을 확인한다.</div><div class='example'><h3>예제 1. 값 목록 출력</h3><div class='codebox'><pre class='code'><span class='label'>Python 코드</span>
+score = {&#x27;국어&#x27;: 90, &#x27;수학&#x27;: 95, &#x27;영어&#x27;: 87}
+
+for value in score.values():
+    print(value)</pre><pre class='output'><span class='label'>출력 결과</span>
+90
+95
+87</pre></div></div><div class='example'><h3>예제 2. 평균 계산</h3><div class='codebox'><pre class='code'><span class='label'>Python 코드</span>
+score = {&#x27;국어&#x27;: 90, &#x27;수학&#x27;: 95, &#x27;영어&#x27;: 87}
+avg = sum(score.values()) / len(score)
+
+print(round(avg, 2))</pre><pre class='output'><span class='label'>출력 결과</span>
+90.67</pre></div></div><div class='example'><h3>예제 3. 특정 값 포함 여부</h3><div class='codebox'><pre class='code'><span class='label'>Python 코드</span>
+student = {&#x27;이름&#x27;: &#x27;민수&#x27;, &#x27;학교&#x27;: &#x27;과학고&#x27;}
+
+if &#x27;과학고&#x27; in student.values():
+    print(&#x27;과학고 학생입니다.&#x27;)</pre><pre class='output'><span class='label'>출력 결과</span>
+과학고 학생입니다.</pre></div></div></section><section class='card' id='sec9'><h2>9. items() <span class='badge'>심화 예제 3개</span></h2><div class='desc'>키와 값을 동시에 꺼내 반복 처리한다.</div><div class='example'><h3>예제 1. 키와 값 함께 출력</h3><div class='codebox'><pre class='code'><span class='label'>Python 코드</span>
+student = {&#x27;이름&#x27;: &#x27;민수&#x27;, &#x27;나이&#x27;: 17, &#x27;학교&#x27;: &#x27;과학고&#x27;}
+
+for key, value in student.items():
+    print(key, &#x27;:&#x27;, value)</pre><pre class='output'><span class='label'>출력 결과</span>
+이름 : 민수
+나이 : 17
+학교 : 과학고</pre></div></div><div class='example'><h3>예제 2. 조건 필터링</h3><div class='codebox'><pre class='code'><span class='label'>Python 코드</span>
+scores = {&#x27;민수&#x27;: 92, &#x27;지아&#x27;: 88, &#x27;하준&#x27;: 95}
+
+high = {name: score for name, score in scores.items() if score &gt;= 90}
+print(high)</pre><pre class='output'><span class='label'>출력 결과</span>
+{&#x27;민수&#x27;: 92, &#x27;하준&#x27;: 95}</pre></div></div><div class='example'><h3>예제 3. 값 기준 정렬</h3><div class='codebox'><pre class='code'><span class='label'>Python 코드</span>
+scores = {&#x27;민수&#x27;: 92, &#x27;지아&#x27;: 88, &#x27;하준&#x27;: 95}
+
+rank = sorted(scores.items(), key=lambda x: x[1], reverse=True)
+print(rank)</pre><pre class='output'><span class='label'>출력 결과</span>
+[(&#x27;하준&#x27;, 95), (&#x27;민수&#x27;, 92), (&#x27;지아&#x27;, 88)]</pre></div></div></section><section class='card' id='sec10'><h2>10. 딕셔너리 병합 <span class='badge'>심화 예제 3개</span></h2><div class='desc'>여러 딕셔너리를 하나로 합친다.</div><div class='example'><h3>예제 1. | 연산자 사용</h3><div class='codebox'><pre class='code'><span class='label'>Python 코드</span>
+d1 = {&#x27;a&#x27;: 1, &#x27;b&#x27;: 2}
+d2 = {&#x27;c&#x27;: 3, &#x27;d&#x27;: 4}
+
+result = d1 | d2
+print(result)</pre><pre class='output'><span class='label'>출력 결과</span>
+{&#x27;a&#x27;: 1, &#x27;b&#x27;: 2, &#x27;c&#x27;: 3, &#x27;d&#x27;: 4}</pre></div></div><div class='example'><h3>예제 2. update() 사용</h3><div class='codebox'><pre class='code'><span class='label'>Python 코드</span>
+student = {&#x27;이름&#x27;: &#x27;민수&#x27;}
+extra = {&#x27;나이&#x27;: 17, &#x27;학교&#x27;: &#x27;과학고&#x27;}
+
+student.update(extra)
+print(student)</pre><pre class='output'><span class='label'>출력 결과</span>
+{&#x27;이름&#x27;: &#x27;민수&#x27;, &#x27;나이&#x27;: 17, &#x27;학교&#x27;: &#x27;과학고&#x27;}</pre></div></div><div class='example'><h3>예제 3. 겹치는 키 병합</h3><div class='codebox'><pre class='code'><span class='label'>Python 코드</span>
+old = {&#x27;수학&#x27;: 80, &#x27;과학&#x27;: 90}
+new = {&#x27;수학&#x27;: 95, &#x27;영어&#x27;: 87}
+
+merged = old | new
+print(merged)</pre><pre class='output'><span class='label'>출력 결과</span>
+{&#x27;수학&#x27;: 95, &#x27;과학&#x27;: 90, &#x27;영어&#x27;: 87}</pre></div></div></section>
+<section class='card' id='comprehensive'>
+<h2>딕셔너리 종합 예제 코드 1개</h2>
+<div class='desc'>아래 코드는 딕셔너리 생성, 조회, get(), 추가, 수정, 삭제, keys(), values(), items(), 병합을 모두 포함한 학생 성적 관리 종합 예제입니다.</div>
+<div class='example'><h3>종합 예제: 학생 성적 관리 프로그램</h3><div class='codebox'><pre class='code'><span class='label'>Python 코드</span>
+# 딕셔너리 종합 예제: 학생 성적 관리 프로그램
+
+students = {
+    &#x27;101&#x27;: {&#x27;이름&#x27;: &#x27;민수&#x27;, &#x27;성적&#x27;: {&#x27;국어&#x27;: 90, &#x27;수학&#x27;: 95}},
+    &#x27;102&#x27;: {&#x27;이름&#x27;: &#x27;지아&#x27;, &#x27;성적&#x27;: {&#x27;국어&#x27;: 88, &#x27;수학&#x27;: 92}}
+}
+
+# 1. 데이터 추가
+students[&#x27;103&#x27;] = {&#x27;이름&#x27;: &#x27;하준&#x27;, &#x27;성적&#x27;: {&#x27;국어&#x27;: 85, &#x27;수학&#x27;: 97}}
+
+# 2. 데이터 수정
+students[&#x27;101&#x27;][&#x27;성적&#x27;][&#x27;국어&#x27;] = 93
+
+# 3. get()으로 안전하게 조회
+search_id = &#x27;104&#x27;
+student = students.get(search_id, {&#x27;이름&#x27;: &#x27;없음&#x27;, &#x27;성적&#x27;: {}})
+print(&#x27;조회 결과:&#x27;, student[&#x27;이름&#x27;])
+
+# 4. keys(), values(), items() 활용
+for sid, info in students.items():
+    name = info[&#x27;이름&#x27;]
+    scores = info[&#x27;성적&#x27;]
+    total = sum(scores.values())
+    avg = total / len(scores)
+    info[&#x27;평균&#x27;] = avg
+    print(sid, name, scores, &#x27;평균:&#x27;, avg)
+
+# 5. 조건 필터링
+excellent = {}
+for sid, info in students.items():
+    if info[&#x27;평균&#x27;] &gt;= 90:
+        excellent[sid] = info[&#x27;이름&#x27;]
+
+print(&#x27;우수 학생:&#x27;, excellent)
+
+# 6. 병합
+class_info = {&#x27;담임&#x27;: &#x27;김교사&#x27;, &#x27;학급&#x27;: &#x27;2학년 1반&#x27;}
+summary = class_info | {&#x27;학생수&#x27;: len(students)}
+print(&#x27;학급 요약:&#x27;, summary)
+
+# 7. 삭제
+removed = students.pop(&#x27;102&#x27;)
+print(&#x27;삭제된 학생:&#x27;, removed[&#x27;이름&#x27;])
+
+# 8. 최종 출력
+print(&#x27;최종 학생 목록&#x27;)
+for sid, info in students.items():
+    print(sid, info)
+</pre><pre class='output'><span class='label'>주요 실행 흐름</span>
+조회 결과: 없음
+101 민수 {'국어': 93, '수학': 95} 평균: 94.0
+102 지아 {'국어': 88, '수학': 92} 평균: 90.0
+103 하준 {'국어': 85, '수학': 97} 평균: 91.0
+우수 학생: {'101': '민수', '102': '지아', '103': '하준'}
+학급 요약: {'담임': '김교사', '학급': '2학년 1반', '학생수': 3}
+삭제된 학생: 지아
+최종 학생 목록</pre></div></div>
+</section>
+<section class='card' id='summary'>
+<h2>핵심 정리표</h2>
+<table class='summary-table'>
+<tr><th>번호</th><th>학습 요소</th><th>핵심 내용</th></tr>
+<tr><td>1</td><td>딕셔너리 생성</td><td>{} 또는 dict()를 이용하여 key:value 구조의 데이터를 만든다.</td></tr><tr><td>2</td><td>값 조회</td><td>키를 이용해 원하는 값을 꺼낸다.</td></tr><tr><td>3</td><td>get() 메서드</td><td>존재하지 않는 키를 조회할 때 오류 대신 기본값을 반환하게 한다.</td></tr><tr><td>4</td><td>데이터 추가</td><td>새로운 키와 값을 딕셔너리에 넣는다.</td></tr><tr><td>5</td><td>데이터 수정</td><td>이미 존재하는 키의 값을 새 값으로 바꾼다.</td></tr><tr><td>6</td><td>데이터 삭제</td><td>del, pop(), clear() 등을 사용해 데이터를 제거한다.</td></tr><tr><td>7</td><td>keys()</td><td>딕셔너리의 모든 키를 확인한다.</td></tr><tr><td>8</td><td>values()</td><td>딕셔너리의 모든 값을 확인한다.</td></tr><tr><td>9</td><td>items()</td><td>키와 값을 동시에 꺼내 반복 처리한다.</td></tr><tr><td>10</td><td>딕셔너리 병합</td><td>여러 딕셔너리를 하나로 합친다.</td></tr>
+</table>
+</section>
+</main></div>
+<a class='topbtn' href='#top'>▲ 위로</a>
+</body></html>

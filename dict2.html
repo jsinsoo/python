@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>딕셔너리 학습 요소 10가지</title>
+  <style>
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:'Segoe UI','Malgun Gothic',sans-serif;
+      background:linear-gradient(135deg,#eef4ff,#f8fbff);
+      color:#1f2937;
+      line-height:1.7;
+    }
+    header{
+      background:linear-gradient(135deg,#2563eb,#1e40af);
+      color:white;
+      padding:42px 24px;
+      text-align:center;
+      box-shadow:0 4px 18px rgba(0,0,0,.18);
+    }
+    header h1{margin:0;font-size:2.2rem}
+    header p{margin:12px 0 0;font-size:1.05rem;opacity:.95}
+    .layout{display:flex;max-width:1280px;margin:0 auto;padding:24px;gap:22px}
+    nav{
+      width:260px;
+      position:sticky;
+      top:20px;
+      align-self:flex-start;
+      background:white;
+      border-radius:18px;
+      padding:18px;
+      box-shadow:0 8px 22px rgba(30,64,175,.12);
+    }
+    nav h2{font-size:1.05rem;margin:0 0 12px;color:#1e40af}
+    nav a{
+      display:block;
+      padding:9px 11px;
+      margin:5px 0;
+      border-radius:10px;
+      text-decoration:none;
+      color:#374151;
+      font-weight:600;
+      transition:.2s;
+      font-size:.94rem;
+    }
+    nav a:hover{background:#dbeafe;color:#1d4ed8;transform:translateX(4px)}
+    main{flex:1;min-width:0}
+    section{
+      background:white;
+      margin-bottom:22px;
+      border-radius:20px;
+      padding:26px;
+      box-shadow:0 8px 24px rgba(15,23,42,.08);
+      border-left:8px solid #2563eb;
+    }
+    section h2{margin-top:0;color:#1d4ed8;font-size:1.45rem}
+    .concept{
+      background:#eff6ff;
+      border:1px solid #bfdbfe;
+      padding:14px 16px;
+      border-radius:14px;
+      margin:12px 0 16px;
+    }
+    pre{
+      background:#0f172a;
+      color:#e5e7eb;
+      padding:18px;
+      border-radius:14px;
+      overflow:auto;
+      font-size:.95rem;
+      line-height:1.6;
+    }
+    code{font-family:'Consolas','D2Coding',monospace}
+    .output{
+      background:#f8fafc;
+      border:1px dashed #94a3b8;
+      padding:14px 16px;
+      border-radius:14px;
+      margin-top:10px;
+    }
+    .output strong{color:#0f766e}
+    table{
+      width:100%;
+      border-collapse:collapse;
+      background:white;
+      margin-top:14px;
+      border-radius:14px;
+      overflow:hidden;
+      box-shadow:0 4px 14px rgba(0,0,0,.06);
+    }
+    th,td{border:1px solid #e5e7eb;padding:12px;text-align:left}
+    th{background:#2563eb;color:white;text-align:center}
+    tr:nth-child(even){background:#f8fafc}
+    .quiz{
+      background:#fff7ed;
+      border:1px solid #fed7aa;
+      padding:16px;
+      border-radius:14px;
+      margin-top:14px;
+    }
+    .quiz summary{cursor:pointer;font-weight:700;color:#c2410c}
+    footer{text-align:center;padding:30px;color:#64748b}
+    @media(max-width:850px){.layout{display:block;padding:14px}nav{width:100%;position:static;margin-bottom:18px}header h1{font-size:1.7rem}}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>파이썬 딕셔너리(Dictionary) 학습 요소 10가지</h1>
+    <p>키와 값의 구조부터 조회, 추가, 수정, 삭제, 반복, 병합까지 한 번에 정리</p>
+  </header>
+
+  <div class="layout">
+    <nav>
+      <h2>목차</h2>
+      <a href="#s1">1. 딕셔너리 생성</a>
+      <a href="#s2">2. 값 조회</a>
+      <a href="#s3">3. get() 사용</a>
+      <a href="#s4">4. 데이터 추가</a>
+      <a href="#s5">5. 데이터 수정</a>
+      <a href="#s6">6. 데이터 삭제</a>
+      <a href="#s7">7. keys()</a>
+      <a href="#s8">8. values()</a>
+      <a href="#s9">9. items()</a>
+      <a href="#s10">10. 딕셔너리 병합</a>
+      <a href="#summary">정리표</a>
+    </nav>
+
+    <main>
+      <section id="s1">
+        <h2>1. 딕셔너리 생성하기</h2>
+        <div class="concept">딕셔너리는 <b>키(Key)</b>와 <b>값(Value)</b>을 한 쌍으로 저장하는 자료형입니다.</div>
+<pre><code>student = {
+    "이름": "민수",
+    "나이": 17,
+    "학교": "과학고"
+}
+
+print(student)</code></pre>
+        <div class="output"><strong>출력:</strong><br>{'이름': '민수', '나이': 17, '학교': '과학고'}</div>
+      </section>
+
+      <section id="s2">
+        <h2>2. 키를 이용하여 값 조회하기</h2>
+        <div class="concept">딕셔너리는 순서 번호가 아니라 <b>키</b>를 이용해 값을 가져옵니다.</div>
+<pre><code>student = {"이름": "민수", "나이": 17}
+
+print(student["이름"])</code></pre>
+        <div class="output"><strong>출력:</strong><br>민수</div>
+      </section>
+
+      <section id="s3">
+        <h2>3. get() 메서드 사용하기</h2>
+        <div class="concept"><code>get()</code>은 존재하지 않는 키를 조회해도 오류가 발생하지 않고 <code>None</code>을 반환합니다.</div>
+<pre><code>student = {"이름": "민수"}
+
+print(student.get("이름"))
+print(student.get("주소"))</code></pre>
+        <div class="output"><strong>출력:</strong><br>민수<br>None</div>
+      </section>
+
+      <section id="s4">
+        <h2>4. 데이터 추가하기</h2>
+        <div class="concept">새로운 키에 값을 대입하면 딕셔너리에 데이터가 추가됩니다.</div>
+<pre><code>student = {"이름": "민수"}
+
+student["학년"] = 2
+
+print(student)</code></pre>
+        <div class="output"><strong>출력:</strong><br>{'이름': '민수', '학년': 2}</div>
+      </section>
+
+      <section id="s5">
+        <h2>5. 데이터 수정하기</h2>
+        <div class="concept">이미 존재하는 키에 새로운 값을 대입하면 기존 값이 수정됩니다.</div>
+<pre><code>student = {"이름": "민수", "나이": 17}
+
+student["나이"] = 18
+
+print(student)</code></pre>
+        <div class="output"><strong>출력:</strong><br>{'이름': '민수', '나이': 18}</div>
+      </section>
+
+      <section id="s6">
+        <h2>6. 데이터 삭제하기</h2>
+        <div class="concept"><code>del</code> 또는 <code>pop()</code>을 사용하여 특정 키와 값을 삭제할 수 있습니다.</div>
+<pre><code>student = {"이름": "민수", "나이": 17}
+
+del student["나이"]
+
+print(student)</code></pre>
+        <div class="output"><strong>출력:</strong><br>{'이름': '민수'}</div>
+      </section>
+
+      <section id="s7">
+        <h2>7. keys() 사용하기</h2>
+        <div class="concept"><code>keys()</code>는 딕셔너리에 들어 있는 모든 키를 가져옵니다.</div>
+<pre><code>student = {"이름": "민수", "나이": 17, "학교": "과학고"}
+
+print(student.keys())</code></pre>
+        <div class="output"><strong>출력:</strong><br>dict_keys(['이름', '나이', '학교'])</div>
+      </section>
+
+      <section id="s8">
+        <h2>8. values() 사용하기</h2>
+        <div class="concept"><code>values()</code>는 딕셔너리에 들어 있는 모든 값을 가져옵니다.</div>
+<pre><code>student = {"이름": "민수", "나이": 17, "학교": "과학고"}
+
+print(student.values())</code></pre>
+        <div class="output"><strong>출력:</strong><br>dict_values(['민수', 17, '과학고'])</div>
+      </section>
+
+      <section id="s9">
+        <h2>9. items() 사용하기</h2>
+        <div class="concept"><code>items()</code>는 키와 값을 동시에 가져올 때 사용합니다.</div>
+<pre><code>student = {"이름": "민수", "나이": 17, "학교": "과학고"}
+
+for key, value in student.items():
+    print(key, value)</code></pre>
+        <div class="output"><strong>출력:</strong><br>이름 민수<br>나이 17<br>학교 과학고</div>
+      </section>
+
+      <section id="s10">
+        <h2>10. 딕셔너리 병합하기</h2>
+        <div class="concept">파이썬 3.9 이상에서는 <code>|</code> 연산자를 사용하여 두 딕셔너리를 병합할 수 있습니다.</div>
+<pre><code>d1 = {"a": 1}
+d2 = {"b": 2}
+
+d3 = d1 | d2
+
+print(d3)</code></pre>
+        <div class="output"><strong>출력:</strong><br>{'a': 1, 'b': 2}</div>
+      </section>
+
+      <section id="summary">
+        <h2>딕셔너리 학습 요소 정리표</h2>
+        <table>
+          <tr><th>번호</th><th>학습 요소</th><th>핵심 내용</th><th>대표 코드</th></tr>
+          <tr><td>1</td><td>생성</td><td>키와 값의 쌍으로 자료 저장</td><td><code>{"이름":"민수"}</code></td></tr>
+          <tr><td>2</td><td>조회</td><td>키를 이용해 값 가져오기</td><td><code>student["이름"]</code></td></tr>
+          <tr><td>3</td><td>get()</td><td>오류 없이 안전하게 조회</td><td><code>student.get("주소")</code></td></tr>
+          <tr><td>4</td><td>추가</td><td>새 키에 값을 대입</td><td><code>student["학년"] = 2</code></td></tr>
+          <tr><td>5</td><td>수정</td><td>기존 키의 값 변경</td><td><code>student["나이"] = 18</code></td></tr>
+          <tr><td>6</td><td>삭제</td><td>키와 값을 제거</td><td><code>del student["나이"]</code></td></tr>
+          <tr><td>7</td><td>keys()</td><td>모든 키 확인</td><td><code>student.keys()</code></td></tr>
+          <tr><td>8</td><td>values()</td><td>모든 값 확인</td><td><code>student.values()</code></td></tr>
+          <tr><td>9</td><td>items()</td><td>키와 값 동시 반복</td><td><code>student.items()</code></td></tr>
+          <tr><td>10</td><td>병합</td><td>두 딕셔너리 합치기</td><td><code>d1 | d2</code></td></tr>
+        </table>
+
+        <details class="quiz">
+          <summary>간단 확인 문제 보기</summary>
+          <p><b>문제:</b> <code>student = {'이름':'민수', '나이':17}</code>에서 나이를 18로 바꾸는 코드는?</p>
+          <p><b>정답:</b> <code>student['나이'] = 18</code></p>
+          <p><b>해설:</b> 이미 존재하는 키에 새로운 값을 대입하면 값이 수정됩니다.</p>
+        </details>
+      </section>
+    </main>
+  </div>
+
+  <footer>
+    파이썬 딕셔너리 학습 자료 | Dictionary Learning Elements
+  </footer>
+</body>
+</html>
