@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>파이썬 최고급 문법 10개 예시 코드</title>
+<style>
+body{margin:0;font-family:"Malgun Gothic","NanumGothic",Arial,sans-serif;background:#f3f6fb;color:#1f2937;line-height:1.7}
+header{background:linear-gradient(135deg,#111827,#2563eb);color:white;text-align:center;padding:42px 20px}
+header h1{margin:0;font-size:34px} header p{font-size:18px}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+.intro,.card{background:white;border-radius:18px;padding:24px;margin-bottom:24px;box-shadow:0 8px 22px rgba(15,23,42,.08)}
+.intro{border-left:8px solid #2563eb}
+.nav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
+.nav a{text-decoration:none;background:white;color:#1d4ed8;border:1px solid #bfdbfe;padding:8px 14px;border-radius:999px;font-weight:bold}
+.card-head{display:flex;justify-content:space-between;align-items:center;gap:14px;border-bottom:1px solid #e5e7eb;padding-bottom:12px}
+h2{margin:0;color:#1e40af;font-size:24px} h3{margin-top:20px;color:#374151}
+.desc{background:#eff6ff;border-radius:12px;padding:14px;font-size:17px;font-weight:bold}
+pre{background:#0f172a;color:#e5e7eb;padding:18px;border-radius:14px;overflow-x:auto;line-height:1.55;font-size:15px}
+.output{background:#ecfdf5;color:#065f46;border:1px solid #a7f3d0}
+button{background:#2563eb;color:white;border:none;padding:9px 14px;border-radius:10px;cursor:pointer;font-weight:bold}
+button:hover{background:#1d4ed8}
+footer{text-align:center;color:#6b7280;padding:24px}
+</style>
+</head>
+<body>
+<header>
+<h1>파이썬에서 꼭 알아야 할 최고급 문법 10개</h1>
+<p>예시 코드 · 출력 결과 · 코드 복사 버튼 포함</p>
+</header>
+<div class="wrap">
+<section class="intro">
+<h2>학습 목표</h2>
+<p>파이썬 고급 문법 10가지를 예시 코드와 출력 결과로 쉽게 이해하는 HTML 학습자료입니다.</p>
+</section>
+<nav class="nav"><a href="#t1">1</a><a href="#t2">2</a><a href="#t3">3</a><a href="#t4">4</a><a href="#t5">5</a><a href="#t6">6</a><a href="#t7">7</a><a href="#t8">8</a><a href="#t9">9</a><a href="#t10">10</a></nav>
+
+<section class="card" id="t1">
+  <div class="card-head">
+    <h2>1. 데코레이터 Decorator</h2>
+    <button onclick="copyCode('code1')">코드 복사</button>
+  </div>
+  <p class="desc">기존 함수를 수정하지 않고 기능을 덧붙입니다.</p>
+  <h3>예시 코드</h3>
+  <pre><code id="code1">def log(func):
+    def wrapper():
+        print(&quot;실행 시작&quot;)
+        result = func()
+        print(&quot;실행 종료&quot;)
+        return result
+    return wrapper
+
+@log
+def hello():
+    return &quot;Hello Python&quot;
+
+print(hello())</code></pre>
+  <h3>출력 결과</h3>
+  <pre class="output">실행 시작
+실행 종료
+Hello Python</pre>
+</section>
+<section class="card" id="t2">
+  <div class="card-head">
+    <h2>2. 클로저 Closure</h2>
+    <button onclick="copyCode('code2')">코드 복사</button>
+  </div>
+  <p class="desc">내부 함수가 바깥 함수의 변수를 기억합니다.</p>
+  <h3>예시 코드</h3>
+  <pre><code id="code2">def outer(x):
+    def inner(y):
+        return x + y
+    return inner
+
+add10 = outer(10)
+
+print(add10(5))
+print(add10(20))</code></pre>
+  <h3>출력 결과</h3>
+  <pre class="output">15
+30</pre>
+</section>
+<section class="card" id="t3">
+  <div class="card-head">
+    <h2>3. 제너레이터 Generator</h2>
+    <button onclick="copyCode('code3')">코드 복사</button>
+  </div>
+  <p class="desc">yield로 값을 필요할 때 하나씩 생성합니다.</p>
+  <h3>예시 코드</h3>
+  <pre><code id="code3">def count_up_to(n):
+    i = 1
+    while i &lt;= n:
+        yield i
+        i += 1
+
+for number in count_up_to(5):
+    print(number)</code></pre>
+  <h3>출력 결과</h3>
+  <pre class="output">1
+2
+3
+4
+5</pre>
+</section>
+<section class="card" id="t4">
+  <div class="card-head">
+    <h2>4. 제너레이터 표현식 Generator Expression</h2>
+    <button onclick="copyCode('code4')">코드 복사</button>
+  </div>
+  <p class="desc">리스트 전체를 만들지 않고 필요한 값만 계산합니다.</p>
+  <h3>예시 코드</h3>
+  <pre><code id="code4">squares = (x * x for x in range(1, 6))
+
+for value in squares:
+    print(value)</code></pre>
+  <h3>출력 결과</h3>
+  <pre class="output">1
+4
+9
+16
+25</pre>
+</section>
+<section class="card" id="t5">
+  <div class="card-head">
+    <h2>5. *args와 **kwargs</h2>
+    <button onclick="copyCode('code5')">코드 복사</button>
+  </div>
+  <p class="desc">개수가 정해지지 않은 인수를 받을 때 사용합니다.</p>
+  <h3>예시 코드</h3>
+  <pre><code id="code5">def student_info(*args, **kwargs):
+    print(&quot;과목:&quot;, args)
+    print(&quot;정보:&quot;, kwargs)
+
+student_info(&quot;국어&quot;, &quot;수학&quot;, &quot;정보&quot;, name=&quot;민수&quot;, grade=1)</code></pre>
+  <h3>출력 결과</h3>
+  <pre class="output">과목: (&#x27;국어&#x27;, &#x27;수학&#x27;, &#x27;정보&#x27;)
+정보: {&#x27;name&#x27;: &#x27;민수&#x27;, &#x27;grade&#x27;: 1}</pre>
+</section>
+<section class="card" id="t6">
+  <div class="card-head">
+    <h2>6. 컨텍스트 매니저 Context Manager</h2>
+    <button onclick="copyCode('code6')">코드 복사</button>
+  </div>
+  <p class="desc">with 문으로 시작과 종료 작업을 자동 처리합니다.</p>
+  <h3>예시 코드</h3>
+  <pre><code id="code6">class StudyRoom:
+    def __enter__(self):
+        print(&quot;공부방 입장&quot;)
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        print(&quot;공부방 퇴장&quot;)
+
+with StudyRoom():
+    print(&quot;파이썬 공부 중&quot;)</code></pre>
+  <h3>출력 결과</h3>
+  <pre class="output">공부방 입장
+파이썬 공부 중
+공부방 퇴장</pre>
+</section>
+<section class="card" id="t7">
+  <div class="card-head">
+    <h2>7. 이터레이터 Iterator</h2>
+    <button onclick="copyCode('code7')">코드 복사</button>
+  </div>
+  <p class="desc">for 문이 값을 하나씩 꺼내는 원리를 직접 구현합니다.</p>
+  <h3>예시 코드</h3>
+  <pre><code id="code7">class Counter:
+    def __init__(self, end):
+        self.current = 0
+        self.end = end
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        self.current += 1
+        if self.current &gt; self.end:
+            raise StopIteration
+        return self.current
+
+for number in Counter(5):
+    print(number)</code></pre>
+  <h3>출력 결과</h3>
+  <pre class="output">1
+2
+3
+4
+5</pre>
+</section>
+<section class="card" id="t8">
+  <div class="card-head">
+    <h2>8. 함수형 프로그래밍 Lambda, Map, Filter</h2>
+    <button onclick="copyCode('code8')">코드 복사</button>
+  </div>
+  <p class="desc">함수를 값처럼 다루어 데이터를 변환하거나 걸러냅니다.</p>
+  <h3>예시 코드</h3>
+  <pre><code id="code8">numbers = [1, 2, 3, 4, 5, 6]
+
+result = list(
+    map(lambda x: x * x,
+        filter(lambda x: x % 2 == 0, numbers))
+)
+
+print(result)</code></pre>
+  <h3>출력 결과</h3>
+  <pre class="output">[4, 16, 36]</pre>
+</section>
+<section class="card" id="t9">
+  <div class="card-head">
+    <h2>9. 메타클래스 Metaclass</h2>
+    <button onclick="copyCode('code9')">코드 복사</button>
+  </div>
+  <p class="desc">클래스를 만드는 클래스를 정의합니다.</p>
+  <h3>예시 코드</h3>
+  <pre><code id="code9">class AddSchoolName(type):
+    def __new__(cls, name, bases, attrs):
+        attrs[&quot;school&quot;] = &quot;전북과학고&quot;
+        return super().__new__(cls, name, bases, attrs)
+
+class Student(metaclass=AddSchoolName):
+    pass
+
+print(Student.school)</code></pre>
+  <h3>출력 결과</h3>
+  <pre class="output">전북과학고</pre>
+</section>
+<section class="card" id="t10">
+  <div class="card-head">
+    <h2>10. 비동기 프로그래밍 Async/Await</h2>
+    <button onclick="copyCode('code10')">코드 복사</button>
+  </div>
+  <p class="desc">기다리는 시간이 많은 작업을 효율적으로 처리합니다.</p>
+  <h3>예시 코드</h3>
+  <pre><code id="code10">import asyncio
+
+async def study():
+    print(&quot;공부 시작&quot;)
+    await asyncio.sleep(1)
+    print(&quot;공부 완료&quot;)
+
+asyncio.run(study())</code></pre>
+  <h3>출력 결과</h3>
+  <pre class="output">공부 시작
+공부 완료</pre>
+</section>
+</div>
+<footer>Python Advanced Grammar 10 Examples</footer>
+<script>
+function copyCode(id){
+  const text=document.getElementById(id).innerText;
+  navigator.clipboard.writeText(text).then(()=>alert("코드가 복사되었습니다."));
+}
+</script>
+</body>
+</html>
