@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>A → B → C → D → E 5단계 중첩 데코레이터 예시 20개</title>
+<style>
+  body {
+    margin: 0;
+    font-family: "Malgun Gothic", "NanumGothic", Arial, sans-serif;
+    background: #f4f7fb;
+    color: #1f2937;
+    line-height: 1.7;
+  }
+  header {
+    background: linear-gradient(135deg, #1e3a8a, #2563eb);
+    color: white;
+    padding: 36px 24px;
+    text-align: center;
+  }
+  header h1 {
+    margin: 0 0 10px;
+    font-size: 32px;
+  }
+  header p {
+    margin: 0;
+    font-size: 18px;
+  }
+  .wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 24px;
+  }
+  .rule {
+    background: white;
+    border-left: 8px solid #2563eb;
+    border-radius: 14px;
+    padding: 22px;
+    margin-bottom: 24px;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+  }
+  .nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 20px 0 28px;
+  }
+  .nav a {
+    display: inline-block;
+    text-decoration: none;
+    background: white;
+    color: #1e3a8a;
+    border: 1px solid #bfdbfe;
+    padding: 8px 13px;
+    border-radius: 999px;
+    font-weight: bold;
+  }
+  .card {
+    background: white;
+    border-radius: 18px;
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+  }
+  .card-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    align-items: center;
+    border-bottom: 1px solid #e5e7eb;
+    padding-bottom: 12px;
+    margin-bottom: 14px;
+  }
+  h2 {
+    margin: 0;
+    color: #1e40af;
+    font-size: 24px;
+  }
+  button {
+    background: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 9px 14px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  button:hover {
+    background: #1d4ed8;
+  }
+  .sentence {
+    font-size: 19px;
+    font-weight: bold;
+    color: #111827;
+    background: #eff6ff;
+    border-radius: 12px;
+    padding: 14px;
+  }
+  pre {
+    background: #0f172a;
+    color: #e5e7eb;
+    padding: 18px;
+    border-radius: 14px;
+    overflow-x: auto;
+    font-size: 15px;
+    line-height: 1.55;
+  }
+  .output pre {
+    background: #ecfdf5;
+    color: #065f46;
+    border: 1px solid #a7f3d0;
+  }
+  .tip {
+    background: #fff7ed;
+    border: 1px solid #fed7aa;
+    padding: 16px;
+    border-radius: 14px;
+    margin-top: 14px;
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>A → B → C → D → E 5단계 중첩 데코레이터 예시 20개</h1>
+  <p>청년들에게 꿈과 열정을 심어주는 긴 문장 10개 + 짧은 응원 문장 10개</p>
+</header>
+
+<div class="wrap">
+  <section class="rule">
+    <h2>데코레이터 실행 순서 핵심 정리</h2>
+    <p><strong>@E @D @C @B def A()</strong>는 내부적으로 <strong>A = E(D(C(B(A))))</strong> 형태입니다.</p>
+    <p>따라서 실제 출력은 원본 함수 A가 먼저 실행된 뒤, B → C → D → E 순서로 문장이 붙습니다.</p>
+    <pre><code>@E
+@D
+@C
+@B
+def A():
+    return "A"
+
+print(A())
+
+# 출력: A → B → C → D → E</code></pre>
+    <div class="tip">아래 예시는 모두 같은 원리로 구성되어 있습니다.</div>
+  </section>
+
+  <div class="nav">
+    <a href="#ex1">1</a>
+<a href="#ex2">2</a>
+<a href="#ex3">3</a>
+<a href="#ex4">4</a>
+<a href="#ex5">5</a>
+<a href="#ex6">6</a>
+<a href="#ex7">7</a>
+<a href="#ex8">8</a>
+<a href="#ex9">9</a>
+<a href="#ex10">10</a>
+<a href="#ex11">11</a>
+<a href="#ex12">12</a>
+<a href="#ex13">13</a>
+<a href="#ex14">14</a>
+<a href="#ex15">15</a>
+<a href="#ex16">16</a>
+<a href="#ex17">17</a>
+<a href="#ex18">18</a>
+<a href="#ex19">19</a>
+<a href="#ex20">20</a>
+  </div>
+
+  
+<section class="card" id="ex1">
+  <div class="card-head">
+    <h2>긴 문장 예시 1</h2>
+    <button onclick="copyCode('code1')">코드 복사</button>
+  </div>
+  <p class="sentence">꿈을 가지면 → 목표를 세우게 되고 → 노력하게 되며 → 실력이 향상되고 → 성공에 가까워진다</p>
+  <pre><code id="code1">def B(func):
+    def wrapper():
+        return func() + &quot; → 목표&quot;
+    return wrapper
+
+def C(func):
+    def wrapper():
+        return func() + &quot; → 노력&quot;
+    return wrapper
+
+def D(func):
+    def wrapper():
+        return func() + &quot; → 실력 향상&quot;
+    return wrapper
+
+def E(func):
+    def wrapper():
+        return func() + &quot; → 성공 가까워짐&quot;
+    return wrapper
+
+@E
+@D
+@C
+@B
+def sentence_1():
+    return &quot;꿈&quot;
+
+print(sentence_1())</code></pre>
+  <div class="output">
+    <strong>출력 결과</strong>
+    <pre>꿈 → 목표 → 노력 → 실력 향상 → 성공 가까워짐</pre>
+  </div>
+</section>
+
+<section class="card" id="ex2">
+  <div class="card-head">
+    <h2>긴 문장 예시 2</h2>
+    <button onclick="copyCode('code2')">코드 복사</button>
+  </div>
+  <p class="sentence">독서를 시작하면 → 지식이 쌓이고 → 사고력이 넓어지며 → 창의성이 높아지고 → 더 큰 꿈을 꾸게 된다</p>
+  <pre><code id="code2">def B(func):
+    def wrapper():
+        return func() + &quot; → 지식&quot;
+    return wrapper
+
+def C(func):
+    def wrapper():
+        return func() + &quot; → 사고력&quot;
+    return wrapper
+
+def D(func):
+    def wrapper():
+        return func() + &quot; → 창의성&quot;
+    return wrapper
+
+def E(func):
+    def wrapper():
+        return func() + &quot; → 더 큰 꿈&quot;
+    return wrapper
+
+@E
+@D
+@C
+@B
+def sentence_2():
+    return &quot;독서&quot;
+
+print(sentence_2())</code></pre>
+  <div class="output">
+    <strong>출력 결과</strong>
+    <pre>독서 → 지식 → 사고력 → 창의성 → 더 큰 꿈</pre>
+  </div>
+</section>
+
+<section class="card" id="ex3">
+  <div class="card-head">
+    <h2>긴 문장 예시 3</h2>
+    <button onclick="copyCode('code3')">코드 복사</button>
+  </div>
+  <p class="sentence">용기를 내어 도전하면 → 경험이 쌓이고 → 자신감이 생기며 → 더 큰 도전을 하게 되고 → 성장한 자신을 만나게 된다</p>
+  <pre><code id="code3">def B(func):
+    def wrapper():
+        return func() + &quot; → 경험&quot;
+    return wrapper
+
+def C(func):
+    def wrapper():
+        return func() + &quot; → 자신감&quot;
+    return wrapper
+
+def D(func):
+    def wrapper():
+        return func() + &quot; → 더 큰 도전&quot;
+    return wrapper
+
+def E(func):
+    def wrapper():
+        return func() + &quot; → 성장&quot;
+    return wrapper
+
+@E
+@D
+@C
+@B
+def sentence_3():
+    return &quot;용기&quot;
+
+print(sentence_3())</code></pre>
+  <div class="output">
+    <strong>출력 결과</strong>
+    <pre>용기 → 경험 → 자신감 → 더 큰 도전 → 성장</pre>
+  </div>
+</section>
+
+<section class="card" id="ex4">
+  <div class="card-head">
+    <h2>긴 문장 예시 4</h2>
+    <button onclick="copyCode('code4')">코드 복사</button>
+  </div>
+  <p class="sentence">실패를 받아들이면 → 교훈을 얻고 → 문제를 분석하며 → 더 나은 방법을 찾고 → 결국 성공하게 된다</p>
+  <pre><code id="code4">def B(func):
+    def wrapper():
+        return func() + &quot; → 교훈&quot;
+    return wrapper
+
+def C(func):
+    def wrapper():
+        return func() + &quot; → 문제 분석&quot;
+    return wrapper
+
+def D(func):
+    def wrapper():
+        return func() + &quot; → 방법 개선&quot;
+    return wrapper
+
+def E(func):
+    def wrapper():
+        return func() + &quot; → 성공&quot;
+    return wrapper
+
+@E
+@D
+@C
+@B
+def sentence_4():
+    return &quot;실패&quot;
+
+print(sentence_4())</code></pre>
+  <div class="output">
+    <strong>출력 결과</strong>
+    <pre>실패 → 교훈 → 문제 분석 → 방법 개선 → 성공</pre>
+  </div>
+</section>
+
+<section class="card" id="ex5">
+  <div class="card-head">
+    <h2>긴 문장 예시 5</h2>
+    <button onclick="copyCode('code5')">코드 복사</button>
+  </div>
+  <p class="sentence">좋은 습관을 만들면 → 꾸준함이 생기고 → 성실함이 길러지며 → 신뢰를 얻고 → 큰 기회를 잡게 된다</p>
+  <pre><code id="code5">def B(func):
+    def wrapper():
+        return func() + &quot; → 꾸준함&quot;
+    return wrapper
+
+def C(func):
+    def wrapper():
+        return func() + &quot; → 성실함&quot;
+    return wrapper
+
+def D(func):
+    def wrapper():
+        return func() + &quot; → 신뢰&quot;
+    return wrapper
+
+def E(func):
+    def wrapper():
+        return func() + &quot; → 기회&quot;
+    return wrapper
+
+@E
+@D
+@C
+@B
+def sentence_5():
+    return &quot;좋은 습관&quot;
+
+print(sentence_5())</code></pre>
+  <div class="output">
+    <strong>출력 결과</strong>
+    <pre>좋은 습관 → 꾸준함 → 성실함 → 신뢰 → 기회</pre>
+  </div>
+</section>
+
+<section class="card" id="ex6">
+  <div class="card-head">
+    <h2>긴 문장 예시 6</h2>
+    <button onclick="copyCode('code6')">코드 복사</button>
+  </div>
+  <p class="sentence">호기심을 가지면 → 질문하게 되고 → 탐구하게 되며 → 새로운 사실을 발견하고 → 세상을 넓게 이해하게 된다</p>
+  <pre><code id="code6">def B(func):
+    def wrapper():
+        return func() + &quot; → 질문&quot;
+    return wrapper
+
+def C(func):
+    def wrapper():
+        return func() + &quot; → 탐구&quot;
+    return wrapper
+
+def D(func):
+    def wrapper():
+        return func() + &quot; → 발견&quot;
+    return wrapper
+
+def E(func):
+    def wrapper():
+        return func() + &quot; → 넓은 이해&quot;
+    return wrapper
+
+@E
+@D
+@C
+@B
+def sentence_6():
+    return &quot;호기심&quot;
+
+print(sentence_6())</code></pre>
+  <div class="output">
+    <strong>출력 결과</strong>
+    <pre>호기심 → 질문 → 탐구 → 발견 → 넓은 이해</pre>
+  </div>
+</section>
+
+<section class="card" id="ex7">
+  <div class="card-head">
+    <h2>긴 문장 예시 7</h2>
+    <button onclick="copyCode('code7')">코드 복사</button>
+  </div>
+  <p class="sentence">운동을 꾸준히 하면 → 건강해지고 → 체력이 향상되며 → 집중력이 높아지고 → 목표 달성에 유리해진다</p>
+  <pre><code id="code7">def B(func):
+    def wrapper():
+        return func() + &quot; → 건강&quot;
+    return wrapper
+
+def C(func):
+    def wrapper():
+        return func() + &quot; → 체력&quot;
+    return wrapper
+
+def D(func):
+    def wrapper():
+        return func() + &quot; → 집중력&quot;
+    return wrapper
+
+def E(func):
+    def wrapper():
+        return func() + &quot; → 목표 달성&quot;
+    return wrapper
+
+@E
+@D
+@C
+@B
+def sentence_7():
+    return &quot;운동&quot;
+
+print(sentence_7())</code></pre>
+  <div class="output">
+    <strong>출력 결과</strong>
+    <pre>운동 → 건강 → 체력 → 집중력 → 목표 달성</pre>
+  </div>
+</section>
+
+<section class="card" id="ex8">
+  <div class="card-head">
+    <h2>긴 문장 예시 8</h2>
+    <button onclick="copyCode('code8')">코드 복사</button>
+  </div>
+  <p class="sentence">협력하는 법을 배우면 → 서로를 이해하게 되고 → 신뢰가 쌓이며 → 팀워크가 향상되고 → 더 큰 성과를 이룬다</p>
+  <pre><code id="code8">def B(func):
+    def wrapper():
+        return func() + &quot; → 이해&quot;
+    return wrapper
+
+def C(func):
+    def wrapper():
+        return func() + &quot; → 신뢰&quot;
+    return wrapper
+
+def D(func):
+    def wrapper():
+        return func() + &quot; → 팀워크&quot;
+    return wrapper
+
+def E(func):
+    def wrapper():
+        return func() + &quot; → 성과&quot;
+    return wrapper
+
+@E
+@D
+@C
+@B
+def sentence_8():
+    return &quot;협력&quot;
+
+print(sentence_8())</code></pre>
+  <div class="output">
+    <strong>출력 결과</strong>
+    <pre>협력 → 이해 → 신뢰 → 팀워크 → 성과</pre>
+  </div>
+</section>
+
+<section class="card" id="ex9">
+  <div class="card-head">
+    <h2>긴 문장 예시 9</h2>
+    <button onclick="copyCode('code9')">코드 복사</button>
+  </div>
+  <p class="sentence">오늘 최선을 다하면 → 작은 성취를 얻고 → 자신감을 키우며 → 더 높은 목표를 세우고 → 원하는 미래를 만든다</p>
+  <pre><code id="code9">def B(func):
+    def wrapper():
+        return func() + &quot; → 작은 성취&quot;
+    return wrapper
+
+def C(func):
+    def wrapper():
+        return func() + &quot; → 자신감&quot;
+    return wrapper
+
+def D(func):
+    def wrapper():
+        return func() + &quot; → 높은 목표&quot;
+    return wrapper
+
+def E(func):
+    def wrapper():
+        return func() + &quot; → 미래&quot;
+    return wrapper
+
+@E
+@D
+@C
+@B
+def sentence_9():
+    return &quot;오늘의 최선&quot;
+
+print(sentence_9())</code></pre>
+  <div class="output">
+    <strong>출력 결과</strong>
+    <pre>오늘의 최선 → 작은 성취 → 자신감 → 높은 목표 → 미래</pre>
+  </div>
+</section>
+
+<section class="card" id="ex10">
+  <div class="card-head">
+    <h2>긴 문장 예시 10</h2>
+    <button onclick="copyCode('code10')">코드 복사</button>
+  </div>
+  <p class="sentence">세상을 바꾸겠다는 꿈을 품으면 → 행동하게 되고 → 사람들에게 영향을 주며 → 긍정적인 변화를 만들고 → 희망이 된다</p>
+  <pre><code id="code10">def B(func):
+    def wrapper():
+        return func() + &quot; → 행동&quot;
+    return wrapper
+
+def C(func):
+    def wrapper():
+        return func() + &quot; → 영향&quot;
+    return wrapper
+
+def D(func):
+    def wrapper():
+        return func() + &quot; → 긍정적 변화&quot;
+    return wrapper
+
+def E(func):
+    def wrapper():
+        return func() + &quot; → 희망&quot;
+    return wrapper
+
+@E
+@D
+@C
+@B
+def sentence_10():
+    return &quot;큰 꿈&quot;
+
+print(sentence_10())</code></pre>
+  <div class="output">
+    <strong>출력 결과</strong>
+    <pre>큰 꿈 → 행동 → 영향 → 긍정적 변화 → 희망</pre>
+  </div>
+</section>
+
+<section class="card" id="ex11">
+  <div class="card-head">
+    <h2>짧은 응원 문장 예시 1</h2>
+    <button onclick="copyCode('code11')">코드 복사</button>
+  </div>
+  <p class="sentence">꿈 → 목표 → 노력 → 성장 → 성공</p>
+  <pre><code id="code11">def B(func):
+    def wrapper():
+        return func() + &quot; → 목표&quot;
+    return wrapper
+
+def C(func):
+    def wrapper():
+        return func() + &quot; → 노력&quot;
+    return wrapper
+
+def D(func):
+    def wrapper():
+        return func() + &quot; → 성장&quot;
+    return wrapper
+
+def E(func):
+    def wrapper():
+        return func() + &quot; → 성공&quot;
+    return wrapper
+
+@E
+@D
+@C
+@B
+def cheer_1():
+    return &quot;꿈&quot;
+
+print(cheer_1())</code></pre>
+  <div class="output">
+    <strong>출력 결과</strong>
+    <pre>꿈 → 목표 → 노력 → 성장 → 성공</pre>
+  </div>
+</section>
+
+<section class="card" id="ex12">
+  <div class="card-head">
+    <h2>짧은 응원 문장 예시 2</h2>
+    <button onclick="copyCode('code12')">코드 복사</button>
+  </div>
+  <p class="sentence">도전 → 경험 → 자신감 → 발전 → 성취</p>
+  <pre><code id="code12">def B(func):
+    def wrapper():
+        return func() + &quot; → 경험&quot;
+    return wrapper
+
+def C(func):
+    def wrapper():
+        return func() + &quot; → 자신감&quot;
+    return wrapper
+
+def D(func):
+    def wrapper():
+        return func() + &quot; → 발전&quot;
+    return wrapper
+
+def E(func):
+    def wrapper():
+        return func() + &quot; → 성취&quot;
+    return wrapper
+
+@E
+@D
+@C
+@B
+def cheer_2():
+    return &quot;도전&quot;
+
+print(cheer_2())</code></pre>
+  <div class="output">
+    <strong>출력 결과</strong>
+    <pre>도전 → 경험 → 자신감 → 발전 → 성취</pre>
+  </div>
+</section>
+
+<section class="card" id="ex13">
+  <div class="card-head">
+    <h2>짧은 응원 문장 예시 3</h2>
+    <button onclick="copyCode('code13')">코드 복사</button>
+  </div>
+  <p class="sentence">배움 → 지식 → 이해 → 지혜 → 통찰</p>
+  <pre><code id="code13">def B(func):
+    def wrapper():
+        return func() + &quot; → 지식&quot;
+    return wrapper
+
+def C(func):
+    def wrapper():
+        return func() + &quot; → 이해&quot;
+    return wrapper
+
+def D(func):
+    def wrapper():
+        return func() + &quot; → 지혜&quot;
+    return wrapper
+
+def E(func):
+    def wrapper():
+        return func() + &quot; → 통찰&quot;
+    return wrapper
+
+@E
+@D
+@C
+@B
+def cheer_3():
+    return &quot;배움&quot;
+
+print(cheer_3())</code></pre>
+  <div class="output">
+    <strong>출력 결과</strong>
+    <pre>배움 → 지식 → 이해 → 지혜 → 통찰</pre>
+  </div>
+</section>
+
+<section class="card" id="ex14">
+  <div class="card-head">
+    <h2>짧은 응원 문장 예시 4</h2>
+    <button onclick="copyCode('code14')">코드 복사</button>
+  </div>
+  <p class="sentence">호기심 → 탐구 → 발견 → 혁신 → 변화</p>
+  <pre><code id="code14">def B(func):
+    def wrapper():
+        return func() + &quot; → 탐구&quot;
+    return wrapper
+
+def C(func):
+    def wrapper():
+        return func() + &quot; → 발견&quot;
+    return wrapper
+
+def D(func):
+    def wrapper():
+        return func() + &quot; → 혁신&quot;
+    return wrapper
+
+def E(func):
+    def wrapper():
+        return func() + &quot; → 변화&quot;
+    return wrapper
+
+@E
+@D
+@C
+@B
+def cheer_4():
+    return &quot;호기심&quot;
+
+print(cheer_4())</code></pre>
+  <div class="output">
+    <strong>출력 결과</strong>
+    <pre>호기심 → 탐구 → 발견 → 혁신 → 변화</pre>
+  </div>
+</section>
+
+<section class="card" id="ex15">
+  <div class="card-head">
+    <h2>짧은 응원 문장 예시 5</h2>
+    <button onclick="copyCode('code15')">코드 복사</button>
+  </div>
+  <p class="sentence">독서 → 사고 → 창의 → 도전 → 성장</p>
+  <pre><code id="code15">def B(func):
+    def wrapper():
+        return func() + &quot; → 사고&quot;
+    return wrapper
+
+def C(func):
+    def wrapper():
+        return func() + &quot; → 창의&quot;
+    return wrapper
+
+def D(func):
+    def wrapper():
+        return func() + &quot; → 도전&quot;
+    return wrapper
+
+def E(func):
+    def wrapper():
+        return func() + &quot; → 성장&quot;
+    return wrapper
+
+@E
+@D
+@C
+@B
+def cheer_5():
+    return &quot;독서&quot;
+
+print(cheer_5())</code></pre>
+  <div class="output">
+    <strong>출력 결과</strong>
+    <pre>독서 → 사고 → 창의 → 도전 → 성장</pre>
+  </div>
+</section>
+
+<section class="card" id="ex16">
+  <div class="card-head">
+    <h2>짧은 응원 문장 예시 6</h2>
+    <button onclick="copyCode('code16')">코드 복사</button>
+  </div>
+  <p class="sentence">실패 → 반성 → 개선 → 재도전 → 성공</p>
+  <pre><code id="code16">def B(func):
+    def wrapper():
+        return func() + &quot; → 반성&quot;
+    return wrapper
+
+def C(func):
+    def wrapper():
+        return func() + &quot; → 개선&quot;
+    return wrapper
+
+def D(func):
+    def wrapper():
+        return func() + &quot; → 재도전&quot;
+    return wrapper
+
+def E(func):
+    def wrapper():
+        return func() + &quot; → 성공&quot;
+    return wrapper
+
+@E
+@D
+@C
+@B
+def cheer_6():
+    return &quot;실패&quot;
+
+print(cheer_6())</code></pre>
+  <div class="output">
+    <strong>출력 결과</strong>
+    <pre>실패 → 반성 → 개선 → 재도전 → 성공</pre>
+  </div>
+</section>
+
+<section class="card" id="ex17">
+  <div class="card-head">
+    <h2>짧은 응원 문장 예시 7</h2>
+    <button onclick="copyCode('code17')">코드 복사</button>
+  </div>
+  <p class="sentence">운동 → 건강 → 체력 → 집중 → 성취</p>
+  <pre><code id="code17">def B(func):
+    def wrapper():
+        return func() + &quot; → 건강&quot;
+    return wrapper
+
+def C(func):
+    def wrapper():
+        return func() + &quot; → 체력&quot;
+    return wrapper
+
+def D(func):
+    def wrapper():
+        return func() + &quot; → 집중&quot;
+    return wrapper
+
+def E(func):
+    def wrapper():
+        return func() + &quot; → 성취&quot;
+    return wrapper
+
+@E
+@D
+@C
+@B
+def cheer_7():
+    return &quot;운동&quot;
+
+print(cheer_7())</code></pre>
+  <div class="output">
+    <strong>출력 결과</strong>
+    <pre>운동 → 건강 → 체력 → 집중 → 성취</pre>
+  </div>
+</section>
+
+<section class="card" id="ex18">
+  <div class="card-head">
+    <h2>짧은 응원 문장 예시 8</h2>
+    <button onclick="copyCode('code18')">코드 복사</button>
+  </div>
+  <p class="sentence">협력 → 신뢰 → 팀워크 → 성과 → 발전</p>
+  <pre><code id="code18">def B(func):
+    def wrapper():
+        return func() + &quot; → 신뢰&quot;
+    return wrapper
+
+def C(func):
+    def wrapper():
+        return func() + &quot; → 팀워크&quot;
+    return wrapper
+
+def D(func):
+    def wrapper():
+        return func() + &quot; → 성과&quot;
+    return wrapper
+
+def E(func):
+    def wrapper():
+        return func() + &quot; → 발전&quot;
+    return wrapper
+
+@E
+@D
+@C
+@B
+def cheer_8():
+    return &quot;협력&quot;
+
+print(cheer_8())</code></pre>
+  <div class="output">
+    <strong>출력 결과</strong>
+    <pre>협력 → 신뢰 → 팀워크 → 성과 → 발전</pre>
+  </div>
+</section>
+
+<section class="card" id="ex19">
+  <div class="card-head">
+    <h2>짧은 응원 문장 예시 9</h2>
+    <button onclick="copyCode('code19')">코드 복사</button>
+  </div>
+  <p class="sentence">열정 → 행동 → 노력 → 실력 → 꿈 실현</p>
+  <pre><code id="code19">def B(func):
+    def wrapper():
+        return func() + &quot; → 행동&quot;
+    return wrapper
+
+def C(func):
+    def wrapper():
+        return func() + &quot; → 노력&quot;
+    return wrapper
+
+def D(func):
+    def wrapper():
+        return func() + &quot; → 실력&quot;
+    return wrapper
+
+def E(func):
+    def wrapper():
+        return func() + &quot; → 꿈 실현&quot;
+    return wrapper
+
+@E
+@D
+@C
+@B
+def cheer_9():
+    return &quot;열정&quot;
+
+print(cheer_9())</code></pre>
+  <div class="output">
+    <strong>출력 결과</strong>
+    <pre>열정 → 행동 → 노력 → 실력 → 꿈 실현</pre>
+  </div>
+</section>
+
+<section class="card" id="ex20">
+  <div class="card-head">
+    <h2>짧은 응원 문장 예시 10</h2>
+    <button onclick="copyCode('code20')">코드 복사</button>
+  </div>
+  <p class="sentence">희망 → 용기 → 도전 → 성장 → 미래</p>
+  <pre><code id="code20">def B(func):
+    def wrapper():
+        return func() + &quot; → 용기&quot;
+    return wrapper
+
+def C(func):
+    def wrapper():
+        return func() + &quot; → 도전&quot;
+    return wrapper
+
+def D(func):
+    def wrapper():
+        return func() + &quot; → 성장&quot;
+    return wrapper
+
+def E(func):
+    def wrapper():
+        return func() + &quot; → 미래&quot;
+    return wrapper
+
+@E
+@D
+@C
+@B
+def cheer_10():
+    return &quot;희망&quot;
+
+print(cheer_10())</code></pre>
+  <div class="output">
+    <strong>출력 결과</strong>
+    <pre>희망 → 용기 → 도전 → 성장 → 미래</pre>
+  </div>
+</section>
+
+</div>
+
+<script>
+function copyCode(id) {
+  const text = document.getElementById(id).innerText;
+  navigator.clipboard.writeText(text).then(() => {
+    alert("코드가 복사되었습니다.");
+  });
+}
+</script>
+</body>
+</html>
