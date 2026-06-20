@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chudnovsky 형제와 원주율 14~14000자리 계산</title>
+<style>
+:root{--bg:#f4f7fb;--card:#ffffff;--ink:#172033;--sub:#52627a;--accent:#2454a6;--soft:#eaf1ff;--line:#d9e2f2;--code:#111827;}
+*{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font-family:Malgun Gothic,Apple SD Gothic Neo,Segoe UI,Arial,sans-serif;line-height:1.72}
+header{background:linear-gradient(135deg,#183b73,#3569c8);color:#fff;padding:42px 24px;text-align:center} header h1{margin:0 0 10px;font-size:34px} header p{margin:0;font-size:17px;opacity:.95}
+nav{position:sticky;top:0;z-index:10;background:#ffffffee;backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:8px;text-align:center}
+nav a{display:inline-block;margin:4px;padding:7px 11px;border-radius:999px;text-decoration:none;background:var(--soft);color:#183b73;font-size:13px;font-weight:700}
+main{max-width:1180px;margin:0 auto;padding:24px}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:24px;margin:18px 0;box-shadow:0 6px 18px rgba(20,45,90,.07)}
+h2{color:#183b73;margin-top:0;border-left:6px solid var(--accent);padding-left:12px} h3{color:#2454a6}.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.profile{display:grid;grid-template-columns:330px 1fr;gap:24px;align-items:start}.photo{width:100%;border-radius:16px;border:1px solid var(--line);background:#e9eef7;min-height:220px;object-fit:cover}.cap{font-size:12px;color:var(--sub);margin-top:8px}
+table{width:100%;border-collapse:collapse;margin:12px 0}th,td{border:1px solid var(--line);padding:10px;vertical-align:top}th{background:var(--soft)}
+pre{background:var(--code);color:#e5e7eb;padding:18px;border-radius:14px;overflow:auto;font-size:14px;line-height:1.55}code{font-family:Consolas,Menlo,monospace}.formula{font-size:20px;text-align:center;background:#f7fbff;border:1px dashed #9bb6e5;border-radius:14px;padding:18px;overflow:auto}.en{color:#14356b;font-weight:700}.ko{color:#2b2f3a}.note{background:#fff8e6;border-left:6px solid #e0a500;padding:14px;border-radius:10px}.btn{border:0;border-radius:8px;background:#2454a6;color:white;padding:8px 12px;font-weight:700;cursor:pointer;margin-bottom:8px}.small{font-size:13px;color:var(--sub)}
+@media(max-width:820px){.grid,.profile{grid-template-columns:1fr}header h1{font-size:26px}}
+</style>
+</head>
+<body>
+<header>
+<h1>Chudnovsky 형제와 원주율 π 계산</h1>
+<p>프로필 · 업적 · 일화 · 영어/한글 문장 · Chudnovsky 알고리즘 14자리~14000자리 코드</p>
+</header>
+<nav>
+<a href="#profile">인물 소개</a><a href="#sentences">영어·한글 12문장</a><a href="#formula">수식</a><a href="#code">파이썬 코드</a><a href="#explain">코드 설명</a><a href="#tips">실행 팁</a>
+</nav>
+<main>
+<section class="card" id="profile">
+<h2>1. 인물 프로필과 사진</h2>
+<div class="profile">
+<div>
+<img class="photo" alt="David and Gregory Chudnovsky" src="chudnovsky.jpg" 
+onerror="this.onerror=null;this.src='https://static01.nyt.com/images/2022/03/14/science/chudnovsky-pi/chudnovsky-pi-superJumbo.jpg';">
+<p class="cap">사진 출처 표시: PBS NOVA의 Chudnovsky 형제 인터뷰 사진을 우선 표시하도록 구성했습니다. 네트워크 또는 원본 사이트 정책에 따라 이미지가 보이지 않으면 출처 링크를 눌러 확인하세요.</p>
+<p class="small"><a href="https://www.pbs.org/wgbh/nova/article/chudnovsky-math-in/" target="_blank">PBS NOVA: Mathematical Siblings</a></p>
+</div>
+<div>
+<table>
+<tr><th>항목</th><th>내용</th></tr>
+<tr><td>이름</td><td>David Volfovich Chudnovsky / Gregory Volfovich Chudnovsky</td></tr>
+<tr><td>분야</td><td>수론, 계산수학, 슈퍼컴퓨팅, 알고리즘, 영상처리</td></tr>
+<tr><td>대표 업적</td><td>Chudnovsky 알고리즘 개발, 원주율 세계 기록급 계산, 수학 기반 고성능 계산 연구</td></tr>
+<tr><td>특징</td><td>형제가 오랫동안 공동 연구를 수행했으며, 직접 만든 슈퍼컴퓨터로 π 계산 기록을 세웠다.</td></tr>
+</table>
+<div class="note">Chudnovsky 알고리즘은 한 항마다 약 14.18자리의 정확도를 얻기 때문에 14000자리 계산에는 약 990개 정도의 항이 필요합니다.</div>
+</div>
+</div>
+</section>
+<section class="card" id="sentences">
+<h2>2. Chudnovsky 형제 업적·프로필·일화 12문장</h2>
+<table>
+<tr><th>No</th><th>English</th><th>한글 번역</th></tr>
+<tr><td>1</td><td class="en">David and Gregory Chudnovsky are mathematician brothers best known for their work on high-precision computation of π.</td><td class="ko">David와 Gregory Chudnovsky는 원주율 π의 고정밀 계산 연구로 가장 잘 알려진 수학자 형제이다.</td></tr>
+<tr><td>2</td><td class="en">They were born in Kyiv, then part of the Ukrainian SSR, and later continued their careers in the United States.</td><td class="ko">그들은 당시 우크라이나 소비에트 사회주의 공화국에 속했던 키이우에서 태어났고, 이후 미국에서 연구 활동을 이어 갔다.</td></tr>
+<tr><td>3</td><td class="en">Their research belongs mainly to number theory, mathematical physics, algorithms, and advanced computation.</td><td class="ko">그들의 연구 분야는 주로 수론, 수리물리학, 알고리즘, 고급 계산 분야에 속한다.</td></tr>
+<tr><td>4</td><td class="en">The Chudnovsky algorithm, published in the late 1980s, is based on Ramanujan-type rapidly convergent series.</td><td class="ko">1980년대 후반에 발표된 Chudnovsky 알고리즘은 라마누잔 계열의 빠르게 수렴하는 급수에 바탕을 둔다.</td></tr>
+<tr><td>5</td><td class="en">A remarkable feature of the algorithm is that each additional term gives about fourteen more correct decimal digits of π.</td><td class="ko">이 알고리즘의 놀라운 특징은 항을 하나 추가할 때마다 원주율의 정확한 소수 자리가 약 14자리씩 늘어난다는 점이다.</td></tr>
+<tr><td>6</td><td class="en">The brothers built a homemade supercomputer called m-zero using mail-order parts.</td><td class="ko">형제는 우편 주문 부품을 이용해 m-zero라는 자체 제작 슈퍼컴퓨터를 만들었다.</td></tr>
+<tr><td>7</td><td class="en">Their apartment-based computing project became famous because it showed that mathematical insight can rival expensive institutional machines.</td><td class="ko">아파트에서 진행된 그들의 계산 프로젝트는 수학적 통찰이 비싼 기관용 컴퓨터와 경쟁할 수 있음을 보여 주었기 때문에 유명해졌다.</td></tr>
+<tr><td>8</td><td class="en">They used their machines to compute billions of digits of π and to investigate whether the digits might hide deeper rules.</td><td class="ko">그들은 직접 만든 기계로 원주율 수십억 자리를 계산하고, 그 숫자 속에 더 깊은 규칙이 숨어 있는지 탐구했다.</td></tr>
+<tr><td>9</td><td class="en">Their work also influenced modern record-setting π computations, where Chudnovsky-type formulas remain central.</td><td class="ko">그들의 연구는 현대의 원주율 세계 기록 계산에도 영향을 주었으며, Chudnovsky 계열 공식은 여전히 핵심적으로 사용된다.</td></tr>
+<tr><td>10</td><td class="en">Beyond π, they applied mathematics and computing to digital imaging, including art-preservation projects at the Metropolitan Museum of Art.</td><td class="ko">원주율 연구를 넘어, 그들은 메트로폴리탄 미술관의 예술 보존 프로젝트를 포함한 디지털 영상 처리에도 수학과 계산을 적용했다.</td></tr>
+<tr><td>11</td><td class="en">Their story is often used to show that algorithms, not only hardware, determine the real power of computation.</td><td class="ko">그들의 이야기는 계산의 진짜 힘이 하드웨어뿐 아니라 알고리즘에 의해 결정된다는 사실을 보여 주는 사례로 자주 사용된다.</td></tr>
+<tr><td>12</td><td class="en">For students, the Chudnovsky brothers offer a powerful lesson: deep theory and practical programming can work together.</td><td class="ko">학생들에게 Chudnovsky 형제는 깊은 이론과 실제 프로그래밍이 함께 작동할 수 있다는 강력한 교훈을 준다.</td></tr>
+</table>
+</section>
+<section class="card" id="formula">
+<h2>3. Chudnovsky 알고리즘 핵심 수식</h2>
+<div class="formula">
+π = 426880√10005 ÷ Σ<sub>k=0</sub><sup>∞</sup> [ (6k)! × (13591409 + 545140134k) ÷ ((3k)! × (k!)³ × (−262537412640768000)<sup>k</sup>) ]
+</div>
+<p>프로그래밍에서는 팩토리얼을 매번 직접 계산하지 않고, 이전 항에서 다음 항을 빠르게 갱신하는 점화식 형태를 많이 사용합니다.</p>
+</section>
+<section class="card" id="code">
+<h2>4. 14자리부터 14000자리까지 근사값을 구하는 파이썬 코드</h2>
+<button class="btn" onclick="copyCode('pycode')">코드 복사</button>
+<pre id="pycode"><code>from decimal import Decimal, getcontext, ROUND_FLOOR
+from pathlib import Path
+import math
+
+# ==========================================================
+# Chudnovsky 알고리즘으로 π를 14자리부터 14000자리까지 저장
+# ==========================================================
+
+MAX_DIGITS = 14000          # 소수점 이하 최대 자리수
+STEP = 14                  # 14자리, 28자리, 42자리, ... 형태로 저장
+EXTRA_PRECISION = 30       # 계산 안정성을 위한 여유 정밀도
+OUT_DIR = Path("pi_outputs")
+
+# Decimal 전체 계산 정밀도 설정
+getcontext().prec = MAX_DIGITS + EXTRA_PRECISION
+
+
+def chudnovsky_pi(digits):
+    """digits: 소수점 이하 원하는 자리수"""
+    # 한 항당 약 14.18자리 정확도 증가
+    terms = math.ceil(digits / 14.18) + 2
+
+    C = 426880 * Decimal(10005).sqrt()
+
+    M = 1
+    L = 13591409
+    X = 1
+    K = 6
+    S = Decimal(L)
+
+    for i in range(1, terms):
+        # M은 (6k)! / ((3k)! (k!)^3)에 해당하는 계수 부분
+        M = (M * (K**3 - 16 * K)) // (i**3)
+
+        # L은 13591409 + 545140134k
+        L += 545140134
+
+        # X는 (-262537412640768000)^k
+        X *= -262537412640768000
+
+        # 급수의 다음 항을 누적
+        S += Decimal(M * L) / X
+
+        # 다음 M 계산을 위한 K 갱신
+        K += 12
+
+    return C / S
+
+
+def decimal_places_string(x, digits):
+    """Decimal x를 소수점 이하 digits자리 문자열로 변환"""
+    q = Decimal(1).scaleb(-digits)  # 10^(-digits)
+    return str(x.quantize(q))
+
+
+def main():
+    OUT_DIR.mkdir(exist_ok=True)
+
+    # 14000자리까지 한 번 계산한 뒤 필요한 자리수만 잘라서 사용
+    pi_value = chudnovsky_pi(MAX_DIGITS)
+
+    summary = []
+    for d in range(STEP, MAX_DIGITS + 1, STEP):
+        text = decimal_places_string(pi_value, d)
+        file = OUT_DIR / f"pi_{d:05d}_digits.txt"
+        file.write_text(text, encoding="utf-8")
+        summary.append(f"{d}자리: {text[:60]}...")
+
+    # 14000이 14의 배수이므로 마지막 파일은 pi_14000_digits.txt
+    (OUT_DIR / "summary.txt").write_text("\n".join(summary), encoding="utf-8")
+
+    print("완료!")
+    print(f"저장 폴더: {OUT_DIR.resolve()}")
+    print(f"마지막 파일: pi_{MAX_DIGITS:05d}_digits.txt")
+    print(decimal_places_string(pi_value, 100))
+
+
+if __name__ == "__main__":
+    main()</code></pre>
+</section>
+<section class="card" id="explain">
+<h2>5. 코드 상세 설명</h2>
+<table>
+<tr><th>코드</th><th>설명</th></tr>
+<tr><td><code>MAX_DIGITS = 14000</code></td><td>원주율을 소수점 이하 최대 14000자리까지 계산하도록 설정합니다.</td></tr>
+<tr><td><code>STEP = 14</code></td><td>14자리, 28자리, 42자리처럼 14자리 간격으로 결과 파일을 만듭니다.</td></tr>
+<tr><td><code>getcontext().prec</code></td><td>Decimal 계산 정밀도를 설정합니다. 14000자리보다 약간 더 크게 잡아 반올림 오차를 줄입니다.</td></tr>
+<tr><td><code>terms = math.ceil(digits / 14.18) + 2</code></td><td>Chudnovsky 알고리즘은 항 하나당 약 14.18자리 정확도를 얻기 때문에 필요한 항 수를 계산합니다.</td></tr>
+<tr><td><code>C = 426880 * Decimal(10005).sqrt()</code></td><td>공식의 앞부분 상수인 426880√10005를 계산합니다.</td></tr>
+<tr><td><code>M</code></td><td>팩토리얼 계수 부분을 저장합니다. 팩토리얼을 직접 계산하지 않고 빠르게 갱신합니다.</td></tr>
+<tr><td><code>L</code></td><td>13591409 + 545140134k 부분입니다. 반복할 때마다 545140134만큼 증가합니다.</td></tr>
+<tr><td><code>X</code></td><td>(−262537412640768000)^k에 해당합니다. 매우 큰 분모 역할을 합니다.</td></tr>
+<tr><td><code>S += Decimal(M * L) / X</code></td><td>현재 항을 전체 급수 합 S에 더합니다.</td></tr>
+<tr><td><code>return C / S</code></td><td>최종적으로 π 값을 반환합니다.</td></tr>
+<tr><td><code>quantize</code></td><td>원하는 소수점 이하 자리수에 맞추어 문자열로 출력합니다.</td></tr>
+<tr><td><code>file.write_text</code></td><td>각 자리수별 원주율 근사값을 TXT 파일로 저장합니다.</td></tr>
+</table>
+</section>
+<section class="card" id="tips">
+<h2>6. 실행 팁</h2>
+<ul>
+<li>Python 기본 라이브러리만 사용하므로 별도 설치가 필요 없습니다.</li>
+<li>14000자리 계산은 일반 PC에서도 가능하지만, 환경에 따라 시간이 조금 걸릴 수 있습니다.</li>
+<li>결과 파일은 <code>pi_outputs</code> 폴더에 저장됩니다.</li>
+<li>처음 테스트할 때는 <code>MAX_DIGITS = 140</code> 정도로 낮춰 실행해 보세요.</li>
+<li>모든 14자리 간격 파일이 필요 없으면 <code>STEP = 140</code> 또는 <code>STEP = 1000</code>으로 바꾸면 됩니다.</li>
+</ul>
+</section>
+<section class="card">
+<h2>7. 참고 자료</h2>
+<ul>
+<li><a href="https://www.pbs.org/wgbh/nova/article/chudnovsky-math-in/" target="_blank">PBS NOVA, Mathematical Siblings</a></li>
+<li><a href="https://engineering.nyu.edu/about/our-engineers/faculty/chudnovsky-brothers" target="_blank">NYU Tandon, The Chudnovsky Brothers</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Chudnovsky_algorithm" target="_blank">Chudnovsky Algorithm</a></li>
+<li><a href="https://www.newyorker.com/magazine/1992/03/02/the-mountains-of-pi" target="_blank">The New Yorker, The Mountains of Pi</a></li>
+</ul>
+</section>
+</main>
+<script>
+function copyCode(id){
+  const text=document.getElementById(id).innerText;
+  navigator.clipboard.writeText(text).then(()=>alert('코드가 복사되었습니다.'));
+}
+</script>
+</body>
+</html>
