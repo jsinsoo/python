@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Chudnovsky + Binary Splitting 원주율 계산기</title>
+<style>
+body{font-family:Arial,sans-serif;background:#f4f6fb;padding:30px}
+h1{color:#222}
+.box{background:white;padding:20px;border-radius:12px;max-width:1000px}
+input,button{font-size:16px;padding:10px;margin:5px}
+pre{background:#111;color:#eee;padding:20px;border-radius:10px;white-space:pre-wrap;word-break:break-all;max-height:520px;overflow:auto}
+</style>
+</head>
+<body>
+
+<div class="box">
+<h1>Chudnovsky + Binary Splitting 원주율 계산기</h1>
+
+<p>소수점 이하 원하는 자리수를 입력하세요. 예: 100, 1000, 5000</p>
+
+<input id="digits" type="number" value="100" min="1" max="14000">
+<button onclick="run()">계산하기</button>
+<button onclick="saveTxt()">TXT 저장</button>
+
+<h2>결과</h2>
+<pre id="out">결과가 여기에 표시됩니다.</pre>
+</div>
+
+<script>
+let lastText = "";
+
+function sqrtBigInt(n){
+    if(n < 2n) return n;
+    let x = n;
+    let y = (x + 1n) >> 1n;
+    while(y < x){
+        x = y;
+        y = (x + n / x) >> 1n;
+    }
+    return x;
+}
+
+function bs(a,b){
+    if(b - a === 1){
+        let P, Q, T;
+
+        if(a === 0){
+            P = 1n;
+            Q = 1n;
+        }else{
+            let k = BigInt(a);
+            P = (6n*k - 5n) * (2n*k - 1n) * (6n*k - 1n);
+            Q = k*k*k * 10939058860032000n;
+        }
+
+        T = P * (13591409n + 545140134n * BigInt(a));
+
+        if(a % 2 === 1) T = -T;
+
+        return [P,Q,T];
+    }
+
+    let m = Math.floor((a+b)/2);
+
+    let [P1,Q1,T1] = bs(a,m);
+    let [P2,Q2,T2] = bs(m,b);
+
+    let P = P1 * P2;
+    let Q = Q1 * Q2;
+    let T = T1 * Q2 + P1 * T2;
+
+    return [P,Q,T];
+}
+
+function piBinarySplitting(digits){
+    const extra = 20;
+    const scale = 10n ** BigInt(digits + extra);
+
+    const N = Math.floor(digits / 14) + 2;
+
+    const [P,Q,T] = bs(0,N);
+
+    const sqrt10005 = sqrtBigInt(10005n * scale * scale);
+    const C = 426880n * sqrt10005;
+
+    const piScaled = (C * Q) / T;
+
+    let s = piScaled.toString();
+
+    while(s.length <= digits + extra){
+        s = "0" + s;
+    }
+
+    let integerPart = s[0];
+    let decimalPart = s.slice(1, digits + 1);
+
+    return integerPart + "." + decimalPart;
+}
+
+function run(){
+    const digits = Number(document.getElementById("digits").value);
+    const out = document.getElementById("out");
+
+    if(!Number.isInteger(digits) || digits < 1 || digits > 14000){
+        alert("1부터 14000 사이의 정수를 입력하세요.");
+        return;
+    }
+
+    out.textContent = "계산 중입니다...";
+
+    setTimeout(() => {
+        const start = performance.now();
+        lastText = piBinarySplitting(digits);
+        const end = performance.now();
+
+        out.textContent =
+            "소수점 이하 " + digits + "자리 원주율\n" +
+            "계산 시간: " + ((end-start)/1000).toFixed(3) + "초\n\n" +
+            lastText;
+    }, 50);
+}
+
+function saveTxt(){
+    if(!lastText){
+        alert("먼저 계산하기 버튼을 누르세요.");
+        return;
+    }
+
+    const digits = document.getElementById("digits").value;
+    const blob = new Blob([lastText], {type:"text/plain;charset=utf-8"});
+    const a = document.createElement("a");
+
+    a.href = URL.createObjectURL(blob);
+    a.download = "pi_binary_splitting_" + digits + "_digits.txt";
+    a.click();
+
+    URL.revokeObjectURL(a.href);
+}
+</script>
+
+</body>
+</html>
