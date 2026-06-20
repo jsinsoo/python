@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Chudnovsky 원주율 계산기</title>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    padding: 30px;
+    background: #f5f7fb;
+}
+h1 { color: #222; }
+input, button {
+    padding: 10px;
+    font-size: 16px;
+    margin: 5px;
+}
+pre {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    white-space: pre-wrap;
+    word-break: break-all;
+    max-height: 500px;
+    overflow: auto;
+}
+</style>
+</head>
+<body>
+
+<h1>Chudnovsky 알고리즘 원주율 계산기</h1>
+
+<p>원하는 소수점 이하 자리수를 입력하세요.</p>
+
+<input id="digits" type="number" value="100" min="1" max="14000">
+<button onclick="runPi()">원주율 계산</button>
+<button onclick="saveTxt()">TXT 저장</button>
+
+<h2>결과</h2>
+<pre id="result">여기에 결과가 표시됩니다.</pre>
+
+<script>
+let lastPi = "";
+
+function sqrtBigInt(n) {
+    if (n < 2n) return n;
+
+    let x = n;
+    let y = (x + 1n) >> 1n;
+
+    while (y < x) {
+        x = y;
+        y = (x + n / x) >> 1n;
+    }
+
+    return x;
+}
+
+function chudnovskyPi(digits) {
+    const extra = 20;
+    const scale = 10n ** BigInt(digits + extra);
+    const terms = Math.ceil(digits / 14.18) + 2;
+
+    const C = 426880n * sqrtBigInt(10005n * scale * scale);
+
+    let M = 1n;
+    let L = 13591409n;
+    let X = 1n;
+    let K = 6n;
+    let S = L * scale;
+
+    for (let i = 1n; i < BigInt(terms); i++) {
+        M = (M * (K ** 3n - 16n * K)) / (i ** 3n);
+        L += 545140134n;
+        X *= -262537412640768000n;
+        S += (M * L * scale) / X;
+        K += 12n;
+    }
+
+    const piScaled = (C * scale) / S;
+    let piText = piScaled.toString();
+
+    while (piText.length <= digits + extra) {
+        piText = "0" + piText;
+    }
+
+    const integerPart = piText[0];
+    const decimalPart = piText.slice(1, digits + 1);
+
+    return integerPart + "." + decimalPart;
+}
+
+function runPi() {
+    const digits = Number(document.getElementById("digits").value);
+
+    if (digits < 1 || digits > 14000) {
+        alert("1부터 14000 사이의 자리수를 입력하세요.");
+        return;
+    }
+
+    document.getElementById("result").textContent = "계산 중입니다...";
+
+    setTimeout(() => {
+        lastPi = chudnovskyPi(digits);
+        document.getElementById("result").textContent =
+            `소수점 이하 ${digits}자리 원주율\n\n` + lastPi;
+    }, 100);
+}
+
+function saveTxt() {
+    if (!lastPi) {
+        alert("먼저 원주율을 계산하세요.");
+        return;
+    }
+
+    const digits = document.getElementById("digits").value;
+    const blob = new Blob([lastPi], { type: "text/plain;charset=utf-8" });
+    const a = document.createElement("a");
+
+    a.href = URL.createObjectURL(blob);
+    a.download = `pi_${digits}_digits.txt`;
+    a.click();
+
+    URL.revokeObjectURL(a.href);
+}
+</script>
+
+</body>
+</html>
