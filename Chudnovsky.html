@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Chudnovsky 알고리즘</title>
+<style>
+body{
+    font-family: Arial, sans-serif;
+    line-height:1.7;
+    max-width:1000px;
+    margin:auto;
+    padding:30px;
+    background:#f7f9fc;
+}
+h1,h2{color:#1d3557;}
+.box{
+    background:white;
+    padding:20px;
+    margin:20px 0;
+    border-radius:12px;
+    box-shadow:0 2px 8px rgba(0,0,0,.1);
+}
+pre{
+    background:#222;
+    color:#eee;
+    padding:18px;
+    border-radius:10px;
+    overflow:auto;
+}
+code{font-size:15px;}
+.formula{
+    font-size:22px;
+    text-align:center;
+    background:#eef3ff;
+    padding:20px;
+    border-radius:10px;
+}
+</style>
+</head>
+<body>
+
+<h1>Chudnovsky 알고리즘</h1>
+
+<div class="box">
+<h2>1. 개념</h2>
+<p>
+Chudnovsky 알고리즘은 원주율 π를 매우 빠르게 계산하는 알고리즘이다.
+항 하나를 더할 때마다 약 14자리 정도의 정확도가 증가한다.
+</p>
+</div>
+
+<div class="box">
+<h2>2. 수식</h2>
+<div class="formula">
+π =
+426880√10005
+/
+Σ [
+(6k)! (13591409 + 545140134k)
+/
+((3k)! (k!)³ (-262537412640768000)<sup>k</sup>)
+]
+</div>
+</div>
+
+<div class="box">
+<h2>3. 파이썬 코드</h2>
+
+<pre><code>from decimal import Decimal, getcontext
+
+getcontext().prec = 110
+
+def pi():
+    C = 426880 * Decimal(10005).sqrt()
+
+    M = 1
+    L = 13591409
+    X = 1
+    K = 6
+    S = L
+
+    for i in range(1, 10):
+        M = (M * (K**3 - 16*K)) // (i**3)
+        L += 545140134
+        X *= -262537412640768000
+        S += Decimal(M * L) / X
+        K += 12
+
+    return C / S
+
+print(pi())</code></pre>
+</div>
+
+<div class="box">
+<h2>4. 변수 설명</h2>
+<table border="1" cellpadding="10" cellspacing="0" width="100%">
+<tr>
+<th>변수</th>
+<th>의미</th>
+</tr>
+<tr>
+<td>C</td>
+<td>426880√10005 값</td>
+</tr>
+<tr>
+<td>M</td>
+<td>팩토리얼 계수 부분</td>
+</tr>
+<tr>
+<td>L</td>
+<td>13591409 + 545140134k 부분</td>
+</tr>
+<tr>
+<td>X</td>
+<td>큰 거듭제곱 분모 부분</td>
+</tr>
+<tr>
+<td>S</td>
+<td>급수의 합</td>
+</tr>
+<tr>
+<td>K</td>
+<td>M을 빠르게 갱신하기 위한 보조 변수</td>
+</tr>
+</table>
+</div>
+
+<div class="box">
+<h2>5. 출력 예시</h2>
+<pre><code>3.14159265358979323846264338327950288419716939937510
+58209749445923078164062862089986280348253421170679</code></pre>
+</div>
+
+<div class="box">
+<h2>6. 핵심 정리</h2>
+<p>
+Chudnovsky 알고리즘은 느리게 수렴하는 바젤 문제 방식보다 훨씬 빠르다.
+따라서 원주율을 소수점 이하 100자리, 1000자리, 10000자리 이상 계산할 때 적합하다.
+</p>
+</div>
+
+</body>
+</html>
