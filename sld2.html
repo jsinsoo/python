@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="ko"><head><meta charset="UTF-8">
+<title>문자열·리스트·딕셔너리 슬라이싱 단답형 30문항 B형</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:'Malgun Gothic',Arial,sans-serif;background:#f3f6fb;color:#1f2937}
+header{position:sticky;top:0;z-index:10;background:#1e3a8a;color:white;padding:16px 24px;box-shadow:0 2px 8px rgba(0,0,0,.18)}
+header h1{margin:0;font-size:24px}
+header p{margin:6px 0 0;font-size:14px}
+.info,main{max-width:1200px;margin:18px auto;padding:0 16px}
+.panel{background:white;padding:18px;border-radius:16px;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+.panel input,.card input{padding:11px;border:1px solid #cbd5e1;border-radius:8px;font-size:15px;margin:5px}
+.card input{width:min(100%,560px)}
+button{padding:10px 14px;border:0;border-radius:8px;background:#2563eb;color:white;font-weight:bold;cursor:pointer;margin:5px}
+button:hover{background:#1d4ed8}
+.card{background:white;margin:18px 0;padding:20px;border-radius:16px;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+.badge{display:inline-block;background:#dbeafe;color:#1e40af;padding:6px 10px;border-radius:999px;font-weight:bold;font-size:13px}
+h2{margin:12px 0;color:#1e40af}
+pre{background:#111827;color:#e5e7eb;padding:16px;border-radius:12px;overflow-x:auto;font-size:15px;line-height:1.55}
+.result{margin-top:10px;font-weight:bold}
+.ok{color:#059669}.no{color:#dc2626}
+details{margin-top:12px;background:#f8fafc;padding:12px;border-radius:10px}
+.scoreBox{text-align:center;font-size:23px;font-weight:bold;margin:16px 0}
+.nav{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.nav a{background:#eef2ff;color:#3730a3;text-decoration:none;padding:7px 10px;border-radius:8px;font-weight:bold}
+</style>
+</head>
+<body>
+<header>
+<h1>문자열·리스트·딕셔너리 슬라이싱 단답형 30문항 B형</h1>
+<p>문항 유형은 A형과 같고, 코드의 값만 바꾸어 정답이 다르게 나오도록 구성했습니다.</p>
+</header>
+<section class="info">
+<div class="panel">
+<label>학번 <input id="studentId" placeholder=""></label>
+<label>이름 <input id="studentName" placeholder=""></label>
+<button onclick="checkAll()">전체 채점</button>
+<button onclick="saveTxt()">TXT 저장</button>
+<div id="score" class="scoreBox"></div>
+<div class="nav">
+<a href="#q1">문자열</a>
+<a href="#q11">리스트</a>
+<a href="#q21">딕셔너리</a>
+</div>
+</div>
+</section>
+<main>
+<div class="card" id="q1">
+  <div class="badge">문자열 슬라이싱</div>
+  <h2>문항 1</h2>
+  <pre><code>s = &#x27;Orange&#x27;
+print(s[0:2])</code></pre>
+  <input id="ans1" placeholder="출력 결과를 입력하세요">
+  <button onclick="checkOne(1)">채점</button>
+  <div id="result1" class="result"></div>
+  <details>
+    <summary>정답 및 상세 풀이</summary>
+    <p><b>정답:</b> <code>Or</code></p>
+    <p>[0:2]는 인덱스 0부터 1까지 가져옵니다.</p>
+  </details>
+</div>
+<div class="card" id="q2">
+  <div class="badge">문자열 슬라이싱</div>
+  <h2>문항 2</h2>
+  <pre><code>s = &#x27;Orange&#x27;
+print(s[2:])</code></pre>
+  <input id="ans2" placeholder="출력 결과를 입력하세요">
+  <button onclick="checkOne(2)">채점</button>
+  <div id="result2" class="result"></div>
+  <details>
+    <summary>정답 및 상세 풀이</summary>
+    <p><b>정답:</b> <code>ange</code></p>
+    <p>[2:]는 인덱스 2부터 끝까지 가져옵니다.</p>
+  </details>
+</div>
+<div class="card" id="q3">
+  <div class="badge">문자열 슬라이싱</div>
+  <h2>문항 3</h2>
+  <pre><code>s = &#x27;Notebook&#x27;
+print(s[:4])</code></pre>
+  <input id="ans3" placeholder="출력 결과를 입력하세요">
+  <button onclick="checkOne(3)">채점</button>
+  <div id="result3" class="result"></div>
+  <details>
+    <summary>정답 및 상세 풀이</summary>
+    <p><b>정답:</b> <code>Note</code></p>
+    <p>[:4]는 처음부터 인덱스 3까지 가져옵니다.</p>
+  </details>
+</div>
+<div class="card" id="q4">
+  <div class="badge">문자열 슬라이싱</div>
+  <h2>문항 4</h2>
+  <pre><code>s = &#x27;Galaxy&#x27;
+print(s[-3:])</code></pre>
+  <input id="ans4" placeholder="출력 결과를 입력하세요">
+  <button onclick="checkOne(4)">채점</button>
+  <div id="result4" class="result"></div>
+  <details>
+    <summary>정답 및 상세 풀이</summary>
+    <p><b>정답:</b> <code>axy</code></p>
+    <p>[-3:]는 뒤에서 세 글자를 가져옵니다.</p>
+  </details>
+</div>
+<div class="card" id="q5">
+  <div class="badge">문자열 슬라이싱</div>
+  <h2>문항 5</h2>
+  <pre><code>s = &#x27;HIJKLMN&#x27;
+print(s[::2])</code></pre>
+  <input id="ans5" placeholder="출력 결과를 입력하세요">
+  <button onclick="checkOne(5)">채점</button>
+  <div id="result5" class="result"></div>
+  <details>
+    <summary>정답 및 상세 풀이</summary>
+    <p><b>정답:</b> <code>HJLN</code></p>
+    <p>[::2]는 처음부터 끝까지 두 칸씩 건너뜁니다.</p>
+  </details>
+</div>
+<div class="card" id="q6">
+  <div class="badge">문자열 슬라이싱</div>
+  <h2>문항 6</h2>
+  <pre><code>s = &#x27;HIJKLMN&#x27;
+print(s[::-1])</code></pre>
+  <input id="ans6" placeholder="출력 결과를 입력하세요">
+  <button onclick="checkOne(6)">채점</button>
+  <div id="result6" class="result"></div>
+  <details>
+    <summary>정답 및 상세 풀이</summary>
+    <p><b>정답:</b> <code>NMLKJIH</code></p>
+    <p>[::-1]은 문자열을 거꾸로 뒤집습니다.</p>
+  </details>
+</div>
+<div class="card" id="q7">
+  <div class="badge">문자열 슬라이싱</div>
+  <h2>문항 7</h2>
+  <pre><code>s = &#x27;Algorithm&#x27;
+print(s[1:8:2])</code></pre>
+  <input id="ans7" placeholder="출력 결과를 입력하세요">
+  <button onclick="checkOne(7)">채점</button>
+  <div id="result7" class="result"></div>
+  <details>
+    <summary>정답 및 상세 풀이</summary>
+    <p><b>정답:</b> <code>loih</code></p>
+    <p>[1:8:2]는 인덱스 1부터 7까지 2칸씩 이동합니다.</p>
+  </details>
+</div>
+<div class="card" id="q8">
+  <div class="badge">문자열 슬라이싱</div>
+  <h2>문항 8</h2>
+  <pre><code>s = &#x27;tomato&#x27;
+print(s[1:-1])</code></pre>
+  <input id="ans8" placeholder="출력 결과를 입력하세요">
+  <button onclick="checkOne(8)">채점</button>
+  <div id="result8" class="result"></div>
+  <details>
+    <summary>정답 및 상세 풀이</summary>
+    <p><b>정답:</b> <code>omat</code></p>
+    <p>[1:-1]은 첫 글자와 마지막 글자를 제외합니다.</p>
+  </details>
+</div>
+<div class="card" id="q9">
+  <div class="badge">문자열 슬라이싱</div>
+  <h2>문항 9</h2>
+  <pre><code>s = &#x27;Good Night&#x27;
+print(s[-5:])</code></pre>
+  <input id="ans9" placeholder="출력 결과를 입력하세요">
+  <button onclick="checkOne(9)">채점</button>
+  <div id="result9" class="result"></div>
+  <details>
+    <summary>정답 및 상세 풀이</summary>
+    <p><b>정답:</b> <code>Night</code></p>
+    <p>[-5:]는 뒤에서 다섯 글자를 가져옵니다.</p>
+  </details>
+</div>
+<div class="card" id="q10">
+  <div class="badge">문자열 슬라이싱</div>
+  <h2>문항 10</h2>
+  <pre><code>s = &#x27;DeepLearning&#x27;
+print(s[4:12])</code></pre>
+  <input id="ans10" placeholder="출력 결과를 입력하세요">
+  <button onclick="checkOne(10)">채점</button>
+  <div id="result10" class="result"></div>
+  <details>
+    <summary>정답 및 상세 풀이</summary>
+    <p><b>정답:</b> <code>Learning</code></p>
+    <p>[4:12]는 인덱스 4부터 11까지 가져옵니다.</p>
+  </details>
+</div>
+<div class="card" id="q11">
+  <div class="badge">리스트 슬라이싱</div>
+  <h2>문항 11</h2>
+  <pre><code>a = [15, 25, 35, 45, 55]
+print(a[1:3])</code></pre>
+  <input id="ans11" placeholder="출력 결과를 입력하세요">
+  <button onclick="checkOne(11)">채점</button>
+  <div id="result11" class="result"></div>
+  <details>
+    <summary>정답 및 상세 풀이</summary>
+    <p><b>정답:</b> <code>[25, 35]</code></p>
+    <p>[1:3]은 인덱스 1부터 2까지 가져옵니다.</p>
+  </details>
+</div>
+<div class="card" id="q12">
+  <div class="badge">리스트 슬라이싱</div>
+  <h2>문항 12</h2>
+  <pre><code>a = [&#x27;K&#x27;, &#x27;L&#x27;, &#x27;M&#x27;, &#x27;N&#x27;]
+print(a[:2])</code></pre>
+  <input id="ans12" placeholder="출력 결과를 입력하세요">
+  <button onclick="checkOne(12)">채점</button>
+  <div id="result12" class="result"></div>
+  <details>
+    <summary>정답 및 상세 풀이</summary>
+    <p><b>정답:</b> <code>[&#x27;K&#x27;, &#x27;L&#x27;]</code></p>
+    <p>[:2]는 앞에서 두 개를 가져옵니다.</p>
+  </details>
+</div>
+<div class="card" id="q13">
+  <div class="badge">리스트 슬라이싱</div>
+  <h2>문항 13</h2>
+  <pre><code>a = [6, 7, 8, 9, 10]
+print(a[2:])</code></pre>
+  <input id="ans13" placeholder="출력 결과를 입력하세요">
+  <button onclick="checkOne(13)">채점</button>
+  <div id="result13" class="result"></div>
+  <details>
+    <summary>정답 및 상세 풀이</summary>
+    <p><b>정답:</b> <code>[8, 9, 10]</code></p>
+    <p>[2:]는 인덱스 2부터 끝까지 가져옵니다.</p>
+  </details>
+</div>
+<div class="card" id="q14">
+  <div class="badge">리스트 슬라이싱</div>
+  <h2>문항 14</h2>
+  <pre><code>a = [&#x27;동&#x27;, &#x27;서&#x27;, &#x27;남&#x27;, &#x27;북&#x27;]
+print(a[-2:])</code></pre>
+  <input id="ans14" placeholder="출력 결과를 입력하세요">
+  <button onclick="checkOne(14)">채점</button>
+  <div id="result14" class="result"></div>
+  <details>
+    <summary>정답 및 상세 풀이</summary>
+    <p><b>정답:</b> <code>[&#x27;남&#x27;, &#x27;북&#x27;]</code></p>
+    <p>[-2:]는 뒤에서 두 개를 가져옵니다.</p>
+  </details>
+</div>
+<div class="card" id="q15">
+  <div class="badge">리스트 슬라이싱</div>
+  <h2>문항 15</h2>
+  <pre><code>a = [2, 4, 6, 8, 10, 12]
+print(a[::2])</code></pre>
+  <input id="ans15" placeholder="출력 결과를 입력하세요">
+  <button onclick="checkOne(15)">채점</button>
+  <div id="result15" class="result"></div>
+  <details>
+    <summary>정답 및 상세 풀이</summary>
+    <p><b>정답:</b> <code>[2, 6, 10]</code></p>
+    <p>[::2]는 2칸씩 건너뜁니다.</p>
+  </details>
+</div>
+<div class="card" id="q16">
+  <div class="badge">리스트 슬라이싱</div>
+  <h2>문항 16</h2>
+  <pre><code>a = [3, 6, 9, 12, 15]
+print(a[::-1])</code></pre>
+  <input id="ans16" placeholder="출력 결과를 입력하세요">
+  <button onclick="checkOne(16)">채점</button>
+  <div id="result16" class="result"></div>
+  <details>
+    <summary>정답 및 상세 풀이</summary>
+    <p><b>정답:</b> <code>[15, 12, 9, 6, 3]</code></p>
+    <p>[::-1]은 리스트를 거꾸로 뒤집습니다.</p>
+  </details>
+</div>
+<div class="card" id="q17">
+  <div class="badge">리스트 슬라이싱</div>
+  <h2>문항 17</h2>
+  <pre><code>a = [&#x27;cat&#x27;, &#x27;dog&#x27;, &#x27;bird&#x27;, &#x27;fish&#x27;]
+print(a[1:-1])</code></pre>
+  <input id="ans17" placeholder="출력 결과를 입력하세요">
+  <button onclick="checkOne(17)">채점</button>
+  <div id="result17" class="result"></div>
+  <details>
+    <summary>정답 및 상세 풀이</summary>
+    <p><b>정답:</b> <code>[&#x27;dog&#x27;, &#x27;bird&#x27;]</code></p>
+    <p>[1:-1]은 첫 요소와 마지막 요소를 제외합니다.</p>
+  </details>
+</div>
+<div class="card" id="q18">
+  <div class="badge">리스트 슬라이싱</div>
+  <h2>문항 18</h2>
+  <pre><code>a = [11, 22, 33, 44, 55]
+print(a[-4:-1])</code></pre>
+  <input id="ans18" placeholder="출력 결과를 입력하세요">
+  <button onclick="checkOne(18)">채점</button>
+  <div id="result18" class="result"></div>
+  <details>
+    <summary>정답 및 상세 풀이</summary>
+    <p><b>정답:</b> <code>[22, 33, 44]</code></p>
+    <p>[-4:-1]은 뒤에서 네 번째부터 마지막 전까지입니다.</p>
+  </details>
+</div>
+<div class="card" id="q19">
+  <div class="badge">리스트 슬라이싱</div>
+  <h2>문항 19</h2>
+  <pre><code>a = [&#x27;일&#x27;, &#x27;월&#x27;, &#x27;화&#x27;, &#x27;수&#x27;, &#x27;목&#x27;]
+print(a[1:5:2])</code></pre>
+  <input id="ans19" placeholder="출력 결과를 입력하세요">
+  <button onclick="checkOne(19)">채점</button>
+  <div id="result19" class="result"></div>
+  <details>
+    <summary>정답 및 상세 풀이</summary>
+    <p><b>정답:</b> <code>[&#x27;월&#x27;, &#x27;수&#x27;]</code></p>
+    <p>[1:5:2]는 인덱스 1부터 4까지 2칸씩 가져옵니다.</p>
+  </details>
+</div>
+<div class="card" id="q20">
+  <div class="badge">리스트 슬라이싱</div>
+  <h2>문항 20</h2>
+  <pre><code>a = [7, 14, 21, 28, 35, 42]
+print(a[3:0:-1])</code></pre>
+  <input id="ans20" placeholder="출력 결과를 입력하세요">
+  <button onclick="checkOne(20)">채점</button>
+  <div id="result20" class="result"></div>
+  <details>
+    <summary>정답 및 상세 풀이</summary>
+    <p><b>정답:</b> <code>[28, 21, 14]</code></p>
+    <p>[3:0:-1]은 인덱스 3부터 1까지 거꾸로 가져옵니다.</p>
+  </details>
+</div>
+<div class="card" id="q21">
+  <div class="badge">딕셔너리 슬라이싱</div>
+  <h2>문항 21</h2>
+  <pre><code>d = {&#x27;x&#x27;:11, &#x27;y&#x27;:22, &#x27;z&#x27;:33, &#x27;w&#x27;:44}
+print(list(d.keys())[1:3])</code></pre>
+  <input id="ans21" placeholder="출력 결과를 입력하세요">
+  <button onclick="checkOne(21)">채점</button>
+  <div id="result21" class="result"></div>
+  <details>
+    <summary>정답 및 상세 풀이</summary>
+    <p><b>정답:</b> <code>[&#x27;y&#x27;, &#x27;z&#x27;]</code></p>
+    <p>딕셔너리는 직접 슬라이싱할 수 없으므로 keys()를 리스트로 바꾼 뒤 [1:3]을 적용합니다.</p>
+  </details>
+</div>
+<div class="card" id="q22">
+  <div class="badge">딕셔너리 슬라이싱</div>
+  <h2>문항 22</h2>
+  <pre><code>d = {&#x27;x&#x27;:11, &#x27;y&#x27;:22, &#x27;z&#x27;:33, &#x27;w&#x27;:44}
+print(list(d.values())[:2])</code></pre>
+  <input id="ans22" placeholder="출력 결과를 입력하세요">
+  <button onclick="checkOne(22)">채점</button>
+  <div id="result22" class="result"></div>
+  <details>
+    <summary>정답 및 상세 풀이</summary>
+    <p><b>정답:</b> <code>[11, 22]</code></p>
+    <p>values()를 리스트로 바꾸면 [11, 22, 33, 44]입니다.</p>
+  </details>
+</div>
+<div class="card" id="q23">
+  <div class="badge">딕셔너리 슬라이싱</div>
+  <h2>문항 23</h2>
+  <pre><code>d = {&#x27;x&#x27;:11, &#x27;y&#x27;:22, &#x27;z&#x27;:33, &#x27;w&#x27;:44}
+print(list(d.items())[2:])</code></pre>
+  <input id="ans23" placeholder="출력 결과를 입력하세요">
+  <button onclick="checkOne(23)">채점</button>
+  <div id="result23" class="result"></div>
+  <details>
+    <summary>정답 및 상세 풀이</summary>
+    <p><b>정답:</b> <code>[(&#x27;z&#x27;, 33), (&#x27;w&#x27;, 44)]</code></p>
+    <p>items()는 (key, value) 튜플 목록입니다.</p>
+  </details>
+</div>
+<div class="card" id="q24">
+  <div class="badge">딕셔너리 슬라이싱</div>
+  <h2>문항 24</h2>
+  <pre><code>d = {&#x27;동&#x27;:1, &#x27;서&#x27;:2, &#x27;남&#x27;:3, &#x27;북&#x27;:4}
+print(list(d.keys())[-2:])</code></pre>
+  <input id="ans24" placeholder="출력 결과를 입력하세요">
+  <button onclick="checkOne(24)">채점</button>
+  <div id="result24" class="result"></div>
+  <details>
+    <summary>정답 및 상세 풀이</summary>
+    <p><b>정답:</b> <code>[&#x27;남&#x27;, &#x27;북&#x27;]</code></p>
+    <p>[-2:]는 뒤에서 두 개의 key를 가져옵니다.</p>
+  </details>
+</div>
+<div class="card" id="q25">
+  <div class="badge">딕셔너리 슬라이싱</div>
+  <h2>문항 25</h2>
+  <pre><code>d = {&#x27;물리&#x27;:70, &#x27;화학&#x27;:85, &#x27;생명&#x27;:90, &#x27;지구&#x27;:95}
+print(list(d.values())[1:4:2])</code></pre>
+  <input id="ans25" placeholder="출력 결과를 입력하세요">
+  <button onclick="checkOne(25)">채점</button>
+  <div id="result25" class="result"></div>
+  <details>
+    <summary>정답 및 상세 풀이</summary>
+    <p><b>정답:</b> <code>[85, 95]</code></p>
+    <p>[1:4:2]는 인덱스 1부터 3까지 2칸씩 이동합니다.</p>
+  </details>
+</div>
+<div class="card" id="q26">
+  <div class="badge">딕셔너리 슬라이싱</div>
+  <h2>문항 26</h2>
+  <pre><code>d = {&#x27;R&#x27;:&#x27;red&#x27;, &#x27;G&#x27;:&#x27;green&#x27;, &#x27;B&#x27;:&#x27;blue&#x27;}
+print(list(d.values())[::-1])</code></pre>
+  <input id="ans26" placeholder="출력 결과를 입력하세요">
+  <button onclick="checkOne(26)">채점</button>
+  <div id="result26" class="result"></div>
+  <details>
+    <summary>정답 및 상세 풀이</summary>
+    <p><b>정답:</b> <code>[&#x27;blue&#x27;, &#x27;green&#x27;, &#x27;red&#x27;]</code></p>
+    <p>[::-1]은 value 리스트를 거꾸로 뒤집습니다.</p>
+  </details>
+</div>
+<div class="card" id="q27">
+  <div class="badge">딕셔너리 슬라이싱</div>
+  <h2>문항 27</h2>
+  <pre><code>d = {&#x27;봄&#x27;:1, &#x27;여름&#x27;:2, &#x27;가을&#x27;:3, &#x27;겨울&#x27;:4, &#x27;장마&#x27;:5}
+print(list(d.keys())[::2])</code></pre>
+  <input id="ans27" placeholder="출력 결과를 입력하세요">
+  <button onclick="checkOne(27)">채점</button>
+  <div id="result27" class="result"></div>
+  <details>
+    <summary>정답 및 상세 풀이</summary>
+    <p><b>정답:</b> <code>[&#x27;봄&#x27;, &#x27;가을&#x27;, &#x27;장마&#x27;]</code></p>
+    <p>[::2]는 key 리스트에서 2칸씩 건너뜁니다.</p>
+  </details>
+</div>
+<div class="card" id="q28">
+  <div class="badge">딕셔너리 슬라이싱</div>
+  <h2>문항 28</h2>
+  <pre><code>d = {&#x27;m&#x27;:10, &#x27;n&#x27;:20, &#x27;o&#x27;:30, &#x27;p&#x27;:40}
+print(list(d.values())[-3:-1])</code></pre>
+  <input id="ans28" placeholder="출력 결과를 입력하세요">
+  <button onclick="checkOne(28)">채점</button>
+  <div id="result28" class="result"></div>
+  <details>
+    <summary>정답 및 상세 풀이</summary>
+    <p><b>정답:</b> <code>[20, 30]</code></p>
+    <p>[-3:-1]은 뒤에서 세 번째부터 마지막 전까지입니다.</p>
+  </details>
+</div>
+<div class="card" id="q29">
+  <div class="badge">딕셔너리 슬라이싱</div>
+  <h2>문항 29</h2>
+  <pre><code>d = {&#x27;first&#x27;:10, &#x27;second&#x27;:20, &#x27;third&#x27;:30, &#x27;fourth&#x27;:40}
+print(list(d.items())[::3])</code></pre>
+  <input id="ans29" placeholder="출력 결과를 입력하세요">
+  <button onclick="checkOne(29)">채점</button>
+  <div id="result29" class="result"></div>
+  <details>
+    <summary>정답 및 상세 풀이</summary>
+    <p><b>정답:</b> <code>[(&#x27;first&#x27;, 10), (&#x27;fourth&#x27;, 40)]</code></p>
+    <p>[::3]은 인덱스 0과 3의 item을 가져옵니다.</p>
+  </details>
+</div>
+<div class="card" id="q30">
+  <div class="badge">딕셔너리 슬라이싱</div>
+  <h2>문항 30</h2>
+  <pre><code>d = {&#x27;Java&#x27;:1, &#x27;C&#x27;:2, &#x27;Ruby&#x27;:3, &#x27;Python&#x27;:4}
+print(list(d.keys())[1:])</code></pre>
+  <input id="ans30" placeholder="출력 결과를 입력하세요">
+  <button onclick="checkOne(30)">채점</button>
+  <div id="result30" class="result"></div>
+  <details>
+    <summary>정답 및 상세 풀이</summary>
+    <p><b>정답:</b> <code>[&#x27;C&#x27;, &#x27;Ruby&#x27;, &#x27;Python&#x27;]</code></p>
+    <p>[1:]은 인덱스 1부터 끝까지의 key를 가져옵니다.</p>
+  </details>
+</div>
+</main>
+<script>
+const answers = {"1": "Or", "2": "ange", "3": "Note", "4": "axy", "5": "HJLN", "6": "NMLKJIH", "7": "loih", "8": "omat", "9": "Night", "10": "Learning", "11": "[25, 35]", "12": "['K', 'L']", "13": "[8, 9, 10]", "14": "['남', '북']", "15": "[2, 6, 10]", "16": "[15, 12, 9, 6, 3]", "17": "['dog', 'bird']", "18": "[22, 33, 44]", "19": "['월', '수']", "20": "[28, 21, 14]", "21": "['y', 'z']", "22": "[11, 22]", "23": "[('z', 33), ('w', 44)]", "24": "['남', '북']", "25": "[85, 95]", "26": "['blue', 'green', 'red']", "27": "['봄', '가을', '장마']", "28": "[20, 30]", "29": "[('first', 10), ('fourth', 40)]", "30": "['C', 'Ruby', 'Python']"};
+const explains = {"1": "[0:2]는 인덱스 0부터 1까지 가져옵니다.", "2": "[2:]는 인덱스 2부터 끝까지 가져옵니다.", "3": "[:4]는 처음부터 인덱스 3까지 가져옵니다.", "4": "[-3:]는 뒤에서 세 글자를 가져옵니다.", "5": "[::2]는 처음부터 끝까지 두 칸씩 건너뜁니다.", "6": "[::-1]은 문자열을 거꾸로 뒤집습니다.", "7": "[1:8:2]는 인덱스 1부터 7까지 2칸씩 이동합니다.", "8": "[1:-1]은 첫 글자와 마지막 글자를 제외합니다.", "9": "[-5:]는 뒤에서 다섯 글자를 가져옵니다.", "10": "[4:12]는 인덱스 4부터 11까지 가져옵니다.", "11": "[1:3]은 인덱스 1부터 2까지 가져옵니다.", "12": "[:2]는 앞에서 두 개를 가져옵니다.", "13": "[2:]는 인덱스 2부터 끝까지 가져옵니다.", "14": "[-2:]는 뒤에서 두 개를 가져옵니다.", "15": "[::2]는 2칸씩 건너뜁니다.", "16": "[::-1]은 리스트를 거꾸로 뒤집습니다.", "17": "[1:-1]은 첫 요소와 마지막 요소를 제외합니다.", "18": "[-4:-1]은 뒤에서 네 번째부터 마지막 전까지입니다.", "19": "[1:5:2]는 인덱스 1부터 4까지 2칸씩 가져옵니다.", "20": "[3:0:-1]은 인덱스 3부터 1까지 거꾸로 가져옵니다.", "21": "딕셔너리는 직접 슬라이싱할 수 없으므로 keys()를 리스트로 바꾼 뒤 [1:3]을 적용합니다.", "22": "values()를 리스트로 바꾸면 [11, 22, 33, 44]입니다.", "23": "items()는 (key, value) 튜플 목록입니다.", "24": "[-2:]는 뒤에서 두 개의 key를 가져옵니다.", "25": "[1:4:2]는 인덱스 1부터 3까지 2칸씩 이동합니다.", "26": "[::-1]은 value 리스트를 거꾸로 뒤집습니다.", "27": "[::2]는 key 리스트에서 2칸씩 건너뜁니다.", "28": "[-3:-1]은 뒤에서 세 번째부터 마지막 전까지입니다.", "29": "[::3]은 인덱스 0과 3의 item을 가져옵니다.", "30": "[1:]은 인덱스 1부터 끝까지의 key를 가져옵니다."};
+const codes = {"1": "s = 'Orange'\nprint(s[0:2])", "2": "s = 'Orange'\nprint(s[2:])", "3": "s = 'Notebook'\nprint(s[:4])", "4": "s = 'Galaxy'\nprint(s[-3:])", "5": "s = 'HIJKLMN'\nprint(s[::2])", "6": "s = 'HIJKLMN'\nprint(s[::-1])", "7": "s = 'Algorithm'\nprint(s[1:8:2])", "8": "s = 'tomato'\nprint(s[1:-1])", "9": "s = 'Good Night'\nprint(s[-5:])", "10": "s = 'DeepLearning'\nprint(s[4:12])", "11": "a = [15, 25, 35, 45, 55]\nprint(a[1:3])", "12": "a = ['K', 'L', 'M', 'N']\nprint(a[:2])", "13": "a = [6, 7, 8, 9, 10]\nprint(a[2:])", "14": "a = ['동', '서', '남', '북']\nprint(a[-2:])", "15": "a = [2, 4, 6, 8, 10, 12]\nprint(a[::2])", "16": "a = [3, 6, 9, 12, 15]\nprint(a[::-1])", "17": "a = ['cat', 'dog', 'bird', 'fish']\nprint(a[1:-1])", "18": "a = [11, 22, 33, 44, 55]\nprint(a[-4:-1])", "19": "a = ['일', '월', '화', '수', '목']\nprint(a[1:5:2])", "20": "a = [7, 14, 21, 28, 35, 42]\nprint(a[3:0:-1])", "21": "d = {'x':11, 'y':22, 'z':33, 'w':44}\nprint(list(d.keys())[1:3])", "22": "d = {'x':11, 'y':22, 'z':33, 'w':44}\nprint(list(d.values())[:2])", "23": "d = {'x':11, 'y':22, 'z':33, 'w':44}\nprint(list(d.items())[2:])", "24": "d = {'동':1, '서':2, '남':3, '북':4}\nprint(list(d.keys())[-2:])", "25": "d = {'물리':70, '화학':85, '생명':90, '지구':95}\nprint(list(d.values())[1:4:2])", "26": "d = {'R':'red', 'G':'green', 'B':'blue'}\nprint(list(d.values())[::-1])", "27": "d = {'봄':1, '여름':2, '가을':3, '겨울':4, '장마':5}\nprint(list(d.keys())[::2])", "28": "d = {'m':10, 'n':20, 'o':30, 'p':40}\nprint(list(d.values())[-3:-1])", "29": "d = {'first':10, 'second':20, 'third':30, 'fourth':40}\nprint(list(d.items())[::3])", "30": "d = {'Java':1, 'C':2, 'Ruby':3, 'Python':4}\nprint(list(d.keys())[1:])"};
+const sections = {"1": "문자열 슬라이싱", "2": "문자열 슬라이싱", "3": "문자열 슬라이싱", "4": "문자열 슬라이싱", "5": "문자열 슬라이싱", "6": "문자열 슬라이싱", "7": "문자열 슬라이싱", "8": "문자열 슬라이싱", "9": "문자열 슬라이싱", "10": "문자열 슬라이싱", "11": "리스트 슬라이싱", "12": "리스트 슬라이싱", "13": "리스트 슬라이싱", "14": "리스트 슬라이싱", "15": "리스트 슬라이싱", "16": "리스트 슬라이싱", "17": "리스트 슬라이싱", "18": "리스트 슬라이싱", "19": "리스트 슬라이싱", "20": "리스트 슬라이싱", "21": "딕셔너리 슬라이싱", "22": "딕셔너리 슬라이싱", "23": "딕셔너리 슬라이싱", "24": "딕셔너리 슬라이싱", "25": "딕셔너리 슬라이싱", "26": "딕셔너리 슬라이싱", "27": "딕셔너리 슬라이싱", "28": "딕셔너리 슬라이싱", "29": "딕셔너리 슬라이싱", "30": "딕셔너리 슬라이싱"};
+const total = 30;
+
+function norm(x) {
+  return String(x).trim().replace(/\s+/g, "");
+}
+
+function checkOne(n) {
+  const user = document.getElementById("ans"+n).value;
+  const result = document.getElementById("result"+n);
+  if(norm(user) === norm(answers[n])) {
+    result.className = "result ok";
+    result.innerHTML = "정답입니다.";
+    return true;
+  } else {
+    result.className = "result no";
+    result.innerHTML = "오답입니다. 정답: <code>" + answers[n] + "</code>";
+    return false;
+  }
+}
+
+function checkAll() {
+  let score = 0;
+  for(let i=1;i<=total;i++) if(checkOne(i)) score++;
+  document.getElementById("score").innerHTML = "점수: " + score + " / " + total + "점";
+  return score;
+}
+
+function nowText() {
+  const d = new Date();
+  const p = n => String(n).padStart(2,"0");
+  return d.getFullYear()+"-"+p(d.getMonth()+1)+"-"+p(d.getDate())+"_"+p(d.getHours())+"-"+p(d.getMinutes())+"-"+p(d.getSeconds());
+}
+
+function saveTxt() {
+  const score = checkAll();
+  const sid = document.getElementById("studentId").value.trim() || "학번없음";
+  const name = document.getElementById("studentName").value.trim() || "이름없음";
+  const time = nowText();
+  let text = "";
+  text += "문자열·리스트·딕셔너리 슬라이싱 단답형 30문항 B형
+";
+  text += "학번: " + sid + "
+";
+  text += "이름: " + name + "
+";
+  text += "점수: " + score + " / " + total + "
+";
+  text += "응시시각: " + time + "
+";
+  text += "====================================
+
+";
+
+  for(let i=1;i<=total;i++) {
+    const user = document.getElementById("ans"+i).value.trim();
+    const ok = norm(user) === norm(answers[i]);
+    text += "[" + sections[i] + " / 문항 " + i + "] " + (ok ? "정답" : "오답") + "
+";
+    text += "코드:
+" + codes[i] + "
+";
+    text += "내 답: " + user + "
+";
+    text += "정답: " + answers[i] + "
+";
+    text += "풀이: " + explains[i] + "
+";
+    text += "------------------------------------
+";
+  }
+
+  const blob = new Blob([text], {type:"text/plain;charset=utf-8"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = sid + "_" + name + "_" + score + "점_슬라이싱30문항B형_" + time + ".txt";
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+</script>
+</body></html>
