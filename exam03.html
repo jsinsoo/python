@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>셀 출력 관련 효능감 5지선다형 21문항 3부</title>
+<style>
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:#eef4ff;color:#111827;font-family:'Malgun Gothic','Apple SD Gothic Neo',Arial,sans-serif;line-height:1.65}
+header{position:sticky;top:0;z-index:30;background:linear-gradient(135deg,#0f172a,#1d4ed8);color:white;padding:14px 18px;box-shadow:0 4px 18px #0003}
+.head{max-width:1480px;margin:auto;display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
+h1{font-size:22px;margin:0}.sub{font-size:13px;color:#dbeafe;margin-top:4px}
+.student{display:flex;gap:8px;flex-wrap:wrap}.student input{padding:9px 11px;border-radius:10px;border:1px solid #bfdbfe}
+.btn{border:0;border-radius:10px;padding:10px 14px;background:#2563eb;color:white;font-weight:900;cursor:pointer}.btn.green{background:#16a34a}.btn.dark{background:#334155}
+main{max-width:1480px;margin:auto;padding:18px}.notice,.cell{background:white;border-radius:18px;padding:18px;margin-bottom:18px;box-shadow:0 5px 18px #0f172a14;border:1px solid #dbe4f0}
+.notice{border-left:8px solid #2563eb}.notice h2{margin:0 0 8px}
+.top{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid #e5e7eb;padding-bottom:12px;margin-bottom:12px;align-items:flex-start}
+.tag{display:inline-block;background:#dbeafe;color:#1e40af;border-radius:999px;padding:4px 10px;font-size:12px;font-weight:900}
+.kind{display:inline-block;background:#dcfce7;color:#166534;border-radius:999px;padding:4px 10px;font-size:12px;font-weight:900;margin-left:6px}
+h2{font-size:19px;margin:7px 0 0}.copy{background:#111827;color:white;border:0;border-radius:9px;padding:8px 11px;font-weight:800;cursor:pointer;white-space:nowrap}
+.hint{background:#f8fafc;border-left:5px solid #64748b;padding:10px 12px;border-radius:10px;font-weight:700}
+pre{background:#0b1220;color:#f8fafc;border-radius:14px;padding:16px;overflow:auto;white-space:pre-wrap;word-break:break-word;font-size:14px;line-height:1.48;border:1px solid #1f2937}
+.question{font-size:17px;font-weight:900;background:#eff6ff;border-left:5px solid #2563eb;padding:12px;border-radius:10px}
+.choices{display:grid;grid-template-columns:1fr;gap:9px}.choice{display:flex;align-items:flex-start;gap:10px;border:1px solid #cbd5e1;background:#f8fafc;border-radius:12px;padding:11px;cursor:pointer;min-height:50px}
+.choice:hover{background:#eef6ff;border-color:#60a5fa}.choice input{margin-top:6px;transform:scale(1.15)}
+.badge{display:inline-flex;align-items:center;justify-content:center;min-width:28px;height:28px;background:#e0e7ff;color:#1e3a8a;border-radius:50%;font-weight:900}
+.choice.correct{background:#dcfce7;border-color:#22c55e}.choice.wrong{background:#fee2e2;border-color:#ef4444}
+.feedback{font-weight:900;margin-top:10px;min-height:24px}.ok{color:#15803d}.no{color:#b91c1c}
+.solution{display:none;background:#ecfdf5;border-left:5px solid #22c55e;padding:12px;border-radius:10px;margin-top:10px}
+.scorebar{position:sticky;bottom:0;background:#fff7ed;border-top:1px solid #fed7aa;padding:12px 18px;font-weight:900;color:#9a3412;box-shadow:0 -3px 14px #0002}.scorebar div{max-width:1480px;margin:auto}
+@media(min-width:980px){.choices{grid-template-columns:1fr 1fr}}
+@media(max-width:720px){header{position:static}main{padding:10px}.student input,.btn{width:100%}pre{font-size:13px}.top{display:block}.copy{margin-top:10px}.cell{padding:14px}}
+@media print{header,.scorebar,.copy,.btn{display:none}body{background:white}.cell{break-inside:avoid;box-shadow:none}.solution{display:block}}
+</style>
+</head>
+<body>
+<header>
+  <div class="head">
+    <div>
+      <h1>셀 출력 관련 효능감 5지선다형 21문항 3부</h1>
+      <div class="sub">출력 예측 · 출력 줄 수 · 출력 순서 · 출력 이유 · 자동 채점 · 정답/해설 · TXT 저장</div>
+    </div>
+    <div class="student">
+      <input id="sid" type="text" placeholder="학번">
+      <input id="sname" type="text" placeholder="이름">
+      <button class="btn green" onclick="grade()">채점</button>
+      <button class="btn" onclick="showAll()">정답 보기</button>
+      <button class="btn dark" onclick="saveTxt()">TXT 저장</button>
+    </div>
+  </div>
+</header>
+<main>
+<section class="notice">
+  <h2>학습 안내</h2>
+  <p>업로드된 3부 코드 셀을 바탕으로, <b>셀 출력과 직접 관련된 5지선다형 21문항</b>으로 다시 구성했습니다.</p>
+  <p>모든 문항은 첫 줄 출력만 묻지 않고, 전체 출력, 두 번째 출력, 출력 줄 수, 출력 순서, 출력이 그렇게 되는 이유를 골고루 다룹니다.</p>
+</section>
+
+<section class="cell" id="q1" data-answer="1" data-correct-letter="B" data-title="end 옵션 때문에 한 줄로 이어지는 출력">
+  <div class="top">
+    <div><span class="tag">원문 코드 셀 49번</span><span class="kind">출력 형식</span><h2>문항 1. end 옵션 때문에 한 줄로 이어지는 출력</h2></div>
+    <button class="copy" type="button">코드 복사</button>
+  </div>
+  <p class="hint">작은 성공 힌트: print의 기본 줄바꿈이 언제 바뀌는지 확인하면 됩니다.</p>
+  <pre><code>#05
+
+class B:
+    def __init__(s, b):
+        s.__b = b
+        print(f&quot;처음 금액: {s.__b}원&quot;,end=&quot;→&quot;)
+
+    def d(s, a):
+        s.__b += a
+        print(f&quot;{a}원 입금&quot;,end=&quot;→&quot;)
+
+    def g(s):
+        return s.__b
+
+a = B(2000)
+a.d(1000)
+print(f&quot;현재 잔액: {a.g()}원&quot;)</code></pre>
+  <p class="question">이 코드 셀을 실행했을 때 전체 출력 형태로 가장 알맞은 것은?</p>
+  <div class="choices">
+    <label class="choice"><input type="radio" name="q1" value="0"><span class="badge">A</span><span>처음 금액: 2000원
+1000원 입금
+현재 잔액: 3000원</span></label><label class="choice"><input type="radio" name="q1" value="1"><span class="badge">B</span><span>처음 금액: 2000원→1000원 입금→현재 잔액: 3000원</span></label><label class="choice"><input type="radio" name="q1" value="2"><span class="badge">C</span><span>처음 금액: 3000원→1000원 입금→현재 잔액: 2000원</span></label><label class="choice"><input type="radio" name="q1" value="3"><span class="badge">D</span><span>현재 잔액: 3000원</span></label><label class="choice"><input type="radio" name="q1" value="4"><span class="badge">E</span><span>처음 금액: 2000원→현재 잔액: 2000원</span></label>
+  </div>
+  <div class="feedback"></div>
+  <div class="solution"><b>정답: B. 처음 금액: 2000원→1000원 입금→현재 잔액: 3000원</b><br>앞의 두 print문은 end=&#x27;→&#x27;를 사용하므로 줄바꿈 대신 화살표가 붙습니다. 2000원에서 1000원을 입금해 최종 잔액은 3000원입니다.</div>
+</section>
+
+<section class="cell" id="q2" data-answer="1" data-correct-letter="B" data-title="여러 리스트를 조합한 첫 출력">
+  <div class="top">
+    <div><span class="tag">원문 코드 셀 50번</span><span class="kind">출력 예측</span><h2>문항 2. 여러 리스트를 조합한 첫 출력</h2></div>
+    <button class="copy" type="button">코드 복사</button>
+  </div>
+  <p class="hint">작은 성공 힌트: i=0일 때 a[0], b[e[0]], c[d[0]]만 따라가면 됩니다.</p>
+  <pre><code>#06
+
+a=[
+&#x27;지도학습&#x27;,
+&#x27;비지도학습&#x27;,
+&#x27;강화학습&#x27;,
+&#x27;자기지도학습&#x27;,
+&#x27;준지도학습&#x27;,
+]
+
+b=[
+&#x27;Semi-Supervised Learning&#x27;,
+&#x27;Self-Supervised Learning&#x27;,
+&#x27;Reinforcement Learning&#x27;,
+&#x27;Unsupervised Learning&#x27;,
+&#x27;Supervised Learning&#x27;,
+]
+
+c=[
+&#x27;정답 없이 데이터 패턴을 찾는 방법&#x27;,
+&#x27;정답이 있는 데이터를 학습하는 방법&#x27;,
+&#x27;보상과 벌을 통해 최적 행동을 학습하는 방법&#x27;,
+&#x27;일부만 정답이 있는 데이터를 학습하는 방법&#x27;,
+&#x27;데이터 스스로 정답을 만들어 학습하는 방법&#x27;,
+]
+
+e=[4,3,2,1,0]
+d=[1,0,2,4,3]
+
+for i in range(5):
+    print(f&#x27;{a[i]}({b[e[i]]}) {c[d[i]]}&#x27;)</code></pre>
+  <p class="question">첫 번째 반복에서 출력되는 문장으로 알맞은 것은?</p>
+  <div class="choices">
+    <label class="choice"><input type="radio" name="q2" value="0"><span class="badge">A</span><span>지도학습(Semi-Supervised Learning) 정답 없이 데이터 패턴을 찾는 방법</span></label><label class="choice"><input type="radio" name="q2" value="1"><span class="badge">B</span><span>지도학습(Supervised Learning) 정답이 있는 데이터를 학습하는 방법</span></label><label class="choice"><input type="radio" name="q2" value="2"><span class="badge">C</span><span>준지도학습(Semi-Supervised Learning) 일부만 정답이 있는 데이터를 학습하는 방법</span></label><label class="choice"><input type="radio" name="q2" value="3"><span class="badge">D</span><span>비지도학습(Unsupervised Learning) 정답 없이 데이터 패턴을 찾는 방법</span></label><label class="choice"><input type="radio" name="q2" value="4"><span class="badge">E</span><span>강화학습(Reinforcement Learning) 보상과 벌을 통해 최적 행동을 학습하는 방법</span></label>
+  </div>
+  <div class="feedback"></div>
+  <div class="solution"><b>정답: B. 지도학습(Supervised Learning) 정답이 있는 데이터를 학습하는 방법</b><br>i=0이면 a[0]=&#x27;지도학습&#x27;, e[0]=4라서 b[4]=&#x27;Supervised Learning&#x27;, d[0]=1이라서 c[1]=&#x27;정답이 있는 데이터를 학습하는 방법&#x27;이 연결됩니다.</div>
+</section>
+
+<section class="cell" id="q3" data-answer="1" data-correct-letter="B" data-title="객체 리스트가 만드는 출력 순서">
+  <div class="top">
+    <div><span class="tag">원문 코드 셀 51번</span><span class="kind">출력 순서</span><h2>문항 3. 객체 리스트가 만드는 출력 순서</h2></div>
+    <button class="copy" type="button">코드 복사</button>
+  </div>
+  <p class="hint">작은 성공 힌트: 리스트 l에 들어 있는 객체 순서를 그대로 따라갑니다.</p>
+  <pre><code>#07
+
+class D:
+    def s(s):return&quot;멍멍!&quot;
+
+class C:
+    def s(s):return&quot;야옹~&quot;
+
+class S:
+    def s(s):return&quot;매에~&quot;
+
+def m(a):
+    print(a.s())
+
+l=[D(),C(),S()]
+for a in l:m(a)
+</code></pre>
+  <p class="question">이 코드 셀의 출력 순서로 알맞은 것은?</p>
+  <div class="choices">
+    <label class="choice"><input type="radio" name="q3" value="0"><span class="badge">A</span><span>야옹~ → 멍멍! → 매에~</span></label><label class="choice"><input type="radio" name="q3" value="1"><span class="badge">B</span><span>멍멍! → 야옹~ → 매에~</span></label><label class="choice"><input type="radio" name="q3" value="2"><span class="badge">C</span><span>매에~ → 야옹~ → 멍멍!</span></label><label class="choice"><input type="radio" name="q3" value="3"><span class="badge">D</span><span>멍멍! 한 줄만 출력</span></label><label class="choice"><input type="radio" name="q3" value="4"><span class="badge">E</span><span>클래스 이름 D, C, S가 출력</span></label>
+  </div>
+  <div class="feedback"></div>
+  <div class="solution"><b>정답: B. 멍멍! → 야옹~ → 매에~</b><br>l=[D(), C(), S()] 순서이므로 각 객체의 s() 결과가 멍멍!, 야옹~, 매에~ 순서로 출력됩니다.</div>
+</section>
+
+<section class="cell" id="q4" data-answer="3" data-correct-letter="D" data-title="딕셔너리 순회와 출력 줄 수">
+  <div class="top">
+    <div><span class="tag">원문 코드 셀 52번</span><span class="kind">출력 줄 수</span><h2>문항 4. 딕셔너리 순회와 출력 줄 수</h2></div>
+    <button class="copy" type="button">코드 복사</button>
+  </div>
+  <p class="hint">작은 성공 힌트: 딕셔너리에는 BY, SA, ND, NC, CC0의 5개 항목이 있습니다.</p>
+  <pre><code>#08
+
+c={
+&quot;BY&quot;:{&quot;eng&quot;:&quot;Attribution&quot;,&quot;kor&quot;:&quot;저작자 표시&quot;},
+&quot;SA&quot;:{&quot;eng&quot;:&quot;ShareAlike&quot;,&quot;kor&quot;:&quot;동일조건 변경허락&quot;},
+&quot;ND&quot;:{&quot;eng&quot;:&quot;NoDerivatives&quot;,&quot;kor&quot;:&quot;변경 금지&quot;},
+&quot;NC&quot;:{&quot;eng&quot;:&quot;NonCommercial&quot;,&quot;kor&quot;:&quot;비영리&quot;},
+&quot;CC0&quot;:{&quot;eng&quot;:&quot;No Rights Reserved&quot;,&quot;kor&quot;:&quot;저작권 포기&quot;}
+}
+
+for k,v in c.items():
+    print(f&#x27;[{k}] {v[&quot;eng&quot;]} {v[&quot;kor&quot;]}&#x27;)</code></pre>
+  <p class="question">이 코드 셀은 총 몇 줄을 출력하는가?</p>
+  <div class="choices">
+    <label class="choice"><input type="radio" name="q4" value="0"><span class="badge">A</span><span>1줄</span></label><label class="choice"><input type="radio" name="q4" value="1"><span class="badge">B</span><span>3줄</span></label><label class="choice"><input type="radio" name="q4" value="2"><span class="badge">C</span><span>4줄</span></label><label class="choice"><input type="radio" name="q4" value="3"><span class="badge">D</span><span>5줄</span></label><label class="choice"><input type="radio" name="q4" value="4"><span class="badge">E</span><span>10줄</span></label>
+  </div>
+  <div class="feedback"></div>
+  <div class="solution"><b>정답: D. 5줄</b><br>for k,v in c.items()가 5개 항목을 한 번씩 순회하고, 반복마다 print가 한 번 실행되므로 총 5줄이 출력됩니다.</div>
+</section>
+
+<section class="cell" id="q5" data-answer="1" data-correct-letter="B" data-title="데코레이터 누적 출력">
+  <div class="top">
+    <div><span class="tag">원문 코드 셀 54번</span><span class="kind">출력 예측</span><h2>문항 5. 데코레이터 누적 출력</h2></div>
+    <button class="copy" type="button">코드 복사</button>
+  </div>
+  <p class="hint">작은 성공 힌트: 데코레이터는 아래쪽부터 함수에 적용됩니다.</p>
+  <pre><code>def add_c_suffix(func):
+    def wrapper():
+        return func() + &quot; → C&quot;
+    return wrapper
+
+def add_b_suffix(func):
+    def wrapper():
+        return func() + &quot; → B&quot;
+    return wrapper
+
+def add_e_suffix(func):
+    def wrapper():
+        return func() + &quot; → E&quot;
+    return wrapper
+
+def add_d_suffix(func):
+    def wrapper():
+        return func() + &quot; → D&quot;
+    return wrapper
+
+@add_e_suffix
+@add_b_suffix
+@add_c_suffix
+@add_d_suffix
+def base_message():
+    return &quot;A&quot;
+
+print(base_message())</code></pre>
+  <p class="question">base_message()의 최종 출력으로 알맞은 것은?</p>
+  <div class="choices">
+    <label class="choice"><input type="radio" name="q5" value="0"><span class="badge">A</span><span>A → B → C → D → E</span></label><label class="choice"><input type="radio" name="q5" value="1"><span class="badge">B</span><span>A → D → C → B → E</span></label><label class="choice"><input type="radio" name="q5" value="2"><span class="badge">C</span><span>A → E → B → C → D</span></label><label class="choice"><input type="radio" name="q5" value="3"><span class="badge">D</span><span>D → C → B → E → A</span></label><label class="choice"><input type="radio" name="q5" value="4"><span class="badge">E</span><span>A</span></label>
+  </div>
+  <div class="feedback"></div>
+  <div class="solution"><b>정답: B. A → D → C → B → E</b><br>가장 아래 @add_d_suffix가 먼저 적용되어 A → D가 되고, 그 다음 C, B, E가 차례로 붙어 A → D → C → B → E가 됩니다.</div>
+</section>
+
+<section class="cell" id="q6" data-answer="1" data-correct-letter="B" data-title="원주율 소수점 자리 출력">
+  <div class="top">
+    <div><span class="tag">원문 코드 셀 56번</span><span class="kind">인덱스 출력</span><h2>문항 6. 원주율 소수점 자리 출력</h2></div>
+    <button class="copy" type="button">코드 복사</button>
+  </div>
+  <p class="hint">작은 성공 힌트: 문자열 인덱스는 0부터 시작합니다.</p>
+  <pre><code>#11
+
+from mpmath import mp
+mp.dps=200
+p=str(mp.pi)
+d=p.split(&quot;.&quot;)[1]
+
+c=d[149]
+
+print(f&#x27;소수점 아래 150번째 숫자: {c}&#x27;)</code></pre>
+  <p class="question">c=d[149]가 의미하는 출력 대상은 무엇인가?</p>
+  <div class="choices">
+    <label class="choice"><input type="radio" name="q6" value="0"><span class="badge">A</span><span>소수점 아래 149번째 숫자</span></label><label class="choice"><input type="radio" name="q6" value="1"><span class="badge">B</span><span>소수점 아래 150번째 숫자</span></label><label class="choice"><input type="radio" name="q6" value="2"><span class="badge">C</span><span>원주율의 정수 부분 3</span></label><label class="choice"><input type="radio" name="q6" value="3"><span class="badge">D</span><span>소수점 아래 마지막 숫자</span></label><label class="choice"><input type="radio" name="q6" value="4"><span class="badge">E</span><span>150번째 줄</span></label>
+  </div>
+  <div class="feedback"></div>
+  <div class="solution"><b>정답: B. 소수점 아래 150번째 숫자</b><br>소수점 아래 첫 번째 숫자는 d[0]입니다. 따라서 d[149]는 소수점 아래 150번째 숫자입니다.</div>
+</section>
+
+<section class="cell" id="q7" data-answer="2" data-correct-letter="C" data-title="조건을 만족하는 첫 보안 설명 출력">
+  <div class="top">
+    <div><span class="tag">원문 코드 셀 58번</span><span class="kind">조건 출력</span><h2>문항 7. 조건을 만족하는 첫 보안 설명 출력</h2></div>
+    <button class="copy" type="button">코드 복사</button>
+  </div>
+  <p class="hint">작은 성공 힌트: check 함수는 딕셔너리 값에 &#x27;구조&#x27;가 들어 있는지 확인합니다.</p>
+  <pre><code>#13
+
+s={
+&#x27;악성코드&#x27;:&#x27;시스템에 해를 끼치거나 정보를 유출&#x27;,
+&#x27;랜섬웨어&#x27;:&#x27;파일 암호화 후 금전 요구&#x27;,
+&#x27;SQL 인젝션&#x27;:&#x27;입력값으로 SQL 구조 조작&#x27;,
+&#x27;XSS&#x27;:&#x27;웹 페이지 악성 스크립트 삽입&#x27;,
+&#x27;해싱&#x27;:&#x27;원본 복원이 어려운 고정 길이 값으로 변환&#x27;
+}
+
+k=list(s)
+c=lambda x:&#x27;구조&#x27;in s[x]
+i=0
+while i&lt;len(k):
+    if not c(k[i]):
+        i+=1
+        pass
+    else:
+        print(s[k[i]])
+        break
+</code></pre>
+  <p class="question">while문에서 실제로 출력되는 값으로 알맞은 것은?</p>
+  <div class="choices">
+    <label class="choice"><input type="radio" name="q7" value="0"><span class="badge">A</span><span>시스템에 해를 끼치거나 정보를 유출</span></label><label class="choice"><input type="radio" name="q7" value="1"><span class="badge">B</span><span>파일 암호화 후 금전 요구</span></label><label class="choice"><input type="radio" name="q7" value="2"><span class="badge">C</span><span>입력값으로 SQL 구조 조작</span></label><label class="choice"><input type="radio" name="q7" value="3"><span class="badge">D</span><span>웹 페이지 악성 스크립트 삽입</span></label><label class="choice"><input type="radio" name="q7" value="4"><span class="badge">E</span><span>원본 복원이 어려운 고정 길이 값으로 변환</span></label>
+  </div>
+  <div class="feedback"></div>
+  <div class="solution"><b>정답: C. 입력값으로 SQL 구조 조작</b><br>값에 &#x27;구조&#x27;가 들어 있는 첫 항목은 SQL 인젝션의 설명인 &#x27;입력값으로 SQL 구조 조작&#x27;입니다. 출력 후 break로 멈춥니다.</div>
+</section>
+
+<section class="cell" id="q8" data-answer="2" data-correct-letter="C" data-title="zip으로 만든 튜플 값 출력">
+  <div class="top">
+    <div><span class="tag">원문 코드 셀 61번</span><span class="kind">자료구조 출력</span><h2>문항 8. zip으로 만든 튜플 값 출력</h2></div>
+    <button class="copy" type="button">코드 복사</button>
+  </div>
+  <p class="hint">작은 성공 힌트: result의 값은 (한국어 용어, 설명) 튜플입니다.</p>
+  <pre><code>#15
+
+eng1 = [&#x27;Confidentiality&#x27;,&#x27;Integrity&#x27;,&#x27;Availability&#x27;]
+kor1 = [&#x27;기밀성(機密性)&#x27;,&#x27;무결성(無缺性)&#x27;,&#x27;가용성(可用性)&#x27;]
+mean = [
+    &#x27;허가된 사람만 정보에 접근하도록 보호&#x27;,
+    &#x27;정보 임의 변경 · 훼손 금지 정확하게 유지&#x27;,
+    &#x27;필요한 사람이 언제든 정보 사용 보장&#x27;
+]
+result = dict(zip(eng1, zip(kor1, mean)))
+print(result[&#x27;Availability&#x27;][0])</code></pre>
+  <p class="question">print(result[&#x27;Availability&#x27;][0])의 출력으로 알맞은 것은?</p>
+  <div class="choices">
+    <label class="choice"><input type="radio" name="q8" value="0"><span class="badge">A</span><span>Availability</span></label><label class="choice"><input type="radio" name="q8" value="1"><span class="badge">B</span><span>필요한 사람이 언제든 정보 사용 보장</span></label><label class="choice"><input type="radio" name="q8" value="2"><span class="badge">C</span><span>가용성(可用性)</span></label><label class="choice"><input type="radio" name="q8" value="3"><span class="badge">D</span><span>기밀성(機密性)</span></label><label class="choice"><input type="radio" name="q8" value="4"><span class="badge">E</span><span>무결성(無缺性)</span></label>
+  </div>
+  <div class="feedback"></div>
+  <div class="solution"><b>정답: C. 가용성(可用性)</b><br>Availability에 대응하는 값은 (&#x27;가용성(可用性)&#x27;, &#x27;필요한 사람이 언제든 정보 사용 보장&#x27;)입니다. [0]은 첫 번째 요소입니다.</div>
+</section>
+
+<section class="cell" id="q9" data-answer="2" data-correct-letter="C" data-title="점수 정렬 후 연결 출력">
+  <div class="top">
+    <div><span class="tag">원문 코드 셀 63번</span><span class="kind">전체 출력</span><h2>문항 9. 점수 정렬 후 연결 출력</h2></div>
+    <button class="copy" type="button">코드 복사</button>
+  </div>
+  <p class="hint">작은 성공 힌트: key=lambda i:i[1]은 점수를 기준으로 정렬한다는 뜻입니다.</p>
+  <pre><code>#16
+
+data={&#x27;수학&#x27;:90,&#x27;영어&#x27;:85,&#x27;정보&#x27;:95,&#x27;국어&#x27;:89, &#x27;과학&#x27;:88}
+print(&quot;♥&quot;.join(map(lambda i:f&quot;{i[0]}{i[1]}&quot;,sorted(data.items(),key=lambda i:i[1]))))</code></pre>
+  <p class="question">이 코드 셀의 출력으로 알맞은 것은?</p>
+  <div class="choices">
+    <label class="choice"><input type="radio" name="q9" value="0"><span class="badge">A</span><span>수학90♥영어85♥정보95♥국어89♥과학88</span></label><label class="choice"><input type="radio" name="q9" value="1"><span class="badge">B</span><span>정보95♥수학90♥국어89♥과학88♥영어85</span></label><label class="choice"><input type="radio" name="q9" value="2"><span class="badge">C</span><span>영어85♥과학88♥국어89♥수학90♥정보95</span></label><label class="choice"><input type="radio" name="q9" value="3"><span class="badge">D</span><span>과학88♥국어89♥수학90♥영어85♥정보95</span></label><label class="choice"><input type="radio" name="q9" value="4"><span class="badge">E</span><span>영어♥과학♥국어♥수학♥정보</span></label>
+  </div>
+  <div class="feedback"></div>
+  <div class="solution"><b>정답: C. 영어85♥과학88♥국어89♥수학90♥정보95</b><br>점수 오름차순은 영어85, 과학88, 국어89, 수학90, 정보95입니다. 각 과목과 점수를 붙이고 ♥로 연결합니다.</div>
+</section>
+
+<section class="cell" id="q10" data-answer="3" data-correct-letter="D" data-title="버블 정렬 설명의 출력 줄 수">
+  <div class="top">
+    <div><span class="tag">원문 코드 셀 64번</span><span class="kind">출력 줄 수</span><h2>문항 10. 버블 정렬 설명의 출력 줄 수</h2></div>
+    <button class="copy" type="button">코드 복사</button>
+  </div>
+  <p class="hint">작은 성공 힌트: 리스트 b에는 제목 1개와 설명 4개가 들어 있습니다.</p>
+  <pre><code>#17
+
+b=[
+&#x27;버블 정렬&#x27;,
+&#x27;앞에서부터 인접한 두 값을 비교한다.&#x27;,
+&#x27;왼쪽 값이 더 크면 두 값을 교환한다.&#x27;,
+&#x27;한 회전이 끝나면 가장 큰 값이 오른쪽 끝에 놓임.&#x27;,
+&#x27;정렬된 끝부분을 제외하고 반복한다.&#x27;
+]
+
+def a(f):
+    def w():
+        for i,t in enumerate(f()):
+            if i==0:print(t)
+            else:print(&quot;→&quot;,t)
+    return w
+
+@a
+def s():
+    return b
+
+s()</code></pre>
+  <p class="question">s()를 실행하면 총 몇 줄이 출력되는가?</p>
+  <div class="choices">
+    <label class="choice"><input type="radio" name="q10" value="0"><span class="badge">A</span><span>1줄</span></label><label class="choice"><input type="radio" name="q10" value="1"><span class="badge">B</span><span>2줄</span></label><label class="choice"><input type="radio" name="q10" value="2"><span class="badge">C</span><span>4줄</span></label><label class="choice"><input type="radio" name="q10" value="3"><span class="badge">D</span><span>5줄</span></label><label class="choice"><input type="radio" name="q10" value="4"><span class="badge">E</span><span>6줄</span></label>
+  </div>
+  <div class="feedback"></div>
+  <div class="solution"><b>정답: D. 5줄</b><br>데코레이터 내부에서 f()가 반환한 리스트 b의 5개 원소를 모두 출력합니다. 따라서 총 5줄입니다.</div>
+</section>
+
+<section class="cell" id="q11" data-answer="2" data-correct-letter="C" data-title="마지막 세 글자 슬라이싱 출력">
+  <div class="top">
+    <div><span class="tag">원문 코드 셀 65번</span><span class="kind">부분 출력</span><h2>문항 11. 마지막 세 글자 슬라이싱 출력</h2></div>
+    <button class="copy" type="button">코드 복사</button>
+  </div>
+  <p class="hint">작은 성공 힌트: dd[-3:]은 마지막 3글자를 가져옵니다.</p>
+  <pre><code>#18
+
+print(list(map(lambda dd:dd[-3:],[&quot;Dream&quot;,&quot;Confidentiality&quot;, &quot;Star&quot;,&quot;Sky&quot;, &quot;Availability&quot;])))</code></pre>
+  <p class="question">출력되는 리스트의 네 번째 원소로 알맞은 것은?</p>
+  <div class="choices">
+    <label class="choice"><input type="radio" name="q11" value="0"><span class="badge">A</span><span>S</span></label><label class="choice"><input type="radio" name="q11" value="1"><span class="badge">B</span><span>ky</span></label><label class="choice"><input type="radio" name="q11" value="2"><span class="badge">C</span><span>Sky</span></label><label class="choice"><input type="radio" name="q11" value="3"><span class="badge">D</span><span>tar</span></label><label class="choice"><input type="radio" name="q11" value="4"><span class="badge">E</span><span>ity</span></label>
+  </div>
+  <div class="feedback"></div>
+  <div class="solution"><b>정답: C. Sky</b><br>입력 리스트의 네 번째 문자열은 &#x27;Sky&#x27;입니다. 길이가 3이므로 마지막 세 글자는 그대로 &#x27;Sky&#x27;입니다.</div>
+</section>
+
+<section class="cell" id="q12" data-answer="1" data-correct-letter="B" data-title="파일 내용 변경 후 출력">
+  <div class="top">
+    <div><span class="tag">원문 코드 셀 66번</span><span class="kind">파일 출력</span><h2>문항 12. 파일 내용 변경 후 출력</h2></div>
+    <button class="copy" type="button">코드 복사</button>
+  </div>
+  <p class="hint">작은 성공 힌트: hello.txt를 먼저 만들고, 홍길동을 구운몽으로 바꿉니다.</p>
+  <pre><code>#19
+
+def r(f,o,n):
+    try:
+        with open(f,&#x27;r&#x27;,encoding=&#x27;utf-8&#x27;) as x:
+            t=x.read()
+
+        t=t.replace(o,n)
+
+        with open(f,&#x27;w&#x27;,encoding=&#x27;utf-8&#x27;) as x:
+            x.write(t)
+
+        print(t)
+
+    except FileNotFoundError:
+        print(&quot;파일이 없습니다.&quot;)
+
+with open(&#x27;hello.txt&#x27;,&#x27;w&#x27;,encoding=&#x27;utf-8&#x27;) as f:
+    f.write(&quot;안녕하세요 홍길동입니다.&quot;)
+
+r(&#x27;hello.txt&#x27;,&#x27;홍길동&#x27;,&#x27;구운몽&#x27;)</code></pre>
+  <p class="question">r(&#x27;hello.txt&#x27;,&#x27;홍길동&#x27;,&#x27;구운몽&#x27;) 실행 후 출력으로 알맞은 것은?</p>
+  <div class="choices">
+    <label class="choice"><input type="radio" name="q12" value="0"><span class="badge">A</span><span>안녕하세요 홍길동입니다.</span></label><label class="choice"><input type="radio" name="q12" value="1"><span class="badge">B</span><span>안녕하세요 구운몽입니다.</span></label><label class="choice"><input type="radio" name="q12" value="2"><span class="badge">C</span><span>파일이 없습니다.</span></label><label class="choice"><input type="radio" name="q12" value="3"><span class="badge">D</span><span>&#x27;홍길동&#x27;가 &#x27;구운몽&#x27;로 변경되었습니다.</span></label><label class="choice"><input type="radio" name="q12" value="4"><span class="badge">E</span><span>hello.txt</span></label>
+  </div>
+  <div class="feedback"></div>
+  <div class="solution"><b>정답: B. 안녕하세요 구운몽입니다.</b><br>파일에 &#x27;안녕하세요 홍길동입니다.&#x27;를 쓴 뒤 replace로 홍길동을 구운몽으로 바꾸고, 바뀐 전체 문자열을 출력합니다.</div>
+</section>
+
+<section class="cell" id="q13" data-answer="1" data-correct-letter="B" data-title="seek와 read 이후 두 번째 출력">
+  <div class="top">
+    <div><span class="tag">원문 코드 셀 67번</span><span class="kind">두 번째 출력</span><h2>문항 13. seek와 read 이후 두 번째 출력</h2></div>
+    <button class="copy" type="button">코드 복사</button>
+  </div>
+  <p class="hint">작은 성공 힌트: seek(12) 뒤 read(6)을 하면 커서는 18 위치로 이동합니다.</p>
+  <pre><code>#20
+
+with open(&#x27;seek_test.txt&#x27;,&#x27;w&#x27;,encoding=&#x27;utf-8&#x27;) as f:
+    f.write(&quot;0123456789abcdefghijklmn&quot;)
+
+with open(&#x27;seek_test.txt&#x27;,&#x27;r+&#x27;,encoding=&#x27;utf-8&#x27;) as f:
+    f.seek(12)
+    d=f.read(6)
+    print(d)
+    print(f.tell())</code></pre>
+  <p class="question">이 코드 셀의 두 번째 출력으로 알맞은 것은?</p>
+  <div class="choices">
+    <label class="choice"><input type="radio" name="q13" value="0"><span class="badge">A</span><span>cdefgh</span></label><label class="choice"><input type="radio" name="q13" value="1"><span class="badge">B</span><span>18</span></label><label class="choice"><input type="radio" name="q13" value="2"><span class="badge">C</span><span>12</span></label><label class="choice"><input type="radio" name="q13" value="3"><span class="badge">D</span><span>현재 커서 위치: 18</span></label><label class="choice"><input type="radio" name="q13" value="4"><span class="badge">E</span><span>f.tell()</span></label>
+  </div>
+  <div class="feedback"></div>
+  <div class="solution"><b>정답: B. 18</b><br>첫 번째 출력은 읽은 문자열 cdefgh입니다. 12번 위치에서 6글자를 읽었으므로 tell()은 18을 반환하고 두 번째 줄에 18이 출력됩니다.</div>
+</section>
+
+<section class="cell" id="q14" data-answer="1" data-correct-letter="B" data-title="가운데 전화번호 마스킹 출력">
+  <div class="top">
+    <div><span class="tag">원문 코드 셀 68번</span><span class="kind">출력 예측</span><h2>문항 14. 가운데 전화번호 마스킹 출력</h2></div>
+    <button class="copy" type="button">코드 복사</button>
+  </div>
+  <p class="hint">작은 성공 힌트: a[1]이 가운데 번호입니다.</p>
+  <pre><code>#21
+
+p=&quot;010-8765-4321&quot;
+
+a=p.split(&quot;-&quot;)
+a[1]=&quot;****&quot;
+m=&quot;-&quot;.join(a)
+
+print(&quot;마스킹 후:&quot;,m)
+</code></pre>
+  <p class="question">이 코드 셀의 출력으로 알맞은 것은?</p>
+  <div class="choices">
+    <label class="choice"><input type="radio" name="q14" value="0"><span class="badge">A</span><span>마스킹 후: ****-8765-4321</span></label><label class="choice"><input type="radio" name="q14" value="1"><span class="badge">B</span><span>마스킹 후: 010-****-4321</span></label><label class="choice"><input type="radio" name="q14" value="2"><span class="badge">C</span><span>마스킹 후: 010-8765-****</span></label><label class="choice"><input type="radio" name="q14" value="3"><span class="badge">D</span><span>010-****-4321</span></label><label class="choice"><input type="radio" name="q14" value="4"><span class="badge">E</span><span>마스킹 후: 010-8765-4321</span></label>
+  </div>
+  <div class="feedback"></div>
+  <div class="solution"><b>정답: B. 마스킹 후: 010-****-4321</b><br>split(&#x27;-&#x27;) 결과는 [&#x27;010&#x27;,&#x27;8765&#x27;,&#x27;4321&#x27;]이고, a[1]만 &#x27;****&#x27;로 바꿉니다. print는 쉼표 때문에 한 칸 띄어 출력합니다.</div>
+</section>
+
+<section class="cell" id="q15" data-answer="2" data-correct-letter="C" data-title="가변 인수로 길이 합 출력">
+  <div class="top">
+    <div><span class="tag">원문 코드 셀 69번</span><span class="kind">출력 계산</span><h2>문항 15. 가변 인수로 길이 합 출력</h2></div>
+    <button class="copy" type="button">코드 복사</button>
+  </div>
+  <p class="hint">작은 성공 힌트: 각 문자열의 길이를 모두 더합니다.</p>
+  <pre><code>#22
+
+def f(*a):
+    t=0
+    for i in a:t+=i
+    return t
+
+s={
+&#x27;1. 진로 설계&#x27;,
+&#x27;2. 자기 분석&#x27;,
+&#x27;3. 직업 데이터 구조화&#x27;,
+&#x27;4. 관련성 탐색&#x27;,
+&#x27;5. 시각화&#x27;}
+d={i:len(i)for i in s}
+
+print(f(*d.values()))
+</code></pre>
+  <p class="question">print(f(*d.values()))의 출력으로 알맞은 것은?</p>
+  <div class="choices">
+    <label class="choice"><input type="radio" name="q15" value="0"><span class="badge">A</span><span>5</span></label><label class="choice"><input type="radio" name="q15" value="1"><span class="badge">B</span><span>25</span></label><label class="choice"><input type="radio" name="q15" value="2"><span class="badge">C</span><span>44</span></label><label class="choice"><input type="radio" name="q15" value="3"><span class="badge">D</span><span>90</span></label><label class="choice"><input type="radio" name="q15" value="4"><span class="badge">E</span><span>문자열 길이</span></label>
+  </div>
+  <div class="feedback"></div>
+  <div class="solution"><b>정답: C. 44</b><br>각 항목 문자열의 길이 합이 44입니다. *d.values()는 길이값들을 f의 가변 인수로 풀어 전달합니다.</div>
+</section>
+
+<section class="cell" id="q16" data-answer="1" data-correct-letter="B" data-title="빈 문자열 포함 길이 정렬 후 출력">
+  <div class="top">
+    <div><span class="tag">원문 코드 셀 70번</span><span class="kind">출력 이유</span><h2>문항 16. 빈 문자열 포함 길이 정렬 후 출력</h2></div>
+    <button class="copy" type="button">코드 복사</button>
+  </div>
+  <p class="hint">작은 성공 힌트: 빈 문자열 길이 0 다음에는 길이 1인 문자열이 옵니다.</p>
+  <pre><code>#23
+
+def f(**k):
+    return k
+
+t=f(
+    문제정의=&quot;무엇을 예측할지 정한다&quot;,
+    데이터준비=&quot;데이터 구조와 품질 확인&quot;,
+    전처리=&quot;결측치 스케일 문제 해결&quot;,
+    모델학습=&quot;패턴 학습&quot;,
+    평가=&quot;테스트 성능 측정&quot;,
+    튜닝=&quot;성능 개선 실험&quot;
+)
+
+s={&#x27;1&#x27;,&#x27;proof&#x27;,&#x27;abcd&#x27;,&#x27;23&#x27;,&#x27;987&#x27;, &#x27;&#x27;}
+d={i:len(i)for i in s}
+l=sorted(d.items(),key=lambda x:x[1])
+k=list(t.keys())
+
+print(t[k[l[1][1]]])
+</code></pre>
+  <p class="question">이 코드 셀에서 최종적으로 &#x27;데이터 구조와 품질 확인&#x27;이 출력되는 이유로 알맞은 것은?</p>
+  <div class="choices">
+    <label class="choice"><input type="radio" name="q16" value="0"><span class="badge">A</span><span>빈 문자열 길이 0이 바로 출력값이 되기 때문</span></label><label class="choice"><input type="radio" name="q16" value="1"><span class="badge">B</span><span>l[1][1]이 1이 되어 k[1]인 데이터준비 항목을 선택하기 때문</span></label><label class="choice"><input type="radio" name="q16" value="2"><span class="badge">C</span><span>proof의 길이가 5라서 평가 항목을 선택하기 때문</span></label><label class="choice"><input type="radio" name="q16" value="3"><span class="badge">D</span><span>set은 항상 입력 순서를 그대로 유지하기 때문</span></label><label class="choice"><input type="radio" name="q16" value="4"><span class="badge">E</span><span>튜닝이 첫 번째 key이기 때문</span></label>
+  </div>
+  <div class="feedback"></div>
+  <div class="solution"><b>정답: B. l[1][1]이 1이 되어 k[1]인 데이터준비 항목을 선택하기 때문</b><br>길이 오름차순 정렬에서 l[1][1]은 1입니다. k=list(t.keys())에서 k[1]은 데이터준비이므로 해당 값 &#x27;데이터 구조와 품질 확인&#x27;이 출력됩니다.</div>
+</section>
+
+<section class="cell" id="q17" data-answer="0" data-correct-letter="A" data-title="문자열 key 정렬 후 출력">
+  <div class="top">
+    <div><span class="tag">원문 코드 셀 71번</span><span class="kind">정렬 출력</span><h2>문항 17. 문자열 key 정렬 후 출력</h2></div>
+    <button class="copy" type="button">코드 복사</button>
+  </div>
+  <p class="hint">작은 성공 힌트: 이번 정렬 기준은 길이가 아니라 x[0], 즉 문자열 자체입니다.</p>
+  <pre><code>#24
+
+t={
+1:(&#x27;단계&#x27;,&#x27;의미&#x27;),
+2:(&#x27;데이터 준비&#x27;,&#x27;문제지와 정답지 분리&#x27;),
+3:(&#x27;데이터 분리&#x27;,&#x27;학습용과 테스트용 분리&#x27;),
+4:(&#x27;모델 생성&#x27;,&#x27;학습할 모델 객체 생성&#x27;),
+5:(&#x27;학습&#x27;,&#x27;데이터 패턴 학습&#x27;),
+6:(&#x27;예측&#x27;,&#x27;새 데이터 결과 예측&#x27;),
+7:(&#x27;평가&#x27;,&#x27;예측과 정답 비교&#x27;)
+}
+s={&#x27;1&#x27;,&#x27;proof&#x27;,&#x27;abcd&#x27;,&#x27;23&#x27;,&#x27;987&#x27;, &#x27;&#x27;}
+d={i:len(i)for i in s}
+l=sorted(d.items(),key=lambda x:x[0])
+print(t[int(l[5][1])][1])</code></pre>
+  <p class="question">이 코드 셀에서 출력되는 값으로 알맞은 것은?</p>
+  <div class="choices">
+    <label class="choice"><input type="radio" name="q17" value="0"><span class="badge">A</span><span>데이터 패턴 학습</span></label><label class="choice"><input type="radio" name="q17" value="1"><span class="badge">B</span><span>문제지와 정답지 분리</span></label><label class="choice"><input type="radio" name="q17" value="2"><span class="badge">C</span><span>학습용과 테스트용 분리</span></label><label class="choice"><input type="radio" name="q17" value="3"><span class="badge">D</span><span>새 데이터 결과 예측</span></label><label class="choice"><input type="radio" name="q17" value="4"><span class="badge">E</span><span>예측과 정답 비교</span></label>
+  </div>
+  <div class="feedback"></div>
+  <div class="solution"><b>정답: A. 데이터 패턴 학습</b><br>문자열 key 기준 정렬 후 l[5][1]은 길이 5가 되고, t[5][1]은 &#x27;데이터 패턴 학습&#x27;입니다.</div>
+</section>
+
+<section class="cell" id="q18" data-answer="1" data-correct-letter="B" data-title="break가 만드는 출력 범위">
+  <div class="top">
+    <div><span class="tag">원문 코드 셀 72번</span><span class="kind">출력 제어</span><h2>문항 18. break가 만드는 출력 범위</h2></div>
+    <button class="copy" type="button">코드 복사</button>
+  </div>
+  <p class="hint">작은 성공 힌트: key가 2일 때만 출력하고 곧바로 반복을 멈춥니다.</p>
+  <pre><code>#25
+
+tiger = {
+    1: (&#x27;종류&#x27;, &#x27;판단방식&#x27;),
+    2: (&#x27;단순 반사&#x27;, &#x27;현재 입력에만 반응&#x27;),
+    3: (&#x27;모델 기반&#x27;, &#x27;현재 입력, 내부 상태 고려&#x27;),
+    4: (&#x27;목표 기반&#x27;, &#x27;목표 달성 여부 고려&#x27;),
+    5: (&#x27;효용 기반&#x27;, &#x27;효율·위험·만족도 비교&#x27;)
+}
+
+for key, (kind, method) in tiger.items():
+
+    if key == 2:
+        print(kind)
+        break</code></pre>
+  <p class="question">이 코드 셀에서 출력되는 내용으로 알맞은 것은?</p>
+  <div class="choices">
+    <label class="choice"><input type="radio" name="q18" value="0"><span class="badge">A</span><span>종류</span></label><label class="choice"><input type="radio" name="q18" value="1"><span class="badge">B</span><span>단순 반사</span></label><label class="choice"><input type="radio" name="q18" value="2"><span class="badge">C</span><span>모델 기반</span></label><label class="choice"><input type="radio" name="q18" value="3"><span class="badge">D</span><span>효용 기반</span></label><label class="choice"><input type="radio" name="q18" value="4"><span class="badge">E</span><span>종류부터 효용 기반까지 모두 출력</span></label>
+  </div>
+  <div class="feedback"></div>
+  <div class="solution"><b>정답: B. 단순 반사</b><br>반복 중 key==2가 되는 순간 kind인 &#x27;단순 반사&#x27;를 출력하고 break로 반복을 종료합니다.</div>
+</section>
+
+<section class="cell" id="q19" data-answer="0" data-correct-letter="A" data-title="도형 객체 리스트의 두 줄 출력">
+  <div class="top">
+    <div><span class="tag">원문 코드 셀 75번</span><span class="kind">출력 순서</span><h2>문항 19. 도형 객체 리스트의 두 줄 출력</h2></div>
+    <button class="copy" type="button">코드 복사</button>
+  </div>
+  <p class="hint">작은 성공 힌트: 리스트 l의 첫 객체는 C(5), 두 번째 객체는 Q(4)입니다.</p>
+  <pre><code>#28
+
+from abc import ABC,abstractmethod
+
+class S(ABC):
+    @abstractmethod
+    def a(s):
+        pass
+
+class C(S):
+    def __init__(s,r):
+        s.r=r
+
+    def a(s):
+        return 3.14*(s.r**2)
+
+class Q(S):
+    def __init__(s,x):
+        s.x=x
+
+    def a(s):
+        return s.x*s.x
+
+l=[C(5),Q(4)]
+for s in l:
+    print(f&quot;도형의 넓이: {s.a()}&quot;)</code></pre>
+  <p class="question">이 코드 셀의 출력 순서로 알맞은 것은?</p>
+  <div class="choices">
+    <label class="choice"><input type="radio" name="q19" value="0"><span class="badge">A</span><span>도형의 넓이: 78.5 → 도형의 넓이: 16</span></label><label class="choice"><input type="radio" name="q19" value="1"><span class="badge">B</span><span>도형의 넓이: 16 → 도형의 넓이: 78.5</span></label><label class="choice"><input type="radio" name="q19" value="2"><span class="badge">C</span><span>도형의 넓이: 25 → 도형의 넓이: 16</span></label><label class="choice"><input type="radio" name="q19" value="3"><span class="badge">D</span><span>도형의 넓이: 5 → 도형의 넓이: 4</span></label><label class="choice"><input type="radio" name="q19" value="4"><span class="badge">E</span><span>추상 클래스라 아무것도 출력되지 않음</span></label>
+  </div>
+  <div class="feedback"></div>
+  <div class="solution"><b>정답: A. 도형의 넓이: 78.5 → 도형의 넓이: 16</b><br>C(5)는 3.14*(5**2)=78.5를 반환하고, Q(4)는 4*4=16을 반환합니다. 리스트 순서대로 두 줄 출력됩니다.</div>
+</section>
+
+<section class="cell" id="q20" data-answer="2" data-correct-letter="C" data-title="파일 커서 위치 출력">
+  <div class="top">
+    <div><span class="tag">원문 코드 셀 76번</span><span class="kind">두 번째 출력</span><h2>문항 20. 파일 커서 위치 출력</h2></div>
+    <button class="copy" type="button">코드 복사</button>
+  </div>
+  <p class="hint">작은 성공 힌트: 10번 위치에서 4글자를 읽으면 커서는 14 위치가 됩니다.</p>
+  <pre><code>#29
+
+with open(&#x27;seek_test.txt&#x27;,&#x27;w&#x27;,encoding=&#x27;utf-8&#x27;) as f:
+    f.write(&quot;0123456789abcdef&quot;)
+
+with open(&#x27;seek_test.txt&#x27;,&#x27;r+&#x27;,encoding=&#x27;utf-8&#x27;) as f:
+    f.seek(10)
+    d=f.read(4)
+    print(f&quot;10번 위치에서 읽은 데이터: {d}&quot;)
+
+    print(f&quot;현재 커서 위치: {f.tell()}&quot;)
+
+    f.seek(0)
+    f.write(&quot;Hello&quot;)</code></pre>
+  <p class="question">이 코드 셀의 두 번째 출력으로 알맞은 것은?</p>
+  <div class="choices">
+    <label class="choice"><input type="radio" name="q20" value="0"><span class="badge">A</span><span>10번 위치에서 읽은 데이터: abcd</span></label><label class="choice"><input type="radio" name="q20" value="1"><span class="badge">B</span><span>현재 커서 위치: 10</span></label><label class="choice"><input type="radio" name="q20" value="2"><span class="badge">C</span><span>현재 커서 위치: 14</span></label><label class="choice"><input type="radio" name="q20" value="3"><span class="badge">D</span><span>Hello</span></label><label class="choice"><input type="radio" name="q20" value="4"><span class="badge">E</span><span>abcd</span></label>
+  </div>
+  <div class="feedback"></div>
+  <div class="solution"><b>정답: C. 현재 커서 위치: 14</b><br>f.seek(10) 후 f.read(4)를 실행하면 커서가 14로 이동합니다. 두 번째 print는 현재 커서 위치: 14를 출력합니다.</div>
+</section>
+
+<section class="cell" id="q21" data-answer="0" data-correct-letter="A" data-title="파일이 없을 때의 예외 출력">
+  <div class="top">
+    <div><span class="tag">원문 코드 셀 77번</span><span class="kind">예외 출력</span><h2>문항 21. 파일이 없을 때의 예외 출력</h2></div>
+    <button class="copy" type="button">코드 복사</button>
+  </div>
+  <p class="hint">작은 성공 힌트: 이 코드 셀 안에서는 hello.txt를 새로 만들지 않고 바로 읽으려고 합니다.</p>
+  <pre><code>#30
+
+def r(f,o,n):
+    try:
+        with open(f,&#x27;r&#x27;,encoding=&#x27;utf-8&#x27;) as x:
+            t=x.read()
+
+        t=t.replace(o,n)
+
+        with open(f,&#x27;w&#x27;,encoding=&#x27;utf-8&#x27;) as x:
+            x.write(t)
+
+        print(f&quot;&#x27;{o}&#x27;가 &#x27;{n}&#x27;로 변경되었습니다.&quot;)
+
+    except FileNotFoundError:
+        print(&quot;파일이 없습니다.&quot;)
+
+r(&#x27;hello.txt&#x27;,&#x27;홍길동&#x27;,&#x27;인수샘&#x27;)</code></pre>
+  <p class="question">hello.txt가 없는 상태에서 이 코드 셀을 독립적으로 실행할 때 출력으로 알맞은 것은?</p>
+  <div class="choices">
+    <label class="choice"><input type="radio" name="q21" value="0"><span class="badge">A</span><span>파일이 없습니다.</span></label><label class="choice"><input type="radio" name="q21" value="1"><span class="badge">B</span><span>&#x27;홍길동&#x27;가 &#x27;인수샘&#x27;로 변경되었습니다.</span></label><label class="choice"><input type="radio" name="q21" value="2"><span class="badge">C</span><span>안녕하세요 인수샘입니다.</span></label><label class="choice"><input type="radio" name="q21" value="3"><span class="badge">D</span><span>홍길동</span></label><label class="choice"><input type="radio" name="q21" value="4"><span class="badge">E</span><span>아무것도 출력되지 않음</span></label>
+  </div>
+  <div class="feedback"></div>
+  <div class="solution"><b>정답: A. 파일이 없습니다.</b><br>읽기 모드 &#x27;r&#x27;로 hello.txt를 열려고 하지만 파일이 없으면 FileNotFoundError가 발생하고 except 블록의 &#x27;파일이 없습니다.&#x27;가 출력됩니다.</div>
+</section>
+
+</main>
+<div class="scorebar"><div id="score">아직 채점하지 않았습니다.</div></div>
+
+<script>
+function markOne(sec){
+  const ans=Number(sec.dataset.answer);
+  const picked=sec.querySelector('input[type=radio]:checked');
+  const fb=sec.querySelector('.feedback');
+  sec.querySelectorAll('.choice').forEach((l,idx)=>{
+    l.classList.remove('correct','wrong');
+    if(idx===ans) l.classList.add('correct');
+  });
+  if(!picked){
+    fb.textContent='미응답입니다. 출력 흐름을 한 줄씩 따라가면 풀 수 있습니다.';
+    fb.className='feedback no';
+    return 0;
+  }
+  const val=Number(picked.value);
+  if(val===ans){
+    fb.textContent='정답입니다. 셀 출력 흐름을 잘 해석했습니다!';
+    fb.className='feedback ok';
+    return 1;
+  }
+  picked.closest('.choice').classList.add('wrong');
+  fb.textContent='오답입니다. 정답은 '+sec.dataset.correctLetter+'번입니다. 해설을 보고 다시 도전하세요.';
+  fb.className='feedback no';
+  return 0;
+}
+function grade(){
+  let total=0,score=0;
+  document.querySelectorAll('.cell').forEach(sec=>{total++; score+=markOne(sec);});
+  document.getElementById('score').textContent=`점수: ${score} / ${total}문항`;
+}
+function showAll(){
+  document.querySelectorAll('.solution').forEach(x=>x.style.display='block');
+  document.querySelectorAll('.cell').forEach(sec=>{
+    const ans=Number(sec.dataset.answer);
+    sec.querySelectorAll('.choice').forEach((l,idx)=>{if(idx===ans) l.classList.add('correct');});
+  });
+}
+document.addEventListener('click',e=>{
+  if(e.target.classList.contains('copy')){
+    const code=e.target.closest('.cell').querySelector('code').innerText;
+    navigator.clipboard.writeText(code);
+    const old=e.target.textContent;
+    e.target.textContent='복사됨';
+    setTimeout(()=>e.target.textContent=old,1200);
+  }
+});
+function saveTxt(){
+  grade();
+  const sid=document.getElementById('sid').value||'학번';
+  const name=document.getElementById('sname').value||'이름';
+  const now=new Date();
+  let lines=[];
+  lines.push('셀 출력 관련 효능감 5지선다형 21문항 3부');
+  lines.push('학번: '+sid);
+  lines.push('이름: '+name);
+  lines.push('응시시각: '+now.toLocaleString());
+  lines.push(document.getElementById('score').textContent);
+  lines.push('');
+  document.querySelectorAll('.cell').forEach((sec,i)=>{
+    const picked=sec.querySelector('input[type=radio]:checked');
+    const ans=Number(sec.dataset.answer);
+    const ansText=sec.querySelectorAll('.choice')[ans].innerText.replace(/^[A-E]\s*/,'');
+    lines.push(`${i+1}번 ${sec.dataset.title}`);
+    lines.push(`선택: ${picked?picked.closest('.choice').innerText:'미응답'}`);
+    lines.push(`정답: ${sec.dataset.correctLetter}. ${ansText}`);
+    lines.push('');
+  });
+  const blob=new Blob([lines.join('\n')],{type:'text/plain;charset=utf-8'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download=`${sid}_${name}_셀출력관련효능감21문항3부_${now.toISOString().slice(0,19).replace(/[:T]/g,'-')}.txt`;
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+</script>
+
+</body>
+</html>
