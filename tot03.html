@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Python 한 줄 코딩 11~15</title>
+
+<style>
+body{
+font-family:"맑은 고딕";
+margin:40px;
+background:#eef8ff;
+line-height:1.8;
+}
+.quiz{
+background:white;
+padding:20px;
+margin:20px 0;
+border-radius:10px;
+box-shadow:0 0 8px gray;
+}
+pre{
+background:#272822;
+color:#f8f8f2;
+padding:12px;
+border-radius:8px;
+}
+summary{
+cursor:pointer;
+font-weight:bold;
+color:#0055aa;
+}
+.answer{
+color:darkgreen;
+}
+.box{
+background:#f8fcff;
+padding:10px;
+border-left:5px solid steelblue;
+margin-top:10px;
+}
+.point{
+background:#fff8dc;
+padding:10px;
+border-left:5px solid orange;
+margin-top:10px;
+}
+</style>
+
+</head>
+
+<body>
+
+<h1>Python 한 줄 코딩 (11~15)</h1>
+
+<div class="quiz">
+
+<h2>⑪ map() + zip()</h2>
+
+<pre>
+print(list(map(sum,zip((1,2,3),(10,20,30)))))
+</pre>
+
+<details>
+
+<summary>정답 및 해설</summary>
+
+<div class="answer">
+
+<pre>
+[11,22,33]
+</pre>
+
+</div>
+
+<div class="box">
+
+zip()
+
+↓
+
+(1,10)
+
+(2,20)
+
+(3,30)
+
+↓
+
+sum()
+
+↓
+
+11
+
+22
+
+33
+
+</div>
+
+<div class="point">
+
+sum()은
+
+튜플의 합도 계산할 수 있다.
+
+</div>
+
+</details>
+
+</div>
+
+
+
+
+
+<div class="quiz">
+
+<h2>⑫ enumerate() + map()</h2>
+
+<pre>
+print(list(enumerate(map(str,(10,20,30)),1)))
+</pre>
+
+<details>
+
+<summary>정답 및 해설</summary>
+
+<div class="answer">
+
+<pre>
+[(1,'10'),
+ (2,'20'),
+ (3,'30')]
+</pre>
+
+</div>
+
+<div class="box">
+
+map(str,...)
+
+↓
+
+'10'
+
+'20'
+
+'30'
+
+↓
+
+enumerate(...,1)
+
+↓
+
+번호 추가
+
+</div>
+
+<div class="point">
+
+map() 결과도
+
+enumerate()에 사용할 수 있다.
+
+</div>
+
+</details>
+
+</div>
+
+
+
+
+
+
+
+<div class="quiz">
+
+<h2>⑬ zip() + map()</h2>
+
+<pre>
+print(list(zip(map(str,(1,2,3)),"ABC")))
+</pre>
+
+<details>
+
+<summary>정답 및 해설</summary>
+
+<div class="answer">
+
+<pre>
+[('1','A'),
+ ('2','B'),
+ ('3','C')]
+</pre>
+
+</div>
+
+<div class="box">
+
+map(str)
+
+↓
+
+'1'
+
+'2'
+
+'3'
+
+↓
+
+zip()
+
+↓
+
+같은 위치끼리 묶는다.
+
+</div>
+
+<div class="point">
+
+zip()
+
+안에는
+
+iterator도 사용할 수 있다.
+
+</div>
+
+</details>
+
+</div>
+
+
+
+
+
+
+
+<div class="quiz">
+
+<h2>⑭ lambda + zip()</h2>
+
+<pre>
+print(list(map(lambda x:x[0]*x[1],zip((1,2,3),(4,5,6)))))
+</pre>
+
+<details>
+
+<summary>정답 및 해설</summary>
+
+<div class="answer">
+
+<pre>
+[4,10,18]
+</pre>
+
+</div>
+
+<div class="box">
+
+zip()
+
+↓
+
+(1,4)
+
+(2,5)
+
+(3,6)
+
+↓
+
+곱셈
+
+↓
+
+4
+
+10
+
+18
+
+</div>
+
+<div class="point">
+
+lambda에서
+
+x[0]
+
+x[1]
+
+접근은 매우 자주 사용된다.
+
+</div>
+
+</details>
+
+</div>
+
+
+
+
+
+
+
+<div class="quiz">
+
+<h2>⑮ enumerate() + zip() + lambda</h2>
+
+<pre>
+print(list(map(lambda x:x[0]+x[1][0]+x[1][1],
+enumerate(zip((1,2,3),(10,20,30))))))
+</pre>
+
+<details>
+
+<summary>정답 및 해설</summary>
+
+<div class="answer">
+
+<pre>
+[11,23,35]
+</pre>
+
+</div>
+
+<div class="box">
+
+enumerate()
+
+↓
+
+(0,(1,10))
+
+(1,(2,20))
+
+(2,(3,30))
+
+↓
+
+0+1+10=11
+
+1+2+20=23
+
+2+3+30=35
+
+</div>
+
+<div class="point">
+
+★★★★★
+
+정보교사 임용
+
+코딩테스트
+
+Python 시험에서
+
+가장 많이 응용되는 형태이다.
+
+</div>
+
+</details>
+
+</div>
+
+</body>
+</html>

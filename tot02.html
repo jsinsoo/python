@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Python 한 줄 코딩 6~10</title>
+
+<style>
+body{
+    font-family:"맑은 고딕";
+    background:#eef8ff;
+    margin:40px;
+    line-height:1.8;
+}
+.quiz{
+    background:white;
+    margin:20px 0;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 0 8px #aaa;
+}
+pre{
+    background:#272822;
+    color:#f8f8f2;
+    padding:12px;
+    border-radius:8px;
+}
+summary{
+    cursor:pointer;
+    color:#0066cc;
+    font-weight:bold;
+}
+.answer{color:darkgreen;}
+.box{
+    background:#f7fbff;
+    border-left:5px solid #4a90e2;
+    padding:10px;
+    margin-top:10px;
+}
+.point{
+    background:#fff8dc;
+    border-left:5px solid orange;
+    padding:10px;
+    margin-top:10px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Python 한 줄 코딩 출력 결과 예측 (6~10)</h1>
+
+<div class="quiz">
+
+<h2>⑥ **kwargs + items()</h2>
+
+<pre>
+print((lambda **k:list(k.items()))(A=10,B=20))
+</pre>
+
+<details>
+<summary>정답 및 해설</summary>
+
+<div class="answer">
+<pre>
+[('A',10),
+ ('B',20)]
+</pre>
+</div>
+
+<div class="box">
+
+**kwargs
+
+↓
+
+dictionary 생성
+
+↓
+
+items()
+
+↓
+
+(key,value)
+
+튜플 목록
+
+</div>
+
+<div class="point">
+
+items()
+
+↓
+
+dict_items 객체
+
+list()로 변환하였다.
+
+</div>
+
+</details>
+
+</div>
+
+
+
+
+
+
+
+<div class="quiz">
+
+<h2>⑦ items() + map()</h2>
+
+<pre>
+print(list(map(lambda x:x[::-1],{'A':1,'B':2}.items())))
+</pre>
+
+<details>
+<summary>정답 및 해설</summary>
+
+<div class="answer">
+
+<pre>
+[(1,'A'),
+ (2,'B')]
+</pre>
+
+</div>
+
+<div class="box">
+
+items()
+
+↓
+
+('A',1)
+
+↓
+
+[::-1]
+
+↓
+
+(1,'A')
+
+</div>
+
+<div class="point">
+
+[::-1]
+
+튜플도 뒤집을 수 있다.
+
+</div>
+
+</details>
+
+</div>
+
+
+
+
+
+
+
+<div class="quiz">
+
+<h2>⑧ enumerate() + items()</h2>
+
+<pre>
+print(list(enumerate({'A':10,'B':20}.items(),1)))
+</pre>
+
+<details>
+
+<summary>정답 및 해설</summary>
+
+<div class="answer">
+
+<pre>
+[(1,('A',10)),
+ (2,('B',20))]
+</pre>
+
+</div>
+
+<div class="box">
+
+items()
+
+↓
+
+('A',10)
+
+↓
+
+enumerate(...,1)
+
+↓
+
+번호 추가
+
+</div>
+
+<div class="point">
+
+★★★★
+
+시험에서 매우 자주 나온다.
+
+</div>
+
+</details>
+
+</div>
+
+
+
+
+
+
+
+<div class="quiz">
+
+<h2>⑨ zip()</h2>
+
+<pre>
+print(dict(zip("ABC",(100,200,300))))
+</pre>
+
+<details>
+
+<summary>정답 및 해설</summary>
+
+<div class="answer">
+
+<pre>
+{
+'A':100,
+'B':200,
+'C':300
+}
+</pre>
+
+</div>
+
+<div class="box">
+
+zip()
+
+↓
+
+('A',100)
+
+('B',200)
+
+('C',300)
+
+↓
+
+dict()
+
+</div>
+
+<div class="point">
+
+dict(zip())
+
+패턴은
+
+가장 많이 사용하는 형태이다.
+
+</div>
+
+</details>
+
+</div>
+
+
+
+
+
+
+
+<div class="quiz">
+
+<h2>⑩ **kwargs + values()</h2>
+
+<pre>
+print((lambda **k:sum(k.values()))(x=5,y=10,z=15))
+</pre>
+
+<details>
+
+<summary>정답 및 해설</summary>
+
+<div class="answer">
+
+<pre>
+30
+</pre>
+
+</div>
+
+<div class="box">
+
+values()
+
+↓
+
+5
+
+10
+
+15
+
+↓
+
+sum()
+
+↓
+
+30
+
+</div>
+
+<div class="point">
+
+values()
+
+keys()
+
+items()
+
+차이를 반드시 구분하자.
+
+</div>
+
+</details>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Python 한 줄 코딩 종합 16~20</title>
+
+<style>
+body{
+    font-family:"맑은 고딕";
+    margin:40px;
+    background:#eef8ff;
+    line-height:1.8;
+}
+.quiz{
+    background:white;
+    padding:20px;
+    margin:20px 0;
+    border-radius:10px;
+    box-shadow:0 0 8px gray;
+}
+pre{
+    background:#272822;
+    color:#f8f8f2;
+    padding:12px;
+    border-radius:8px;
+}
+summary{
+    cursor:pointer;
+    color:#0055aa;
+    font-weight:bold;
+}
+.answer{
+    color:darkgreen;
+}
+.box{
+    background:#f8fcff;
+    padding:10px;
+    border-left:5px solid steelblue;
+    margin-top:10px;
+}
+.point{
+    background:#fff8dc;
+    padding:10px;
+    border-left:5px solid orange;
+    margin-top:10px;
+}
+</style>
+
+</head>
+
+<body>
+
+<h1>Python 한 줄 코딩 종합 (16~20)</h1>
+
+<!-- 16 -->
+
+<div class="quiz">
+
+<h2>⑯ *args + zip() + map()</h2>
+
+<pre>
+print((lambda *a:list(zip(a,map(lambda x:x*2,a))))(1,2,3))
+</pre>
+
+<details>
+
+<summary>정답 및 해설</summary>
+
+<div class="answer">
+
+<pre>
+[(1,2),
+ (2,4),
+ (3,6)]
+</pre>
+
+</div>
+
+<div class="box">
+
+① *args
+
+↓
+
+(1,2,3)
+
+② map()
+
+↓
+
+2
+
+4
+
+6
+
+③ zip()
+
+↓
+
+(1,2)
+
+(2,4)
+
+(3,6)
+
+</div>
+
+<div class="point">
+
+zip()과 map()을 함께 사용하는 대표 패턴이다.
+
+</div>
+
+</details>
+
+</div>
+
+
+
+
+
+<!--17-->
+
+<div class="quiz">
+
+<h2>⑰ **kwargs + items() + enumerate()</h2>
+
+<pre>
+print((lambda **k:list(enumerate(k.items(),1)))(A=10,B=20))
+</pre>
+
+<details>
+
+<summary>정답 및 해설</summary>
+
+<div class="answer">
+
+<pre>
+[(1,('A',10)),
+ (2,('B',20))]
+</pre>
+
+</div>
+
+<div class="box">
+
+items()
+
+↓
+
+('A',10)
+
+('B',20)
+
+↓
+
+enumerate(...,1)
+
+↓
+
+번호 추가
+
+</div>
+
+<div class="point">
+
+(번호,(key,value))
+
+형태를 반드시 기억하자.
+
+</div>
+
+</details>
+
+</div>
+
+
+
+
+
+<!--18-->
+
+<div class="quiz">
+
+<h2>⑱ enumerate() + zip() + lambda</h2>
+
+<pre>
+print(list(map(lambda x:x[0]+sum(x[1]),
+enumerate(zip((1,2),(10,20))))))
+</pre>
+
+<details>
+
+<summary>정답 및 해설</summary>
+
+<div class="answer">
+
+<pre>
+[11,23]
+</pre>
+
+</div>
+
+<div class="box">
+
+enumerate()
+
+↓
+
+(0,(1,10))
+
+(1,(2,20))
+
+↓
+
+sum((1,10))
+
+↓
+
+11
+
+↓
+
+0+11=11
+
+1+22=23
+
+</div>
+
+<div class="point">
+
+sum()은 튜플에도 사용할 수 있다.
+
+</div>
+
+</details>
+
+</div>
+
+
+
+
+
+<!--19-->
+
+<div class="quiz">
+
+<h2>⑲ *args + enumerate()</h2>
+
+<pre>
+print((lambda *a:dict(enumerate(a,1)))(5,6,7))
+</pre>
+
+<details>
+
+<summary>정답 및 해설</summary>
+
+<div class="answer">
+
+<pre>
+{1:5,
+2:6,
+3:7}
+</pre>
+
+</div>
+
+<div class="box">
+
+enumerate(...,1)
+
+↓
+
+(1,5)
+
+(2,6)
+
+(3,7)
+
+↓
+
+dict()
+
+</div>
+
+<div class="point">
+
+dict(enumerate())
+
+형태는 번호 매기기에 매우 유용하다.
+
+</div>
+
+</details>
+
+</div>
+
+
+
+
+
+<!--20-->
+
+<div class="quiz">
+
+<h2>⑳ **kwargs + items() + map()</h2>
+
+<pre>
+print((lambda **k:list(map(lambda x:x[0],k.items())))(A=1,B=2,C=3))
+</pre>
+
+<details>
+
+<summary>정답 및 해설</summary>
+
+<div class="answer">
+
+<pre>
+['A',
+ 'B',
+ 'C']
+</pre>
+
+</div>
+
+<div class="box">
+
+items()
+
+↓
+
+('A',1)
+
+↓
+
+x[0]
+
+↓
+
+'A'
+
+동일하게
+
+B
+
+C
+
+추출
+
+</div>
+
+<div class="point">
+
+key만 추출하는 다른 방법은
+
+<pre>
+list(k.keys())
+</pre>
+
+이다.
+
+</div>
+
+</details>
+
+</div>
+
+</body>
+</html>

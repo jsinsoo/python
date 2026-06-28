@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Python 한 줄 코딩 1~5</title>
+
+<style>
+body{
+    font-family:"맑은 고딕";
+    background:#eef6ff;
+    margin:40px;
+    line-height:1.8;
+}
+h1{
+    color:#0b5394;
+}
+.quiz{
+    background:white;
+    margin:20px 0;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 0 8px #aaa;
+}
+pre{
+    background:#272822;
+    color:#f8f8f2;
+    padding:12px;
+    border-radius:8px;
+}
+summary{
+    cursor:pointer;
+    color:#0066cc;
+    font-weight:bold;
+}
+.answer{
+    color:darkgreen;
+}
+.box{
+    background:#f7fbff;
+    border-left:5px solid #4a90e2;
+    padding:10px;
+    margin-top:10px;
+}
+.point{
+    background:#fff8dc;
+    border-left:5px solid orange;
+    padding:10px;
+    margin-top:10px;
+}
+</style>
+
+</head>
+
+<body>
+
+<h1>Python 한 줄 코딩 출력 결과 예측 (1~5)</h1>
+
+<div class="quiz">
+
+<h2>① *args + sum()</h2>
+
+<pre>
+print((lambda *a:sum(a))(10,20,30))
+</pre>
+
+<details>
+
+<summary>정답 및 해설</summary>
+
+<div class="answer">
+
+<pre>
+60
+</pre>
+
+</div>
+
+<div class="box">
+
+<b>실행 과정</b>
+
+① lambda 함수 생성
+
+② *a
+
+↓
+
+(10,20,30)
+
+③ sum()
+
+↓
+
+10+20+30
+
+↓
+
+60
+
+</div>
+
+<div class="point">
+
+<b>핵심</b>
+
+*args는 tuple이다.
+
+</div>
+
+</details>
+
+</div>
+
+
+
+
+
+<div class="quiz">
+
+<h2>② map() + lambda</h2>
+
+<pre>
+print(list(map(lambda x:x*2,(1,2,3))))
+</pre>
+
+<details>
+
+<summary>정답 및 해설</summary>
+
+<div class="answer">
+
+<pre>
+[2,4,6]
+</pre>
+
+</div>
+
+<div class="box">
+
+map()
+
+↓
+
+모든 원소에
+
+lambda 적용
+
+1→2
+
+2→4
+
+3→6
+
+</div>
+
+<div class="point">
+
+map()은
+
+반복 가능한 객체(iterator)를 반환한다.
+
+</div>
+
+</details>
+
+</div>
+
+
+
+
+
+
+<div class="quiz">
+
+<h2>③ enumerate()</h2>
+
+<pre>
+print(list(enumerate("ABC",1)))
+</pre>
+
+<details>
+
+<summary>정답 및 해설</summary>
+
+<div class="answer">
+
+<pre>
+[(1,'A'),
+ (2,'B'),
+ (3,'C')]
+</pre>
+
+</div>
+
+<div class="box">
+
+enumerate()
+
+↓
+
+번호를 붙인다.
+
+시작 번호는
+
+1
+
+</div>
+
+<div class="point">
+
+기본 시작 번호는
+
+0이다.
+
+</div>
+
+</details>
+
+</div>
+
+
+
+
+
+
+<div class="quiz">
+
+<h2>④ zip()</h2>
+
+<pre>
+print(list(zip((10,20,30),"ABC")))
+</pre>
+
+<details>
+
+<summary>정답 및 해설</summary>
+
+<div class="answer">
+
+<pre>
+[(10,'A'),
+ (20,'B'),
+ (30,'C')]
+</pre>
+
+</div>
+
+<div class="box">
+
+zip()
+
+↓
+
+같은 위치끼리 묶는다.
+
+10 ↔ A
+
+20 ↔ B
+
+30 ↔ C
+
+</div>
+
+<div class="point">
+
+zip()은
+
+가장 짧은 iterable 길이에 맞춘다.
+
+</div>
+
+</details>
+
+</div>
+
+
+
+
+
+
+<div class="quiz">
+
+<h2>⑤ zip() + map() + lambda</h2>
+
+<pre>
+print(list(map(lambda x:x[0]+x[1],zip((1,2,3),(10,20,30)))))
+</pre>
+
+<details>
+
+<summary>정답 및 해설</summary>
+
+<div class="answer">
+
+<pre>
+[11,22,33]
+</pre>
+
+</div>
+
+<div class="box">
+
+zip()
+
+↓
+
+(1,10)
+
+(2,20)
+
+(3,30)
+
+↓
+
+lambda
+
+↓
+
+1+10
+
+2+20
+
+3+30
+
+</div>
+
+<div class="point">
+
+★★★★★
+
+가장 많이 출제되는
+
+zip()+map()+lambda
+
+조합이다.
+
+</div>
+
+</details>
+
+</div>
+
+</body>
+</html>
