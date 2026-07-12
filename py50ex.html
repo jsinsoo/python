@@ -1,0 +1,477 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>2022 고등학교 정보 성취기준별 과세특 연계 Python 프로젝트</title>
+<style>
+:root{--bg:#f4f7fb;--paper:#fff;--ink:#182230;--muted:#5c6978;--line:#d9e2ed;--primary:#225bb7;--code:#101827}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;line-height:1.7}.toolbar{position:fixed;left:8px;right:8px;top:8px;z-index:20;display:flex;gap:6px;align-items:center;background:rgba(255,255,255,.96);border:1px solid var(--line);padding:6px;border-radius:10px;box-shadow:0 5px 18px rgba(30,55,90,.13)}.toolbar select,.toolbar input,.toolbar button{height:31px;border:1px solid #bcc8d8;border-radius:6px;background:#fff;padding:0 9px;font-size:12px}.toolbar select{max-width:330px}.toolbar input{width:190px}.wrap{width:min(1500px,96vw);margin:auto;padding:74px 0 70px}.hero{background:linear-gradient(135deg,#163f86,#2d70db);color:#fff;padding:42px;border-radius:22px;box-shadow:0 16px 38px rgba(25,62,135,.22)}.hero h1{margin:0;font-size:clamp(27px,4vw,48px);line-height:1.25}.badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}.badge{padding:5px 11px;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.15);border-radius:999px;font-size:13px}.summary{background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px;margin:24px 0}details summary{cursor:pointer;color:var(--primary);font-weight:700}table{width:100%;border-collapse:collapse;margin-top:14px;font-size:14px}th,td{border:1px solid var(--line);padding:8px;vertical-align:top}th{background:#edf3ff}.area-title{margin:38px 0 14px;padding:15px 20px;border-left:7px solid var(--primary);background:#eaf2ff;border-radius:10px;font-size:27px}.project{background:#fff;border:1px solid var(--line);border-radius:18px;padding:26px;margin-bottom:24px;box-shadow:0 8px 24px rgba(30,55,90,.06);scroll-margin-top:62px}.head{display:grid;grid-template-columns:54px 1fr;gap:14px}.num{display:grid;place-items:center;width:50px;height:50px;border-radius:13px;background:var(--primary);color:#fff;font-weight:800}h2{margin:0;font-size:24px}.overview{margin:7px 0 0;color:var(--muted)}.record-grid,.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:18px}.record,.detail-grid article{border:1px solid var(--line);border-radius:12px;padding:16px}.record.a{border-top:4px solid #2f68c8}.record.b{border-top:4px solid #2b8a65}.record h3,.detail-grid h3{margin:0 0 8px}.code-box{margin-top:18px;border:1px solid var(--line);border-radius:13px;overflow:hidden}.code-top{display:flex;justify-content:space-between;align-items:center;padding:9px 12px;background:#edf2f8}.code-top button{border:0;background:var(--primary);color:#fff;border-radius:6px;padding:6px 11px;cursor:pointer}pre{margin:0;padding:18px;background:var(--code);color:#eaf0fa;overflow:auto;font:13.5px/1.58 Consolas,"Courier New",monospace}.footer{text-align:center;color:var(--muted);padding:25px}.hidden{display:none!important}@media(max-width:900px){.record-grid,.detail-grid{grid-template-columns:1fr}.toolbar input{display:none}}@media print{.toolbar{display:none}.wrap{width:100%;padding:0}.project{box-shadow:none;break-inside:avoid}pre{white-space:pre-wrap}}
+</style></head><body>
+<div class="toolbar"><select onchange="jumpTo(this.value)"><option value="">성취기준 바로 가기</option><option value="p1">01. 12정01-01 디지털 사회 영향 분석 대시보드</option><option value="p2">02. 12정01-02 개인정보 비식별화 및 라이선스 점검 도구</option><option value="p3">03. 12정01-03 생성형 AI 윤리 점검 체크리스트</option><option value="p4">04. 12정02-01 공공데이터·센서데이터 수집 비교기</option><option value="p5">05. 12정02-02 Pandas 데이터 자동 전처리기</option><option value="p6">06. 12정02-03 인구·기후 데이터 분석 시각화</option><option value="p7">07. 12정03-01 학교 급식 대기시간 알고리즘</option><option value="p8">08. 12정03-02 조건·반복 기반 환경 위험 판정기</option><option value="p9">09. 12정03-03 자료형 기반 과학 실험 기록</option><option value="p10">10. 12정03-04 함수·모듈 기반 데이터 분석 도구</option><option value="p11">11. 12정03-05 학생 프로젝트 데이터 관리</option><option value="p12">12. 12정03-06 정렬·탐색 알고리즘 성능 비교기</option><option value="p13">13. 12정03-07 오류 분석 및 자동 테스트</option><option value="p14">14. 12정03-08 학교 분실물 관리 응용 프로그램</option><option value="p15">15. 12정03-09 협업 프로젝트 역할·버전 관리</option><option value="p16">16. 12정03-10 프로젝트 성능 평가 및 개선</option><option value="p17">17. 12정04-01 규칙 기반 AI와 머신러닝 비교</option><option value="p18">18. 12정04-02 붓꽃 머신러닝 분류</option><option value="p19">19. 12정04-03 AI 공정성·투명성 평가 도구</option><option value="p20">20. 12정05-01 플랫폼 서비스 이용 데이터 분석</option><option value="p21">21. 12정05-02 지속가능한 디지털 프로젝트 평가기</option></select><input id="search" placeholder="기준·프로젝트 검색" oninput="filterProjects()"><button onclick="window.print()">인쇄</button><button onclick="window.scrollTo(0,0)">TOP</button></div>
+<main class="wrap"><header class="hero"><h1>2022 개정 교육과정 고등학교 「정보」<br>성취기준별 과세특 연계 Python 프로젝트</h1><p>21개 성취기준의 A형·B형 과세특 예시와 연결되는 Python 프로젝트 코드, 상세 설명, 확장 탐구를 통합했습니다.</p><div class="badges"><span class="badge">성취기준 21개</span><span class="badge">Python 프로젝트 21개</span><span class="badge">A/B형 과세특 연결</span><span class="badge">복사·검색·인쇄</span></div></header>
+<section class="summary"><details><summary>전체 프로젝트 목록 보기</summary><table><thead><tr><th>번호</th><th>성취기준</th><th>프로젝트</th><th>핵심 내용</th></tr></thead><tbody><tr><td>1</td><td>12정01-01</td><td>디지털 사회 영향 분석 대시보드</td><td>교육·의료·교통 분야의 디지털 전환 사례를 비교하고 긍정·부정 영향을 시각화한다.</td></tr><tr><td>2</td><td>12정01-02</td><td>개인정보 비식별화 및 라이선스 점검 도구</td><td>이름·전화번호를 마스킹하고 자료별 라이선스를 점검한다.</td></tr><tr><td>3</td><td>12정01-03</td><td>생성형 AI 윤리 점검 체크리스트</td><td>AI 결과의 편향, 출처, 개인정보, 인간 검토 여부를 자동 점검한다.</td></tr><tr><td>4</td><td>12정02-01</td><td>공공데이터·센서데이터 수집 비교기</td><td>CSV와 센서형 데이터를 함께 구성하고 변수 유형과 데이터 품질을 비교한다.</td></tr><tr><td>5</td><td>12정02-02</td><td>Pandas 데이터 자동 전처리기</td><td>결측치, 중복값, 이상치를 자동 처리하고 처리 전후 결과를 비교한다.</td></tr><tr><td>6</td><td>12정02-03</td><td>인구·기후 데이터 분석 시각화</td><td>지역별 인구 증감률과 기온 변화를 분석하고 그래프로 표현한다.</td></tr><tr><td>7</td><td>12정03-01</td><td>학교 급식 대기시간 알고리즘</td><td>학생 수와 배식 속도로 예상 대기시간을 계산한다.</td></tr><tr><td>8</td><td>12정03-02</td><td>조건·반복 기반 환경 위험 판정기</td><td>여러 시간대의 온도와 미세먼지를 반복 처리하여 위험 단계를 판정한다.</td></tr><tr><td>9</td><td>12정03-03</td><td>자료형 기반 과학 실험 기록</td><td>문자열, 정수, 실수, 불 자료형으로 실험 정보를 관리한다.</td></tr><tr><td>10</td><td>12정03-04</td><td>함수·모듈 기반 데이터 분석 도구</td><td>평균, 범위, 이상치 탐지를 함수로 분리한다.</td></tr><tr><td>11</td><td>12정03-05</td><td>학생 프로젝트 데이터 관리</td><td>리스트와 딕셔너리로 학생별 프로젝트 정보를 저장하고 검색한다.</td></tr><tr><td>12</td><td>12정03-06</td><td>정렬·탐색 알고리즘 성능 비교기</td><td>버블 정렬과 내장 정렬의 실행 시간을 비교한다.</td></tr><tr><td>13</td><td>12정03-07</td><td>오류 분석 및 자동 테스트</td><td>예외 처리와 단위 테스트로 오류를 찾고 수정한다.</td></tr><tr><td>14</td><td>12정03-08</td><td>학교 분실물 관리 응용 프로그램</td><td>분실물 등록, 검색, 반환 처리를 수행한다.</td></tr><tr><td>15</td><td>12정03-09</td><td>협업 프로젝트 역할·버전 관리</td><td>팀원 역할과 작업 상태, 변경 이력을 기록한다.</td></tr><tr><td>16</td><td>12정03-10</td><td>프로젝트 성능 평가 및 개선</td><td>정확도, 실행 시간, 사용자 만족도로 개선 우선순위를 정한다.</td></tr><tr><td>17</td><td>12정04-01</td><td>규칙 기반 AI와 머신러닝 비교</td><td>동일한 분류 문제를 규칙 기반 방식으로 구현한다.</td></tr><tr><td>18</td><td>12정04-02</td><td>붓꽃 머신러닝 분류</td><td>데이터 분리, 학습, 예측, 평가 과정을 수행한다.</td></tr><tr><td>19</td><td>12정04-03</td><td>AI 공정성·투명성 평가 도구</td><td>집단별 정확도를 비교하고 공정성 검토 필요성을 판단한다.</td></tr><tr><td>20</td><td>12정05-01</td><td>플랫폼 서비스 이용 데이터 분석</td><td>이용시간, 만족도, 광고 노출량을 분석한다.</td></tr><tr><td>21</td><td>12정05-02</td><td>지속가능한 디지털 프로젝트 평가기</td><td>에너지, 개인정보, 협업, 오픈소스 준수를 종합 평가한다.</td></tr></tbody></table></details><p style="font-size:13px;color:#5c6978">※ 사용자가 제공한 성취기준 문구와 A/B형 과세특 예시를 기반으로 구성한 수업·평가용 자료입니다.</p></section>
+<h1 class="area-title">Ⅰ. 디지털 문화</h1>
+<section class="project" id="p1" data-search="ⅰ. 디지털 문화 12정01-01 디지털 사회 영향 분석 대시보드 교육·의료·교통 분야의 디지털 전환 사례를 비교하고 긍정·부정 영향을 시각화한다.">
+<div class="head"><span class="num">01</span><div><h2>12정01-01 · 디지털 사회 영향 분석 대시보드</h2><p class="overview">교육·의료·교통 분야의 디지털 전환 사례를 비교하고 긍정·부정 영향을 시각화한다.</p></div></div>
+<div class="record-grid"><article class="record a"><h3>A형 과세특 연결</h3><p>디지털 전환의 긍정적·부정적 영향을 비교·분석하고 근거 중심으로 설명함.</p></article><article class="record b"><h3>B형 과세특 연결</h3><p>공공데이터를 활용해 디지털 서비스 개선 방안을 제안하고 협업으로 구체화함.</p></article></div>
+<div class="code-box"><div class="code-top"><strong>Python 프로젝트 예시 코드</strong><button onclick="copyCode(this)">코드 복사</button></div><pre><code># 사전 설치: pip install pandas matplotlib
+import pandas as pd
+import matplotlib.pyplot as plt
+
+df = pd.DataFrame({
+    &quot;분야&quot;: [&quot;교육&quot;, &quot;의료&quot;, &quot;교통&quot;],
+    &quot;편의성&quot;: [85, 92, 88],
+    &quot;접근성&quot;: [78, 81, 84],
+    &quot;개인정보위험&quot;: [55, 72, 61]
+})
+
+df[&quot;긍정영향&quot;] = (df[&quot;편의성&quot;] + df[&quot;접근성&quot;]) / 2
+df[&quot;순영향&quot;] = df[&quot;긍정영향&quot;] - df[&quot;개인정보위험&quot;] * 0.4
+print(df.round(1))
+
+df.set_index(&quot;분야&quot;)[[&quot;긍정영향&quot;, &quot;개인정보위험&quot;]].plot(kind=&quot;bar&quot;)
+plt.title(&quot;디지털 전환의 긍정·위험 영향 비교&quot;)
+plt.ylabel(&quot;점수&quot;)
+plt.xticks(rotation=0)
+plt.tight_layout()
+plt.show()</code></pre></div>
+<div class="detail-grid"><article><h3>프로젝트 상세 설명</h3><p>디지털 전환의 사회적 영향을 수치화하여 장점과 위험을 균형 있게 분석한다.</p><ol><li>문제 상황을 분석하고 입력과 출력을 정의한다.</li><li>성취기준의 핵심 개념을 Python 코드로 구현한다.</li><li>실행 결과를 표·그래프·평가지표로 확인한다.</li><li>오류 가능성, 데이터 윤리, 개선 방향을 검토한다.</li></ol></article><article><h3>확장 탐구</h3><p>실제 공공데이터를 추가하고 분야별 가중치를 바꾸어 결과를 비교한다.</p><p><b>과세특 기록 포인트:</b> 문제 정의, 구현 과정, 테스트, 분석 결과, 협업 역할, 개선 활동을 실제 수행 근거와 함께 기록한다.</p></article></div>
+</section>
+<section class="project" id="p2" data-search="ⅰ. 디지털 문화 12정01-02 개인정보 비식별화 및 라이선스 점검 도구 이름·전화번호를 마스킹하고 자료별 라이선스를 점검한다.">
+<div class="head"><span class="num">02</span><div><h2>12정01-02 · 개인정보 비식별화 및 라이선스 점검 도구</h2><p class="overview">이름·전화번호를 마스킹하고 자료별 라이선스를 점검한다.</p></div></div>
+<div class="record-grid"><article class="record a"><h3>A형 과세특 연결</h3><p>개인정보 보호와 저작권 사례를 조사하고 디지털 시민의 책임을 설명함.</p></article><article class="record b"><h3>B형 과세특 연결</h3><p>데이터 출처와 라이선스를 표시하고 개인정보 비식별화와 보안을 실천함.</p></article></div>
+<div class="code-box"><div class="code-top"><strong>Python 프로젝트 예시 코드</strong><button onclick="copyCode(this)">코드 복사</button></div><pre><code>import hashlib
+
+def mask_name(name):
+    return name[0] + &quot;*&quot; * (len(name) - 1)
+
+def mask_phone(phone):
+    parts = phone.split(&quot;-&quot;)
+    return f&quot;{parts[0]}-****-{parts[2]}&quot; if len(parts) == 3 else &quot;형식 오류&quot;
+
+def pseudonymize(text, salt=&quot;school&quot;):
+    return hashlib.sha256((salt + text).encode()).hexdigest()[:12]
+
+licenses = {
+    &quot;학교사진.jpg&quot;: &quot;CC BY-NC&quot;,
+    &quot;아이콘.png&quot;: &quot;CC0&quot;,
+    &quot;코드.py&quot;: &quot;MIT&quot;
+}
+
+print(mask_name(&quot;홍길동&quot;))
+print(mask_phone(&quot;010-1234-5678&quot;))
+print(pseudonymize(&quot;1101_홍길동&quot;))
+for file, license_name in licenses.items():
+    print(file, &quot;→&quot;, license_name)</code></pre></div>
+<div class="detail-grid"><article><h3>프로젝트 상세 설명</h3><p>개인정보 보호와 저작권 준수를 실제 코드로 구현한다.</p><ol><li>문제 상황을 분석하고 입력과 출력을 정의한다.</li><li>성취기준의 핵심 개념을 Python 코드로 구현한다.</li><li>실행 결과를 표·그래프·평가지표로 확인한다.</li><li>오류 가능성, 데이터 윤리, 개선 방향을 검토한다.</li></ol></article><article><h3>확장 탐구</h3><p>이메일 마스킹, 생년월일 범주화, 라이선스별 허용 행위 안내 기능을 추가한다.</p><p><b>과세특 기록 포인트:</b> 문제 정의, 구현 과정, 테스트, 분석 결과, 협업 역할, 개선 활동을 실제 수행 근거와 함께 기록한다.</p></article></div>
+</section>
+<section class="project" id="p3" data-search="ⅰ. 디지털 문화 12정01-03 생성형 ai 윤리 점검 체크리스트 ai 결과의 편향, 출처, 개인정보, 인간 검토 여부를 자동 점검한다.">
+<div class="head"><span class="num">03</span><div><h2>12정01-03 · 생성형 AI 윤리 점검 체크리스트</h2><p class="overview">AI 결과의 편향, 출처, 개인정보, 인간 검토 여부를 자동 점검한다.</p></div></div>
+<div class="record-grid"><article class="record a"><h3>A형 과세특 연결</h3><p>생성형 AI의 편향성과 저작권 문제를 탐구하고 윤리적 활용 방안을 제시함.</p></article><article class="record b"><h3>B형 과세특 연결</h3><p>AI 결과의 신뢰성과 공정성을 검토하고 출처 기록과 인간 검토를 적용함.</p></article></div>
+<div class="code-box"><div class="code-top"><strong>Python 프로젝트 예시 코드</strong><button onclick="copyCode(this)">코드 복사</button></div><pre><code>checks = {
+    &quot;출처를 기록했는가&quot;: True,
+    &quot;개인정보를 제거했는가&quot;: True,
+    &quot;편향 가능성을 검토했는가&quot;: False,
+    &quot;사람이 최종 검토했는가&quot;: True,
+    &quot;저작권 침해 가능성을 확인했는가&quot;: False
+}
+
+score = sum(checks.values())
+for item, passed in checks.items():
+    print(f&quot;{&#x27;통과&#x27; if passed else &#x27;보완&#x27;} : {item}&quot;)
+print(f&quot;윤리 점검 점수: {score}/{len(checks)}&quot;)
+if score &lt; len(checks):
+    print(&quot;보완이 필요한 항목을 수정한 뒤 결과물을 사용하세요.&quot;)</code></pre></div>
+<div class="detail-grid"><article><h3>프로젝트 상세 설명</h3><p>생성형 AI 활용 과정에서 발생할 수 있는 윤리 문제를 항목별로 점검한다.</p><ol><li>문제 상황을 분석하고 입력과 출력을 정의한다.</li><li>성취기준의 핵심 개념을 Python 코드로 구현한다.</li><li>실행 결과를 표·그래프·평가지표로 확인한다.</li><li>오류 가능성, 데이터 윤리, 개선 방향을 검토한다.</li></ol></article><article><h3>확장 탐구</h3><p>체크 결과를 JSON으로 저장하고 위험도가 높은 항목에 자동 경고를 표시한다.</p><p><b>과세특 기록 포인트:</b> 문제 정의, 구현 과정, 테스트, 분석 결과, 협업 역할, 개선 활동을 실제 수행 근거와 함께 기록한다.</p></article></div>
+</section><h1 class="area-title">Ⅱ. 데이터</h1>
+<section class="project" id="p4" data-search="ⅱ. 데이터 12정02-01 공공데이터·센서데이터 수집 비교기 csv와 센서형 데이터를 함께 구성하고 변수 유형과 데이터 품질을 비교한다.">
+<div class="head"><span class="num">04</span><div><h2>12정02-01 · 공공데이터·센서데이터 수집 비교기</h2><p class="overview">CSV와 센서형 데이터를 함께 구성하고 변수 유형과 데이터 품질을 비교한다.</p></div></div>
+<div class="record-grid"><article class="record a"><h3>A형 과세특 연결</h3><p>공공데이터와 센서데이터의 구조와 특성을 비교하고 데이터 품질의 중요성을 분석함.</p></article><article class="record b"><h3>B형 과세특 연결</h3><p>API와 CSV로 데이터를 수집하고 변수별 특성과 오류를 점검함.</p></article></div>
+<div class="code-box"><div class="code-top"><strong>Python 프로젝트 예시 코드</strong><button onclick="copyCode(this)">코드 복사</button></div><pre><code>import csv
+from pathlib import Path
+
+weather = [
+    [&quot;date&quot;, &quot;temperature&quot;, &quot;rain&quot;],
+    [&quot;2026-07-01&quot;, 28.4, 0],
+    [&quot;2026-07-02&quot;, 29.1, 12]
+]
+with open(&quot;weather.csv&quot;, &quot;w&quot;, newline=&quot;&quot;, encoding=&quot;utf-8-sig&quot;) as f:
+    csv.writer(f).writerows(weather)
+
+sensor_data = [
+    {&quot;time&quot;: &quot;09:00&quot;, &quot;temperature&quot;: 24.2, &quot;humidity&quot;: 48},
+    {&quot;time&quot;: &quot;09:10&quot;, &quot;temperature&quot;: 24.5, &quot;humidity&quot;: 50}
+]
+print(Path(&quot;weather.csv&quot;).read_text(encoding=&quot;utf-8-sig&quot;))
+print(sensor_data)
+print(&quot;공공데이터: 정형·주기적 수집&quot;)
+print(&quot;센서데이터: 실시간·연속형 특성&quot;)</code></pre></div>
+<div class="detail-grid"><article><h3>프로젝트 상세 설명</h3><p>서로 다른 출처와 형식의 데이터를 수집하여 구조와 갱신 주기를 비교한다.</p><ol><li>문제 상황을 분석하고 입력과 출력을 정의한다.</li><li>성취기준의 핵심 개념을 Python 코드로 구현한다.</li><li>실행 결과를 표·그래프·평가지표로 확인한다.</li><li>오류 가능성, 데이터 윤리, 개선 방향을 검토한다.</li></ol></article><article><h3>확장 탐구</h3><p>JSON과 API 응답 형식을 추가하고 데이터 사전을 작성한다.</p><p><b>과세특 기록 포인트:</b> 문제 정의, 구현 과정, 테스트, 분석 결과, 협업 역할, 개선 활동을 실제 수행 근거와 함께 기록한다.</p></article></div>
+</section>
+<section class="project" id="p5" data-search="ⅱ. 데이터 12정02-02 pandas 데이터 자동 전처리기 결측치, 중복값, 이상치를 자동 처리하고 처리 전후 결과를 비교한다.">
+<div class="head"><span class="num">05</span><div><h2>12정02-02 · Pandas 데이터 자동 전처리기</h2><p class="overview">결측치, 중복값, 이상치를 자동 처리하고 처리 전후 결과를 비교한다.</p></div></div>
+<div class="record-grid"><article class="record a"><h3>A형 과세특 연결</h3><p>결측치, 중복값, 이상치 처리 방식에 따른 결과 차이를 비교함.</p></article><article class="record b"><h3>B형 과세특 연결</h3><p>Python과 Pandas로 전처리를 자동화하고 다양한 입력을 테스트함.</p></article></div>
+<div class="code-box"><div class="code-top"><strong>Python 프로젝트 예시 코드</strong><button onclick="copyCode(this)">코드 복사</button></div><pre><code># 사전 설치: pip install pandas
+import pandas as pd
+
+df = pd.DataFrame({
+    &quot;지역&quot;: [&quot;A&quot;, &quot;A&quot;, &quot;B&quot;, &quot;B&quot;, &quot;C&quot;],
+    &quot;미세먼지&quot;: [35, 35, None, 480, 42]
+})
+print(&quot;처리 전&quot;)
+print(df)
+
+df = df.drop_duplicates()
+median = df[&quot;미세먼지&quot;].median()
+df[&quot;미세먼지&quot;] = df[&quot;미세먼지&quot;].fillna(median)
+df.loc[~df[&quot;미세먼지&quot;].between(0, 300), &quot;미세먼지&quot;] = median
+
+print(&quot;\n처리 후&quot;)
+print(df)</code></pre></div>
+<div class="detail-grid"><article><h3>프로젝트 상세 설명</h3><p>전처리 방법이 분석 결과에 미치는 영향을 확인하고 데이터 정제 절차를 자동화한다.</p><ol><li>문제 상황을 분석하고 입력과 출력을 정의한다.</li><li>성취기준의 핵심 개념을 Python 코드로 구현한다.</li><li>실행 결과를 표·그래프·평가지표로 확인한다.</li><li>오류 가능성, 데이터 윤리, 개선 방향을 검토한다.</li></ol></article><article><h3>확장 탐구</h3><p>평균 대체, 중앙값 대체, 행 삭제를 각각 적용해 결과를 비교한다.</p><p><b>과세특 기록 포인트:</b> 문제 정의, 구현 과정, 테스트, 분석 결과, 협업 역할, 개선 활동을 실제 수행 근거와 함께 기록한다.</p></article></div>
+</section>
+<section class="project" id="p6" data-search="ⅱ. 데이터 12정02-03 인구·기후 데이터 분석 시각화 지역별 인구 증감률과 기온 변화를 분석하고 그래프로 표현한다.">
+<div class="head"><span class="num">06</span><div><h2>12정02-03 · 인구·기후 데이터 분석 시각화</h2><p class="overview">지역별 인구 증감률과 기온 변화를 분석하고 그래프로 표현한다.</p></div></div>
+<div class="record-grid"><article class="record a"><h3>A형 과세특 연결</h3><p>데이터의 추세와 상관관계를 분석하고 시각화를 통해 시사점을 제안함.</p></article><article class="record b"><h3>B형 과세특 연결</h3><p>Matplotlib로 적절한 그래프를 구현하여 데이터 특징을 전달함.</p></article></div>
+<div class="code-box"><div class="code-top"><strong>Python 프로젝트 예시 코드</strong><button onclick="copyCode(this)">코드 복사</button></div><pre><code># 사전 설치: pip install pandas matplotlib
+import pandas as pd
+import matplotlib.pyplot as plt
+
+df = pd.DataFrame({
+    &quot;지역&quot;: [&quot;A&quot;, &quot;B&quot;, &quot;C&quot;, &quot;D&quot;],
+    &quot;2020인구&quot;: [120000, 95000, 80000, 70000],
+    &quot;2025인구&quot;: [116000, 90000, 76000, 65000],
+    &quot;평균기온&quot;: [13.8, 14.1, 14.5, 14.8]
+})
+df[&quot;증감률&quot;] = (df[&quot;2025인구&quot;] - df[&quot;2020인구&quot;]) / df[&quot;2020인구&quot;] * 100
+print(df.round(2))
+print(&quot;상관계수:&quot;, df[&quot;증감률&quot;].corr(df[&quot;평균기온&quot;]))
+plt.scatter(df[&quot;평균기온&quot;], df[&quot;증감률&quot;])
+for _, row in df.iterrows():
+    plt.text(row[&quot;평균기온&quot;], row[&quot;증감률&quot;], row[&quot;지역&quot;])
+plt.xlabel(&quot;평균기온&quot;)
+plt.ylabel(&quot;인구 증감률(%)&quot;)
+plt.title(&quot;기후와 인구 변화 관계 탐색&quot;)
+plt.show()</code></pre></div>
+<div class="detail-grid"><article><h3>프로젝트 상세 설명</h3><p>데이터의 경향과 상관관계를 찾고 시각화를 통해 정책적 시사점을 도출한다.</p><ol><li>문제 상황을 분석하고 입력과 출력을 정의한다.</li><li>성취기준의 핵심 개념을 Python 코드로 구현한다.</li><li>실행 결과를 표·그래프·평가지표로 확인한다.</li><li>오류 가능성, 데이터 윤리, 개선 방향을 검토한다.</li></ol></article><article><h3>확장 탐구</h3><p>실제 행정구역 데이터와 지도 시각화를 추가한다.</p><p><b>과세특 기록 포인트:</b> 문제 정의, 구현 과정, 테스트, 분석 결과, 협업 역할, 개선 활동을 실제 수행 근거와 함께 기록한다.</p></article></div>
+</section><h1 class="area-title">Ⅲ. 알고리즘과 프로그래밍</h1>
+<section class="project" id="p7" data-search="ⅲ. 알고리즘과 프로그래밍 12정03-01 학교 급식 대기시간 알고리즘 학생 수와 배식 속도로 예상 대기시간을 계산한다.">
+<div class="head"><span class="num">07</span><div><h2>12정03-01 · 학교 급식 대기시간 알고리즘</h2><p class="overview">학생 수와 배식 속도로 예상 대기시간을 계산한다.</p></div></div>
+<div class="record-grid"><article class="record a"><h3>A형 과세특 연결</h3><p>실생활 문제를 단계별로 분석하여 순서도와 의사코드로 표현함.</p></article><article class="record b"><h3>B형 과세특 연결</h3><p>학교생활 문제 해결 알고리즘을 설계하고 피드백으로 개선함.</p></article></div>
+<div class="code-box"><div class="code-top"><strong>Python 프로젝트 예시 코드</strong><button onclick="copyCode(this)">코드 복사</button></div><pre><code>def expected_wait(students, serving_per_minute):
+    if students &lt; 0 or serving_per_minute &lt;= 0:
+        raise ValueError(&quot;입력값을 확인하세요.&quot;)
+    return students / serving_per_minute
+
+cases = [(120, 15), (180, 20), (240, 24)]
+for students, speed in cases:
+    print(f&quot;학생 {students}명, 분당 {speed}명 → 약 {expected_wait(students, speed):.1f}분&quot;)
+
+# 의사코드
+# 1. 학생 수와 분당 배식 인원을 입력한다.
+# 2. 학생 수를 배식 속도로 나눈다.
+# 3. 예상 대기시간을 출력한다.</code></pre></div>
+<div class="detail-grid"><article><h3>프로젝트 상세 설명</h3><p>실생활 문제를 입력, 처리, 출력 단계로 분해하고 의사코드와 Python 코드로 표현한다.</p><ol><li>문제 상황을 분석하고 입력과 출력을 정의한다.</li><li>성취기준의 핵심 개념을 Python 코드로 구현한다.</li><li>실행 결과를 표·그래프·평가지표로 확인한다.</li><li>오류 가능성, 데이터 윤리, 개선 방향을 검토한다.</li></ol></article><article><h3>확장 탐구</h3><p>여러 배식대가 동시에 운영되는 경우를 반영한다.</p><p><b>과세특 기록 포인트:</b> 문제 정의, 구현 과정, 테스트, 분석 결과, 협업 역할, 개선 활동을 실제 수행 근거와 함께 기록한다.</p></article></div>
+</section>
+<section class="project" id="p8" data-search="ⅲ. 알고리즘과 프로그래밍 12정03-02 조건·반복 기반 환경 위험 판정기 여러 시간대의 온도와 미세먼지를 반복 처리하여 위험 단계를 판정한다.">
+<div class="head"><span class="num">08</span><div><h2>12정03-02 · 조건·반복 기반 환경 위험 판정기</h2><p class="overview">여러 시간대의 온도와 미세먼지를 반복 처리하여 위험 단계를 판정한다.</p></div></div>
+<div class="record-grid"><article class="record a"><h3>A형 과세특 연결</h3><p>순차·선택·반복 구조의 특징을 이해하고 효율적인 알고리즘을 설계함.</p></article><article class="record b"><h3>B형 과세특 연결</h3><p>반복과 조건 구조를 활용한 프로그램을 구현하고 결과를 분석함.</p></article></div>
+<div class="code-box"><div class="code-top"><strong>Python 프로젝트 예시 코드</strong><button onclick="copyCode(this)">코드 복사</button></div><pre><code>records = [
+    {&quot;time&quot;: &quot;09:00&quot;, &quot;temp&quot;: 23, &quot;pm10&quot;: 28},
+    {&quot;time&quot;: &quot;12:00&quot;, &quot;temp&quot;: 31, &quot;pm10&quot;: 82},
+    {&quot;time&quot;: &quot;15:00&quot;, &quot;temp&quot;: 34, &quot;pm10&quot;: 120}
+]
+for r in records:
+    if r[&quot;temp&quot;] &gt;= 33 or r[&quot;pm10&quot;] &gt; 100:
+        level = &quot;위험&quot;
+    elif r[&quot;temp&quot;] &gt;= 28 or r[&quot;pm10&quot;] &gt; 50:
+        level = &quot;주의&quot;
+    else:
+        level = &quot;안전&quot;
+    print(r[&quot;time&quot;], level)</code></pre></div>
+<div class="detail-grid"><article><h3>프로젝트 상세 설명</h3><p>순차, 선택, 반복 구조를 결합하여 여러 데이터를 효율적으로 처리한다.</p><ol><li>문제 상황을 분석하고 입력과 출력을 정의한다.</li><li>성취기준의 핵심 개념을 Python 코드로 구현한다.</li><li>실행 결과를 표·그래프·평가지표로 확인한다.</li><li>오류 가능성, 데이터 윤리, 개선 방향을 검토한다.</li></ol></article><article><h3>확장 탐구</h3><p>위험 기준을 함수로 분리하고 임계값을 사용자 입력으로 받는다.</p><p><b>과세특 기록 포인트:</b> 문제 정의, 구현 과정, 테스트, 분석 결과, 협업 역할, 개선 활동을 실제 수행 근거와 함께 기록한다.</p></article></div>
+</section>
+<section class="project" id="p9" data-search="ⅲ. 알고리즘과 프로그래밍 12정03-03 자료형 기반 과학 실험 기록 문자열, 정수, 실수, 불 자료형으로 실험 정보를 관리한다.">
+<div class="head"><span class="num">09</span><div><h2>12정03-03 · 자료형 기반 과학 실험 기록</h2><p class="overview">문자열, 정수, 실수, 불 자료형으로 실험 정보를 관리한다.</p></div></div>
+<div class="record-grid"><article class="record a"><h3>A형 과세특 연결</h3><p>자료형의 특성을 이해하고 문제 상황에 적합한 변수를 설계함.</p></article><article class="record b"><h3>B형 과세특 연결</h3><p>다양한 자료형과 예외 처리를 활용해 사용자 편의성을 높임.</p></article></div>
+<div class="code-box"><div class="code-top"><strong>Python 프로젝트 예시 코드</strong><button onclick="copyCode(this)">코드 복사</button></div><pre><code>experiment = {
+    &quot;title&quot;: &quot;용수철 진동 실험&quot;,
+    &quot;trial&quot;: 3,
+    &quot;period&quot;: 1.42,
+    &quot;success&quot;: True
+}
+for key, value in experiment.items():
+    print(key, value, type(value).__name__)
+
+try:
+    mass = float(input(&quot;질량(g): &quot;))
+    if mass &lt;= 0:
+        raise ValueError(&quot;질량은 양수여야 합니다.&quot;)
+    print(&quot;입력 질량:&quot;, mass)
+except ValueError as e:
+    print(&quot;입력 오류:&quot;, e)</code></pre></div>
+<div class="detail-grid"><article><h3>프로젝트 상세 설명</h3><p>문제 상황에 맞는 자료형을 선택하고 입력 오류를 처리한다.</p><ol><li>문제 상황을 분석하고 입력과 출력을 정의한다.</li><li>성취기준의 핵심 개념을 Python 코드로 구현한다.</li><li>실행 결과를 표·그래프·평가지표로 확인한다.</li><li>오류 가능성, 데이터 윤리, 개선 방향을 검토한다.</li></ol></article><article><h3>확장 탐구</h3><p>날짜형과 리스트형 데이터를 추가하고 파일 저장 기능을 구현한다.</p><p><b>과세특 기록 포인트:</b> 문제 정의, 구현 과정, 테스트, 분석 결과, 협업 역할, 개선 활동을 실제 수행 근거와 함께 기록한다.</p></article></div>
+</section>
+<section class="project" id="p10" data-search="ⅲ. 알고리즘과 프로그래밍 12정03-04 함수·모듈 기반 데이터 분석 도구 평균, 범위, 이상치 탐지를 함수로 분리한다.">
+<div class="head"><span class="num">10</span><div><h2>12정03-04 · 함수·모듈 기반 데이터 분석 도구</h2><p class="overview">평균, 범위, 이상치 탐지를 함수로 분리한다.</p></div></div>
+<div class="record-grid"><article class="record a"><h3>A형 과세특 연결</h3><p>함수 중심 프로그램을 설계하여 재사용성과 유지보수성을 높임.</p></article><article class="record b"><h3>B형 과세특 연결</h3><p>모듈화를 적용하고 팀원과 기능을 분담하여 협업함.</p></article></div>
+<div class="code-box"><div class="code-top"><strong>Python 프로젝트 예시 코드</strong><button onclick="copyCode(this)">코드 복사</button></div><pre><code>from statistics import mean
+
+def data_range(values):
+    return max(values) - min(values)
+
+def detect_outliers(values, limit=2.0):
+    avg = mean(values)
+    return [v for v in values if abs(v - avg) &gt;= limit]
+
+def summarize(values):
+    return {
+        &quot;평균&quot;: round(mean(values), 2),
+        &quot;범위&quot;: round(data_range(values), 2),
+        &quot;이상값&quot;: detect_outliers(values)
+    }
+
+temperatures = [22.1, 22.3, 22.0, 29.8, 22.2]
+print(summarize(temperatures))</code></pre></div>
+<div class="detail-grid"><article><h3>프로젝트 상세 설명</h3><p>기능별 함수를 설계하여 재사용성과 유지보수성을 높인다.</p><ol><li>문제 상황을 분석하고 입력과 출력을 정의한다.</li><li>성취기준의 핵심 개념을 Python 코드로 구현한다.</li><li>실행 결과를 표·그래프·평가지표로 확인한다.</li><li>오류 가능성, 데이터 윤리, 개선 방향을 검토한다.</li></ol></article><article><h3>확장 탐구</h3><p>함수를 별도 모듈 파일로 분리하고 import하여 사용한다.</p><p><b>과세특 기록 포인트:</b> 문제 정의, 구현 과정, 테스트, 분석 결과, 협업 역할, 개선 활동을 실제 수행 근거와 함께 기록한다.</p></article></div>
+</section>
+<section class="project" id="p11" data-search="ⅲ. 알고리즘과 프로그래밍 12정03-05 학생 프로젝트 데이터 관리 리스트와 딕셔너리로 학생별 프로젝트 정보를 저장하고 검색한다.">
+<div class="head"><span class="num">11</span><div><h2>12정03-05 · 학생 프로젝트 데이터 관리</h2><p class="overview">리스트와 딕셔너리로 학생별 프로젝트 정보를 저장하고 검색한다.</p></div></div>
+<div class="record-grid"><article class="record a"><h3>A형 과세특 연결</h3><p>자료구조별 특징을 비교하고 문제에 적합한 자료구조를 선택함.</p></article><article class="record b"><h3>B형 과세특 연결</h3><p>리스트와 딕셔너리를 활용한 데이터 관리 프로그램을 구현함.</p></article></div>
+<div class="code-box"><div class="code-top"><strong>Python 프로젝트 예시 코드</strong><button onclick="copyCode(this)">코드 복사</button></div><pre><code>students = [
+    {&quot;id&quot;: &quot;1101&quot;, &quot;name&quot;: &quot;민수&quot;, &quot;score&quot;: 88, &quot;topic&quot;: &quot;AI&quot;},
+    {&quot;id&quot;: &quot;1102&quot;, &quot;name&quot;: &quot;서연&quot;, &quot;score&quot;: 94, &quot;topic&quot;: &quot;데이터&quot;},
+    {&quot;id&quot;: &quot;1103&quot;, &quot;name&quot;: &quot;지훈&quot;, &quot;score&quot;: 91, &quot;topic&quot;: &quot;보안&quot;}
+]
+score_by_id = {s[&quot;id&quot;]: s[&quot;score&quot;] for s in students}
+print(&quot;1102 점수:&quot;, score_by_id[&quot;1102&quot;])
+print(&quot;평균:&quot;, sum(score_by_id.values()) / len(score_by_id))
+top = max(students, key=lambda s: s[&quot;score&quot;])
+print(&quot;최고점:&quot;, top[&quot;name&quot;], top[&quot;score&quot;])</code></pre></div>
+<div class="detail-grid"><article><h3>프로젝트 상세 설명</h3><p>리스트와 딕셔너리의 특성을 비교하고 목적에 맞는 자료구조를 선택한다.</p><ol><li>문제 상황을 분석하고 입력과 출력을 정의한다.</li><li>성취기준의 핵심 개념을 Python 코드로 구현한다.</li><li>실행 결과를 표·그래프·평가지표로 확인한다.</li><li>오류 가능성, 데이터 윤리, 개선 방향을 검토한다.</li></ol></article><article><h3>확장 탐구</h3><p>주제별 학생 수 집계와 JSON 저장 기능을 추가한다.</p><p><b>과세특 기록 포인트:</b> 문제 정의, 구현 과정, 테스트, 분석 결과, 협업 역할, 개선 활동을 실제 수행 근거와 함께 기록한다.</p></article></div>
+</section>
+<section class="project" id="p12" data-search="ⅲ. 알고리즘과 프로그래밍 12정03-06 정렬·탐색 알고리즘 성능 비교기 버블 정렬과 내장 정렬의 실행 시간을 비교한다.">
+<div class="head"><span class="num">12</span><div><h2>12정03-06 · 정렬·탐색 알고리즘 성능 비교기</h2><p class="overview">버블 정렬과 내장 정렬의 실행 시간을 비교한다.</p></div></div>
+<div class="record-grid"><article class="record a"><h3>A형 과세특 연결</h3><p>정렬과 탐색 알고리즘의 시간 복잡도와 실행 성능을 비교함.</p></article><article class="record b"><h3>B형 과세특 연결</h3><p>여러 알고리즘을 구현하고 실행 시간을 측정하여 비교함.</p></article></div>
+<div class="code-box"><div class="code-top"><strong>Python 프로젝트 예시 코드</strong><button onclick="copyCode(this)">코드 복사</button></div><pre><code>import random
+from time import perf_counter
+
+def bubble_sort(data):
+    a = data[:]
+    for end in range(len(a)-1, 0, -1):
+        for i in range(end):
+            if a[i] &gt; a[i+1]:
+                a[i], a[i+1] = a[i+1], a[i]
+    return a
+
+data = [random.randint(0, 10000) for _ in range(1000)]
+for fn in [bubble_sort, sorted]:
+    start = perf_counter()
+    fn(data)
+    print(fn.__name__, perf_counter() - start)</code></pre></div>
+<div class="detail-grid"><article><h3>프로젝트 상세 설명</h3><p>알고리즘별 실행 시간을 측정하고 입력 크기에 따른 성능 차이를 분석한다.</p><ol><li>문제 상황을 분석하고 입력과 출력을 정의한다.</li><li>성취기준의 핵심 개념을 Python 코드로 구현한다.</li><li>실행 결과를 표·그래프·평가지표로 확인한다.</li><li>오류 가능성, 데이터 윤리, 개선 방향을 검토한다.</li></ol></article><article><h3>확장 탐구</h3><p>데이터 크기를 단계적으로 늘리고 그래프로 시각화한다.</p><p><b>과세특 기록 포인트:</b> 문제 정의, 구현 과정, 테스트, 분석 결과, 협업 역할, 개선 활동을 실제 수행 근거와 함께 기록한다.</p></article></div>
+</section>
+<section class="project" id="p13" data-search="ⅲ. 알고리즘과 프로그래밍 12정03-07 오류 분석 및 자동 테스트 예외 처리와 단위 테스트로 오류를 찾고 수정한다.">
+<div class="head"><span class="num">13</span><div><h2>12정03-07 · 오류 분석 및 자동 테스트</h2><p class="overview">예외 처리와 단위 테스트로 오류를 찾고 수정한다.</p></div></div>
+<div class="record-grid"><article class="record a"><h3>A형 과세특 연결</h3><p>오류 원인을 체계적으로 분석하고 다양한 테스트로 안정성을 향상시킴.</p></article><article class="record b"><h3>B형 과세특 연결</h3><p>예외 처리와 디버깅 도구로 오류를 수정하고 품질을 높임.</p></article></div>
+<div class="code-box"><div class="code-top"><strong>Python 프로젝트 예시 코드</strong><button onclick="copyCode(this)">코드 복사</button></div><pre><code>import unittest
+
+def safe_average(values):
+    if not isinstance(values, list):
+        raise TypeError(&quot;리스트만 입력할 수 있습니다.&quot;)
+    if not values:
+        raise ValueError(&quot;빈 리스트는 계산할 수 없습니다.&quot;)
+    return sum(values) / len(values)
+
+class TestAverage(unittest.TestCase):
+    def test_normal(self):
+        self.assertEqual(safe_average([1, 2, 3]), 2)
+    def test_empty(self):
+        with self.assertRaises(ValueError):
+            safe_average([])
+    def test_wrong_type(self):
+        with self.assertRaises(TypeError):
+            safe_average(&quot;123&quot;)
+
+if __name__ == &quot;__main__&quot;:
+    unittest.main()</code></pre></div>
+<div class="detail-grid"><article><h3>프로젝트 상세 설명</h3><p>오류 유형을 예측하고 테스트 사례를 설계하여 프로그램 신뢰성을 높인다.</p><ol><li>문제 상황을 분석하고 입력과 출력을 정의한다.</li><li>성취기준의 핵심 개념을 Python 코드로 구현한다.</li><li>실행 결과를 표·그래프·평가지표로 확인한다.</li><li>오류 가능성, 데이터 윤리, 개선 방향을 검토한다.</li></ol></article><article><h3>확장 탐구</h3><p>로그 파일 기록과 경계값 테스트를 추가한다.</p><p><b>과세특 기록 포인트:</b> 문제 정의, 구현 과정, 테스트, 분석 결과, 협업 역할, 개선 활동을 실제 수행 근거와 함께 기록한다.</p></article></div>
+</section>
+<section class="project" id="p14" data-search="ⅲ. 알고리즘과 프로그래밍 12정03-08 학교 분실물 관리 응용 프로그램 분실물 등록, 검색, 반환 처리를 수행한다.">
+<div class="head"><span class="num">14</span><div><h2>12정03-08 · 학교 분실물 관리 응용 프로그램</h2><p class="overview">분실물 등록, 검색, 반환 처리를 수행한다.</p></div></div>
+<div class="record-grid"><article class="record a"><h3>A형 과세특 연결</h3><p>학교생활 문제 해결 응용 프로그램을 요구사항부터 구현까지 수행함.</p></article><article class="record b"><h3>B형 과세특 연결</h3><p>사용자 중심 인터페이스를 구현하고 피드백으로 기능을 개선함.</p></article></div>
+<div class="code-box"><div class="code-top"><strong>Python 프로젝트 예시 코드</strong><button onclick="copyCode(this)">코드 복사</button></div><pre><code>items = []
+
+def add_item(name, place, date):
+    items.append({&quot;name&quot;: name, &quot;place&quot;: place, &quot;date&quot;: date, &quot;returned&quot;: False})
+
+def search(keyword):
+    return [item for item in items if keyword in item[&quot;name&quot;] or keyword in item[&quot;place&quot;]]
+
+def mark_returned(index):
+    items[index][&quot;returned&quot;] = True
+
+add_item(&quot;검은 우산&quot;, &quot;도서관&quot;, &quot;2026-07-10&quot;)
+add_item(&quot;USB&quot;, &quot;정보실&quot;, &quot;2026-07-11&quot;)
+print(search(&quot;정보실&quot;))
+mark_returned(1)
+print(items)</code></pre></div>
+<div class="detail-grid"><article><h3>프로젝트 상세 설명</h3><p>학교생활 문제의 요구사항을 분석하고 실제 사용 가능한 응용 프로그램으로 구현한다.</p><ol><li>문제 상황을 분석하고 입력과 출력을 정의한다.</li><li>성취기준의 핵심 개념을 Python 코드로 구현한다.</li><li>실행 결과를 표·그래프·평가지표로 확인한다.</li><li>오류 가능성, 데이터 윤리, 개선 방향을 검토한다.</li></ol></article><article><h3>확장 탐구</h3><p>Tkinter GUI, 파일 저장, 사용자 피드백 기능을 추가한다.</p><p><b>과세특 기록 포인트:</b> 문제 정의, 구현 과정, 테스트, 분석 결과, 협업 역할, 개선 활동을 실제 수행 근거와 함께 기록한다.</p></article></div>
+</section>
+<section class="project" id="p15" data-search="ⅲ. 알고리즘과 프로그래밍 12정03-09 협업 프로젝트 역할·버전 관리 팀원 역할과 작업 상태, 변경 이력을 기록한다.">
+<div class="head"><span class="num">15</span><div><h2>12정03-09 · 협업 프로젝트 역할·버전 관리</h2><p class="overview">팀원 역할과 작업 상태, 변경 이력을 기록한다.</p></div></div>
+<div class="record-grid"><article class="record a"><h3>A형 과세특 연결</h3><p>협업 도구를 활용하여 역할을 분담하고 진행 과정을 관리함.</p></article><article class="record b"><h3>B형 과세특 연결</h3><p>Git 기반 버전 관리, 코드 리뷰, 병합을 통해 협업함.</p></article></div>
+<div class="code-box"><div class="code-top"><strong>Python 프로젝트 예시 코드</strong><button onclick="copyCode(this)">코드 복사</button></div><pre><code>from datetime import datetime
+
+tasks = [
+    {&quot;task&quot;: &quot;데이터 수집&quot;, &quot;owner&quot;: &quot;민수&quot;, &quot;status&quot;: &quot;완료&quot;},
+    {&quot;task&quot;: &quot;전처리&quot;, &quot;owner&quot;: &quot;서연&quot;, &quot;status&quot;: &quot;진행 중&quot;},
+    {&quot;task&quot;: &quot;시각화&quot;, &quot;owner&quot;: &quot;지훈&quot;, &quot;status&quot;: &quot;대기&quot;}
+]
+history = []
+
+def update_status(task_name, new_status, user):
+    for task in tasks:
+        if task[&quot;task&quot;] == task_name:
+            old = task[&quot;status&quot;]
+            task[&quot;status&quot;] = new_status
+            history.append({
+                &quot;time&quot;: datetime.now().isoformat(timespec=&quot;seconds&quot;),
+                &quot;user&quot;: user,
+                &quot;task&quot;: task_name,
+                &quot;change&quot;: f&quot;{old} → {new_status}&quot;
+            })
+
+update_status(&quot;전처리&quot;, &quot;완료&quot;, &quot;서연&quot;)
+print(tasks)
+print(history)</code></pre></div>
+<div class="detail-grid"><article><h3>프로젝트 상세 설명</h3><p>역할 분담과 변경 이력을 관리하여 협업 과정을 구조화한다.</p><ol><li>문제 상황을 분석하고 입력과 출력을 정의한다.</li><li>성취기준의 핵심 개념을 Python 코드로 구현한다.</li><li>실행 결과를 표·그래프·평가지표로 확인한다.</li><li>오류 가능성, 데이터 윤리, 개선 방향을 검토한다.</li></ol></article><article><h3>확장 탐구</h3><p>Git 커밋 메시지와 연계하고 JSON으로 이력을 저장한다.</p><p><b>과세특 기록 포인트:</b> 문제 정의, 구현 과정, 테스트, 분석 결과, 협업 역할, 개선 활동을 실제 수행 근거와 함께 기록한다.</p></article></div>
+</section>
+<section class="project" id="p16" data-search="ⅲ. 알고리즘과 프로그래밍 12정03-10 프로젝트 성능 평가 및 개선 정확도, 실행 시간, 사용자 만족도로 개선 우선순위를 정한다.">
+<div class="head"><span class="num">16</span><div><h2>12정03-10 · 프로젝트 성능 평가 및 개선</h2><p class="overview">정확도, 실행 시간, 사용자 만족도로 개선 우선순위를 정한다.</p></div></div>
+<div class="record-grid"><article class="record a"><h3>A형 과세특 연결</h3><p>프로젝트 결과를 객관적으로 평가하고 개선 방안을 제안함.</p></article><article class="record b"><h3>B형 과세특 연결</h3><p>테스트 결과와 사용자 의견을 반영하여 프로그램을 개선함.</p></article></div>
+<div class="code-box"><div class="code-top"><strong>Python 프로젝트 예시 코드</strong><button onclick="copyCode(this)">코드 복사</button></div><pre><code>project = {&quot;accuracy&quot;: 0.86, &quot;speed_score&quot;: 72, &quot;usability&quot;: 3.8}
+weights = {&quot;accuracy&quot;: 0.5, &quot;speed_score&quot;: 0.25, &quot;usability&quot;: 0.25}
+normalized = {
+    &quot;accuracy&quot;: project[&quot;accuracy&quot;] * 100,
+    &quot;speed_score&quot;: project[&quot;speed_score&quot;],
+    &quot;usability&quot;: project[&quot;usability&quot;] / 5 * 100
+}
+total = sum(normalized[k] * weights[k] for k in weights)
+print(&quot;종합 평가:&quot;, round(total, 1))
+for key, value in normalized.items():
+    if value &lt; 80:
+        print(&quot;개선 우선:&quot;, key, value)</code></pre></div>
+<div class="detail-grid"><article><h3>프로젝트 상세 설명</h3><p>프로젝트 결과를 객관적인 지표로 평가하고 개선 우선순위를 정한다.</p><ol><li>문제 상황을 분석하고 입력과 출력을 정의한다.</li><li>성취기준의 핵심 개념을 Python 코드로 구현한다.</li><li>실행 결과를 표·그래프·평가지표로 확인한다.</li><li>오류 가능성, 데이터 윤리, 개선 방향을 검토한다.</li></ol></article><article><h3>확장 탐구</h3><p>평가 전후 점수와 사용자 의견을 비교한다.</p><p><b>과세특 기록 포인트:</b> 문제 정의, 구현 과정, 테스트, 분석 결과, 협업 역할, 개선 활동을 실제 수행 근거와 함께 기록한다.</p></article></div>
+</section><h1 class="area-title">Ⅳ. 인공지능</h1>
+<section class="project" id="p17" data-search="ⅳ. 인공지능 12정04-01 규칙 기반 ai와 머신러닝 비교 동일한 분류 문제를 규칙 기반 방식으로 구현한다.">
+<div class="head"><span class="num">17</span><div><h2>12정04-01 · 규칙 기반 AI와 머신러닝 비교</h2><p class="overview">동일한 분류 문제를 규칙 기반 방식으로 구현한다.</p></div></div>
+<div class="record-grid"><article class="record a"><h3>A형 과세특 연결</h3><p>머신러닝과 딥러닝의 기본 원리와 활용 사례를 분석함.</p></article><article class="record b"><h3>B형 과세특 연결</h3><p>간단한 머신러닝 모델을 구현하고 데이터에 따른 결과 차이를 분석함.</p></article></div>
+<div class="code-box"><div class="code-top"><strong>Python 프로젝트 예시 코드</strong><button onclick="copyCode(this)">코드 복사</button></div><pre><code>def rule_based(temp, humidity):
+    if temp &gt;= 30 and humidity &gt;= 70:
+        return &quot;불쾌&quot;
+    if temp &gt;= 27:
+        return &quot;주의&quot;
+    return &quot;쾌적&quot;
+
+samples = [(25, 60), (28, 55), (31, 75)]
+for temp, humidity in samples:
+    print(temp, humidity, rule_based(temp, humidity))
+
+print(&quot;규칙 기반 AI는 사람이 기준을 작성합니다.&quot;)
+print(&quot;머신러닝은 데이터에서 판단 기준을 학습합니다.&quot;)</code></pre></div>
+<div class="detail-grid"><article><h3>프로젝트 상세 설명</h3><p>규칙 기반과 학습 기반 인공지능의 차이를 이해한다.</p><ol><li>문제 상황을 분석하고 입력과 출력을 정의한다.</li><li>성취기준의 핵심 개념을 Python 코드로 구현한다.</li><li>실행 결과를 표·그래프·평가지표로 확인한다.</li><li>오류 가능성, 데이터 윤리, 개선 방향을 검토한다.</li></ol></article><article><h3>확장 탐구</h3><p>의사결정나무 모델을 추가하여 결과를 비교한다.</p><p><b>과세특 기록 포인트:</b> 문제 정의, 구현 과정, 테스트, 분석 결과, 협업 역할, 개선 활동을 실제 수행 근거와 함께 기록한다.</p></article></div>
+</section>
+<section class="project" id="p18" data-search="ⅳ. 인공지능 12정04-02 붓꽃 머신러닝 분류 데이터 분리, 학습, 예측, 평가 과정을 수행한다.">
+<div class="head"><span class="num">18</span><div><h2>12정04-02 · 붓꽃 머신러닝 분류</h2><p class="overview">데이터 분리, 학습, 예측, 평가 과정을 수행한다.</p></div></div>
+<div class="record-grid"><article class="record a"><h3>A형 과세특 연결</h3><p>데이터 전처리, 학습, 평가 과정을 수행하고 모델 성능을 비교함.</p></article><article class="record b"><h3>B형 과세특 연결</h3><p>Python 머신러닝 라이브러리로 모델을 구현하고 정확도 개선 실험을 수행함.</p></article></div>
+<div class="code-box"><div class="code-top"><strong>Python 프로젝트 예시 코드</strong><button onclick="copyCode(this)">코드 복사</button></div><pre><code># 사전 설치: pip install scikit-learn
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.metrics import accuracy_score, confusion_matrix
+
+iris = load_iris()
+X_train, X_test, y_train, y_test = train_test_split(
+    iris.data, iris.target, test_size=0.25,
+    random_state=42, stratify=iris.target
+)
+model = DecisionTreeClassifier(max_depth=3, random_state=42)
+model.fit(X_train, y_train)
+pred = model.predict(X_test)
+print(&quot;정확도:&quot;, accuracy_score(y_test, pred))
+print(&quot;혼동행렬:&quot;)
+print(confusion_matrix(y_test, pred))</code></pre></div>
+<div class="detail-grid"><article><h3>프로젝트 상세 설명</h3><p>머신러닝의 데이터 전처리, 학습, 예측, 평가 절차를 체계적으로 수행한다.</p><ol><li>문제 상황을 분석하고 입력과 출력을 정의한다.</li><li>성취기준의 핵심 개념을 Python 코드로 구현한다.</li><li>실행 결과를 표·그래프·평가지표로 확인한다.</li><li>오류 가능성, 데이터 윤리, 개선 방향을 검토한다.</li></ol></article><article><h3>확장 탐구</h3><p>트리 깊이와 학습 데이터 비율을 바꾸어 정확도 변화를 비교한다.</p><p><b>과세특 기록 포인트:</b> 문제 정의, 구현 과정, 테스트, 분석 결과, 협업 역할, 개선 활동을 실제 수행 근거와 함께 기록한다.</p></article></div>
+</section>
+<section class="project" id="p19" data-search="ⅳ. 인공지능 12정04-03 ai 공정성·투명성 평가 도구 집단별 정확도를 비교하고 공정성 검토 필요성을 판단한다.">
+<div class="head"><span class="num">19</span><div><h2>12정04-03 · AI 공정성·투명성 평가 도구</h2><p class="overview">집단별 정확도를 비교하고 공정성 검토 필요성을 판단한다.</p></div></div>
+<div class="record-grid"><article class="record a"><h3>A형 과세특 연결</h3><p>AI의 편향성과 개인정보 문제를 분석하고 윤리적 활용 기준을 제시함.</p></article><article class="record b"><h3>B형 과세특 연결</h3><p>공정성, 투명성, 설명 가능성을 고려한 개선 방안을 적용함.</p></article></div>
+<div class="code-box"><div class="code-top"><strong>Python 프로젝트 예시 코드</strong><button onclick="copyCode(this)">코드 복사</button></div><pre><code>from collections import defaultdict
+
+records = [
+    {&quot;group&quot;: &quot;A&quot;, &quot;actual&quot;: 1, &quot;pred&quot;: 1},
+    {&quot;group&quot;: &quot;A&quot;, &quot;actual&quot;: 1, &quot;pred&quot;: 0},
+    {&quot;group&quot;: &quot;A&quot;, &quot;actual&quot;: 0, &quot;pred&quot;: 0},
+    {&quot;group&quot;: &quot;B&quot;, &quot;actual&quot;: 1, &quot;pred&quot;: 1},
+    {&quot;group&quot;: &quot;B&quot;, &quot;actual&quot;: 0, &quot;pred&quot;: 1},
+    {&quot;group&quot;: &quot;B&quot;, &quot;actual&quot;: 0, &quot;pred&quot;: 0}
+]
+stats = defaultdict(lambda: {&quot;correct&quot;: 0, &quot;total&quot;: 0})
+for r in records:
+    stats[r[&quot;group&quot;]][&quot;total&quot;] += 1
+    stats[r[&quot;group&quot;]][&quot;correct&quot;] += int(r[&quot;actual&quot;] == r[&quot;pred&quot;])
+accuracies = {}
+for group, s in stats.items():
+    accuracies[group] = s[&quot;correct&quot;] / s[&quot;total&quot;]
+    print(group, &quot;정확도:&quot;, round(accuracies[group], 3))
+gap = max(accuracies.values()) - min(accuracies.values())
+print(&quot;집단 간 정확도 차이:&quot;, round(gap, 3))
+if gap &gt; 0.1:
+    print(&quot;공정성 검토가 필요합니다.&quot;)</code></pre></div>
+<div class="detail-grid"><article><h3>프로젝트 상세 설명</h3><p>AI 모델의 전체 정확도뿐 아니라 집단별 성능 차이를 분석한다.</p><ol><li>문제 상황을 분석하고 입력과 출력을 정의한다.</li><li>성취기준의 핵심 개념을 Python 코드로 구현한다.</li><li>실행 결과를 표·그래프·평가지표로 확인한다.</li><li>오류 가능성, 데이터 윤리, 개선 방향을 검토한다.</li></ol></article><article><h3>확장 탐구</h3><p>거짓 양성률과 거짓 음성률을 추가하고 모델 카드를 작성한다.</p><p><b>과세특 기록 포인트:</b> 문제 정의, 구현 과정, 테스트, 분석 결과, 협업 역할, 개선 활동을 실제 수행 근거와 함께 기록한다.</p></article></div>
+</section><h1 class="area-title">Ⅴ. 디지털 문화와 사회</h1>
+<section class="project" id="p20" data-search="ⅴ. 디지털 문화와 사회 12정05-01 플랫폼 서비스 이용 데이터 분석 이용시간, 만족도, 광고 노출량을 분석한다.">
+<div class="head"><span class="num">20</span><div><h2>12정05-01 · 플랫폼 서비스 이용 데이터 분석</h2><p class="overview">이용시간, 만족도, 광고 노출량을 분석한다.</p></div></div>
+<div class="record-grid"><article class="record a"><h3>A형 과세특 연결</h3><p>플랫폼 경제와 디지털 문화의 변화를 분석하고 사회적 영향을 평가함.</p></article><article class="record b"><h3>B형 과세특 연결</h3><p>플랫폼 이용 데이터를 분석하여 지속가능한 문화 형성 방안을 제안함.</p></article></div>
+<div class="code-box"><div class="code-top"><strong>Python 프로젝트 예시 코드</strong><button onclick="copyCode(this)">코드 복사</button></div><pre><code># 사전 설치: pip install pandas matplotlib
+import pandas as pd
+import matplotlib.pyplot as plt
+
+df = pd.DataFrame({
+    &quot;플랫폼&quot;: [&quot;A&quot;, &quot;B&quot;, &quot;C&quot;, &quot;D&quot;],
+    &quot;이용시간&quot;: [120, 85, 150, 60],
+    &quot;만족도&quot;: [4.2, 3.8, 4.0, 3.5],
+    &quot;광고노출&quot;: [18, 9, 25, 6]
+})
+df[&quot;시간대비만족&quot;] = df[&quot;만족도&quot;] / df[&quot;이용시간&quot;] * 100
+print(df.round(2))
+plt.scatter(df[&quot;광고노출&quot;], df[&quot;만족도&quot;])
+for _, r in df.iterrows():
+    plt.text(r[&quot;광고노출&quot;], r[&quot;만족도&quot;], r[&quot;플랫폼&quot;])
+plt.xlabel(&quot;광고 노출량&quot;)
+plt.ylabel(&quot;만족도&quot;)
+plt.title(&quot;플랫폼 광고와 만족도&quot;)
+plt.show()</code></pre></div>
+<div class="detail-grid"><article><h3>프로젝트 상세 설명</h3><p>플랫폼 경제와 디지털 문화의 특징을 데이터로 분석한다.</p><ol><li>문제 상황을 분석하고 입력과 출력을 정의한다.</li><li>성취기준의 핵심 개념을 Python 코드로 구현한다.</li><li>실행 결과를 표·그래프·평가지표로 확인한다.</li><li>오류 가능성, 데이터 윤리, 개선 방향을 검토한다.</li></ol></article><article><h3>확장 탐구</h3><p>추천 알고리즘, 필터 버블, 과의존 변수를 추가한다.</p><p><b>과세특 기록 포인트:</b> 문제 정의, 구현 과정, 테스트, 분석 결과, 협업 역할, 개선 활동을 실제 수행 근거와 함께 기록한다.</p></article></div>
+</section>
+<section class="project" id="p21" data-search="ⅴ. 디지털 문화와 사회 12정05-02 지속가능한 디지털 프로젝트 평가기 에너지, 개인정보, 협업, 오픈소스 준수를 종합 평가한다.">
+<div class="head"><span class="num">21</span><div><h2>12정05-02 · 지속가능한 디지털 프로젝트 평가기</h2><p class="overview">에너지, 개인정보, 협업, 오픈소스 준수를 종합 평가한다.</p></div></div>
+<div class="record-grid"><article class="record a"><h3>A형 과세특 연결</h3><p>지속가능한 디지털 사회를 위한 정보 공유와 책임성을 강조함.</p></article><article class="record b"><h3>B형 과세특 연결</h3><p>정보윤리와 협업 규칙을 준수하며 책임 있는 정보 활용을 실천함.</p></article></div>
+<div class="code-box"><div class="code-top"><strong>Python 프로젝트 예시 코드</strong><button onclick="copyCode(this)">코드 복사</button></div><pre><code>criteria = {
+    &quot;에너지 효율&quot;: 82,
+    &quot;개인정보 보호&quot;: 95,
+    &quot;협업 참여&quot;: 88,
+    &quot;오픈소스 출처 표기&quot;: 100,
+    &quot;접근성&quot;: 76
+}
+weights = {
+    &quot;에너지 효율&quot;: 0.20,
+    &quot;개인정보 보호&quot;: 0.25,
+    &quot;협업 참여&quot;: 0.20,
+    &quot;오픈소스 출처 표기&quot;: 0.20,
+    &quot;접근성&quot;: 0.15
+}
+total = sum(criteria[k] * weights[k] for k in criteria)
+print(&quot;지속가능성 종합 점수:&quot;, round(total, 1))
+for item, score in criteria.items():
+    status = &quot;우수&quot; if score &gt;= 90 else &quot;보통&quot; if score &gt;= 80 else &quot;개선 필요&quot;
+    print(item, score, status)</code></pre></div>
+<div class="detail-grid"><article><h3>프로젝트 상세 설명</h3><p>디지털 프로젝트를 기능뿐 아니라 윤리, 협업, 지속가능성 관점에서 평가한다.</p><ol><li>문제 상황을 분석하고 입력과 출력을 정의한다.</li><li>성취기준의 핵심 개념을 Python 코드로 구현한다.</li><li>실행 결과를 표·그래프·평가지표로 확인한다.</li><li>오류 가능성, 데이터 윤리, 개선 방향을 검토한다.</li></ol></article><article><h3>확장 탐구</h3><p>팀원별 평가와 자기평가를 추가하고 개선 전후 점수를 비교한다.</p><p><b>과세특 기록 포인트:</b> 문제 정의, 구현 과정, 테스트, 분석 결과, 협업 역할, 개선 활동을 실제 수행 근거와 함께 기록한다.</p></article></div>
+</section><footer class="footer">Python 3.13 이상 권장 · pandas, matplotlib, scikit-learn 예시는 사전 설치 후 실행</footer></main>
+<script>function jumpTo(id){if(id)document.getElementById(id).scrollIntoView({behavior:'smooth'})}async function copyCode(btn){const text=btn.closest('.code-box').querySelector('code').innerText;try{await navigator.clipboard.writeText(text);const old=btn.textContent;btn.textContent='복사됨';setTimeout(()=>btn.textContent=old,1000)}catch(e){const t=document.createElement('textarea');t.value=text;document.body.appendChild(t);t.select();document.execCommand('copy');t.remove()}}function filterProjects(){const q=document.getElementById('search').value.trim().toLowerCase();document.querySelectorAll('.project').forEach(el=>el.classList.toggle('hidden',q&&!el.dataset.search.includes(q)))}</script></body></html>
