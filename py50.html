@@ -1,0 +1,2214 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2022 개정 교육과정 정보과학 성취기준별 Python 프로젝트 50개</title>
+<style>
+:root{--bg:#f4f7fb;--paper:#fff;--ink:#182234;--muted:#5d6b7d;--line:#dbe4ef;--accent:#2457c5;--accent2:#e9f0ff;--code:#101827;}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;line-height:1.65}
+.toolbar{position:fixed;left:8px;top:8px;z-index:10;display:flex;gap:5px;align-items:center;background:rgba(255,255,255,.94);border:1px solid var(--line);padding:5px;border-radius:9px;box-shadow:0 4px 16px rgba(20,40,80,.12)}
+.toolbar select,.toolbar input,.toolbar button{height:30px;border:1px solid #bdc9d8;border-radius:6px;background:#fff;font-size:12px;padding:0 8px}
+.toolbar select{max-width:260px} .toolbar input{width:150px}
+.wrap{width:min(1500px,96vw);margin:0 auto;padding:76px 0 80px}
+.hero{background:linear-gradient(135deg,#183b86,#2d67db);color:#fff;padding:42px;border-radius:22px;box-shadow:0 16px 36px rgba(28,64,140,.22)}
+.hero h1{margin:0 0 10px;font-size:clamp(25px,4vw,46px);line-height:1.22}
+.hero p{margin:8px 0;max-width:1050px}
+.badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+.badge{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.32);padding:5px 11px;border-radius:999px;font-size:13px}
+.notice,.standards-box{background:var(--paper);margin-top:24px;border:1px solid var(--line);border-radius:16px;padding:24px}
+.notice strong{color:#b23a2a}
+details summary{cursor:pointer;font-weight:700;color:var(--accent)}
+table{width:100%;border-collapse:collapse;margin-top:14px;font-size:14px}
+th,td{border:1px solid var(--line);padding:9px;vertical-align:top} th{background:#edf3ff}
+.project{background:var(--paper);margin:26px 0;border:1px solid var(--line);border-radius:18px;padding:26px;box-shadow:0 8px 24px rgba(30,55,90,.06);scroll-margin-top:60px}
+.project-head{display:grid;grid-template-columns:52px 1fr;gap:15px;align-items:start}
+.num{display:grid;place-items:center;width:48px;height:48px;border-radius:13px;background:var(--accent);color:#fff;font-weight:800}
+h2{margin:0 0 8px;font-size:23px}
+.standard{background:var(--accent2);padding:9px 12px;border-radius:9px;font-size:14px}
+.project-head p{margin:8px 0 0;color:var(--muted)}
+.code-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:20px}
+.code-card{min-width:0;border:1px solid var(--line);border-radius:13px;overflow:hidden;background:#fff}
+.code-title{display:flex;justify-content:space-between;align-items:center;padding:9px 12px;background:#eef3f9}
+.code-title button{border:0;border-radius:6px;background:var(--accent);color:#fff;padding:6px 11px;cursor:pointer}
+pre{margin:0;padding:17px;background:var(--code);color:#e8edf7;overflow:auto;min-height:250px;font:13.5px/1.55 Consolas,"Courier New",monospace;tab-size:4}
+.explain{margin:0;padding:10px 13px;color:var(--muted);font-size:13px}
+.footer{text-align:center;color:var(--muted);padding:25px}
+.hidden{display:none!important}
+@media(max-width:900px){.code-grid{grid-template-columns:1fr}.toolbar input{display:none}.wrap{padding-top:68px}}
+@media print{.toolbar{display:none}.wrap{width:100%;padding:0}.project{break-inside:avoid;box-shadow:none}pre{white-space:pre-wrap;min-height:0}}
+</style>
+</head>
+<body>
+<div class="toolbar">
+  <select id="jump" onchange="jumpToProject(this.value)">
+    <option value="">프로젝트 바로 가기</option>
+    <option value="p1">01. 과학 실험 측정값 통계 함수</option><option value="p2">02. 단위 변환 함수 라이브러리</option><option value="p3">03. 대기질 위험도 판정 함수</option><option value="p4">04. 재귀 팩토리얼과 조합 계산기</option><option value="p5">05. 프랙털 나무 문자열 생성기</option><option value="p6">06. 하노이 탑 이동 시뮬레이터</option><option value="p7">07. 피보나치 반복·재귀 비교</option><option value="p8">08. 최대공약수 반복·재귀 비교</option><option value="p9">09. 이진 탐색 반복·재귀 비교</option><option value="p10">10. 브라우저 뒤로 가기 스택</option><option value="p11">11. 급식실 대기열 큐</option><option value="p12">12. 스택·큐 동작 시각화</option><option value="p13">13. 괄호 검사기</option><option value="p14">14. 프린터 작업 스케줄러</option><option value="p15">15. 응급실 우선순위 대기열</option><option value="p16">16. 교실 좌석 관계 인접행렬</option><option value="p17">17. 학교 건물 연결 인접리스트</option><option value="p18">18. 생물 분류 트리</option><option value="p19">19. 친구 추천 그래프</option><option value="p20">20. 학교 최단 이동 경로</option><option value="p21">21. 감염 확산 네트워크</option><option value="p22">22. 미로 완전 탐색</option><option value="p23">23. 부분집합 합 탐색</option><option value="p24">24. N-Queen 상태 공간 탐색</option><option value="p25">25. 가지치기 배낭 탐색</option><option value="p26">26. 탐욕적 동전 교환</option><option value="p27">27. 분기한정 작업 배정</option><option value="p28">28. 큰 정수 곱셈 문제 분해</option><option value="p29">29. 구간 합 문제 분해</option><option value="p30">30. 행렬 영역 합 분해</option><option value="p31">31. 합병 정렬</option><option value="p32">32. 퀵 정렬</option><option value="p33">33. 최근접 점 분할정복</option><option value="p34">34. 동적 계획 피보나치</option><option value="p35">35. 최장 공통 부분수열</option><option value="p36">36. 격자 최단 비용 경로</option><option value="p37">37. 정렬 알고리즘 시간 비교</option><option value="p38">38. 탐색 알고리즘 복잡도 실험</option><option value="p39">39. 자료구조 조회 성능 비교</option><option value="p40">40. 교실 전력 낭비 탐지</option><option value="p41">41. 학교 급식 잔반 분석</option><option value="p42">42. 지역 미세먼지 경보 분석</option><option value="p43">43. 스마트 교실 프로젝트 설계</option><option value="p44">44. 생태계 개체군 시뮬레이션 설계</option><option value="p45">45. 교통 안전 분석 프로젝트 설계</option><option value="p46">46. Pandas 기상 데이터 분석</option><option value="p47">47. Matplotlib 과학 데이터 시각화</option><option value="p48">48. 센서 데이터 테스트·디버깅</option><option value="p49">49. 알고리즘 경계값 테스트</option><option value="p50">50. AI 예측 결과 공정성 평가</option>
+  </select>
+  <input id="search" placeholder="제목·성취기준 검색" oninput="filterProjects()">
+  <button onclick="window.print()">인쇄</button>
+  <button onclick="window.scrollTo(0,0)">TOP</button>
+</div>
+
+<main class="wrap">
+<header class="hero">
+  <h1>2022 개정 교육과정 정보과학<br>성취기준별 Python 프로젝트 50개</h1>
+  <p>공식 성취기준 18개를 반영한 수업·탐구용 프로젝트와 프로젝트별 실행 예시 코드 2개씩, 총 100개를 수록했습니다.</p>
+  <div class="badges"><span class="badge">프로젝트 50개</span><span class="badge">Python 코드 100개</span><span class="badge">성취기준 18개</span><span class="badge">복사·검색·인쇄 지원</span></div>
+</header>
+
+<section class="notice">
+  <strong>중요 정정:</strong> 2022 개정 「정보과학」은 ‘컴퓨팅 시스템·데이터와 인공지능’ 중심의 16개 기준이 아니라,
+  <b>프로그래밍 3개, 데이터 구조 4개, 알고리즘 6개, 정보과학 프로젝트 5개</b>로 구성된 총 18개 성취기준 체계입니다.
+  본 자료는 이 체계에 맞추어 다시 작성했습니다.
+</section>
+
+<section class="standards-box">
+<details>
+<summary>성취기준 18개 전체 보기</summary>
+<table><thead><tr><th style="width:140px">코드</th><th>성취기준</th></tr></thead><tbody>
+<tr><td>12정과01-01</td><td>함수 정의와 호출의 원리를 이해하고, 매개변수를 활용한 함수 프로그램을 작성한다.</td></tr>
+<tr><td>12정과01-02</td><td>주어진 문제에서 적용할 수 있는 재귀관계를 파악하고, 재귀구조를 활용하여 프로그램을 작성한다.</td></tr>
+<tr><td>12정과01-03</td><td>반복구조와 재귀구조를 활용하여 문제를 해결하고, 두 방식의 차이를 비교·분석한다.</td></tr>
+<tr><td>12정과02-01</td><td>스택과 큐의 원리를 이해하고, 순차적인 데이터 구조를 이용하여 스택과 큐를 구현한다.</td></tr>
+<tr><td>12정과02-02</td><td>스택, 큐를 활용하여 문제를 효율적으로 해결하는 프로그램을 작성한다.</td></tr>
+<tr><td>12정과02-03</td><td>인접행렬과 인접리스트를 활용하여 트리와 그래프를 구현한다.</td></tr>
+<tr><td>12정과02-04</td><td>트리, 그래프를 활용하여 문제를 효율적으로 해결하는 프로그램을 작성한다.</td></tr>
+<tr><td>12정과03-01</td><td>문제를 분석하여 상태 공간으로 구조화하고, 상태 공간을 모두 탐색하여 문제를 해결하는 알고리즘을 설계한다.</td></tr>
+<tr><td>12정과03-02</td><td>문제의 상태 공간 일부를 배제하는 알고리즘을 설계하고, 기존의 탐색 기반 알고리즘과 비교·분석한다.</td></tr>
+<tr><td>12정과03-03</td><td>전체 문제를 부분 문제로 분해하고, 전체 문제와 부분 문제의 관계를 발견한다.</td></tr>
+<tr><td>12정과03-04</td><td>부분 문제를 해결한 결과를 이용하여 전체 문제를 해결하는 알고리즘을 설계한다.</td></tr>
+<tr><td>12정과03-05</td><td>부분 문제가 중복으로 적용되지 않는 알고리즘을 설계하고 기존의 관계 기반 알고리즘과 비교·분석한다.</td></tr>
+<tr><td>12정과03-06</td><td>알고리즘의 복잡도를 빅오 표기법으로 표현하고 다른 알고리즘과 비교한다.</td></tr>
+<tr><td>12정과04-01</td><td>다양한 학문 분야에서 컴퓨터과학의 기본 개념과 원리를 바탕으로 해결할 수 있는 실생활의 문제를 발견한다.</td></tr>
+<tr><td>12정과04-02</td><td>발견한 문제를 분석하고, 문제를 해결하기 위한 프로젝트 수행 과정을 설계한다.</td></tr>
+<tr><td>12정과04-03</td><td>다양한 오픈소스 및 라이브러리를 활용하여 협력적으로 문제를 해결하기 위한 프로그램을 작성한다.</td></tr>
+<tr><td>12정과04-04</td><td>완성도 높은 프로그램을 구현하기 위하여 테스트와 디버깅 과정을 통해 검증한다.</td></tr>
+<tr><td>12정과04-05</td><td>프로젝트의 산출물을 기능적, 윤리적 관점에서 평가하고 결과를 공유한다.</td></tr>
+</tbody></table>
+</details>
+<p style="font-size:13px;color:#5d6b7d">출처 확인: 교육부 고시 제2022-33호(2022 개정 교육과정) 및 정보과학 성취기준 정리 자료. 학교 공식 문서에 인용할 때에는 교육부 원문을 최종 대조하세요.</p>
+</section>
+
+
+<section class="project" id="p1" data-text="12정과01-01 과학 실험 측정값 통계 함수 측정값의 평균·최댓값·최솟값을 함수로 모듈화한다.">
+  <div class="project-head">
+    <span class="num">01</span>
+    <div>
+      <h2>과학 실험 측정값 통계 함수</h2>
+      <div class="standard"><b>[12정과01-01]</b> 함수 정의와 호출의 원리를 이해하고, 매개변수를 활용한 함수 프로그램을 작성한다.</div>
+      <p>측정값의 평균·최댓값·최솟값을 함수로 모듈화한다.</p>
+    </div>
+  </div>
+  <div class="code-grid">
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 1</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>def summarize(values):
+    if not values:
+        raise ValueError(&quot;측정값이 없습니다.&quot;)
+    return {
+        &quot;평균&quot;: sum(values) / len(values),
+        &quot;최솟값&quot;: min(values),
+        &quot;최댓값&quot;: max(values),
+    }
+
+temperatures = [21.5, 22.1, 20.9, 23.0, 22.4]
+print(summarize(temperatures))</code></pre>
+      <p class="explain">기본 개념을 직접 구현하며 입력·처리·출력의 흐름을 확인하는 코드입니다.</p>
+    </article>
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 2</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>def mean(values):
+    return sum(values) / len(values)
+
+def deviation(values):
+    avg = mean(values)
+    return [round(x - avg, 2) for x in values]
+
+data = [10.2, 10.5, 9.8, 10.1]
+print(&quot;평균:&quot;, mean(data))
+print(&quot;편차:&quot;, deviation(data))</code></pre>
+      <p class="explain">자료구조, 함수화, 성능 비교 또는 검증 요소를 확장한 코드입니다.</p>
+    </article>
+  </div>
+</section>
+<section class="project" id="p2" data-text="12정과01-01 단위 변환 함수 라이브러리 온도·거리·질량 단위 변환 함수를 설계한다.">
+  <div class="project-head">
+    <span class="num">02</span>
+    <div>
+      <h2>단위 변환 함수 라이브러리</h2>
+      <div class="standard"><b>[12정과01-01]</b> 함수 정의와 호출의 원리를 이해하고, 매개변수를 활용한 함수 프로그램을 작성한다.</div>
+      <p>온도·거리·질량 단위 변환 함수를 설계한다.</p>
+    </div>
+  </div>
+  <div class="code-grid">
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 1</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>def celsius_to_fahrenheit(c):
+    return c * 9 / 5 + 32
+
+def km_to_mile(km):
+    return km * 0.621371
+
+print(celsius_to_fahrenheit(25))
+print(round(km_to_mile(10), 3))</code></pre>
+      <p class="explain">기본 개념을 직접 구현하며 입력·처리·출력의 흐름을 확인하는 코드입니다.</p>
+    </article>
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 2</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>CONVERTERS = {
+    &quot;kg_to_g&quot;: lambda x: x * 1000,
+    &quot;m_to_cm&quot;: lambda x: x * 100,
+    &quot;hour_to_min&quot;: lambda x: x * 60,
+}
+
+def convert(kind, value):
+    if kind not in CONVERTERS:
+        raise ValueError(&quot;지원하지 않는 변환입니다.&quot;)
+    return CONVERTERS[kind](value)
+
+print(convert(&quot;kg_to_g&quot;, 2.5))</code></pre>
+      <p class="explain">자료구조, 함수화, 성능 비교 또는 검증 요소를 확장한 코드입니다.</p>
+    </article>
+  </div>
+</section>
+<section class="project" id="p3" data-text="12정과01-01 대기질 위험도 판정 함수 미세먼지와 초미세먼지 수치로 위험 단계를 반환한다.">
+  <div class="project-head">
+    <span class="num">03</span>
+    <div>
+      <h2>대기질 위험도 판정 함수</h2>
+      <div class="standard"><b>[12정과01-01]</b> 함수 정의와 호출의 원리를 이해하고, 매개변수를 활용한 함수 프로그램을 작성한다.</div>
+      <p>미세먼지와 초미세먼지 수치로 위험 단계를 반환한다.</p>
+    </div>
+  </div>
+  <div class="code-grid">
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 1</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>def air_grade(pm10, pm25):
+    if pm10 &lt;= 30 and pm25 &lt;= 15:
+        return &quot;좋음&quot;
+    if pm10 &lt;= 80 and pm25 &lt;= 35:
+        return &quot;보통&quot;
+    if pm10 &lt;= 150 and pm25 &lt;= 75:
+        return &quot;나쁨&quot;
+    return &quot;매우 나쁨&quot;
+
+print(air_grade(72, 28))</code></pre>
+      <p class="explain">기본 개념을 직접 구현하며 입력·처리·출력의 흐름을 확인하는 코드입니다.</p>
+    </article>
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 2</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>def risk_score(pm10, pm25, weight=(0.4, 0.6)):
+    score = pm10 * weight[0] + pm25 * weight[1]
+    return round(score, 1)
+
+samples = [(25, 10), (90, 42), (160, 80)]
+for sample in samples:
+    print(sample, risk_score(*sample))</code></pre>
+      <p class="explain">자료구조, 함수화, 성능 비교 또는 검증 요소를 확장한 코드입니다.</p>
+    </article>
+  </div>
+</section>
+<section class="project" id="p4" data-text="12정과01-02 재귀 팩토리얼과 조합 계산기 수학적 재귀관계를 python 함수로 표현한다.">
+  <div class="project-head">
+    <span class="num">04</span>
+    <div>
+      <h2>재귀 팩토리얼과 조합 계산기</h2>
+      <div class="standard"><b>[12정과01-02]</b> 주어진 문제에서 적용할 수 있는 재귀관계를 파악하고, 재귀구조를 활용하여 프로그램을 작성한다.</div>
+      <p>수학적 재귀관계를 Python 함수로 표현한다.</p>
+    </div>
+  </div>
+  <div class="code-grid">
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 1</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>def factorial(n):
+    if n &lt; 0:
+        raise ValueError(&quot;0 이상의 정수만 가능합니다.&quot;)
+    if n &lt;= 1:
+        return 1
+    return n * factorial(n - 1)
+
+print(factorial(6))</code></pre>
+      <p class="explain">기본 개념을 직접 구현하며 입력·처리·출력의 흐름을 확인하는 코드입니다.</p>
+    </article>
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 2</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>def combination(n, r):
+    if r == 0 or r == n:
+        return 1
+    return combination(n - 1, r - 1) + combination(n - 1, r)
+
+print(combination(6, 2))</code></pre>
+      <p class="explain">자료구조, 함수화, 성능 비교 또는 검증 요소를 확장한 코드입니다.</p>
+    </article>
+  </div>
+</section>
+<section class="project" id="p5" data-text="12정과01-02 프랙털 나무 문자열 생성기 재귀 호출 단계에 따라 가지 구조를 표현한다.">
+  <div class="project-head">
+    <span class="num">05</span>
+    <div>
+      <h2>프랙털 나무 문자열 생성기</h2>
+      <div class="standard"><b>[12정과01-02]</b> 주어진 문제에서 적용할 수 있는 재귀관계를 파악하고, 재귀구조를 활용하여 프로그램을 작성한다.</div>
+      <p>재귀 호출 단계에 따라 가지 구조를 표현한다.</p>
+    </div>
+  </div>
+  <div class="code-grid">
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 1</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>def fractal(level, prefix=&quot;&quot;):
+    if level == 0:
+        print(prefix + &quot;●&quot;)
+        return
+    print(prefix + &quot;├─&quot;)
+    fractal(level - 1, prefix + &quot;│ &quot;)
+    print(prefix + &quot;└─&quot;)
+    fractal(level - 1, prefix + &quot;  &quot;)
+
+fractal(3)</code></pre>
+      <p class="explain">기본 개념을 직접 구현하며 입력·처리·출력의 흐름을 확인하는 코드입니다.</p>
+    </article>
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 2</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>def binary_branch(depth):
+    if depth == 0:
+        return [&quot;*&quot;]
+    smaller = binary_branch(depth - 1)
+    return [&quot;L&quot; + x for x in smaller] + [&quot;R&quot; + x for x in smaller]
+
+print(binary_branch(3))</code></pre>
+      <p class="explain">자료구조, 함수화, 성능 비교 또는 검증 요소를 확장한 코드입니다.</p>
+    </article>
+  </div>
+</section>
+<section class="project" id="p6" data-text="12정과01-02 하노이 탑 이동 시뮬레이터 재귀관계를 이용해 원판 이동 과정을 출력한다.">
+  <div class="project-head">
+    <span class="num">06</span>
+    <div>
+      <h2>하노이 탑 이동 시뮬레이터</h2>
+      <div class="standard"><b>[12정과01-02]</b> 주어진 문제에서 적용할 수 있는 재귀관계를 파악하고, 재귀구조를 활용하여 프로그램을 작성한다.</div>
+      <p>재귀관계를 이용해 원판 이동 과정을 출력한다.</p>
+    </div>
+  </div>
+  <div class="code-grid">
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 1</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>def hanoi(n, start, end, temp):
+    if n == 1:
+        print(f&quot;{start} → {end}&quot;)
+        return
+    hanoi(n - 1, start, temp, end)
+    print(f&quot;{start} → {end}&quot;)
+    hanoi(n - 1, temp, end, start)
+
+hanoi(3, &quot;A&quot;, &quot;C&quot;, &quot;B&quot;)</code></pre>
+      <p class="explain">기본 개념을 직접 구현하며 입력·처리·출력의 흐름을 확인하는 코드입니다.</p>
+    </article>
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 2</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>def hanoi_moves(n):
+    if n == 0:
+        return 0
+    return 2 * hanoi_moves(n - 1) + 1
+
+for n in range(1, 6):
+    print(n, hanoi_moves(n))</code></pre>
+      <p class="explain">자료구조, 함수화, 성능 비교 또는 검증 요소를 확장한 코드입니다.</p>
+    </article>
+  </div>
+</section>
+<section class="project" id="p7" data-text="12정과01-03 피보나치 반복·재귀 비교 동일 문제의 두 구현 방식과 실행 횟수를 비교한다.">
+  <div class="project-head">
+    <span class="num">07</span>
+    <div>
+      <h2>피보나치 반복·재귀 비교</h2>
+      <div class="standard"><b>[12정과01-03]</b> 반복구조와 재귀구조를 활용하여 문제를 해결하고, 두 방식의 차이를 비교·분석한다.</div>
+      <p>동일 문제의 두 구현 방식과 실행 횟수를 비교한다.</p>
+    </div>
+  </div>
+  <div class="code-grid">
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 1</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>calls = 0
+def fib_recursive(n):
+    global calls
+    calls += 1
+    if n &lt; 2:
+        return n
+    return fib_recursive(n - 1) + fib_recursive(n - 2)
+
+print(fib_recursive(10), &quot;호출:&quot;, calls)</code></pre>
+      <p class="explain">기본 개념을 직접 구현하며 입력·처리·출력의 흐름을 확인하는 코드입니다.</p>
+    </article>
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 2</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>def fib_iterative(n):
+    a, b = 0, 1
+    steps = 0
+    for _ in range(n):
+        a, b = b, a + b
+        steps += 1
+    return a, steps
+
+print(fib_iterative(10))</code></pre>
+      <p class="explain">자료구조, 함수화, 성능 비교 또는 검증 요소를 확장한 코드입니다.</p>
+    </article>
+  </div>
+</section>
+<section class="project" id="p8" data-text="12정과01-03 최대공약수 반복·재귀 비교 유클리드 알고리즘의 반복형과 재귀형을 비교한다.">
+  <div class="project-head">
+    <span class="num">08</span>
+    <div>
+      <h2>최대공약수 반복·재귀 비교</h2>
+      <div class="standard"><b>[12정과01-03]</b> 반복구조와 재귀구조를 활용하여 문제를 해결하고, 두 방식의 차이를 비교·분석한다.</div>
+      <p>유클리드 알고리즘의 반복형과 재귀형을 비교한다.</p>
+    </div>
+  </div>
+  <div class="code-grid">
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 1</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>def gcd_recursive(a, b):
+    if b == 0:
+        return a
+    return gcd_recursive(b, a % b)
+
+print(gcd_recursive(84, 30))</code></pre>
+      <p class="explain">기본 개념을 직접 구현하며 입력·처리·출력의 흐름을 확인하는 코드입니다.</p>
+    </article>
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 2</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>def gcd_iterative(a, b):
+    steps = 0
+    while b:
+        a, b = b, a % b
+        steps += 1
+    return a, steps
+
+print(gcd_iterative(84, 30))</code></pre>
+      <p class="explain">자료구조, 함수화, 성능 비교 또는 검증 요소를 확장한 코드입니다.</p>
+    </article>
+  </div>
+</section>
+<section class="project" id="p9" data-text="12정과01-03 이진 탐색 반복·재귀 비교 탐색 단계 수와 코드 구조의 차이를 분석한다.">
+  <div class="project-head">
+    <span class="num">09</span>
+    <div>
+      <h2>이진 탐색 반복·재귀 비교</h2>
+      <div class="standard"><b>[12정과01-03]</b> 반복구조와 재귀구조를 활용하여 문제를 해결하고, 두 방식의 차이를 비교·분석한다.</div>
+      <p>탐색 단계 수와 코드 구조의 차이를 분석한다.</p>
+    </div>
+  </div>
+  <div class="code-grid">
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 1</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>def binary_recursive(data, target, left, right):
+    if left &gt; right:
+        return -1
+    mid = (left + right) // 2
+    if data[mid] == target:
+        return mid
+    if target &lt; data[mid]:
+        return binary_recursive(data, target, left, mid - 1)
+    return binary_recursive(data, target, mid + 1, right)
+
+data = list(range(0, 30, 2))
+print(binary_recursive(data, 18, 0, len(data)-1))</code></pre>
+      <p class="explain">기본 개념을 직접 구현하며 입력·처리·출력의 흐름을 확인하는 코드입니다.</p>
+    </article>
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 2</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>def binary_iterative(data, target):
+    left, right, steps = 0, len(data)-1, 0
+    while left &lt;= right:
+        steps += 1
+        mid = (left + right) // 2
+        if data[mid] == target:
+            return mid, steps
+        if data[mid] &lt; target:
+            left = mid + 1
+        else:
+            right = mid - 1
+    return -1, steps
+
+print(binary_iterative(list(range(100)), 73))</code></pre>
+      <p class="explain">자료구조, 함수화, 성능 비교 또는 검증 요소를 확장한 코드입니다.</p>
+    </article>
+  </div>
+</section>
+<section class="project" id="p10" data-text="12정과02-01 브라우저 뒤로 가기 스택 방문 기록을 스택으로 구현한다.">
+  <div class="project-head">
+    <span class="num">10</span>
+    <div>
+      <h2>브라우저 뒤로 가기 스택</h2>
+      <div class="standard"><b>[12정과02-01]</b> 스택과 큐의 원리를 이해하고, 순차적인 데이터 구조를 이용하여 스택과 큐를 구현한다.</div>
+      <p>방문 기록을 스택으로 구현한다.</p>
+    </div>
+  </div>
+  <div class="code-grid">
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 1</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>history = []
+current = None
+
+def visit(page):
+    global current
+    if current is not None:
+        history.append(current)
+    current = page
+
+def back():
+    global current
+    if history:
+        current = history.pop()
+    return current
+
+visit(&quot;학교&quot;)
+visit(&quot;정보과학&quot;)
+visit(&quot;자료구조&quot;)
+print(back())</code></pre>
+      <p class="explain">기본 개념을 직접 구현하며 입력·처리·출력의 흐름을 확인하는 코드입니다.</p>
+    </article>
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 2</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>class Browser:
+    def __init__(self):
+        self.stack = []
+        self.current = &quot;홈&quot;
+
+    def visit(self, page):
+        self.stack.append(self.current)
+        self.current = page
+
+    def back(self):
+        if self.stack:
+            self.current = self.stack.pop()
+        return self.current
+
+b = Browser()
+b.visit(&quot;A&quot;); b.visit(&quot;B&quot;)
+print(b.back())</code></pre>
+      <p class="explain">자료구조, 함수화, 성능 비교 또는 검증 요소를 확장한 코드입니다.</p>
+    </article>
+  </div>
+</section>
+<section class="project" id="p11" data-text="12정과02-01 급식실 대기열 큐 선입선출 방식으로 학생 대기열을 처리한다.">
+  <div class="project-head">
+    <span class="num">11</span>
+    <div>
+      <h2>급식실 대기열 큐</h2>
+      <div class="standard"><b>[12정과02-01]</b> 스택과 큐의 원리를 이해하고, 순차적인 데이터 구조를 이용하여 스택과 큐를 구현한다.</div>
+      <p>선입선출 방식으로 학생 대기열을 처리한다.</p>
+    </div>
+  </div>
+  <div class="code-grid">
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 1</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>from collections import deque
+
+queue = deque([&quot;1101&quot;, &quot;1102&quot;, &quot;1103&quot;])
+queue.append(&quot;1104&quot;)
+
+while queue:
+    print(&quot;배식:&quot;, queue.popleft())</code></pre>
+      <p class="explain">기본 개념을 직접 구현하며 입력·처리·출력의 흐름을 확인하는 코드입니다.</p>
+    </article>
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 2</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>from collections import deque
+
+class LunchQueue:
+    def __init__(self):
+        self.q = deque()
+
+    def enter(self, student):
+        self.q.append(student)
+
+    def serve(self):
+        return self.q.popleft() if self.q else None
+
+line = LunchQueue()
+for s in [&quot;민수&quot;, &quot;서연&quot;, &quot;지훈&quot;]:
+    line.enter(s)
+print(line.serve())</code></pre>
+      <p class="explain">자료구조, 함수화, 성능 비교 또는 검증 요소를 확장한 코드입니다.</p>
+    </article>
+  </div>
+</section>
+<section class="project" id="p12" data-text="12정과02-01 스택·큐 동작 시각화 삽입과 삭제 과정을 단계별 텍스트로 표현한다.">
+  <div class="project-head">
+    <span class="num">12</span>
+    <div>
+      <h2>스택·큐 동작 시각화</h2>
+      <div class="standard"><b>[12정과02-01]</b> 스택과 큐의 원리를 이해하고, 순차적인 데이터 구조를 이용하여 스택과 큐를 구현한다.</div>
+      <p>삽입과 삭제 과정을 단계별 텍스트로 표현한다.</p>
+    </div>
+  </div>
+  <div class="code-grid">
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 1</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>stack = []
+for value in [10, 20, 30]:
+    stack.append(value)
+    print(&quot;push&quot;, value, &quot;=&gt;&quot;, stack)
+
+while stack:
+    print(&quot;pop&quot;, stack.pop(), &quot;=&gt;&quot;, stack)</code></pre>
+      <p class="explain">기본 개념을 직접 구현하며 입력·처리·출력의 흐름을 확인하는 코드입니다.</p>
+    </article>
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 2</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>from collections import deque
+
+q = deque()
+for value in [&quot;A&quot;, &quot;B&quot;, &quot;C&quot;]:
+    q.append(value)
+    print(&quot;enqueue&quot;, value, &quot;=&gt;&quot;, list(q))
+
+while q:
+    print(&quot;dequeue&quot;, q.popleft(), &quot;=&gt;&quot;, list(q))</code></pre>
+      <p class="explain">자료구조, 함수화, 성능 비교 또는 검증 요소를 확장한 코드입니다.</p>
+    </article>
+  </div>
+</section>
+<section class="project" id="p13" data-text="12정과02-02 괄호 검사기 스택으로 수식의 괄호 짝을 검사한다.">
+  <div class="project-head">
+    <span class="num">13</span>
+    <div>
+      <h2>괄호 검사기</h2>
+      <div class="standard"><b>[12정과02-02]</b> 스택, 큐를 활용하여 문제를 효율적으로 해결하는 프로그램을 작성한다.</div>
+      <p>스택으로 수식의 괄호 짝을 검사한다.</p>
+    </div>
+  </div>
+  <div class="code-grid">
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 1</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>def balanced(text):
+    pairs = {&quot;)&quot;: &quot;(&quot;, &quot;]&quot;: &quot;[&quot;, &quot;}&quot;: &quot;{&quot;}
+    stack = []
+    for ch in text:
+        if ch in &quot;([{&quot;:
+            stack.append(ch)
+        elif ch in pairs:
+            if not stack or stack.pop() != pairs[ch]:
+                return False
+    return not stack
+
+print(balanced(&quot;{a + [b * (c+d)]}&quot;))</code></pre>
+      <p class="explain">기본 개념을 직접 구현하며 입력·처리·출력의 흐름을 확인하는 코드입니다.</p>
+    </article>
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 2</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>def check_parentheses(expression):
+    stack = []
+    for index, ch in enumerate(expression):
+        if ch == &quot;(&quot;:
+            stack.append(index)
+        elif ch == &quot;)&quot;:
+            if not stack:
+                return f&quot;{index}번 위치에 여는 괄호가 없음&quot;
+            stack.pop()
+    return &quot;정상&quot; if not stack else f&quot;{stack[-1]}번 괄호가 닫히지 않음&quot;
+
+print(check_parentheses(&quot;(3+5)*(2-1)&quot;))</code></pre>
+      <p class="explain">자료구조, 함수화, 성능 비교 또는 검증 요소를 확장한 코드입니다.</p>
+    </article>
+  </div>
+</section>
+<section class="project" id="p14" data-text="12정과02-02 프린터 작업 스케줄러 큐를 활용하여 인쇄 작업을 순서대로 처리한다.">
+  <div class="project-head">
+    <span class="num">14</span>
+    <div>
+      <h2>프린터 작업 스케줄러</h2>
+      <div class="standard"><b>[12정과02-02]</b> 스택, 큐를 활용하여 문제를 효율적으로 해결하는 프로그램을 작성한다.</div>
+      <p>큐를 활용하여 인쇄 작업을 순서대로 처리한다.</p>
+    </div>
+  </div>
+  <div class="code-grid">
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 1</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>from collections import deque
+
+jobs = deque([
+    (&quot;보고서.pdf&quot;, 3),
+    (&quot;그래프.png&quot;, 1),
+    (&quot;논문.docx&quot;, 5)
+])
+
+while jobs:
+    name, pages = jobs.popleft()
+    print(f&quot;{name}: {pages}쪽 인쇄 완료&quot;)</code></pre>
+      <p class="explain">기본 개념을 직접 구현하며 입력·처리·출력의 흐름을 확인하는 코드입니다.</p>
+    </article>
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 2</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>from collections import deque
+
+queue = deque()
+def add_job(name, pages):
+    queue.append({&quot;name&quot;: name, &quot;pages&quot;: pages})
+
+def process():
+    if not queue:
+        return &quot;작업 없음&quot;
+    job = queue.popleft()
+    return f&quot;{job[&#x27;name&#x27;]} {job[&#x27;pages&#x27;]}쪽 처리&quot;
+
+add_job(&quot;A.pdf&quot;, 2)
+add_job(&quot;B.pdf&quot;, 4)
+print(process())</code></pre>
+      <p class="explain">자료구조, 함수화, 성능 비교 또는 검증 요소를 확장한 코드입니다.</p>
+    </article>
+  </div>
+</section>
+<section class="project" id="p15" data-text="12정과02-02 응급실 우선순위 대기열 힙 기반 우선순위 큐로 환자를 처리한다.">
+  <div class="project-head">
+    <span class="num">15</span>
+    <div>
+      <h2>응급실 우선순위 대기열</h2>
+      <div class="standard"><b>[12정과02-02]</b> 스택, 큐를 활용하여 문제를 효율적으로 해결하는 프로그램을 작성한다.</div>
+      <p>힙 기반 우선순위 큐로 환자를 처리한다.</p>
+    </div>
+  </div>
+  <div class="code-grid">
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 1</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>import heapq
+
+patients = []
+heapq.heappush(patients, (2, 1, &quot;학생A&quot;))
+heapq.heappush(patients, (1, 2, &quot;학생B&quot;))
+heapq.heappush(patients, (3, 3, &quot;학생C&quot;))
+
+while patients:
+    priority, _, name = heapq.heappop(patients)
+    print(priority, name)</code></pre>
+      <p class="explain">기본 개념을 직접 구현하며 입력·처리·출력의 흐름을 확인하는 코드입니다.</p>
+    </article>
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 2</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>import heapq
+
+class EmergencyQueue:
+    def __init__(self):
+        self.heap = []
+        self.order = 0
+
+    def add(self, name, severity):
+        self.order += 1
+        heapq.heappush(self.heap, (-severity, self.order, name))
+
+    def next(self):
+        return heapq.heappop(self.heap)[2]
+
+q = EmergencyQueue()
+q.add(&quot;A&quot;, 2); q.add(&quot;B&quot;, 5); q.add(&quot;C&quot;, 3)
+print(q.next())</code></pre>
+      <p class="explain">자료구조, 함수화, 성능 비교 또는 검증 요소를 확장한 코드입니다.</p>
+    </article>
+  </div>
+</section>
+<section class="project" id="p16" data-text="12정과02-03 교실 좌석 관계 인접행렬 학생 간 협업 관계를 행렬로 표현한다.">
+  <div class="project-head">
+    <span class="num">16</span>
+    <div>
+      <h2>교실 좌석 관계 인접행렬</h2>
+      <div class="standard"><b>[12정과02-03]</b> 인접행렬과 인접리스트를 활용하여 트리와 그래프를 구현한다.</div>
+      <p>학생 간 협업 관계를 행렬로 표현한다.</p>
+    </div>
+  </div>
+  <div class="code-grid">
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 1</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>students = [&quot;가&quot;, &quot;나&quot;, &quot;다&quot;, &quot;라&quot;]
+matrix = [
+    [0, 1, 1, 0],
+    [1, 0, 0, 1],
+    [1, 0, 0, 1],
+    [0, 1, 1, 0],
+]
+
+for i, row in enumerate(matrix):
+    partners = [students[j] for j, v in enumerate(row) if v]
+    print(students[i], &quot;협업:&quot;, partners)</code></pre>
+      <p class="explain">기본 개념을 직접 구현하며 입력·처리·출력의 흐름을 확인하는 코드입니다.</p>
+    </article>
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 2</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>def add_edge(matrix, a, b):
+    matrix[a][b] = matrix[b][a] = 1
+
+n = 5
+graph = [[0] * n for _ in range(n)]
+add_edge(graph, 0, 2)
+add_edge(graph, 1, 2)
+add_edge(graph, 2, 4)
+for row in graph:
+    print(row)</code></pre>
+      <p class="explain">자료구조, 함수화, 성능 비교 또는 검증 요소를 확장한 코드입니다.</p>
+    </article>
+  </div>
+</section>
+<section class="project" id="p17" data-text="12정과02-03 학교 건물 연결 인접리스트 건물 사이 이동 경로를 그래프로 구현한다.">
+  <div class="project-head">
+    <span class="num">17</span>
+    <div>
+      <h2>학교 건물 연결 인접리스트</h2>
+      <div class="standard"><b>[12정과02-03]</b> 인접행렬과 인접리스트를 활용하여 트리와 그래프를 구현한다.</div>
+      <p>건물 사이 이동 경로를 그래프로 구현한다.</p>
+    </div>
+  </div>
+  <div class="code-grid">
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 1</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>graph = {
+    &quot;본관&quot;: [&quot;과학관&quot;, &quot;도서관&quot;],
+    &quot;과학관&quot;: [&quot;본관&quot;, &quot;체육관&quot;],
+    &quot;도서관&quot;: [&quot;본관&quot;, &quot;기숙사&quot;],
+    &quot;체육관&quot;: [&quot;과학관&quot;],
+    &quot;기숙사&quot;: [&quot;도서관&quot;],
+}
+for place, neighbors in graph.items():
+    print(place, &quot;-&gt;&quot;, neighbors)</code></pre>
+      <p class="explain">기본 개념을 직접 구현하며 입력·처리·출력의 흐름을 확인하는 코드입니다.</p>
+    </article>
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 2</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>from collections import defaultdict
+
+graph = defaultdict(list)
+roads = [(&quot;A&quot;, &quot;B&quot;), (&quot;A&quot;, &quot;C&quot;), (&quot;B&quot;, &quot;D&quot;)]
+for a, b in roads:
+    graph[a].append(b)
+    graph[b].append(a)
+
+print(dict(graph))</code></pre>
+      <p class="explain">자료구조, 함수화, 성능 비교 또는 검증 요소를 확장한 코드입니다.</p>
+    </article>
+  </div>
+</section>
+<section class="project" id="p18" data-text="12정과02-03 생물 분류 트리 계층적 분류 체계를 트리 구조로 표현한다.">
+  <div class="project-head">
+    <span class="num">18</span>
+    <div>
+      <h2>생물 분류 트리</h2>
+      <div class="standard"><b>[12정과02-03]</b> 인접행렬과 인접리스트를 활용하여 트리와 그래프를 구현한다.</div>
+      <p>계층적 분류 체계를 트리 구조로 표현한다.</p>
+    </div>
+  </div>
+  <div class="code-grid">
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 1</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>tree = {
+    &quot;생물&quot;: [&quot;동물&quot;, &quot;식물&quot;],
+    &quot;동물&quot;: [&quot;척추동물&quot;, &quot;무척추동물&quot;],
+    &quot;식물&quot;: [&quot;종자식물&quot;, &quot;양치식물&quot;],
+}
+
+def show(node, depth=0):
+    print(&quot;  &quot; * depth + node)
+    for child in tree.get(node, []):
+        show(child, depth + 1)
+
+show(&quot;생물&quot;)</code></pre>
+      <p class="explain">기본 개념을 직접 구현하며 입력·처리·출력의 흐름을 확인하는 코드입니다.</p>
+    </article>
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 2</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>class Node:
+    def __init__(self, name):
+        self.name = name
+        self.children = []
+
+root = Node(&quot;생물&quot;)
+root.children = [Node(&quot;동물&quot;), Node(&quot;식물&quot;)]
+root.children[0].children = [Node(&quot;포유류&quot;), Node(&quot;조류&quot;)]
+
+def preorder(node):
+    print(node.name)
+    for child in node.children:
+        preorder(child)
+
+preorder(root)</code></pre>
+      <p class="explain">자료구조, 함수화, 성능 비교 또는 검증 요소를 확장한 코드입니다.</p>
+    </article>
+  </div>
+</section>
+<section class="project" id="p19" data-text="12정과02-04 친구 추천 그래프 공통 친구 수를 이용해 친구를 추천한다.">
+  <div class="project-head">
+    <span class="num">19</span>
+    <div>
+      <h2>친구 추천 그래프</h2>
+      <div class="standard"><b>[12정과02-04]</b> 트리, 그래프를 활용하여 문제를 효율적으로 해결하는 프로그램을 작성한다.</div>
+      <p>공통 친구 수를 이용해 친구를 추천한다.</p>
+    </div>
+  </div>
+  <div class="code-grid">
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 1</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>friends = {
+    &quot;민수&quot;: {&quot;서연&quot;, &quot;지훈&quot;},
+    &quot;서연&quot;: {&quot;민수&quot;, &quot;유진&quot;},
+    &quot;지훈&quot;: {&quot;민수&quot;, &quot;유진&quot;},
+    &quot;유진&quot;: {&quot;서연&quot;, &quot;지훈&quot;, &quot;하나&quot;},
+    &quot;하나&quot;: {&quot;유진&quot;},
+}
+
+person = &quot;민수&quot;
+candidates = set().union(*(friends[x] for x in friends[person]))
+candidates -= friends[person] | {person}
+print(candidates)</code></pre>
+      <p class="explain">기본 개념을 직접 구현하며 입력·처리·출력의 흐름을 확인하는 코드입니다.</p>
+    </article>
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 2</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>def recommend(graph, person):
+    scores = {}
+    for friend in graph[person]:
+        for candidate in graph[friend]:
+            if candidate != person and candidate not in graph[person]:
+                scores[candidate] = scores.get(candidate, 0) + 1
+    return sorted(scores.items(), key=lambda x: -x[1])
+
+g = {&quot;A&quot;:{&quot;B&quot;,&quot;C&quot;}, &quot;B&quot;:{&quot;A&quot;,&quot;D&quot;}, &quot;C&quot;:{&quot;A&quot;,&quot;D&quot;,&quot;E&quot;},
+     &quot;D&quot;:{&quot;B&quot;,&quot;C&quot;}, &quot;E&quot;:{&quot;C&quot;}}
+print(recommend(g, &quot;A&quot;))</code></pre>
+      <p class="explain">자료구조, 함수화, 성능 비교 또는 검증 요소를 확장한 코드입니다.</p>
+    </article>
+  </div>
+</section>
+<section class="project" id="p20" data-text="12정과02-04 학교 최단 이동 경로 그래프에서 bfs로 최소 이동 횟수를 구한다.">
+  <div class="project-head">
+    <span class="num">20</span>
+    <div>
+      <h2>학교 최단 이동 경로</h2>
+      <div class="standard"><b>[12정과02-04]</b> 트리, 그래프를 활용하여 문제를 효율적으로 해결하는 프로그램을 작성한다.</div>
+      <p>그래프에서 BFS로 최소 이동 횟수를 구한다.</p>
+    </div>
+  </div>
+  <div class="code-grid">
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 1</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>from collections import deque
+
+graph = {
+    &quot;교실&quot;: [&quot;복도&quot;],
+    &quot;복도&quot;: [&quot;교실&quot;, &quot;계단&quot;, &quot;도서관&quot;],
+    &quot;계단&quot;: [&quot;복도&quot;, &quot;급식실&quot;],
+    &quot;도서관&quot;: [&quot;복도&quot;],
+    &quot;급식실&quot;: [&quot;계단&quot;],
+}
+
+def distance(start, goal):
+    q = deque([(start, 0)])
+    visited = {start}
+    while q:
+        node, d = q.popleft()
+        if node == goal:
+            return d
+        for nxt in graph[node]:
+            if nxt not in visited:
+                visited.add(nxt)
+                q.append((nxt, d + 1))
+
+print(distance(&quot;교실&quot;, &quot;급식실&quot;))</code></pre>
+      <p class="explain">기본 개념을 직접 구현하며 입력·처리·출력의 흐름을 확인하는 코드입니다.</p>
+    </article>
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 2</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>from collections import deque
+
+def shortest_path(graph, start, goal):
+    q = deque([[start]])
+    visited = {start}
+    while q:
+        path = q.popleft()
+        node = path[-1]
+        if node == goal:
+            return path
+        for nxt in graph[node]:
+            if nxt not in visited:
+                visited.add(nxt)
+                q.append(path + [nxt])
+
+g = {&quot;A&quot;:[&quot;B&quot;,&quot;C&quot;], &quot;B&quot;:[&quot;D&quot;], &quot;C&quot;:[&quot;D&quot;], &quot;D&quot;:[]}
+print(shortest_path(g, &quot;A&quot;, &quot;D&quot;))</code></pre>
+      <p class="explain">자료구조, 함수화, 성능 비교 또는 검증 요소를 확장한 코드입니다.</p>
+    </article>
+  </div>
+</section>
+<section class="project" id="p21" data-text="12정과02-04 감염 확산 네트워크 그래프 탐색으로 감염 전파 범위를 계산한다.">
+  <div class="project-head">
+    <span class="num">21</span>
+    <div>
+      <h2>감염 확산 네트워크</h2>
+      <div class="standard"><b>[12정과02-04]</b> 트리, 그래프를 활용하여 문제를 효율적으로 해결하는 프로그램을 작성한다.</div>
+      <p>그래프 탐색으로 감염 전파 범위를 계산한다.</p>
+    </div>
+  </div>
+  <div class="code-grid">
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 1</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>from collections import deque
+
+network = {
+    1: [2, 3], 2: [1, 4], 3: [1, 5],
+    4: [2, 6], 5: [3], 6: [4]
+}
+
+infected = {1}
+q = deque([(1, 0)])
+limit = 2
+while q:
+    node, day = q.popleft()
+    if day == limit:
+        continue
+    for nxt in network[node]:
+        if nxt not in infected:
+            infected.add(nxt)
+            q.append((nxt, day + 1))
+
+print(&quot;감염 가능:&quot;, sorted(infected))</code></pre>
+      <p class="explain">기본 개념을 직접 구현하며 입력·처리·출력의 흐름을 확인하는 코드입니다.</p>
+    </article>
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 2</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>def spread(graph, initial, steps):
+    infected = set(initial)
+    frontier = set(initial)
+    for _ in range(steps):
+        new = {n for x in frontier for n in graph[x]} - infected
+        infected |= new
+        frontier = new
+    return infected
+
+g = {&quot;A&quot;:{&quot;B&quot;}, &quot;B&quot;:{&quot;A&quot;,&quot;C&quot;}, &quot;C&quot;:{&quot;B&quot;,&quot;D&quot;}, &quot;D&quot;:{&quot;C&quot;}}
+print(spread(g, {&quot;A&quot;}, 3))</code></pre>
+      <p class="explain">자료구조, 함수화, 성능 비교 또는 검증 요소를 확장한 코드입니다.</p>
+    </article>
+  </div>
+</section>
+<section class="project" id="p22" data-text="12정과03-01 미로 완전 탐색 모든 이동 가능 상태를 탐색해 출구를 찾는다.">
+  <div class="project-head">
+    <span class="num">22</span>
+    <div>
+      <h2>미로 완전 탐색</h2>
+      <div class="standard"><b>[12정과03-01]</b> 문제를 분석하여 상태 공간으로 구조화하고, 상태 공간을 모두 탐색하여 문제를 해결하는 알고리즘을 설계한다.</div>
+      <p>모든 이동 가능 상태를 탐색해 출구를 찾는다.</p>
+    </div>
+  </div>
+  <div class="code-grid">
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 1</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>maze = [
+    &quot;S..#&quot;,
+    &quot;.#..&quot;,
+    &quot;...G&quot;,
+]
+rows, cols = len(maze), len(maze[0])
+
+def dfs(r, c, visited):
+    if not (0 &lt;= r &lt; rows and 0 &lt;= c &lt; cols):
+        return False
+    if maze[r][c] == &quot;#&quot; or (r, c) in visited:
+        return False
+    if maze[r][c] == &quot;G&quot;:
+        return True
+    visited.add((r, c))
+    return any(dfs(r+dr, c+dc, visited)
+               for dr, dc in [(1,0),(-1,0),(0,1),(0,-1)])
+
+print(dfs(0, 0, set()))</code></pre>
+      <p class="explain">기본 개념을 직접 구현하며 입력·처리·출력의 흐름을 확인하는 코드입니다.</p>
+    </article>
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 2</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>from collections import deque
+
+grid = [[0,0,1],[1,0,0],[0,0,0]]
+q = deque([(0,0)])
+visited = {(0,0)}
+while q:
+    r,c = q.popleft()
+    if (r,c) == (2,2):
+        print(&quot;도착&quot;)
+        break
+    for dr,dc in [(1,0),(-1,0),(0,1),(0,-1)]:
+        nr,nc = r+dr,c+dc
+        if 0&lt;=nr&lt;3 and 0&lt;=nc&lt;3 and grid[nr][nc]==0 and (nr,nc) not in visited:
+            visited.add((nr,nc)); q.append((nr,nc))</code></pre>
+      <p class="explain">자료구조, 함수화, 성능 비교 또는 검증 요소를 확장한 코드입니다.</p>
+    </article>
+  </div>
+</section>
+<section class="project" id="p23" data-text="12정과03-01 부분집합 합 탐색 모든 부분집합을 조사해 목표 합을 찾는다.">
+  <div class="project-head">
+    <span class="num">23</span>
+    <div>
+      <h2>부분집합 합 탐색</h2>
+      <div class="standard"><b>[12정과03-01]</b> 문제를 분석하여 상태 공간으로 구조화하고, 상태 공간을 모두 탐색하여 문제를 해결하는 알고리즘을 설계한다.</div>
+      <p>모든 부분집합을 조사해 목표 합을 찾는다.</p>
+    </div>
+  </div>
+  <div class="code-grid">
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 1</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>numbers = [3, 5, 6, 8]
+target = 14
+
+for mask in range(1 &lt;&lt; len(numbers)):
+    chosen = [numbers[j] for j in range(len(numbers)) if mask &amp; (1 &lt;&lt; j)]
+    if sum(chosen) == target:
+        print(chosen)</code></pre>
+      <p class="explain">기본 개념을 직접 구현하며 입력·처리·출력의 흐름을 확인하는 코드입니다.</p>
+    </article>
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 2</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>from itertools import combinations
+
+values = [2, 4, 7, 9]
+target = 11
+answers = []
+for r in range(len(values) + 1):
+    for comb in combinations(values, r):
+        if sum(comb) == target:
+            answers.append(comb)
+print(answers)</code></pre>
+      <p class="explain">자료구조, 함수화, 성능 비교 또는 검증 요소를 확장한 코드입니다.</p>
+    </article>
+  </div>
+</section>
+<section class="project" id="p24" data-text="12정과03-01 n-queen 상태 공간 탐색 백트래킹 전 단계인 완전 탐색 구조를 이해한다.">
+  <div class="project-head">
+    <span class="num">24</span>
+    <div>
+      <h2>N-Queen 상태 공간 탐색</h2>
+      <div class="standard"><b>[12정과03-01]</b> 문제를 분석하여 상태 공간으로 구조화하고, 상태 공간을 모두 탐색하여 문제를 해결하는 알고리즘을 설계한다.</div>
+      <p>백트래킹 전 단계인 완전 탐색 구조를 이해한다.</p>
+    </div>
+  </div>
+  <div class="code-grid">
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 1</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>from itertools import permutations
+
+def valid(cols):
+    n = len(cols)
+    return all(abs(cols[i]-cols[j]) != abs(i-j)
+               for i in range(n) for j in range(i+1,n))
+
+n = 5
+solutions = [p for p in permutations(range(n)) if valid(p)]
+print(&quot;해의 수:&quot;, len(solutions))
+print(solutions[0])</code></pre>
+      <p class="explain">기본 개념을 직접 구현하며 입력·처리·출력의 흐름을 확인하는 코드입니다.</p>
+    </article>
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 2</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>def queens(n, row=0, cols=()):
+    if row == n:
+        yield cols
+        return
+    for col in range(n):
+        if all(col != c and abs(col-c) != row-r for r,c in enumerate(cols)):
+            yield from queens(n, row+1, cols+(col,))
+
+print(next(queens(8)))</code></pre>
+      <p class="explain">자료구조, 함수화, 성능 비교 또는 검증 요소를 확장한 코드입니다.</p>
+    </article>
+  </div>
+</section>
+<section class="project" id="p25" data-text="12정과03-02 가지치기 배낭 탐색 현재 최적값보다 불리한 상태를 배제한다.">
+  <div class="project-head">
+    <span class="num">25</span>
+    <div>
+      <h2>가지치기 배낭 탐색</h2>
+      <div class="standard"><b>[12정과03-02]</b> 문제의 상태 공간 일부를 배제하는 알고리즘을 설계하고, 기존의 탐색 기반 알고리즘과 비교·분석한다.</div>
+      <p>현재 최적값보다 불리한 상태를 배제한다.</p>
+    </div>
+  </div>
+  <div class="code-grid">
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 1</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>weights = [2, 3, 4, 5]
+values = [3, 4, 5, 8]
+capacity = 7
+best = 0
+
+def search(i, w, v):
+    global best
+    if w &gt; capacity:
+        return
+    if i == len(weights):
+        best = max(best, v)
+        return
+    if v + sum(values[i:]) &lt;= best:   # 가지치기
+        return
+    search(i+1, w, v)
+    search(i+1, w+weights[i], v+values[i])
+
+search(0, 0, 0)
+print(best)</code></pre>
+      <p class="explain">기본 개념을 직접 구현하며 입력·처리·출력의 흐름을 확인하는 코드입니다.</p>
+    </article>
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 2</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>items = [(5,10), (4,7), (3,6), (2,4)]
+capacity = 7
+best = 0
+
+def dfs(idx, remain, score):
+    global best
+    if idx == len(items):
+        best = max(best, score)
+        return
+    weight, value = items[idx]
+    dfs(idx+1, remain, score)
+    if weight &lt;= remain:
+        dfs(idx+1, remain-weight, score+value)
+
+dfs(0, capacity, 0)
+print(best)</code></pre>
+      <p class="explain">자료구조, 함수화, 성능 비교 또는 검증 요소를 확장한 코드입니다.</p>
+    </article>
+  </div>
+</section>
+<section class="project" id="p26" data-text="12정과03-02 탐욕적 동전 교환 탐욕법과 완전 탐색 결과를 비교한다.">
+  <div class="project-head">
+    <span class="num">26</span>
+    <div>
+      <h2>탐욕적 동전 교환</h2>
+      <div class="standard"><b>[12정과03-02]</b> 문제의 상태 공간 일부를 배제하는 알고리즘을 설계하고, 기존의 탐색 기반 알고리즘과 비교·분석한다.</div>
+      <p>탐욕법과 완전 탐색 결과를 비교한다.</p>
+    </div>
+  </div>
+  <div class="code-grid">
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 1</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>coins = [500, 100, 50, 10]
+amount = 1260
+count = 0
+for coin in coins:
+    use, amount = divmod(amount, coin)
+    count += use
+    print(coin, use)
+print(&quot;동전 수:&quot;, count)</code></pre>
+      <p class="explain">기본 개념을 직접 구현하며 입력·처리·출력의 흐름을 확인하는 코드입니다.</p>
+    </article>
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 2</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>def greedy(coins, amount):
+    result = []
+    for coin in sorted(coins, reverse=True):
+        while coin &lt;= amount:
+            amount -= coin
+            result.append(coin)
+    return result if amount == 0 else None
+
+print(greedy([1, 3, 4], 6))
+# [4,1,1]이지만 최적해는 [3,3]이므로 탐욕법의 한계를 확인한다.</code></pre>
+      <p class="explain">자료구조, 함수화, 성능 비교 또는 검증 요소를 확장한 코드입니다.</p>
+    </article>
+  </div>
+</section>
+<section class="project" id="p27" data-text="12정과03-02 분기한정 작업 배정 하한값을 이용해 불필요한 상태를 줄인다.">
+  <div class="project-head">
+    <span class="num">27</span>
+    <div>
+      <h2>분기한정 작업 배정</h2>
+      <div class="standard"><b>[12정과03-02]</b> 문제의 상태 공간 일부를 배제하는 알고리즘을 설계하고, 기존의 탐색 기반 알고리즘과 비교·분석한다.</div>
+      <p>하한값을 이용해 불필요한 상태를 줄인다.</p>
+    </div>
+  </div>
+  <div class="code-grid">
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 1</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>cost = [
+    [9, 2, 7],
+    [6, 4, 3],
+    [5, 8, 1],
+]
+best = float(&quot;inf&quot;)
+
+def assign(worker, used, total):
+    global best
+    if total &gt;= best:
+        return
+    if worker == len(cost):
+        best = total
+        return
+    for job in range(len(cost)):
+        if job not in used:
+            assign(worker+1, used|{job}, total+cost[worker][job])
+
+assign(0, set(), 0)
+print(best)</code></pre>
+      <p class="explain">기본 개념을 직접 구현하며 입력·처리·출력의 흐름을 확인하는 코드입니다.</p>
+    </article>
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 2</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>from itertools import permutations
+
+cost = [[4,2,8],[2,5,7],[6,3,1]]
+best = None
+for jobs in permutations(range(3)):
+    total = sum(cost[w][jobs[w]] for w in range(3))
+    if best is None or total &lt; best[0]:
+        best = (total, jobs)
+print(best)</code></pre>
+      <p class="explain">자료구조, 함수화, 성능 비교 또는 검증 요소를 확장한 코드입니다.</p>
+    </article>
+  </div>
+</section>
+<section class="project" id="p28" data-text="12정과03-03 큰 정수 곱셈 문제 분해 큰 문제를 작은 자릿수 문제로 나누어 관계를 찾는다.">
+  <div class="project-head">
+    <span class="num">28</span>
+    <div>
+      <h2>큰 정수 곱셈 문제 분해</h2>
+      <div class="standard"><b>[12정과03-03]</b> 전체 문제를 부분 문제로 분해하고, 전체 문제와 부분 문제의 관계를 발견한다.</div>
+      <p>큰 문제를 작은 자릿수 문제로 나누어 관계를 찾는다.</p>
+    </div>
+  </div>
+  <div class="code-grid">
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 1</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>def split_number(n):
+    text = str(n)
+    mid = len(text) // 2
+    return int(text[:mid] or 0), int(text[mid:] or 0)
+
+a, b = split_number(12345678)
+print(a, b)
+print(a * 10 ** len(str(b)) + b)</code></pre>
+      <p class="explain">기본 개념을 직접 구현하며 입력·처리·출력의 흐름을 확인하는 코드입니다.</p>
+    </article>
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 2</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>def multiply_by_parts(x, y):
+    if x &lt; 10 or y &lt; 10:
+        return x * y
+    m = max(len(str(x)), len(str(y))) // 2
+    p = 10 ** m
+    a, b = divmod(x, p)
+    c, d = divmod(y, p)
+    return a*c*p*p + (a*d+b*c)*p + b*d
+
+print(multiply_by_parts(1234, 5678))</code></pre>
+      <p class="explain">자료구조, 함수화, 성능 비교 또는 검증 요소를 확장한 코드입니다.</p>
+    </article>
+  </div>
+</section>
+<section class="project" id="p29" data-text="12정과03-03 구간 합 문제 분해 전체 구간 질의를 접두사 합 부분 문제로 바꾼다.">
+  <div class="project-head">
+    <span class="num">29</span>
+    <div>
+      <h2>구간 합 문제 분해</h2>
+      <div class="standard"><b>[12정과03-03]</b> 전체 문제를 부분 문제로 분해하고, 전체 문제와 부분 문제의 관계를 발견한다.</div>
+      <p>전체 구간 질의를 접두사 합 부분 문제로 바꾼다.</p>
+    </div>
+  </div>
+  <div class="code-grid">
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 1</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>data = [3, 1, 4, 1, 5, 9, 2]
+prefix = [0]
+for x in data:
+    prefix.append(prefix[-1] + x)
+
+def range_sum(left, right):
+    return prefix[right + 1] - prefix[left]
+
+print(range_sum(2, 5))</code></pre>
+      <p class="explain">기본 개념을 직접 구현하며 입력·처리·출력의 흐름을 확인하는 코드입니다.</p>
+    </article>
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 2</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>values = [10, 20, 30, 40]
+prefix = [0]
+for value in values:
+    prefix.append(prefix[-1] + value)
+
+queries = [(0,1), (1,3), (0,3)]
+for l,r in queries:
+    print(l, r, prefix[r+1]-prefix[l])</code></pre>
+      <p class="explain">자료구조, 함수화, 성능 비교 또는 검증 요소를 확장한 코드입니다.</p>
+    </article>
+  </div>
+</section>
+<section class="project" id="p30" data-text="12정과03-03 행렬 영역 합 분해 2차원 누적합으로 부분 영역 관계를 발견한다.">
+  <div class="project-head">
+    <span class="num">30</span>
+    <div>
+      <h2>행렬 영역 합 분해</h2>
+      <div class="standard"><b>[12정과03-03]</b> 전체 문제를 부분 문제로 분해하고, 전체 문제와 부분 문제의 관계를 발견한다.</div>
+      <p>2차원 누적합으로 부분 영역 관계를 발견한다.</p>
+    </div>
+  </div>
+  <div class="code-grid">
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 1</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>matrix = [
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9],
+]
+p = [[0]*4 for _ in range(4)]
+for r in range(3):
+    for c in range(3):
+        p[r+1][c+1] = matrix[r][c] + p[r][c+1] + p[r+1][c] - p[r][c]
+
+def area(r1,c1,r2,c2):
+    return p[r2+1][c2+1]-p[r1][c2+1]-p[r2+1][c1]+p[r1][c1]
+
+print(area(1,1,2,2))</code></pre>
+      <p class="explain">기본 개념을 직접 구현하며 입력·처리·출력의 흐름을 확인하는 코드입니다.</p>
+    </article>
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 2</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>grid = [[2,1],[3,4]]
+prefix = [[0]*3 for _ in range(3)]
+for i in range(2):
+    for j in range(2):
+        prefix[i+1][j+1] = (grid[i][j] + prefix[i][j+1]
+                            + prefix[i+1][j] - prefix[i][j])
+print(prefix)</code></pre>
+      <p class="explain">자료구조, 함수화, 성능 비교 또는 검증 요소를 확장한 코드입니다.</p>
+    </article>
+  </div>
+</section>
+<section class="project" id="p31" data-text="12정과03-04 합병 정렬 부분 배열 정렬 결과를 합쳐 전체를 정렬한다.">
+  <div class="project-head">
+    <span class="num">31</span>
+    <div>
+      <h2>합병 정렬</h2>
+      <div class="standard"><b>[12정과03-04]</b> 부분 문제를 해결한 결과를 이용하여 전체 문제를 해결하는 알고리즘을 설계한다.</div>
+      <p>부분 배열 정렬 결과를 합쳐 전체를 정렬한다.</p>
+    </div>
+  </div>
+  <div class="code-grid">
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 1</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>def merge_sort(data):
+    if len(data) &lt;= 1:
+        return data
+    mid = len(data)//2
+    left = merge_sort(data[:mid])
+    right = merge_sort(data[mid:])
+    result = []
+    while left and right:
+        result.append(left.pop(0) if left[0] &lt;= right[0] else right.pop(0))
+    return result + left + right
+
+print(merge_sort([7,2,9,1,5]))</code></pre>
+      <p class="explain">기본 개념을 직접 구현하며 입력·처리·출력의 흐름을 확인하는 코드입니다.</p>
+    </article>
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 2</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>def merge(left, right):
+    result = []
+    i = j = 0
+    while i &lt; len(left) and j &lt; len(right):
+        if left[i] &lt;= right[j]:
+            result.append(left[i]); i += 1
+        else:
+            result.append(right[j]); j += 1
+    return result + left[i:] + right[j:]
+
+print(merge([1,4,8], [2,3,9]))</code></pre>
+      <p class="explain">자료구조, 함수화, 성능 비교 또는 검증 요소를 확장한 코드입니다.</p>
+    </article>
+  </div>
+</section>
+<section class="project" id="p32" data-text="12정과03-04 퀵 정렬 피벗을 기준으로 문제를 나누어 해결한다.">
+  <div class="project-head">
+    <span class="num">32</span>
+    <div>
+      <h2>퀵 정렬</h2>
+      <div class="standard"><b>[12정과03-04]</b> 부분 문제를 해결한 결과를 이용하여 전체 문제를 해결하는 알고리즘을 설계한다.</div>
+      <p>피벗을 기준으로 문제를 나누어 해결한다.</p>
+    </div>
+  </div>
+  <div class="code-grid">
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 1</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>def quick_sort(data):
+    if len(data) &lt;= 1:
+        return data
+    pivot = data[len(data)//2]
+    left = [x for x in data if x &lt; pivot]
+    same = [x for x in data if x == pivot]
+    right = [x for x in data if x &gt; pivot]
+    return quick_sort(left) + same + quick_sort(right)
+
+print(quick_sort([5,3,8,3,1,9]))</code></pre>
+      <p class="explain">기본 개념을 직접 구현하며 입력·처리·출력의 흐름을 확인하는 코드입니다.</p>
+    </article>
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 2</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>def partition(data, low, high):
+    pivot = data[high]
+    i = low
+    for j in range(low, high):
+        if data[j] &lt;= pivot:
+            data[i], data[j] = data[j], data[i]
+            i += 1
+    data[i], data[high] = data[high], data[i]
+    return i
+
+a = [4,2,7,1,3]
+p = partition(a, 0, len(a)-1)
+print(a, &quot;피벗 위치:&quot;, p)</code></pre>
+      <p class="explain">자료구조, 함수화, 성능 비교 또는 검증 요소를 확장한 코드입니다.</p>
+    </article>
+  </div>
+</section>
+<section class="project" id="p33" data-text="12정과03-04 최근접 점 분할정복 평면의 점 집합을 분할해 최소 거리를 탐색한다.">
+  <div class="project-head">
+    <span class="num">33</span>
+    <div>
+      <h2>최근접 점 분할정복</h2>
+      <div class="standard"><b>[12정과03-04]</b> 부분 문제를 해결한 결과를 이용하여 전체 문제를 해결하는 알고리즘을 설계한다.</div>
+      <p>평면의 점 집합을 분할해 최소 거리를 탐색한다.</p>
+    </div>
+  </div>
+  <div class="code-grid">
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 1</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>from math import hypot
+
+points = [(0,0),(2,2),(3,1),(8,8),(9,9)]
+best = float(&quot;inf&quot;)
+pair = None
+for i in range(len(points)):
+    for j in range(i+1, len(points)):
+        d = hypot(points[i][0]-points[j][0], points[i][1]-points[j][1])
+        if d &lt; best:
+            best, pair = d, (points[i], points[j])
+print(pair, round(best,3))</code></pre>
+      <p class="explain">기본 개념을 직접 구현하며 입력·처리·출력의 흐름을 확인하는 코드입니다.</p>
+    </article>
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 2</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>def closest_split(points):
+    points = sorted(points)
+    mid = len(points)//2
+    left, right = points[:mid], points[mid:]
+    print(&quot;왼쪽 부분:&quot;, left)
+    print(&quot;오른쪽 부분:&quot;, right)
+    return left, right
+
+closest_split([(5,2),(1,3),(8,7),(2,2)])</code></pre>
+      <p class="explain">자료구조, 함수화, 성능 비교 또는 검증 요소를 확장한 코드입니다.</p>
+    </article>
+  </div>
+</section>
+<section class="project" id="p34" data-text="12정과03-05 동적 계획 피보나치 중복 부분 문제를 저장하여 재계산을 없앤다.">
+  <div class="project-head">
+    <span class="num">34</span>
+    <div>
+      <h2>동적 계획 피보나치</h2>
+      <div class="standard"><b>[12정과03-05]</b> 부분 문제가 중복으로 적용되지 않는 알고리즘을 설계하고 기존의 관계 기반 알고리즘과 비교·분석한다.</div>
+      <p>중복 부분 문제를 저장하여 재계산을 없앤다.</p>
+    </div>
+  </div>
+  <div class="code-grid">
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 1</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>def fib_dp(n):
+    if n &lt; 2:
+        return n
+    dp = [0, 1]
+    for i in range(2, n+1):
+        dp.append(dp[-1] + dp[-2])
+    return dp[n]
+
+print(fib_dp(30))</code></pre>
+      <p class="explain">기본 개념을 직접 구현하며 입력·처리·출력의 흐름을 확인하는 코드입니다.</p>
+    </article>
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 2</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>from functools import lru_cache
+
+@lru_cache(maxsize=None)
+def fib(n):
+    if n &lt; 2:
+        return n
+    return fib(n-1) + fib(n-2)
+
+print(fib(100))
+print(fib.cache_info())</code></pre>
+      <p class="explain">자료구조, 함수화, 성능 비교 또는 검증 요소를 확장한 코드입니다.</p>
+    </article>
+  </div>
+</section>
+<section class="project" id="p35" data-text="12정과03-05 최장 공통 부분수열 표를 활용해 문자열 부분 문제의 답을 저장한다.">
+  <div class="project-head">
+    <span class="num">35</span>
+    <div>
+      <h2>최장 공통 부분수열</h2>
+      <div class="standard"><b>[12정과03-05]</b> 부분 문제가 중복으로 적용되지 않는 알고리즘을 설계하고 기존의 관계 기반 알고리즘과 비교·분석한다.</div>
+      <p>표를 활용해 문자열 부분 문제의 답을 저장한다.</p>
+    </div>
+  </div>
+  <div class="code-grid">
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 1</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>def lcs(a, b):
+    dp = [[0]*(len(b)+1) for _ in range(len(a)+1)]
+    for i in range(1, len(a)+1):
+        for j in range(1, len(b)+1):
+            if a[i-1] == b[j-1]:
+                dp[i][j] = dp[i-1][j-1] + 1
+            else:
+                dp[i][j] = max(dp[i-1][j], dp[i][j-1])
+    return dp[-1][-1]
+
+print(lcs(&quot;INFORMATION&quot;, &quot;FORMATION&quot;))</code></pre>
+      <p class="explain">기본 개념을 직접 구현하며 입력·처리·출력의 흐름을 확인하는 코드입니다.</p>
+    </article>
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 2</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>a, b = &quot;ABCBDAB&quot;, &quot;BDCABA&quot;
+dp = [[0]*(len(b)+1) for _ in range(len(a)+1)]
+for i, x in enumerate(a, 1):
+    for j, y in enumerate(b, 1):
+        dp[i][j] = dp[i-1][j-1]+1 if x==y else max(dp[i-1][j], dp[i][j-1])
+print(&quot;LCS 길이:&quot;, dp[-1][-1])</code></pre>
+      <p class="explain">자료구조, 함수화, 성능 비교 또는 검증 요소를 확장한 코드입니다.</p>
+    </article>
+  </div>
+</section>
+<section class="project" id="p36" data-text="12정과03-05 격자 최단 비용 경로 각 칸까지의 최소 비용을 동적 계획법으로 계산한다.">
+  <div class="project-head">
+    <span class="num">36</span>
+    <div>
+      <h2>격자 최단 비용 경로</h2>
+      <div class="standard"><b>[12정과03-05]</b> 부분 문제가 중복으로 적용되지 않는 알고리즘을 설계하고 기존의 관계 기반 알고리즘과 비교·분석한다.</div>
+      <p>각 칸까지의 최소 비용을 동적 계획법으로 계산한다.</p>
+    </div>
+  </div>
+  <div class="code-grid">
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 1</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>cost = [
+    [1, 3, 1],
+    [1, 5, 1],
+    [4, 2, 1],
+]
+dp = [[0]*3 for _ in range(3)]
+for r in range(3):
+    for c in range(3):
+        if r == 0 and c == 0:
+            dp[r][c] = cost[r][c]
+        else:
+            up = dp[r-1][c] if r else float(&quot;inf&quot;)
+            left = dp[r][c-1] if c else float(&quot;inf&quot;)
+            dp[r][c] = cost[r][c] + min(up, left)
+print(dp[-1][-1])</code></pre>
+      <p class="explain">기본 개념을 직접 구현하며 입력·처리·출력의 흐름을 확인하는 코드입니다.</p>
+    </article>
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 2</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>grid = [[2,1,3],[4,1,2],[3,2,1]]
+for r in range(3):
+    for c in range(3):
+        if r == c == 0:
+            continue
+        candidates = []
+        if r: candidates.append(grid[r-1][c])
+        if c: candidates.append(grid[r][c-1])
+        grid[r][c] += min(candidates)
+print(grid)</code></pre>
+      <p class="explain">자료구조, 함수화, 성능 비교 또는 검증 요소를 확장한 코드입니다.</p>
+    </article>
+  </div>
+</section>
+<section class="project" id="p37" data-text="12정과03-06 정렬 알고리즘 시간 비교 버블 정렬과 내장 정렬의 증가 추세를 비교한다.">
+  <div class="project-head">
+    <span class="num">37</span>
+    <div>
+      <h2>정렬 알고리즘 시간 비교</h2>
+      <div class="standard"><b>[12정과03-06]</b> 알고리즘의 복잡도를 빅오 표기법으로 표현하고 다른 알고리즘과 비교한다.</div>
+      <p>버블 정렬과 내장 정렬의 증가 추세를 비교한다.</p>
+    </div>
+  </div>
+  <div class="code-grid">
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 1</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>import random, time
+
+def bubble(data):
+    a = data[:]
+    for end in range(len(a)-1, 0, -1):
+        for i in range(end):
+            if a[i] &gt; a[i+1]:
+                a[i], a[i+1] = a[i+1], a[i]
+    return a
+
+for n in [100, 300, 600]:
+    data = [random.random() for _ in range(n)]
+    start = time.perf_counter()
+    bubble(data)
+    print(n, round(time.perf_counter()-start, 5))</code></pre>
+      <p class="explain">기본 개념을 직접 구현하며 입력·처리·출력의 흐름을 확인하는 코드입니다.</p>
+    </article>
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 2</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>import random, time
+
+for n in [1000, 5000, 10000]:
+    data = [random.randint(0, n) for _ in range(n)]
+    start = time.perf_counter()
+    sorted(data)
+    elapsed = time.perf_counter() - start
+    print(f&quot;n={n:5d}, {elapsed:.6f}초&quot;)</code></pre>
+      <p class="explain">자료구조, 함수화, 성능 비교 또는 검증 요소를 확장한 코드입니다.</p>
+    </article>
+  </div>
+</section>
+<section class="project" id="p38" data-text="12정과03-06 탐색 알고리즘 복잡도 실험 선형 탐색과 이진 탐색의 비교 횟수를 측정한다.">
+  <div class="project-head">
+    <span class="num">38</span>
+    <div>
+      <h2>탐색 알고리즘 복잡도 실험</h2>
+      <div class="standard"><b>[12정과03-06]</b> 알고리즘의 복잡도를 빅오 표기법으로 표현하고 다른 알고리즘과 비교한다.</div>
+      <p>선형 탐색과 이진 탐색의 비교 횟수를 측정한다.</p>
+    </div>
+  </div>
+  <div class="code-grid">
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 1</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>def linear_search(data, target):
+    count = 0
+    for i, x in enumerate(data):
+        count += 1
+        if x == target:
+            return i, count
+    return -1, count
+
+print(linear_search(list(range(1024)), 1000))</code></pre>
+      <p class="explain">기본 개념을 직접 구현하며 입력·처리·출력의 흐름을 확인하는 코드입니다.</p>
+    </article>
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 2</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>def binary_count(data, target):
+    left, right, count = 0, len(data)-1, 0
+    while left &lt;= right:
+        count += 1
+        mid = (left+right)//2
+        if data[mid] == target:
+            return mid, count
+        if data[mid] &lt; target: left = mid+1
+        else: right = mid-1
+    return -1, count
+
+print(binary_count(list(range(1024)), 1000))</code></pre>
+      <p class="explain">자료구조, 함수화, 성능 비교 또는 검증 요소를 확장한 코드입니다.</p>
+    </article>
+  </div>
+</section>
+<section class="project" id="p39" data-text="12정과03-06 자료구조 조회 성능 비교 리스트와 집합의 포함 연산 시간을 비교한다.">
+  <div class="project-head">
+    <span class="num">39</span>
+    <div>
+      <h2>자료구조 조회 성능 비교</h2>
+      <div class="standard"><b>[12정과03-06]</b> 알고리즘의 복잡도를 빅오 표기법으로 표현하고 다른 알고리즘과 비교한다.</div>
+      <p>리스트와 집합의 포함 연산 시간을 비교한다.</p>
+    </div>
+  </div>
+  <div class="code-grid">
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 1</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>import time
+
+n = 200000
+values_list = list(range(n))
+values_set = set(values_list)
+
+for data in [values_list, values_set]:
+    start = time.perf_counter()
+    for _ in range(100):
+        (n-1) in data
+    print(type(data).__name__, time.perf_counter()-start)</code></pre>
+      <p class="explain">기본 개념을 직접 구현하며 입력·처리·출력의 흐름을 확인하는 코드입니다.</p>
+    </article>
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 2</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>import random, time
+
+values = [random.randint(0, 100000) for _ in range(100000)]
+start = time.perf_counter()
+unique_list = []
+for x in values[:3000]:
+    if x not in unique_list:
+        unique_list.append(x)
+print(&quot;list:&quot;, time.perf_counter()-start)
+
+start = time.perf_counter()
+unique_set = set(values[:3000])
+print(&quot;set :&quot;, time.perf_counter()-start)</code></pre>
+      <p class="explain">자료구조, 함수화, 성능 비교 또는 검증 요소를 확장한 코드입니다.</p>
+    </article>
+  </div>
+</section>
+<section class="project" id="p40" data-text="12정과04-01 교실 전력 낭비 탐지 교실 사용 여부와 전력량으로 낭비 상황을 찾는다.">
+  <div class="project-head">
+    <span class="num">40</span>
+    <div>
+      <h2>교실 전력 낭비 탐지</h2>
+      <div class="standard"><b>[12정과04-01]</b> 다양한 학문 분야에서 컴퓨터과학의 기본 개념과 원리를 바탕으로 해결할 수 있는 실생활의 문제를 발견한다.</div>
+      <p>교실 사용 여부와 전력량으로 낭비 상황을 찾는다.</p>
+    </div>
+  </div>
+  <div class="code-grid">
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 1</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>records = [
+    {&quot;room&quot;:&quot;1-1&quot;, &quot;occupied&quot;:False, &quot;power&quot;:2.8},
+    {&quot;room&quot;:&quot;1-2&quot;, &quot;occupied&quot;:True,  &quot;power&quot;:3.1},
+    {&quot;room&quot;:&quot;2-1&quot;, &quot;occupied&quot;:False, &quot;power&quot;:0.3},
+]
+for r in records:
+    if not r[&quot;occupied&quot;] and r[&quot;power&quot;] &gt; 1.0:
+        print(&quot;낭비 의심:&quot;, r[&quot;room&quot;])</code></pre>
+      <p class="explain">기본 개념을 직접 구현하며 입력·처리·출력의 흐름을 확인하는 코드입니다.</p>
+    </article>
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 2</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>def waste_score(occupied, light, aircon):
+    score = 0
+    if not occupied and light: score += 1
+    if not occupied and aircon: score += 2
+    return score
+
+samples = [(False,True,True),(True,True,True),(False,False,True)]
+for x in samples:
+    print(x, waste_score(*x))</code></pre>
+      <p class="explain">자료구조, 함수화, 성능 비교 또는 검증 요소를 확장한 코드입니다.</p>
+    </article>
+  </div>
+</section>
+<section class="project" id="p41" data-text="12정과04-01 학교 급식 잔반 분석 메뉴별 잔반량에서 개선 문제를 발견한다.">
+  <div class="project-head">
+    <span class="num">41</span>
+    <div>
+      <h2>학교 급식 잔반 분석</h2>
+      <div class="standard"><b>[12정과04-01]</b> 다양한 학문 분야에서 컴퓨터과학의 기본 개념과 원리를 바탕으로 해결할 수 있는 실생활의 문제를 발견한다.</div>
+      <p>메뉴별 잔반량에서 개선 문제를 발견한다.</p>
+    </div>
+  </div>
+  <div class="code-grid">
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 1</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>meals = {
+    &quot;카레&quot;: [12, 9, 11],
+    &quot;비빔밥&quot;: [25, 27, 22],
+    &quot;국수&quot;: [8, 10, 7],
+}
+averages = {menu: sum(v)/len(v) for menu,v in meals.items()}
+print(&quot;개선 우선 메뉴:&quot;, max(averages, key=averages.get))
+print(averages)</code></pre>
+      <p class="explain">기본 개념을 직접 구현하며 입력·처리·출력의 흐름을 확인하는 코드입니다.</p>
+    </article>
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 2</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>records = [(&quot;월&quot;,18),(&quot;화&quot;,11),(&quot;수&quot;,29),(&quot;목&quot;,9),(&quot;금&quot;,14)]
+avg = sum(x[1] for x in records)/len(records)
+print(&quot;평균:&quot;, avg)
+print(&quot;평균 초과:&quot;, [day for day,waste in records if waste &gt; avg])</code></pre>
+      <p class="explain">자료구조, 함수화, 성능 비교 또는 검증 요소를 확장한 코드입니다.</p>
+    </article>
+  </div>
+</section>
+<section class="project" id="p42" data-text="12정과04-01 지역 미세먼지 경보 분석 환경 데이터를 통해 생활 문제를 정의한다.">
+  <div class="project-head">
+    <span class="num">42</span>
+    <div>
+      <h2>지역 미세먼지 경보 분석</h2>
+      <div class="standard"><b>[12정과04-01]</b> 다양한 학문 분야에서 컴퓨터과학의 기본 개념과 원리를 바탕으로 해결할 수 있는 실생활의 문제를 발견한다.</div>
+      <p>환경 데이터를 통해 생활 문제를 정의한다.</p>
+    </div>
+  </div>
+  <div class="code-grid">
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 1</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>data = [
+    (&quot;전주&quot;, 32, 14),
+    (&quot;군산&quot;, 91, 41),
+    (&quot;익산&quot;, 55, 23),
+]
+for city, pm10, pm25 in data:
+    alert = pm10 &gt; 80 or pm25 &gt; 35
+    print(city, &quot;경보&quot; if alert else &quot;정상&quot;)</code></pre>
+      <p class="explain">기본 개념을 직접 구현하며 입력·처리·출력의 흐름을 확인하는 코드입니다.</p>
+    </article>
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 2</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>def daily_alert(values, threshold):
+    exceed = [x for x in values if x &gt; threshold]
+    return len(exceed), round(len(exceed)/len(values)*100, 1)
+
+pm25 = [12, 19, 38, 41, 22, 17, 50]
+print(daily_alert(pm25, 35))</code></pre>
+      <p class="explain">자료구조, 함수화, 성능 비교 또는 검증 요소를 확장한 코드입니다.</p>
+    </article>
+  </div>
+</section>
+<section class="project" id="p43" data-text="12정과04-02 스마트 교실 프로젝트 설계 요구사항·입력·처리·출력을 명세한다.">
+  <div class="project-head">
+    <span class="num">43</span>
+    <div>
+      <h2>스마트 교실 프로젝트 설계</h2>
+      <div class="standard"><b>[12정과04-02]</b> 발견한 문제를 분석하고, 문제를 해결하기 위한 프로젝트 수행 과정을 설계한다.</div>
+      <p>요구사항·입력·처리·출력을 명세한다.</p>
+    </div>
+  </div>
+  <div class="code-grid">
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 1</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>project = {
+    &quot;문제&quot;: &quot;빈 교실의 조명과 냉방기 낭비&quot;,
+    &quot;입력&quot;: [&quot;재실 여부&quot;, &quot;조도&quot;, &quot;온도&quot;],
+    &quot;처리&quot;: [&quot;결측값 처리&quot;, &quot;임계값 판정&quot;],
+    &quot;출력&quot;: [&quot;절전 명령&quot;, &quot;경고 기록&quot;],
+}
+for key, value in project.items():
+    print(f&quot;{key}: {value}&quot;)</code></pre>
+      <p class="explain">기본 개념을 직접 구현하며 입력·처리·출력의 흐름을 확인하는 코드입니다.</p>
+    </article>
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 2</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>requirements = [
+    (&quot;R1&quot;, &quot;사람이 없고 조명이 켜지면 경고&quot;, &quot;필수&quot;),
+    (&quot;R2&quot;, &quot;온도가 28도 이상이면 냉방 권고&quot;, &quot;필수&quot;),
+    (&quot;R3&quot;, &quot;일별 절감량 그래프 제공&quot;, &quot;선택&quot;),
+]
+for rid, text, level in requirements:
+    print(rid, level, text)</code></pre>
+      <p class="explain">자료구조, 함수화, 성능 비교 또는 검증 요소를 확장한 코드입니다.</p>
+    </article>
+  </div>
+</section>
+<section class="project" id="p44" data-text="12정과04-02 생태계 개체군 시뮬레이션 설계 변수와 단계별 수행 절차를 설계한다.">
+  <div class="project-head">
+    <span class="num">44</span>
+    <div>
+      <h2>생태계 개체군 시뮬레이션 설계</h2>
+      <div class="standard"><b>[12정과04-02]</b> 발견한 문제를 분석하고, 문제를 해결하기 위한 프로젝트 수행 과정을 설계한다.</div>
+      <p>변수와 단계별 수행 절차를 설계한다.</p>
+    </div>
+  </div>
+  <div class="code-grid">
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 1</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>model = {
+    &quot;초기_피식자&quot;: 100,
+    &quot;초기_포식자&quot;: 20,
+    &quot;피식자_증가율&quot;: 0.10,
+    &quot;포식률&quot;: 0.002,
+    &quot;포식자_감소율&quot;: 0.05,
+}
+print(&quot;입력 변수:&quot;, list(model))
+print(&quot;시뮬레이션 단계: 초기화 → 반복 계산 → 저장 → 시각화&quot;)</code></pre>
+      <p class="explain">기본 개념을 직접 구현하며 입력·처리·출력의 흐름을 확인하는 코드입니다.</p>
+    </article>
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 2</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>prey, predator = 100.0, 15.0
+for year in range(1, 11):
+    prey_change = 0.1*prey - 0.005*prey*predator
+    predator_change = 0.001*prey*predator - 0.08*predator
+    prey += prey_change
+    predator += predator_change
+    print(year, round(prey,1), round(predator,1))</code></pre>
+      <p class="explain">자료구조, 함수화, 성능 비교 또는 검증 요소를 확장한 코드입니다.</p>
+    </article>
+  </div>
+</section>
+<section class="project" id="p45" data-text="12정과04-02 교통 안전 분석 프로젝트 설계 데이터 수집부터 평가까지 수행 계획을 만든다.">
+  <div class="project-head">
+    <span class="num">45</span>
+    <div>
+      <h2>교통 안전 분석 프로젝트 설계</h2>
+      <div class="standard"><b>[12정과04-02]</b> 발견한 문제를 분석하고, 문제를 해결하기 위한 프로젝트 수행 과정을 설계한다.</div>
+      <p>데이터 수집부터 평가까지 수행 계획을 만든다.</p>
+    </div>
+  </div>
+  <div class="code-grid">
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 1</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>plan = [
+    (&quot;1주&quot;, &quot;교통사고 공공데이터 수집&quot;),
+    (&quot;2주&quot;, &quot;결측치·이상치 전처리&quot;),
+    (&quot;3주&quot;, &quot;시간대·지역별 위험도 분석&quot;),
+    (&quot;4주&quot;, &quot;시각화와 정책 제안&quot;),
+]
+for week, task in plan:
+    print(week, task)</code></pre>
+      <p class="explain">기본 개념을 직접 구현하며 입력·처리·출력의 흐름을 확인하는 코드입니다.</p>
+    </article>
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 2</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>risks = {
+    &quot;데이터 부족&quot;: &quot;분석 범위를 최근 3년으로 확대&quot;,
+    &quot;위치정보 오류&quot;: &quot;좌표 범위 검사&quot;,
+    &quot;편향된 해석&quot;: &quot;인구·교통량 변수를 함께 고려&quot;,
+}
+for risk, response in risks.items():
+    print(f&quot;{risk} → {response}&quot;)</code></pre>
+      <p class="explain">자료구조, 함수화, 성능 비교 또는 검증 요소를 확장한 코드입니다.</p>
+    </article>
+  </div>
+</section>
+<section class="project" id="p46" data-text="12정과04-03 pandas 기상 데이터 분석 오픈소스 라이브러리로 표 데이터를 분석한다.">
+  <div class="project-head">
+    <span class="num">46</span>
+    <div>
+      <h2>Pandas 기상 데이터 분석</h2>
+      <div class="standard"><b>[12정과04-03]</b> 다양한 오픈소스 및 라이브러리를 활용하여 협력적으로 문제를 해결하기 위한 프로그램을 작성한다.</div>
+      <p>오픈소스 라이브러리로 표 데이터를 분석한다.</p>
+    </div>
+  </div>
+  <div class="code-grid">
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 1</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code># 사전 설치: pip install pandas
+import pandas as pd
+from io import StringIO
+
+csv = StringIO(&#x27;&#x27;&#x27;date,temp,rain
+2026-07-01,28.1,0
+2026-07-02,29.3,12
+2026-07-03,27.8,4
+&#x27;&#x27;&#x27;)
+df = pd.read_csv(csv)
+print(df)
+print(&quot;평균 기온:&quot;, df[&quot;temp&quot;].mean())</code></pre>
+      <p class="explain">기본 개념을 직접 구현하며 입력·처리·출력의 흐름을 확인하는 코드입니다.</p>
+    </article>
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 2</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code># 사전 설치: pip install pandas
+import pandas as pd
+
+df = pd.DataFrame({
+    &quot;지역&quot;: [&quot;전주&quot;,&quot;군산&quot;,&quot;익산&quot;,&quot;전주&quot;],
+    &quot;기온&quot;: [29.1,28.4,29.0,30.2],
+})
+print(df.groupby(&quot;지역&quot;)[&quot;기온&quot;].agg([&quot;mean&quot;,&quot;max&quot;]))</code></pre>
+      <p class="explain">자료구조, 함수화, 성능 비교 또는 검증 요소를 확장한 코드입니다.</p>
+    </article>
+  </div>
+</section>
+<section class="project" id="p47" data-text="12정과04-03 matplotlib 과학 데이터 시각화 실험 결과를 그래프로 공유 가능한 형태로 만든다.">
+  <div class="project-head">
+    <span class="num">47</span>
+    <div>
+      <h2>Matplotlib 과학 데이터 시각화</h2>
+      <div class="standard"><b>[12정과04-03]</b> 다양한 오픈소스 및 라이브러리를 활용하여 협력적으로 문제를 해결하기 위한 프로그램을 작성한다.</div>
+      <p>실험 결과를 그래프로 공유 가능한 형태로 만든다.</p>
+    </div>
+  </div>
+  <div class="code-grid">
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 1</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code># 사전 설치: pip install matplotlib
+import matplotlib.pyplot as plt
+
+time = [0, 1, 2, 3, 4]
+distance = [0, 4.9, 19.6, 44.1, 78.4]
+
+plt.plot(time, distance, marker=&quot;o&quot;)
+plt.xlabel(&quot;시간(s)&quot;)
+plt.ylabel(&quot;낙하 거리(m)&quot;)
+plt.title(&quot;자유 낙하 시뮬레이션&quot;)
+plt.grid(True)
+plt.show()</code></pre>
+      <p class="explain">기본 개념을 직접 구현하며 입력·처리·출력의 흐름을 확인하는 코드입니다.</p>
+    </article>
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 2</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code># 사전 설치: pip install matplotlib
+import matplotlib.pyplot as plt
+
+ph = [2, 4, 6, 7, 8, 10, 12]
+rate = [1, 3, 7, 10, 8, 4, 1]
+
+plt.bar([str(x) for x in ph], rate)
+plt.xlabel(&quot;pH&quot;)
+plt.ylabel(&quot;효소 반응 상대값&quot;)
+plt.title(&quot;pH와 효소 반응&quot;)
+plt.show()</code></pre>
+      <p class="explain">자료구조, 함수화, 성능 비교 또는 검증 요소를 확장한 코드입니다.</p>
+    </article>
+  </div>
+</section>
+<section class="project" id="p48" data-text="12정과04-04 센서 데이터 테스트·디버깅 단위 테스트와 예외 처리로 프로그램을 검증한다.">
+  <div class="project-head">
+    <span class="num">48</span>
+    <div>
+      <h2>센서 데이터 테스트·디버깅</h2>
+      <div class="standard"><b>[12정과04-04]</b> 완성도 높은 프로그램을 구현하기 위하여 테스트와 디버깅 과정을 통해 검증한다.</div>
+      <p>단위 테스트와 예외 처리로 프로그램을 검증한다.</p>
+    </div>
+  </div>
+  <div class="code-grid">
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 1</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>def clean_sensor(value):
+    value = float(value)
+    if not -40 &lt;= value &lt;= 85:
+        raise ValueError(&quot;센서 허용 범위를 벗어남&quot;)
+    return round(value, 1)
+
+samples = [&quot;22.46&quot;, &quot;100&quot;, &quot;오류&quot;]
+for sample in samples:
+    try:
+        print(clean_sensor(sample))
+    except (ValueError, TypeError) as e:
+        print(&quot;처리 실패:&quot;, sample, e)</code></pre>
+      <p class="explain">기본 개념을 직접 구현하며 입력·처리·출력의 흐름을 확인하는 코드입니다.</p>
+    </article>
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 2</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>import unittest
+
+def moving_average(values, window):
+    if window &lt;= 0 or window &gt; len(values):
+        raise ValueError(&quot;잘못된 window&quot;)
+    return [sum(values[i:i+window])/window
+            for i in range(len(values)-window+1)]
+
+class TestSensor(unittest.TestCase):
+    def test_average(self):
+        self.assertEqual(moving_average([1,2,3], 2), [1.5,2.5])
+    def test_error(self):
+        with self.assertRaises(ValueError):
+            moving_average([1,2], 0)
+
+unittest.main()</code></pre>
+      <p class="explain">자료구조, 함수화, 성능 비교 또는 검증 요소를 확장한 코드입니다.</p>
+    </article>
+  </div>
+</section>
+<section class="project" id="p49" data-text="12정과04-04 알고리즘 경계값 테스트 정상값·경계값·오류값 테스트를 자동화한다.">
+  <div class="project-head">
+    <span class="num">49</span>
+    <div>
+      <h2>알고리즘 경계값 테스트</h2>
+      <div class="standard"><b>[12정과04-04]</b> 완성도 높은 프로그램을 구현하기 위하여 테스트와 디버깅 과정을 통해 검증한다.</div>
+      <p>정상값·경계값·오류값 테스트를 자동화한다.</p>
+    </div>
+  </div>
+  <div class="code-grid">
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 1</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>def binary_search(data, target):
+    left, right = 0, len(data)-1
+    while left &lt;= right:
+        mid = (left+right)//2
+        if data[mid] == target: return mid
+        if data[mid] &lt; target: left = mid+1
+        else: right = mid-1
+    return -1
+
+tests = [
+    ([], 3, -1),
+    ([3], 3, 0),
+    ([1,3,5], 1, 0),
+    ([1,3,5], 5, 2),
+    ([1,3,5], 4, -1),
+]
+for data, target, expected in tests:
+    assert binary_search(data,target) == expected
+print(&quot;모든 테스트 통과&quot;)</code></pre>
+      <p class="explain">기본 개념을 직접 구현하며 입력·처리·출력의 흐름을 확인하는 코드입니다.</p>
+    </article>
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 2</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>def safe_divide(a, b):
+    if b == 0:
+        raise ZeroDivisionError(&quot;분모는 0일 수 없습니다.&quot;)
+    return a / b
+
+cases = [(10,2,5), (-6,3,-2), (0,4,0)]
+for a,b,expected in cases:
+    result = safe_divide(a,b)
+    print(a,b,result)
+    assert result == expected</code></pre>
+      <p class="explain">자료구조, 함수화, 성능 비교 또는 검증 요소를 확장한 코드입니다.</p>
+    </article>
+  </div>
+</section>
+<section class="project" id="p50" data-text="12정과04-05 ai 예측 결과 공정성 평가 집단별 정확도와 오류율을 비교하고 윤리적으로 평가한다.">
+  <div class="project-head">
+    <span class="num">50</span>
+    <div>
+      <h2>AI 예측 결과 공정성 평가</h2>
+      <div class="standard"><b>[12정과04-05]</b> 프로젝트의 산출물을 기능적, 윤리적 관점에서 평가하고 결과를 공유한다.</div>
+      <p>집단별 정확도와 오류율을 비교하고 윤리적으로 평가한다.</p>
+    </div>
+  </div>
+  <div class="code-grid">
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 1</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>results = [
+    {&quot;group&quot;:&quot;A&quot;,&quot;correct&quot;:45,&quot;total&quot;:50},
+    {&quot;group&quot;:&quot;B&quot;,&quot;correct&quot;:32,&quot;total&quot;:40},
+]
+for r in results:
+    accuracy = r[&quot;correct&quot;] / r[&quot;total&quot;]
+    print(r[&quot;group&quot;], f&quot;{accuracy:.1%}&quot;)
+
+gap = abs(45/50 - 32/40)
+print(&quot;집단 정확도 차이:&quot;, f&quot;{gap:.1%}&quot;)</code></pre>
+      <p class="explain">기본 개념을 직접 구현하며 입력·처리·출력의 흐름을 확인하는 코드입니다.</p>
+    </article>
+    <article class="code-card">
+      <div class="code-title"><strong>예시 코드 2</strong><button onclick="copyCode(this)">복사</button></div>
+      <pre><code>def rates(tp, tn, fp, fn):
+    accuracy = (tp+tn)/(tp+tn+fp+fn)
+    false_positive = fp/(fp+tn) if fp+tn else 0
+    false_negative = fn/(fn+tp) if fn+tp else 0
+    return accuracy, false_positive, false_negative
+
+groups = {
+    &quot;집단A&quot;: (40,45,5,10),
+    &quot;집단B&quot;: (35,42,8,15),
+}
+for name, values in groups.items():
+    print(name, tuple(round(x,3) for x in rates(*values)))</code></pre>
+      <p class="explain">자료구조, 함수화, 성능 비교 또는 검증 요소를 확장한 코드입니다.</p>
+    </article>
+  </div>
+</section>
+
+<footer class="footer">
+  Python 3.13 이상 기준 · pandas와 matplotlib 예시는 해당 라이브러리 설치 후 실행
+</footer>
+</main>
+
+<script>
+function jumpToProject(id){
+  if(id) document.getElementById(id).scrollIntoView({behavior:'smooth'});
+}
+async function copyCode(btn){
+  const text = btn.closest('.code-card').querySelector('code').innerText;
+  try{
+    await navigator.clipboard.writeText(text);
+    const old = btn.textContent; btn.textContent='복사됨';
+    setTimeout(()=>btn.textContent=old,1000);
+  }catch(e){
+    const t=document.createElement('textarea');t.value=text;document.body.appendChild(t);
+    t.select();document.execCommand('copy');t.remove();
+  }
+}
+function filterProjects(){
+  const q=document.getElementById('search').value.trim().toLowerCase();
+  document.querySelectorAll('.project').forEach(el=>{
+    el.classList.toggle('hidden', q && !el.dataset.text.includes(q));
+  });
+}
+</script>
+</body>
+</html>
