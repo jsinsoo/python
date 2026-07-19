@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>파이썬300A · 코드별 복수정답형 평가</title>
+<style>
+    * { box-sizing: border-box; }
+    body {
+        margin: 0;
+        background: #f4f7fb;
+        color: #1f2937;
+        font-family: "Malgun Gothic", "Apple SD Gothic Neo", Arial, sans-serif;
+        line-height: 1.75;
+    }
+    header {
+        padding: 45px 20px;
+        text-align: center;
+        background: linear-gradient(135deg, #1e3a8a, #4338ca);
+        color: white;
+    }
+    header h1 { margin: 0 0 10px; font-size: 2.1rem; }
+    header p { margin: 0; opacity: .92; }
+    main { max-width: 1120px; margin: 0 auto; padding: 25px 18px 60px; }
+    .notice, section {
+        background: white;
+        border-radius: 14px;
+        padding: 24px;
+        margin: 22px 0;
+        box-shadow: 0 4px 14px rgba(31, 41, 55, .08);
+    }
+    h2 { color: #1e3a8a; border-bottom: 3px solid #bfdbfe; padding-bottom: 9px; }
+    h3 { color: #4338ca; margin-top: 34px; }
+    .tag {
+        display: inline-block;
+        padding: 3px 10px;
+        margin-right: 7px;
+        border-radius: 20px;
+        background: #e0e7ff;
+        color: #3730a3;
+        font-size: .85rem;
+        font-weight: bold;
+    }
+    pre {
+        background: #111827;
+        color: #f9fafb;
+        padding: 17px;
+        border-radius: 10px;
+        overflow-x: auto;
+        line-height: 1.55;
+    }
+    code { font-family: Consolas, "Courier New", monospace; }
+    .output {
+        background: #ecfdf5;
+        border-left: 5px solid #10b981;
+        padding: 12px 15px;
+        border-radius: 6px;
+        margin: 12px 0;
+    }
+    .explain {
+        background: #eff6ff;
+        border-left: 5px solid #3b82f6;
+        padding: 12px 15px;
+        border-radius: 6px;
+        margin: 12px 0;
+    }
+    .warning {
+        background: #fff7ed;
+        border-left: 5px solid #f97316;
+        padding: 12px 15px;
+        border-radius: 6px;
+        margin: 12px 0;
+    }
+    .summary {
+        background: #f5f3ff;
+        border-left: 5px solid #8b5cf6;
+        padding: 15px;
+        border-radius: 6px;
+    }
+    table { width: 100%; border-collapse: collapse; margin: 14px 0; }
+    th, td { border: 1px solid #cbd5e1; padding: 10px; text-align: left; }
+    th { background: #e0e7ff; }
+    footer { text-align: center; padding: 25px; color: #64748b; }
+
+    .quiz-intro {
+        background: linear-gradient(135deg, #eef2ff, #f0fdfa);
+        border: 2px solid #c7d2fe;
+    }
+    .student-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+        margin: 18px 0;
+    }
+    .student-grid label { font-weight: 700; color: #312e81; }
+    .student-grid input {
+        width: 100%; margin-top: 6px; padding: 12px 14px;
+        border: 1px solid #a5b4fc; border-radius: 9px; font-size: 1rem;
+    }
+    .quiz-card {
+        border: 1px solid #dbeafe; border-left: 7px solid #4f46e5;
+        border-radius: 13px; padding: 20px; margin: 22px 0; background: #fff;
+        box-shadow: 0 3px 10px rgba(30, 58, 138, .06);
+    }
+    .quiz-card h3 { margin: 0 0 12px; color: #312e81; }
+    .quiz-code { margin: 12px 0 16px; }
+    .question-guide {
+        padding: 10px 13px; background: #fff7ed; border-radius: 8px;
+        border-left: 4px solid #f97316; font-weight: 700;
+    }
+    .choice {
+        display: block; padding: 11px 12px; margin: 8px 0;
+        border: 1px solid #dbeafe; border-radius: 9px; cursor: pointer;
+        transition: .15s; background: #f8fafc;
+    }
+    .choice:hover { background: #eef2ff; border-color: #818cf8; }
+    .choice input { margin-right: 9px; transform: scale(1.15); }
+    .action-row {
+        position: sticky; bottom: 10px; z-index: 20;
+        display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;
+        padding: 14px; background: rgba(255,255,255,.94);
+        border: 1px solid #c7d2fe; border-radius: 14px;
+        box-shadow: 0 6px 22px rgba(30, 41, 59, .16);
+    }
+    .btn {
+        border: 0; border-radius: 10px; padding: 13px 22px;
+        font-size: 1rem; font-weight: 800; cursor: pointer;
+    }
+    .btn-primary { background: #4338ca; color: white; }
+    .btn-secondary { background: #e2e8f0; color: #1e293b; }
+    .result-box {
+        display: none; margin-top: 24px; padding: 22px;
+        border-radius: 14px; background: #f8fafc; border: 2px solid #94a3b8;
+    }
+    .result-summary {
+        font-size: 1.25rem; font-weight: 900; color: #1e3a8a;
+        padding: 15px; background: #dbeafe; border-radius: 10px;
+    }
+    .review {
+        margin: 16px 0; padding: 16px; border-radius: 10px;
+        border-left: 6px solid #64748b; background: white;
+    }
+    .review.correct { border-left-color: #16a34a; background: #f0fdf4; }
+    .review.wrong { border-left-color: #dc2626; background: #fef2f2; }
+    .answer-line { font-weight: 800; margin: 6px 0; }
+    .detail-list { margin: 8px 0 0; padding-left: 22px; }
+    .detail-list li { margin: 5px 0; }
+    @media (max-width: 720px) {
+        .student-grid { grid-template-columns: 1fr; }
+        header h1 { font-size: 1.65rem; }
+        .quiz-card { padding: 15px; }
+    }
+
+</style>
+</head>
+<body>
+<header>
+    <h1>파이썬 완전 문법 300예제</h1>
+    <p>1편 · 기초 문법 1~50예제 — 출력, 변수, 자료형, 입력, 연산자, 형변환</p>
+</header>
+
+<main>
+<div class="notice">
+    <h2>학습 안내</h2>
+    <p>각 예제는 <strong>코드 → 실행 결과 → 상세 설명 → 주의점</strong> 순서로 구성되어 있습니다. 코드를 직접 실행하면서 값을 바꾸어 보면 문법을 더 빠르게 익힐 수 있습니다.</p>
+    <table>
+        <tr><th>범위</th><th>주제</th></tr>
+        <tr><td>1~10</td><td>출력과 주석</td></tr>
+        <tr><td>11~20</td><td>변수와 기본 자료형</td></tr>
+        <tr><td>21~30</td><td>입력과 형변환</td></tr>
+        <tr><td>31~40</td><td>산술·비교·논리 연산자</td></tr>
+        <tr><td>41~50</td><td>문자열 기초와 문자열 연산</td></tr>
+    </table>
+</div>
+
+<section>
+<h2>1. 출력과 주석 — 예제 1~10</h2>
+
+<h3>예제 1. 가장 기본적인 출력</h3>
+<span class="tag">print()</span><span class="tag">기초</span>
+<pre><code>print("안녕하세요!")</code></pre>
+<div class="output"><strong>실행 결과</strong><br>안녕하세요!</div>
+<div class="explain"><strong>설명</strong><br><code>print()</code> 함수는 화면에 값을 출력합니다. 큰따옴표 또는 작은따옴표로 감싼 내용은 문자열입니다.</div>
+
+<h3>예제 2. 숫자 출력</h3>
+<pre><code>print(100)
+print(3.14)</code></pre>
+<div class="output"><strong>실행 결과</strong><br>100<br>3.14</div>
+<div class="explain"><strong>설명</strong><br>숫자는 따옴표 없이 작성합니다. 따옴표를 붙이면 숫자가 아니라 문자열이 됩니다.</div>
+
+<h3>예제 3. 여러 값 한 번에 출력</h3>
+<pre><code>print("이름:", "홍길동")
+print("점수:", 95)</code></pre>
+<div class="output"><strong>실행 결과</strong><br>이름: 홍길동<br>점수: 95</div>
+<div class="explain"><strong>설명</strong><br><code>print()</code> 안에 쉼표로 여러 값을 넣으면 기본적으로 한 칸 띄어 출력합니다.</div>
+
+<h3>예제 4. sep 옵션 사용</h3>
+<pre><code>print("2026", "07", "04", sep="-")</code></pre>
+<div class="output"><strong>실행 결과</strong><br>2026-07-04</div>
+<div class="explain"><strong>설명</strong><br><code>sep</code>은 여러 값 사이에 넣을 구분 문자를 지정합니다. 기본값은 공백입니다.</div>
+
+<h3>예제 5. end 옵션 사용</h3>
+<pre><code>print("파이썬", end=" ")
+print("공부하기")</code></pre>
+<div class="output"><strong>실행 결과</strong><br>파이썬 공부하기</div>
+<div class="explain"><strong>설명</strong><br>기본적으로 <code>print()</code>는 출력 후 줄을 바꿉니다. <code>end=" "</code>를 사용하면 줄바꿈 대신 공백을 넣습니다.</div>
+
+<h3>예제 6. 줄바꿈 문자</h3>
+<pre><code>print("첫째 줄\n둘째 줄\n셋째 줄")</code></pre>
+<div class="output"><strong>실행 결과</strong><br>첫째 줄<br>둘째 줄<br>셋째 줄</div>
+<div class="explain"><strong>설명</strong><br><code>\n</code>은 줄바꿈을 뜻하는 이스케이프 문자입니다.</div>
+
+<h3>예제 7. 따옴표 출력</h3>
+<pre><code>print('그는 "파이썬"을 좋아합니다.')
+print("그는 '파이썬'을 좋아합니다.")</code></pre>
+<div class="output"><strong>실행 결과</strong><br>그는 "파이썬"을 좋아합니다.<br>그는 '파이썬'을 좋아합니다.</div>
+<div class="explain"><strong>설명</strong><br>문자열 바깥쪽 따옴표와 안쪽 따옴표를 다르게 사용하면 따옴표를 쉽게 출력할 수 있습니다.</div>
+
+<h3>예제 8. 백슬래시 출력</h3>
+<pre><code>print("C:\\Python\\python.exe")</code></pre>
+<div class="output"><strong>실행 결과</strong><br>C:\Python\python.exe</div>
+<div class="explain"><strong>설명</strong><br>백슬래시 자체를 출력하려면 <code>\\</code>처럼 두 번 작성합니다.</div>
+
+<h3>예제 9. 한 줄 주석</h3>
+<pre><code># 이 줄은 설명을 위한 주석입니다.
+print("주석은 실행되지 않습니다.")</code></pre>
+<div class="output"><strong>실행 결과</strong><br>주석은 실행되지 않습니다.</div>
+<div class="explain"><strong>설명</strong><br><code>#</code> 뒤에 작성한 내용은 프로그램 실행에 영향을 주지 않습니다. 코드 설명이나 메모에 사용합니다.</div>
+
+<h3>예제 10. 여러 줄 문자열</h3>
+<pre><code>message = """파이썬은
+배우기 쉽고
+활용 범위가 넓습니다."""
+print(message)</code></pre>
+<div class="output"><strong>실행 결과</strong><br>파이썬은<br>배우기 쉽고<br>활용 범위가 넓습니다.</div>
+<div class="explain"><strong>설명</strong><br>큰따옴표 3개 또는 작은따옴표 3개를 사용하면 여러 줄 문자열을 만들 수 있습니다.</div>
+</section>
+
+<section>
+<h2>2. 변수와 기본 자료형 — 예제 11~20</h2>
+
+<h3>예제 11. 변수에 값 저장하기</h3>
+<pre><code>name = "홍길동"
+print(name)</code></pre>
+<div class="output"><strong>실행 결과</strong><br>홍길동</div>
+<div class="explain"><strong>설명</strong><br>변수는 데이터를 저장하는 이름입니다. <code>=</code>는 오른쪽 값을 왼쪽 변수에 저장한다는 뜻입니다.</div>
+
+<h3>예제 12. 변수 값 변경하기</h3>
+<pre><code>score = 80
+print(score)
+
+score = 95
+print(score)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>80<br>95</div>
+<div class="explain"><strong>설명</strong><br>변수에는 새로운 값을 다시 저장할 수 있습니다. 이전 값은 새 값으로 바뀝니다.</div>
+
+<h3>예제 13. 여러 변수 만들기</h3>
+<pre><code>name = "민수"
+age = 15
+height = 170.5
+
+print(name, age, height)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>민수 15 170.5</div>
+<div class="explain"><strong>설명</strong><br>문자열, 정수, 실수처럼 서로 다른 종류의 데이터를 각각 변수에 저장할 수 있습니다.</div>
+
+<h3>예제 14. 여러 변수에 한 번에 값 저장</h3>
+<pre><code>name, age, city = "서연", 16, "광주"
+print(name, age, city)</code></pre>
+<div class="output"><strong>실행 결과</strong><br>서연 16 광주</div>
+<div class="explain"><strong>설명</strong><br>왼쪽 변수 개수와 오른쪽 값 개수가 같으면 한 줄에서 여러 값을 저장할 수 있습니다.</div>
+
+<h3>예제 15. 같은 값 여러 변수에 저장</h3>
+<pre><code>x = y = z = 10
+print(x, y, z)</code></pre>
+<div class="output"><strong>실행 결과</strong><br>10 10 10</div>
+<div class="explain"><strong>설명</strong><br>연속 대입을 사용하면 여러 변수에 같은 값을 저장할 수 있습니다.</div>
+
+<h3>예제 16. 정수형 int</h3>
+<pre><code>age = 15
+print(age)
+print(type(age))</code></pre>
+<div class="output"><strong>실행 결과</strong><br>15<br>&lt;class 'int'&gt;</div>
+<div class="explain"><strong>설명</strong><br><code>int</code>는 소수점이 없는 정수를 뜻합니다. <code>type()</code>은 데이터의 자료형을 확인합니다.</div>
+
+<h3>예제 17. 실수형 float</h3>
+<pre><code>pi = 3.14159
+print(pi)
+print(type(pi))</code></pre>
+<div class="output"><strong>실행 결과</strong><br>3.14159<br>&lt;class 'float'&gt;</div>
+<div class="explain"><strong>설명</strong><br><code>float</code>는 소수점이 있는 실수 자료형입니다.</div>
+
+<h3>예제 18. 문자열 str</h3>
+<pre><code>subject = "Python"
+print(subject)
+print(type(subject))</code></pre>
+<div class="output"><strong>실행 결과</strong><br>Python<br>&lt;class 'str'&gt;</div>
+<div class="explain"><strong>설명</strong><br><code>str</code>은 문자와 문장 데이터를 저장하는 문자열 자료형입니다.</div>
+
+<h3>예제 19. 불리언 bool</h3>
+<pre><code>is_student = True
+is_raining = False
+
+print(is_student)
+print(type(is_raining))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>True<br>&lt;class 'bool'&gt;</div>
+<div class="explain"><strong>설명</strong><br><code>bool</code>은 참 또는 거짓을 저장합니다. 반드시 <code>True</code>, <code>False</code>처럼 첫 글자를 대문자로 작성합니다.</div>
+
+<h3>예제 20. None 값</h3>
+<pre><code>result = None
+print(result)
+print(type(result))</code></pre>
+<div class="output"><strong>실행 결과</strong><br>None<br>&lt;class 'NoneType'&gt;</div>
+<div class="explain"><strong>설명</strong><br><code>None</code>은 값이 아직 없음을 나타냅니다. 빈 문자열 <code>""</code>이나 숫자 0과는 다릅니다.</div>
+</section>
+
+<section>
+<h2>3. 입력과 형변환 — 예제 21~30</h2>
+
+<h3>예제 21. input으로 이름 입력받기</h3>
+<pre><code>name = input("이름을 입력하세요: ")
+print("안녕하세요,", name)</code></pre>
+<div class="output"><strong>입력 예시</strong><br>이름을 입력하세요: 민수<br><strong>실행 결과</strong><br>안녕하세요, 민수</div>
+<div class="explain"><strong>설명</strong><br><code>input()</code>은 사용자가 입력한 내용을 문자열로 받아옵니다.</div>
+
+<h3>예제 22. 입력값의 자료형 확인</h3>
+<pre><code>age = input("나이를 입력하세요: ")
+print(age)
+print(type(age))</code></pre>
+<div class="explain"><strong>설명</strong><br>사용자가 15를 입력해도 <code>input()</code>의 결과는 <code>"15"</code>라는 문자열입니다.</div>
+
+<h3>예제 23. 문자열을 정수로 변환</h3>
+<pre><code>age = int(input("나이를 입력하세요: "))
+print(age + 1)</code></pre>
+<div class="output"><strong>입력 예시</strong><br>나이를 입력하세요: 15<br><strong>실행 결과</strong><br>16</div>
+<div class="explain"><strong>설명</strong><br><code>int()</code>는 숫자 모양의 문자열을 정수로 바꿉니다.</div>
+
+<h3>예제 24. 문자열을 실수로 변환</h3>
+<pre><code>height = float(input("키를 입력하세요: "))
+print(height + 0.5)</code></pre>
+<div class="output"><strong>입력 예시</strong><br>키를 입력하세요: 170.5<br><strong>실행 결과</strong><br>171.0</div>
+<div class="explain"><strong>설명</strong><br><code>float()</code>는 소수점이 포함된 문자열을 실수로 변환합니다.</div>
+
+<h3>예제 25. 숫자를 문자열로 변환</h3>
+<pre><code>score = 95
+message = "점수는 " + str(score) + "점입니다."
+print(message)</code></pre>
+<div class="output"><strong>실행 결과</strong><br>점수는 95점입니다.</div>
+<div class="explain"><strong>설명</strong><br>문자열과 숫자를 <code>+</code>로 연결하려면 숫자를 <code>str()</code>로 문자열로 바꿔야 합니다.</div>
+
+<h3>예제 26. bool 형변환</h3>
+<pre><code>print(bool(1))
+print(bool(0))
+print(bool("파이썬"))
+print(bool(""))</code></pre>
+<div class="output"><strong>실행 결과</strong><br>True<br>False<br>True<br>False</div>
+<div class="explain"><strong>설명</strong><br>0, 빈 문자열, 빈 리스트 등은 보통 False로 변환되고, 값이 있으면 True로 변환됩니다.</div>
+
+<h3>예제 27. 두 수의 합</h3>
+<pre><code>a = int(input("첫 번째 수: "))
+b = int(input("두 번째 수: "))
+
+print("합:", a + b)</code></pre>
+
+<div class="output"><strong>입력 예시</strong><br>첫 번째 수: 10<br>두 번째 수: 20<br><strong>실행 결과</strong><br>합: 30</div>
+<div class="explain"><strong>설명</strong><br>계산을 위해 입력값을 각각 정수로 변환합니다.</div>
+
+<h3>예제 28. 문자열 입력을 그대로 연결하기</h3>
+<pre><code>a = input("첫 번째 수: ")
+b = input("두 번째 수: ")
+
+print(a + b)</code></pre>
+
+<div class="output"><strong>입력 예시</strong><br>첫 번째 수: 10<br>두 번째 수: 20<br><strong>실행 결과</strong><br>1020</div>
+<div class="warning"><strong>주의</strong><br>입력값을 정수로 변환하지 않으면 덧셈이 아니라 문자열 연결이 됩니다.</div>
+
+<h3>예제 29. f-string으로 출력하기</h3>
+<pre><code>name = "지훈"
+score = 92
+
+print(f"{name}의 점수는 {score}점입니다.")</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>지훈의 점수는 92점입니다.</div>
+<div class="explain"><strong>설명</strong><br>문자열 앞에 <code>f</code>를 붙이고 중괄호 안에 변수를 넣으면 편리하게 값을 출력할 수 있습니다.</div>
+
+<h3>예제 30. 입력값으로 자기소개 만들기</h3>
+<pre><code>name = input("이름: ")
+grade = int(input("학년: "))
+favorite = input("좋아하는 과목: ")
+
+print(f"{name} 학생은 {grade}학년이고, {favorite} 과목을 좋아합니다.")</code></pre>
+
+<div class="explain"><strong>설명</strong><br>문자열 입력, 정수 변환, f-string을 함께 사용하는 기본 예제입니다.</div>
+</section>
+
+<section>
+<h2>4. 연산자 — 예제 31~40</h2>
+
+<h3>예제 31. 덧셈과 뺄셈</h3>
+<pre><code>a = 20
+b = 7
+
+print(a + b)
+print(a - b)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>27<br>13</div>
+<div class="explain"><strong>설명</strong><br><code>+</code>는 덧셈, <code>-</code>는 뺄셈 연산자입니다.</div>
+
+<h3>예제 32. 곱셈과 나눗셈</h3>
+<pre><code>a = 20
+b = 6
+
+print(a * b)
+print(a / b)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>120<br>3.3333333333333335</div>
+<div class="explain"><strong>설명</strong><br><code>*</code>는 곱셈, <code>/</code>는 나눗셈입니다. 나눗셈 결과는 실수형으로 나옵니다.</div>
+
+<h3>예제 33. 몫과 나머지</h3>
+<pre><code>print(17 // 5)
+print(17 % 5)</code></pre>
+<div class="output"><strong>실행 결과</strong><br>3<br>2</div>
+<div class="explain"><strong>설명</strong><br><code>//</code>는 나눈 몫의 정수 부분, <code>%</code>는 나머지를 구합니다.</div>
+
+<h3>예제 34. 거듭제곱</h3>
+<pre><code>print(2 ** 3)
+print(5 ** 2)</code></pre>
+<div class="output"><strong>실행 결과</strong><br>8<br>25</div>
+<div class="explain"><strong>설명</strong><br><code>**</code>는 거듭제곱 연산자입니다. <code>2 ** 3</code>은 2의 3제곱입니다.</div>
+
+<h3>예제 35. 복합 대입 연산자</h3>
+<pre><code>score = 80
+score += 10
+print(score)
+
+score -= 5
+print(score)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>90<br>85</div>
+<div class="explain"><strong>설명</strong><br><code>score += 10</code>은 <code>score = score + 10</code>과 같은 뜻입니다.</div>
+
+<h3>예제 36. 비교 연산자</h3>
+<pre><code>print(10 > 5)
+print(10 < 5)
+print(10 == 10)
+print(10 != 5)</code></pre>
+<div class="output"><strong>실행 결과</strong><br>True<br>False<br>True<br>True</div>
+<div class="explain"><strong>설명</strong><br>비교 연산의 결과는 항상 <code>True</code> 또는 <code>False</code>입니다.</div>
+
+<h3>예제 37. 크거나 같음, 작거나 같음</h3>
+<pre><code>score = 80
+
+print(score >= 80)
+print(score <= 70)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>True<br>False</div>
+<div class="explain"><strong>설명</strong><br><code>>=</code>는 크거나 같음, <code><=</code>는 작거나 같음을 의미합니다.</div>
+
+<h3>예제 38. 논리 and</h3>
+<pre><code>age = 15
+has_ticket = True
+
+print(age >= 14 and has_ticket)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>True</div>
+<div class="explain"><strong>설명</strong><br><code>and</code>는 두 조건이 모두 참일 때만 True가 됩니다.</div>
+
+<h3>예제 39. 논리 or</h3>
+<pre><code>is_weekend = False
+is_holiday = True
+
+print(is_weekend or is_holiday)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>True</div>
+<div class="explain"><strong>설명</strong><br><code>or</code>는 두 조건 중 하나라도 참이면 True가 됩니다.</div>
+
+<h3>예제 40. 논리 not</h3>
+<pre><code>is_raining = True
+
+print(not is_raining)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>False</div>
+<div class="explain"><strong>설명</strong><br><code>not</code>은 True와 False를 반대로 바꿉니다.</div>
+</section>
+
+<section>
+<h2>5. 문자열 기초 — 예제 41~50</h2>
+
+<h3>예제 41. 문자열 길이</h3>
+<pre><code>text = "Python"
+print(len(text))</code></pre>
+<div class="output"><strong>실행 결과</strong><br>6</div>
+<div class="explain"><strong>설명</strong><br><code>len()</code>은 문자열에 들어 있는 글자 수를 반환합니다.</div>
+
+<h3>예제 42. 문자열 인덱싱</h3>
+<pre><code>text = "Python"
+
+print(text[0])
+print(text[1])
+print(text[-1])</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>P<br>y<br>n</div>
+<div class="explain"><strong>설명</strong><br>문자열의 첫 번째 위치는 0입니다. 음수 인덱스는 뒤에서부터 셉니다.</div>
+
+<h3>예제 43. 문자열 슬라이싱</h3>
+<pre><code>text = "Python Programming"
+
+print(text[0:6])
+print(text[7:])</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>Python<br>Programming</div>
+<div class="explain"><strong>설명</strong><br><code>[시작:끝]</code> 형식으로 문자열 일부를 가져옵니다. 끝 위치의 문자는 포함되지 않습니다.</div>
+
+<h3>예제 44. 문자열 연결</h3>
+<pre><code>first = "파이썬"
+second = "프로그래밍"
+
+print(first + " " + second)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>파이썬 프로그래밍</div>
+<div class="explain"><strong>설명</strong><br>문자열끼리는 <code>+</code> 연산자로 연결할 수 있습니다.</div>
+
+<h3>예제 45. 문자열 반복</h3>
+<pre><code>print("★" * 5)
+print("안녕! " * 3)</code></pre>
+<div class="output"><strong>실행 결과</strong><br>★★★★★<br>안녕! 안녕! 안녕!</div>
+<div class="explain"><strong>설명</strong><br>문자열에 정수를 곱하면 해당 횟수만큼 반복됩니다.</div>
+
+<h3>예제 46. 대문자와 소문자 변환</h3>
+<pre><code>text = "Python"
+
+print(text.upper())
+print(text.lower())</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>PYTHON<br>python</div>
+<div class="explain"><strong>설명</strong><br><code>upper()</code>는 대문자, <code>lower()</code>는 소문자로 변환합니다.</div>
+
+<h3>예제 47. 공백 제거</h3>
+<pre><code>text = "   Python Study   "
+
+print(text.strip())</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>Python Study</div>
+<div class="explain"><strong>설명</strong><br><code>strip()</code>은 문자열 양쪽 끝의 공백을 제거합니다.</div>
+
+<h3>예제 48. 문자열 치환</h3>
+<pre><code>text = "나는 자바를 공부합니다."
+new_text = text.replace("자바", "파이썬")
+
+print(new_text)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>나는 파이썬을 공부합니다.</div>
+<div class="explain"><strong>설명</strong><br><code>replace(기존문자열, 새문자열)</code>은 문자열 일부를 바꾼 새 문자열을 반환합니다.</div>
+
+<h3>예제 49. 문자열 포함 여부</h3>
+<pre><code>text = "Python Programming"
+
+print("Python" in text)
+print("Java" in text)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>True<br>False</div>
+<div class="explain"><strong>설명</strong><br><code>in</code> 연산자는 특정 문자열이 포함되어 있는지 확인합니다.</div>
+
+<h3>예제 50. 문자열 포맷 종합</h3>
+<pre><code>name = "도윤"
+subject = "파이썬"
+score = 98
+
+message = f"{name} 학생은 {subject} 과목에서 {score}점을 받았습니다."
+print(message)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>도윤 학생은 파이썬 과목에서 98점을 받았습니다.</div>
+<div class="explain"><strong>설명</strong><br>f-string은 여러 변수와 문장을 조합해 자연스러운 결과를 만들 때 매우 편리합니다.</div>
+
+<div class="summary">
+    <h3>1편 핵심 요약</h3>
+    <ul>
+        <li><code>print()</code>는 값을 출력하고, <code>input()</code>은 사용자의 입력을 문자열로 받습니다.</li>
+        <li>기본 자료형에는 <code>int</code>, <code>float</code>, <code>str</code>, <code>bool</code>, <code>None</code>이 있습니다.</li>
+        <li><code>int()</code>, <code>float()</code>, <code>str()</code>로 자료형을 변환할 수 있습니다.</li>
+        <li>산술 연산자, 비교 연산자, 논리 연산자를 사용해 계산과 조건 판단을 수행합니다.</li>
+        <li>문자열은 인덱싱, 슬라이싱, 연결, 반복, 메서드 호출로 다양하게 다룰 수 있습니다.</li>
+    </ul>
+</div>
+</section>
+
+<section class="quiz-intro" id="assessment">
+<h2>파이썬300A 코드 이해 평가</h2>
+<p>각 코드에 대한 설명 5개 중 <strong>옳은 것 3개를 모두 선택</strong>하세요. 정답 3개를 모두 고르고 틀린 보기를 선택하지 않아야 정답으로 인정됩니다.</p>
+<div class="student-grid">
+<label>학번<input id="studentId" type="text" maxlength="20" placeholder="예: 1101"></label>
+<label>이름<input id="studentName" type="text" maxlength="20" placeholder="예: 홍길동"></label>
+</div>
+<p><strong>배점:</strong> 문항당 2점 · 총 50문항 · 100점</p>
+</section>
+<section id="quizSection">
+<h2>코드별 복수정답형 50문항</h2>
+<div id="quizContainer"></div>
+<div class="action-row">
+<button class="btn btn-primary" type="button" onclick="gradeQuiz()">채점하고 TXT 저장</button>
+<button class="btn btn-secondary" type="button" onclick="scrollToTop()">맨 위로</button>
+</div>
+<div id="resultBox" class="result-box"></div>
+</section>
+
+</main>
+
+<footer>
+    파이썬 완전 문법 300예제 · 1편 기초 문법 1~50
+</footer>
+
+<script>
+const questions = [{"number": 1, "title": "가장 기본적인 출력", "options": ["print() 함수는 괄호 안의 값을 화면에 출력한다.", "\"안녕하세요!\"는 큰따옴표로 감싼 문자열 리터럴이다.", "이 코드를 실행하면 안녕하세요!가 한 줄 출력된다.", "문자열을 출력하려면 반드시 작은따옴표만 사용해야 한다.", "print()를 실행하면 문자열의 따옴표까지 함께 출력된다."], "answers": [0, 1, 2], "explanation": "print()는 전달받은 값을 표준 출력에 표시한다. 따옴표는 문자열의 경계를 나타낼 뿐, 출력 결과에는 포함되지 않는다.", "optionExplanations": ["옳은 설명입니다. print() 함수는 괄호 안의 값을 화면에 출력한다.", "옳은 설명입니다. \"안녕하세요!\"는 큰따옴표로 감싼 문자열 리터럴이다.", "옳은 설명입니다. 이 코드를 실행하면 안녕하세요!가 한 줄 출력된다.", "틀린 설명입니다. 문자열을 출력하려면 반드시 작은따옴표만 사용해야 한다. print()는 전달받은 값을 표준 출력에 표시한다. 따옴표는 문자열의 경계를 나타낼 뿐, 출력 결과에는 포함되지 않는다.", "틀린 설명입니다. print()를 실행하면 문자열의 따옴표까지 함께 출력된다. print()는 전달받은 값을 표준 출력에 표시한다. 따옴표는 문자열의 경계를 나타낼 뿐, 출력 결과에는 포함되지 않는다."], "code": "print(\"안녕하세요!\")"}, {"number": 2, "title": "숫자 출력", "options": ["100은 int 자료형의 정수 리터럴이다.", "3.14는 float 자료형의 실수 리터럴이다.", "print(100)의 출력 결과는 따옴표가 포함된 \"100\"이다.", "두 개의 print() 때문에 출력 결과는 두 줄로 나타난다.", "3.14는 소수점이 있으므로 문자열 자료형이다."], "answers": [0, 1, 3], "explanation": "따옴표 없이 작성한 100과 3.14는 각각 정수와 실수이다. 각 print()는 기본적으로 출력 후 줄을 바꾼다.", "optionExplanations": ["옳은 설명입니다. 100은 int 자료형의 정수 리터럴이다.", "옳은 설명입니다. 3.14는 float 자료형의 실수 리터럴이다.", "틀린 설명입니다. print(100)의 출력 결과는 따옴표가 포함된 \"100\"이다. 따옴표 없이 작성한 100과 3.14는 각각 정수와 실수이다. 각 print()는 기본적으로 출력 후 줄을 바꾼다.", "옳은 설명입니다. 두 개의 print() 때문에 출력 결과는 두 줄로 나타난다.", "틀린 설명입니다. 3.14는 소수점이 있으므로 문자열 자료형이다. 따옴표 없이 작성한 100과 3.14는 각각 정수와 실수이다. 각 print()는 기본적으로 출력 후 줄을 바꾼다."], "code": "print(100)\nprint(3.14)"}, {"number": 3, "title": "여러 값 한 번에 출력", "options": ["쉼표로 구분한 값들은 기본적으로 한 칸씩 띄어 출력된다.", "두 번째 줄의 출력 결과는 점수: 95이다.", "쉼표는 출력 결과에 그대로 쉼표 문자로 나타난다.", "숫자 95는 자동으로 문자열 자료형으로 영구 변환된다.", "\"이름:\"과 \"홍길동\"은 서로 다른 두 인수이다."], "answers": [0, 1, 4], "explanation": "print()에 여러 인수를 전달하면 기본 sep 값인 공백이 사이에 들어간다. 숫자는 출력될 뿐 자료형 자체가 바뀌지는 않는다.", "optionExplanations": ["옳은 설명입니다. 쉼표로 구분한 값들은 기본적으로 한 칸씩 띄어 출력된다.", "옳은 설명입니다. 두 번째 줄의 출력 결과는 점수: 95이다.", "틀린 설명입니다. 쉼표는 출력 결과에 그대로 쉼표 문자로 나타난다. print()에 여러 인수를 전달하면 기본 sep 값인 공백이 사이에 들어간다. 숫자는 출력될 뿐 자료형 자체가 바뀌지는 않는다.", "틀린 설명입니다. 숫자 95는 자동으로 문자열 자료형으로 영구 변환된다. print()에 여러 인수를 전달하면 기본 sep 값인 공백이 사이에 들어간다. 숫자는 출력될 뿐 자료형 자체가 바뀌지는 않는다.", "옳은 설명입니다. \"이름:\"과 \"홍길동\"은 서로 다른 두 인수이다."], "code": "print(\"이름:\", \"홍길동\")\nprint(\"점수:\", 95)"}, {"number": 4, "title": "sep 옵션 사용", "options": ["sep=\"-\"는 여러 출력 값 사이에 하이픈을 넣는다.", "sep은 print()가 끝난 뒤 출력할 문자를 지정한다.", "실행 결과는 2026-07-04이다.", "세 값은 모두 문자열이므로 앞의 0이 유지된다.", "\"07\"을 정수 7로 자동 변환하여 출력한다."], "answers": [0, 2, 3], "explanation": "sep은 여러 인수 사이의 구분 문자열이다. 모든 값이 문자열이므로 07과 04의 앞자리 0도 그대로 출력된다.", "optionExplanations": ["옳은 설명입니다. sep=\"-\"는 여러 출력 값 사이에 하이픈을 넣는다.", "틀린 설명입니다. sep은 print()가 끝난 뒤 출력할 문자를 지정한다. sep은 여러 인수 사이의 구분 문자열이다. 모든 값이 문자열이므로 07과 04의 앞자리 0도 그대로 출력된다.", "옳은 설명입니다. 실행 결과는 2026-07-04이다.", "옳은 설명입니다. 세 값은 모두 문자열이므로 앞의 0이 유지된다.", "틀린 설명입니다. \"07\"을 정수 7로 자동 변환하여 출력한다. sep은 여러 인수 사이의 구분 문자열이다. 모든 값이 문자열이므로 07과 04의 앞자리 0도 그대로 출력된다."], "code": "print(\"2026\", \"07\", \"04\", sep=\"-\")"}, {"number": 5, "title": "end 옵션 사용", "options": ["첫 번째 print()는 줄바꿈 대신 공백으로 끝난다.", "end=\" \"는 두 값 사이의 구분자를 바꾸는 sep 옵션과 같다.", "두 출력은 같은 줄에서 파이썬 공부하기로 이어진다.", "실행 결과에서 파이썬과 공부하기 사이에는 줄바꿈이 들어간다.", "두 번째 print()는 기본 end 값인 줄바꿈을 사용한다."], "answers": [0, 2, 4], "explanation": "end는 한 번의 print()가 끝난 뒤 붙는 문자열을 정한다. 첫 출력 뒤 공백이 붙고 두 번째 출력이 같은 줄에 이어진다.", "optionExplanations": ["옳은 설명입니다. 첫 번째 print()는 줄바꿈 대신 공백으로 끝난다.", "틀린 설명입니다. end=\" \"는 두 값 사이의 구분자를 바꾸는 sep 옵션과 같다. end는 한 번의 print()가 끝난 뒤 붙는 문자열을 정한다. 첫 출력 뒤 공백이 붙고 두 번째 출력이 같은 줄에 이어진다.", "옳은 설명입니다. 두 출력은 같은 줄에서 파이썬 공부하기로 이어진다.", "틀린 설명입니다. 실행 결과에서 파이썬과 공부하기 사이에는 줄바꿈이 들어간다. end는 한 번의 print()가 끝난 뒤 붙는 문자열을 정한다. 첫 출력 뒤 공백이 붙고 두 번째 출력이 같은 줄에 이어진다.", "옳은 설명입니다. 두 번째 print()는 기본 end 값인 줄바꿈을 사용한다."], "code": "print(\"파이썬\", end=\" \")\nprint(\"공부하기\")"}, {"number": 6, "title": "줄바꿈 문자", "options": ["\\n은 문자열 안에서 줄바꿈을 나타내는 이스케이프 문자이다.", "\\n 두 글자가 화면에 그대로 출력된다.", "줄을 바꾸려면 반드시 print()를 세 번 호출해야 한다.", "하나의 print() 호출이지만 결과는 세 줄이다.", "출력 순서는 첫째 줄, 둘째 줄, 셋째 줄이다."], "answers": [0, 3, 4], "explanation": "\\n은 문자열 안에서 새 줄을 만든다. 따라서 print()가 한 번이어도 문자열 내부의 두 개의 \\n 때문에 세 줄이 출력된다.", "optionExplanations": ["옳은 설명입니다. \\n은 문자열 안에서 줄바꿈을 나타내는 이스케이프 문자이다.", "틀린 설명입니다. \\n 두 글자가 화면에 그대로 출력된다. \\n은 문자열 안에서 새 줄을 만든다. 따라서 print()가 한 번이어도 문자열 내부의 두 개의 \\n 때문에 세 줄이 출력된다.", "틀린 설명입니다. 줄을 바꾸려면 반드시 print()를 세 번 호출해야 한다. \\n은 문자열 안에서 새 줄을 만든다. 따라서 print()가 한 번이어도 문자열 내부의 두 개의 \\n 때문에 세 줄이 출력된다.", "옳은 설명입니다. 하나의 print() 호출이지만 결과는 세 줄이다.", "옳은 설명입니다. 출력 순서는 첫째 줄, 둘째 줄, 셋째 줄이다."], "code": "print(\"첫째 줄\\n둘째 줄\\n셋째 줄\")"}, {"number": 7, "title": "따옴표 출력", "options": ["문자열 안쪽 따옴표는 종류와 관계없이 항상 백슬래시로 이스케이프해야 한다.", "작은따옴표 문자열 안에는 큰따옴표를 바로 포함할 수 있다.", "큰따옴표 문자열 안에는 작은따옴표를 바로 포함할 수 있다.", "두 문장 모두 문법 오류 없이 실행된다.", "출력 결과에서 파이썬을 감싼 따옴표는 모두 제거된다."], "answers": [1, 2, 3], "explanation": "바깥 문자열 구분자와 다른 종류의 따옴표는 이스케이프 없이 사용할 수 있으며, 안쪽 따옴표는 출력 결과에 표시된다.", "optionExplanations": ["틀린 설명입니다. 문자열 안쪽 따옴표는 종류와 관계없이 항상 백슬래시로 이스케이프해야 한다. 바깥 문자열 구분자와 다른 종류의 따옴표는 이스케이프 없이 사용할 수 있으며, 안쪽 따옴표는 출력 결과에 표시된다.", "옳은 설명입니다. 작은따옴표 문자열 안에는 큰따옴표를 바로 포함할 수 있다.", "옳은 설명입니다. 큰따옴표 문자열 안에는 작은따옴표를 바로 포함할 수 있다.", "옳은 설명입니다. 두 문장 모두 문법 오류 없이 실행된다.", "틀린 설명입니다. 출력 결과에서 파이썬을 감싼 따옴표는 모두 제거된다. 바깥 문자열 구분자와 다른 종류의 따옴표는 이스케이프 없이 사용할 수 있으며, 안쪽 따옴표는 출력 결과에 표시된다."], "code": "print('그는 \"파이썬\"을 좋아합니다.')\nprint(\"그는 '파이썬'을 좋아합니다.\")"}, {"number": 8, "title": "백슬래시 출력", "options": ["코드에 작성한 백슬래시 두 개가 결과에도 두 개씩 출력된다.", "문자열 리터럴의 \\\\는 실제 백슬래시 한 개를 나타낸다.", "실행 결과는 C:\\Python\\python.exe이다.", "경로 문자열에는 백슬래시를 사용할 수 없으므로 오류가 발생한다.", "백슬래시는 이스케이프 문자의 시작 기호로도 사용된다."], "answers": [1, 2, 4], "explanation": "일반 문자열에서 백슬래시 자체를 나타내려면 \\\\처럼 두 번 작성한다. 출력에서는 각각 한 개로 보인다.", "optionExplanations": ["틀린 설명입니다. 코드에 작성한 백슬래시 두 개가 결과에도 두 개씩 출력된다. 일반 문자열에서 백슬래시 자체를 나타내려면 \\\\처럼 두 번 작성한다. 출력에서는 각각 한 개로 보인다.", "옳은 설명입니다. 문자열 리터럴의 \\\\는 실제 백슬래시 한 개를 나타낸다.", "옳은 설명입니다. 실행 결과는 C:\\Python\\python.exe이다.", "틀린 설명입니다. 경로 문자열에는 백슬래시를 사용할 수 없으므로 오류가 발생한다. 일반 문자열에서 백슬래시 자체를 나타내려면 \\\\처럼 두 번 작성한다. 출력에서는 각각 한 개로 보인다.", "옳은 설명입니다. 백슬래시는 이스케이프 문자의 시작 기호로도 사용된다."], "code": "print(\"C:\\\\Python\\\\python.exe\")"}, {"number": 9, "title": "한 줄 주석", "options": ["주석 문장도 print()보다 먼저 화면에 출력된다.", "# 뒤의 문장은 파이썬 실행 대상에서 제외된다.", "#은 다음 줄의 코드까지 모두 주석으로 만든다.", "실제로 출력되는 문장은 주석은 실행되지 않습니다.이다.", "주석은 코드의 의미나 의도를 기록하는 데 활용할 수 있다."], "answers": [1, 3, 4], "explanation": "# 주석은 해당 줄의 끝까지만 적용되며 프로그램 실행에는 참여하지 않는다.", "optionExplanations": ["틀린 설명입니다. 주석 문장도 print()보다 먼저 화면에 출력된다. # 주석은 해당 줄의 끝까지만 적용되며 프로그램 실행에는 참여하지 않는다.", "옳은 설명입니다. # 뒤의 문장은 파이썬 실행 대상에서 제외된다.", "틀린 설명입니다. #은 다음 줄의 코드까지 모두 주석으로 만든다. # 주석은 해당 줄의 끝까지만 적용되며 프로그램 실행에는 참여하지 않는다.", "옳은 설명입니다. 실제로 출력되는 문장은 주석은 실행되지 않습니다.이다.", "옳은 설명입니다. 주석은 코드의 의미나 의도를 기록하는 데 활용할 수 있다."], "code": "# 이 줄은 설명을 위한 주석입니다.\nprint(\"주석은 실행되지 않습니다.\")"}, {"number": 10, "title": "여러 줄 문자열", "options": ["큰따옴표 세 개는 파이썬에서 오직 주석으로만 사용된다.", "message의 자료형은 list이다.", "큰따옴표 세 개로 여러 줄 문자열을 만들었다.", "message에는 줄바꿈 문자가 포함된 문자열이 저장된다.", "print(message)는 세 줄의 문장을 출력한다."], "answers": [2, 3, 4], "explanation": "삼중 따옴표는 여러 줄 문자열 리터럴을 만든다. 변수 message에는 줄바꿈을 포함한 str 값이 저장된다.", "optionExplanations": ["틀린 설명입니다. 큰따옴표 세 개는 파이썬에서 오직 주석으로만 사용된다. 삼중 따옴표는 여러 줄 문자열 리터럴을 만든다. 변수 message에는 줄바꿈을 포함한 str 값이 저장된다.", "틀린 설명입니다. message의 자료형은 list이다. 삼중 따옴표는 여러 줄 문자열 리터럴을 만든다. 변수 message에는 줄바꿈을 포함한 str 값이 저장된다.", "옳은 설명입니다. 큰따옴표 세 개로 여러 줄 문자열을 만들었다.", "옳은 설명입니다. message에는 줄바꿈 문자가 포함된 문자열이 저장된다.", "옳은 설명입니다. print(message)는 세 줄의 문장을 출력한다."], "code": "message = \"\"\"파이썬은\n배우기 쉽고\n활용 범위가 넓습니다.\"\"\"\nprint(message)"}, {"number": 11, "title": "변수에 값 저장하기", "options": ["name 변수에 문자열 홍길동이 저장된다.", "=는 오른쪽 값을 왼쪽 이름에 대입하는 연산자이다.", "print(name)은 변수에 저장된 값을 출력한다.", "name이라는 글자 자체가 출력된다.", "변수 이름은 반드시 대문자로 시작해야 한다."], "answers": [0, 1, 2], "explanation": "대입문은 문자열을 name에 연결하고, print(name)은 변수의 현재 값을 읽어 출력한다.", "optionExplanations": ["옳은 설명입니다. name 변수에 문자열 홍길동이 저장된다.", "옳은 설명입니다. =는 오른쪽 값을 왼쪽 이름에 대입하는 연산자이다.", "옳은 설명입니다. print(name)은 변수에 저장된 값을 출력한다.", "틀린 설명입니다. name이라는 글자 자체가 출력된다. 대입문은 문자열을 name에 연결하고, print(name)은 변수의 현재 값을 읽어 출력한다.", "틀린 설명입니다. 변수 이름은 반드시 대문자로 시작해야 한다. 대입문은 문자열을 name에 연결하고, print(name)은 변수의 현재 값을 읽어 출력한다."], "code": "name = \"홍길동\"\nprint(name)"}, {"number": 12, "title": "변수 값 변경하기", "options": ["첫 번째 출력은 80이다.", "score에 95를 다시 대입하면 이전 값 80은 새 값으로 교체된다.", "한 번 값을 저장한 변수는 다시 변경할 수 없다.", "두 번째 출력은 95이다.", "최종 출력은 80과 80이다."], "answers": [0, 1, 3], "explanation": "파이썬 변수는 재대입할 수 있다. score는 처음 80이었다가 이후 95를 가리키게 된다.", "optionExplanations": ["옳은 설명입니다. 첫 번째 출력은 80이다.", "옳은 설명입니다. score에 95를 다시 대입하면 이전 값 80은 새 값으로 교체된다.", "틀린 설명입니다. 한 번 값을 저장한 변수는 다시 변경할 수 없다. 파이썬 변수는 재대입할 수 있다. score는 처음 80이었다가 이후 95를 가리키게 된다.", "옳은 설명입니다. 두 번째 출력은 95이다.", "틀린 설명입니다. 최종 출력은 80과 80이다. 파이썬 변수는 재대입할 수 있다. score는 처음 80이었다가 이후 95를 가리키게 된다."], "code": "score = 80\nprint(score)\n\nscore = 95\nprint(score)"}, {"number": 13, "title": "여러 변수 만들기", "options": ["name은 str, age는 int, height는 float이다.", "print(name, age, height)는 세 값을 공백으로 구분해 출력한다.", "height의 170.5는 정수 자료형이다.", "한 print() 안에는 같은 자료형의 변수만 넣을 수 있다.", "서로 다른 자료형의 값을 서로 다른 변수에 저장할 수 있다."], "answers": [0, 1, 4], "explanation": "동적 자료형 언어인 파이썬은 각 변수에 다양한 자료형을 저장할 수 있고, print()는 이들을 함께 출력할 수 있다.", "optionExplanations": ["옳은 설명입니다. name은 str, age는 int, height는 float이다.", "옳은 설명입니다. print(name, age, height)는 세 값을 공백으로 구분해 출력한다.", "틀린 설명입니다. height의 170.5는 정수 자료형이다. 동적 자료형 언어인 파이썬은 각 변수에 다양한 자료형을 저장할 수 있고, print()는 이들을 함께 출력할 수 있다.", "틀린 설명입니다. 한 print() 안에는 같은 자료형의 변수만 넣을 수 있다. 동적 자료형 언어인 파이썬은 각 변수에 다양한 자료형을 저장할 수 있고, print()는 이들을 함께 출력할 수 있다.", "옳은 설명입니다. 서로 다른 자료형의 값을 서로 다른 변수에 저장할 수 있다."], "code": "name = \"민수\"\nage = 15\nheight = 170.5\n\nprint(name, age, height)"}, {"number": 14, "title": "여러 변수에 한 번에 값 저장", "options": ["왼쪽 변수 3개와 오른쪽 값 3개가 순서대로 대응한다.", "name에는 오른쪽의 마지막 값인 광주가 저장된다.", "age에는 정수 16이 저장된다.", "출력 결과는 서연 16 광주이다.", "변수 수와 값 수가 달라도 항상 자동으로 맞춰 대입된다."], "answers": [0, 2, 3], "explanation": "다중 대입에서는 위치가 같은 변수와 값이 대응한다. 일반적인 언패킹에서 개수가 맞지 않으면 오류가 난다.", "optionExplanations": ["옳은 설명입니다. 왼쪽 변수 3개와 오른쪽 값 3개가 순서대로 대응한다.", "틀린 설명입니다. name에는 오른쪽의 마지막 값인 광주가 저장된다. 다중 대입에서는 위치가 같은 변수와 값이 대응한다. 일반적인 언패킹에서 개수가 맞지 않으면 오류가 난다.", "옳은 설명입니다. age에는 정수 16이 저장된다.", "옳은 설명입니다. 출력 결과는 서연 16 광주이다.", "틀린 설명입니다. 변수 수와 값 수가 달라도 항상 자동으로 맞춰 대입된다. 다중 대입에서는 위치가 같은 변수와 값이 대응한다. 일반적인 언패킹에서 개수가 맞지 않으면 오류가 난다."], "code": "name, age, city = \"서연\", 16, \"광주\"\nprint(name, age, city)"}, {"number": 15, "title": "같은 값 여러 변수에 저장", "options": ["x, y, z 모두 정수 10을 가리킨다.", "z에만 10이 저장되고 x와 y는 정의되지 않는다.", "연속 대입을 이용한 코드이다.", "x, y, z는 하나의 문자열 \"10\"을 공유한다.", "출력 결과는 10 10 10이다."], "answers": [0, 2, 4], "explanation": "연속 대입은 오른쪽 값을 각 변수에 차례로 대입한다. 여기서는 세 변수 모두 int 10이다.", "optionExplanations": ["옳은 설명입니다. x, y, z 모두 정수 10을 가리킨다.", "틀린 설명입니다. z에만 10이 저장되고 x와 y는 정의되지 않는다. 연속 대입은 오른쪽 값을 각 변수에 차례로 대입한다. 여기서는 세 변수 모두 int 10이다.", "옳은 설명입니다. 연속 대입을 이용한 코드이다.", "틀린 설명입니다. x, y, z는 하나의 문자열 \"10\"을 공유한다. 연속 대입은 오른쪽 값을 각 변수에 차례로 대입한다. 여기서는 세 변수 모두 int 10이다.", "옳은 설명입니다. 출력 결과는 10 10 10이다."], "code": "x = y = z = 10\nprint(x, y, z)"}, {"number": 16, "title": "정수형 int", "options": ["age의 자료형은 int이다.", "age = 15는 age에 문자열 \"15\"를 저장한다.", "type() 함수는 변수의 이름 길이를 반환한다.", "type(age)는 값의 자료형 정보를 반환한다.", "두 번째 출력에는 <class 'int'>가 나타난다."], "answers": [0, 3, 4], "explanation": "따옴표 없는 15는 정수이고 type()은 객체의 자료형을 알려 준다.", "optionExplanations": ["옳은 설명입니다. age의 자료형은 int이다.", "틀린 설명입니다. age = 15는 age에 문자열 \"15\"를 저장한다. 따옴표 없는 15는 정수이고 type()은 객체의 자료형을 알려 준다.", "틀린 설명입니다. type() 함수는 변수의 이름 길이를 반환한다. 따옴표 없는 15는 정수이고 type()은 객체의 자료형을 알려 준다.", "옳은 설명입니다. type(age)는 값의 자료형 정보를 반환한다.", "옳은 설명입니다. 두 번째 출력에는 <class 'int'>가 나타난다."], "code": "age = 15\nprint(age)\nprint(type(age))"}, {"number": 17, "title": "실수형 float", "options": ["소수점이 있는 수는 모두 str 자료형이다.", "3.14159는 float 객체이다.", "첫 번째 출력은 3.14159이다.", "type(pi)의 결과에는 float가 표시된다.", "pi라는 변수 이름 때문에 원주율 값으로 자동 보정된다."], "answers": [1, 2, 3], "explanation": "소수점 표기 숫자는 float로 저장된다. 변수 이름은 값의 의미를 설명할 뿐 자동 계산 기능은 없다.", "optionExplanations": ["틀린 설명입니다. 소수점이 있는 수는 모두 str 자료형이다. 소수점 표기 숫자는 float로 저장된다. 변수 이름은 값의 의미를 설명할 뿐 자동 계산 기능은 없다.", "옳은 설명입니다. 3.14159는 float 객체이다.", "옳은 설명입니다. 첫 번째 출력은 3.14159이다.", "옳은 설명입니다. type(pi)의 결과에는 float가 표시된다.", "틀린 설명입니다. pi라는 변수 이름 때문에 원주율 값으로 자동 보정된다. 소수점 표기 숫자는 float로 저장된다. 변수 이름은 값의 의미를 설명할 뿐 자동 계산 기능은 없다."], "code": "pi = 3.14159\nprint(pi)\nprint(type(pi))"}, {"number": 18, "title": "문자열 str", "options": ["따옴표 안의 영문은 특별히 bytes 자료형이 된다.", "\"Python\"은 str 자료형이다.", "subject에는 6글자 문자열이 저장된다.", "type(subject)는 문자열의 글자 수 6을 반환한다.", "type(subject)는 <class 'str'>를 출력한다."], "answers": [1, 2, 4], "explanation": "따옴표로 묶인 Python은 문자열이며 type()은 str 자료형임을 보여 준다.", "optionExplanations": ["틀린 설명입니다. 따옴표 안의 영문은 특별히 bytes 자료형이 된다. 따옴표로 묶인 Python은 문자열이며 type()은 str 자료형임을 보여 준다.", "옳은 설명입니다. \"Python\"은 str 자료형이다.", "옳은 설명입니다. subject에는 6글자 문자열이 저장된다.", "틀린 설명입니다. type(subject)는 문자열의 글자 수 6을 반환한다. 따옴표로 묶인 Python은 문자열이며 type()은 str 자료형임을 보여 준다.", "옳은 설명입니다. type(subject)는 <class 'str'>를 출력한다."], "code": "subject = \"Python\"\nprint(subject)\nprint(type(subject))"}, {"number": 19, "title": "불리언 bool", "options": ["true와 false처럼 모두 소문자로 작성해야 한다.", "True와 False는 bool 자료형의 값이다.", "False는 숫자 0과 완전히 같은 객체이다.", "is_student를 출력하면 True가 나온다.", "type(is_raining)은 <class 'bool'>을 나타낸다."], "answers": [1, 3, 4], "explanation": "불리언 리터럴은 첫 글자를 대문자로 쓴다. False가 수치 연산에서 0처럼 동작할 수 있어도 동일한 객체나 동일한 자료형은 아니다.", "optionExplanations": ["틀린 설명입니다. true와 false처럼 모두 소문자로 작성해야 한다. 불리언 리터럴은 첫 글자를 대문자로 쓴다. False가 수치 연산에서 0처럼 동작할 수 있어도 동일한 객체나 동일한 자료형은 아니다.", "옳은 설명입니다. True와 False는 bool 자료형의 값이다.", "틀린 설명입니다. False는 숫자 0과 완전히 같은 객체이다. 불리언 리터럴은 첫 글자를 대문자로 쓴다. False가 수치 연산에서 0처럼 동작할 수 있어도 동일한 객체나 동일한 자료형은 아니다.", "옳은 설명입니다. is_student를 출력하면 True가 나온다.", "옳은 설명입니다. type(is_raining)은 <class 'bool'>을 나타낸다."], "code": "is_student = True\nis_raining = False\n\nprint(is_student)\nprint(type(is_raining))"}, {"number": 20, "title": "None 값", "options": ["None을 출력하면 아무 글자도 나타나지 않는다.", "None은 아직 정의되지 않은 변수에서만 자동 생성된다.", "result에는 값이 없음을 나타내는 None이 저장된다.", "None의 자료형 이름은 NoneType이다.", "None은 빈 문자열이나 숫자 0과 구별된다."], "answers": [2, 3, 4], "explanation": "None은 부재를 표현하는 특별한 단일 객체이며 출력하면 None이라는 글자가 보인다.", "optionExplanations": ["틀린 설명입니다. None을 출력하면 아무 글자도 나타나지 않는다. None은 부재를 표현하는 특별한 단일 객체이며 출력하면 None이라는 글자가 보인다.", "틀린 설명입니다. None은 아직 정의되지 않은 변수에서만 자동 생성된다. None은 부재를 표현하는 특별한 단일 객체이며 출력하면 None이라는 글자가 보인다.", "옳은 설명입니다. result에는 값이 없음을 나타내는 None이 저장된다.", "옳은 설명입니다. None의 자료형 이름은 NoneType이다.", "옳은 설명입니다. None은 빈 문자열이나 숫자 0과 구별된다."], "code": "result = None\nprint(result)\nprint(type(result))"}, {"number": 21, "title": "input으로 이름 입력받기", "options": ["input()의 반환값은 문자열이다.", "입력 안내 문구가 먼저 화면에 표시된다.", "민수를 입력하면 안녕하세요, 민수가 출력된다.", "input()은 입력한 이름을 자동으로 변수명으로 만든다.", "쉼표 때문에 출력 결과에 실제 쉼표 문자가 반드시 포함된다."], "answers": [0, 1, 2], "explanation": "input()은 문자열을 반환한다. print()의 여러 인수는 기본 공백으로 구분되며 코드 속 쉼표는 문법 구분자이다.", "optionExplanations": ["옳은 설명입니다. input()의 반환값은 문자열이다.", "옳은 설명입니다. 입력 안내 문구가 먼저 화면에 표시된다.", "옳은 설명입니다. 민수를 입력하면 안녕하세요, 민수가 출력된다.", "틀린 설명입니다. input()은 입력한 이름을 자동으로 변수명으로 만든다. input()은 문자열을 반환한다. print()의 여러 인수는 기본 공백으로 구분되며 코드 속 쉼표는 문법 구분자이다.", "틀린 설명입니다. 쉼표 때문에 출력 결과에 실제 쉼표 문자가 반드시 포함된다. input()은 문자열을 반환한다. print()의 여러 인수는 기본 공백으로 구분되며 코드 속 쉼표는 문법 구분자이다."], "code": "name = input(\"이름을 입력하세요: \")\nprint(\"안녕하세요,\", name)"}, {"number": 22, "title": "입력값의 자료형 확인", "options": ["사용자가 15를 입력해도 age는 str이다.", "첫 번째 print(age)는 입력한 문자 15를 출력한다.", "숫자 모양을 입력하면 input()이 자동으로 int로 바꾼다.", "type(age)는 <class 'str'>를 보여 준다.", "input()으로 받은 값에는 type()을 사용할 수 없다."], "answers": [0, 1, 3], "explanation": "input()은 항상 문자열을 반환하므로 숫자 계산이 필요하면 별도의 형변환이 필요하다.", "optionExplanations": ["옳은 설명입니다. 사용자가 15를 입력해도 age는 str이다.", "옳은 설명입니다. 첫 번째 print(age)는 입력한 문자 15를 출력한다.", "틀린 설명입니다. 숫자 모양을 입력하면 input()이 자동으로 int로 바꾼다. input()은 항상 문자열을 반환하므로 숫자 계산이 필요하면 별도의 형변환이 필요하다.", "옳은 설명입니다. type(age)는 <class 'str'>를 보여 준다.", "틀린 설명입니다. input()으로 받은 값에는 type()을 사용할 수 없다. input()은 항상 문자열을 반환하므로 숫자 계산이 필요하면 별도의 형변환이 필요하다."], "code": "age = input(\"나이를 입력하세요: \")\nprint(age)\nprint(type(age))"}, {"number": 23, "title": "문자열을 정수로 변환", "options": ["int()가 입력 문자열을 정수로 변환한다.", "15를 입력하면 age + 1의 결과는 16이다.", "int(input())은 어떤 입력이든 오류 없이 정수로 만든다.", "age + 1은 문자열 연결이므로 151을 출력한다.", "숫자가 아닌 문자를 입력하면 ValueError가 발생할 수 있다."], "answers": [0, 1, 4], "explanation": "int()는 정수 형태 문자열만 정상 변환한다. 변환된 age는 int이므로 + 1은 산술 덧셈이다.", "optionExplanations": ["옳은 설명입니다. int()가 입력 문자열을 정수로 변환한다.", "옳은 설명입니다. 15를 입력하면 age + 1의 결과는 16이다.", "틀린 설명입니다. int(input())은 어떤 입력이든 오류 없이 정수로 만든다. int()는 정수 형태 문자열만 정상 변환한다. 변환된 age는 int이므로 + 1은 산술 덧셈이다.", "틀린 설명입니다. age + 1은 문자열 연결이므로 151을 출력한다. int()는 정수 형태 문자열만 정상 변환한다. 변환된 age는 int이므로 + 1은 산술 덧셈이다.", "옳은 설명입니다. 숫자가 아닌 문자를 입력하면 ValueError가 발생할 수 있다."], "code": "age = int(input(\"나이를 입력하세요: \"))\nprint(age + 1)"}, {"number": 24, "title": "문자열을 실수로 변환", "options": ["float()는 입력값을 실수로 변환한다.", "float()는 소수 부분을 버리고 정수만 저장한다.", "170.5를 입력하면 171.0이 출력된다.", "height + 0.5는 실수 덧셈이다.", "170.5를 입력하면 문자열 연결로 170.50.5가 출력된다."], "answers": [0, 2, 3], "explanation": "float() 변환 후 height는 실수이므로 0.5와 더해 171.0이 된다.", "optionExplanations": ["옳은 설명입니다. float()는 입력값을 실수로 변환한다.", "틀린 설명입니다. float()는 소수 부분을 버리고 정수만 저장한다. float() 변환 후 height는 실수이므로 0.5와 더해 171.0이 된다.", "옳은 설명입니다. 170.5를 입력하면 171.0이 출력된다.", "옳은 설명입니다. height + 0.5는 실수 덧셈이다.", "틀린 설명입니다. 170.5를 입력하면 문자열 연결로 170.50.5가 출력된다. float() 변환 후 height는 실수이므로 0.5와 더해 171.0이 된다."], "code": "height = float(input(\"키를 입력하세요: \"))\nprint(height + 0.5)"}, {"number": 25, "title": "숫자를 문자열로 변환", "options": ["str(score)는 정수 95를 문자열 \"95\"로 바꾼다.", "str(score)를 사용하지 않아도 문자열과 정수는 +로 바로 연결된다.", "문자열끼리 +로 연결하여 message를 만든다.", "str()은 숫자의 값을 0으로 초기화한다.", "최종 출력은 점수는 95점입니다.이다."], "answers": [0, 2, 4], "explanation": "문자열 연결 연산 +의 두 피연산자는 문자열이어야 하므로 score를 str로 변환한다.", "optionExplanations": ["옳은 설명입니다. str(score)는 정수 95를 문자열 \"95\"로 바꾼다.", "틀린 설명입니다. str(score)를 사용하지 않아도 문자열과 정수는 +로 바로 연결된다. 문자열 연결 연산 +의 두 피연산자는 문자열이어야 하므로 score를 str로 변환한다.", "옳은 설명입니다. 문자열끼리 +로 연결하여 message를 만든다.", "틀린 설명입니다. str()은 숫자의 값을 0으로 초기화한다. 문자열 연결 연산 +의 두 피연산자는 문자열이어야 하므로 score를 str로 변환한다.", "옳은 설명입니다. 최종 출력은 점수는 95점입니다.이다."], "code": "score = 95\nmessage = \"점수는 \" + str(score) + \"점입니다.\"\nprint(message)"}, {"number": 26, "title": "bool 형변환", "options": ["bool(1)은 True이다.", "문자열의 내용이 한글이면 bool 값은 항상 False이다.", "문자열 \"False\"를 bool로 바꾸면 False가 된다.", "bool(0)과 bool(\"\")은 False이다.", "비어 있지 않은 문자열 \"파이썬\"은 True로 변환된다."], "answers": [0, 3, 4], "explanation": "0과 빈 문자열은 거짓으로 평가되고, 비어 있지 않은 문자열은 내용과 관계없이 참으로 평가된다.", "optionExplanations": ["옳은 설명입니다. bool(1)은 True이다.", "틀린 설명입니다. 문자열의 내용이 한글이면 bool 값은 항상 False이다. 0과 빈 문자열은 거짓으로 평가되고, 비어 있지 않은 문자열은 내용과 관계없이 참으로 평가된다.", "틀린 설명입니다. 문자열 \"False\"를 bool로 바꾸면 False가 된다. 0과 빈 문자열은 거짓으로 평가되고, 비어 있지 않은 문자열은 내용과 관계없이 참으로 평가된다.", "옳은 설명입니다. bool(0)과 bool(\"\")은 False이다.", "옳은 설명입니다. 비어 있지 않은 문자열 \"파이썬\"은 True로 변환된다."], "code": "print(bool(1))\nprint(bool(0))\nprint(bool(\"파이썬\"))\nprint(bool(\"\"))"}, {"number": 27, "title": "두 수의 합", "options": ["입력값은 문자열 상태이므로 결과가 항상 1020이다.", "두 input() 결과를 각각 int로 변환한다.", "10과 20을 입력하면 a + b는 30이다.", "print()는 합:과 계산 결과를 공백으로 구분해 출력한다.", "두 번째 입력값은 첫 번째 값을 자동으로 덮어쓴다."], "answers": [1, 2, 3], "explanation": "a와 b는 서로 다른 정수 변수이며 산술 덧셈을 수행한다.", "optionExplanations": ["틀린 설명입니다. 입력값은 문자열 상태이므로 결과가 항상 1020이다. a와 b는 서로 다른 정수 변수이며 산술 덧셈을 수행한다.", "옳은 설명입니다. 두 input() 결과를 각각 int로 변환한다.", "옳은 설명입니다. 10과 20을 입력하면 a + b는 30이다.", "옳은 설명입니다. print()는 합:과 계산 결과를 공백으로 구분해 출력한다.", "틀린 설명입니다. 두 번째 입력값은 첫 번째 값을 자동으로 덮어쓴다. a와 b는 서로 다른 정수 변수이며 산술 덧셈을 수행한다."], "code": "a = int(input(\"첫 번째 수: \"))\nb = int(input(\"두 번째 수: \"))\n\nprint(\"합:\", a + b)"}, {"number": 28, "title": "문자열 입력을 그대로 연결", "options": ["input()은 숫자 모양을 자동 감지하여 30을 계산한다.", "a와 b는 모두 문자열이다.", "10과 20을 입력하면 a + b는 \"1020\"이 된다.", "문자열끼리 +를 사용하면 TypeError가 발생한다.", "문자열의 +는 두 문자열을 이어 붙인다."], "answers": [1, 2, 4], "explanation": "형변환하지 않은 input() 결과는 str이며 +는 연결 연산으로 동작한다.", "optionExplanations": ["틀린 설명입니다. input()은 숫자 모양을 자동 감지하여 30을 계산한다. 형변환하지 않은 input() 결과는 str이며 +는 연결 연산으로 동작한다.", "옳은 설명입니다. a와 b는 모두 문자열이다.", "옳은 설명입니다. 10과 20을 입력하면 a + b는 \"1020\"이 된다.", "틀린 설명입니다. 문자열끼리 +를 사용하면 TypeError가 발생한다. 형변환하지 않은 input() 결과는 str이며 +는 연결 연산으로 동작한다.", "옳은 설명입니다. 문자열의 +는 두 문자열을 이어 붙인다."], "code": "a = input(\"첫 번째 수: \")\nb = input(\"두 번째 수: \")\n\nprint(a + b)"}, {"number": 29, "title": "f-string으로 출력", "options": ["중괄호는 결과에도 그대로 출력된다.", "문자열 앞의 f는 중괄호 안 표현식을 평가하게 한다.", "f-string 안에는 숫자 변수를 넣을 수 없다.", "{name} 자리에는 지훈이 들어간다.", "출력 결과는 지훈의 점수는 92점입니다.이다."], "answers": [1, 3, 4], "explanation": "f-string은 문자열 안에 변수나 표현식의 값을 자연스럽게 삽입한다.", "optionExplanations": ["틀린 설명입니다. 중괄호는 결과에도 그대로 출력된다. f-string은 문자열 안에 변수나 표현식의 값을 자연스럽게 삽입한다.", "옳은 설명입니다. 문자열 앞의 f는 중괄호 안 표현식을 평가하게 한다.", "틀린 설명입니다. f-string 안에는 숫자 변수를 넣을 수 없다. f-string은 문자열 안에 변수나 표현식의 값을 자연스럽게 삽입한다.", "옳은 설명입니다. {name} 자리에는 지훈이 들어간다.", "옳은 설명입니다. 출력 결과는 지훈의 점수는 92점입니다.이다."], "code": "name = \"지훈\"\nscore = 92\n\nprint(f\"{name}의 점수는 {score}점입니다.\")"}, {"number": 30, "title": "입력값으로 자기소개", "options": ["grade에 1을 입력하면 자료형은 str로 남는다.", "favorite에는 숫자만 입력할 수 있다.", "name과 favorite은 문자열로 입력받는다.", "grade는 int로 변환된다.", "f-string으로 세 입력값을 한 문장에 삽입한다."], "answers": [2, 3, 4], "explanation": "input() 기본 결과는 문자열이고 grade만 int()를 거친다. f-string은 자료형이 다른 값도 문자열 표현으로 삽입한다.", "optionExplanations": ["틀린 설명입니다. grade에 1을 입력하면 자료형은 str로 남는다. input() 기본 결과는 문자열이고 grade만 int()를 거친다. f-string은 자료형이 다른 값도 문자열 표현으로 삽입한다.", "틀린 설명입니다. favorite에는 숫자만 입력할 수 있다. input() 기본 결과는 문자열이고 grade만 int()를 거친다. f-string은 자료형이 다른 값도 문자열 표현으로 삽입한다.", "옳은 설명입니다. name과 favorite은 문자열로 입력받는다.", "옳은 설명입니다. grade는 int로 변환된다.", "옳은 설명입니다. f-string으로 세 입력값을 한 문장에 삽입한다."], "code": "name = input(\"이름: \")\ngrade = int(input(\"학년: \"))\nfavorite = input(\"좋아하는 과목: \")\n\nprint(f\"{name} 학생은 {grade}학년이고, {favorite} 과목을 좋아합니다.\")"}, {"number": 31, "title": "덧셈과 뺄셈", "options": ["a + b는 27이다.", "a - b는 13이다.", "두 연산 결과는 각각 별도의 줄에 출력된다.", "두 번째 결과는 b - a이므로 -13이다.", "+ 연산자는 정수에서는 문자열 연결만 수행한다."], "answers": [0, 1, 2], "explanation": "정수 20과 7에 산술 덧셈과 뺄셈을 적용한다.", "optionExplanations": ["옳은 설명입니다. a + b는 27이다.", "옳은 설명입니다. a - b는 13이다.", "옳은 설명입니다. 두 연산 결과는 각각 별도의 줄에 출력된다.", "틀린 설명입니다. 두 번째 결과는 b - a이므로 -13이다. 정수 20과 7에 산술 덧셈과 뺄셈을 적용한다.", "틀린 설명입니다. + 연산자는 정수에서는 문자열 연결만 수행한다. 정수 20과 7에 산술 덧셈과 뺄셈을 적용한다."], "code": "a = 20\nb = 7\n\nprint(a + b)\nprint(a - b)"}, {"number": 32, "title": "곱셈과 나눗셈", "options": ["a * b는 120이다.", "a / b의 결과는 float이다.", "정수끼리 /를 사용하면 항상 몫 3만 반환한다.", "20 / 6은 약 3.3333333333333335로 출력된다.", "* 연산은 a를 b제곱하는 뜻이다."], "answers": [0, 1, 3], "explanation": "/는 일반 나눗셈으로 실수를 반환하며 *는 곱셈이다.", "optionExplanations": ["옳은 설명입니다. a * b는 120이다.", "옳은 설명입니다. a / b의 결과는 float이다.", "틀린 설명입니다. 정수끼리 /를 사용하면 항상 몫 3만 반환한다. /는 일반 나눗셈으로 실수를 반환하며 *는 곱셈이다.", "옳은 설명입니다. 20 / 6은 약 3.3333333333333335로 출력된다.", "틀린 설명입니다. * 연산은 a를 b제곱하는 뜻이다. /는 일반 나눗셈으로 실수를 반환하며 *는 곱셈이다."], "code": "a = 20\nb = 6\n\nprint(a * b)\nprint(a / b)"}, {"number": 33, "title": "몫과 나머지", "options": ["17 // 5의 결과는 3이다.", "17 % 5의 결과는 2이다.", "17 // 5는 반올림하여 4를 반환한다.", "%는 백분율을 계산하므로 340을 출력한다.", "//와 %를 함께 사용하면 나눗셈의 몫과 나머지를 확인할 수 있다."], "answers": [0, 1, 4], "explanation": "//는 바닥 나눗셈, %는 나머지 연산자이다.", "optionExplanations": ["옳은 설명입니다. 17 // 5의 결과는 3이다.", "옳은 설명입니다. 17 % 5의 결과는 2이다.", "틀린 설명입니다. 17 // 5는 반올림하여 4를 반환한다. //는 바닥 나눗셈, %는 나머지 연산자이다.", "틀린 설명입니다. %는 백분율을 계산하므로 340을 출력한다. //는 바닥 나눗셈, %는 나머지 연산자이다.", "옳은 설명입니다. //와 %를 함께 사용하면 나눗셈의 몫과 나머지를 확인할 수 있다."], "code": "print(17 // 5)\nprint(17 % 5)"}, {"number": 34, "title": "거듭제곱", "options": ["2 ** 3은 8이다.", "**는 두 수를 단순히 두 번 곱하는 연산자이다.", "5 ** 2는 25이다.", "**는 왼쪽 값을 오른쪽 지수만큼 거듭제곱한다.", "2 ** 3의 결과는 6이다."], "answers": [0, 2, 3], "explanation": "거듭제곱 연산자 **는 밑과 지수를 사용한다.", "optionExplanations": ["옳은 설명입니다. 2 ** 3은 8이다.", "틀린 설명입니다. **는 두 수를 단순히 두 번 곱하는 연산자이다. 거듭제곱 연산자 **는 밑과 지수를 사용한다.", "옳은 설명입니다. 5 ** 2는 25이다.", "옳은 설명입니다. **는 왼쪽 값을 오른쪽 지수만큼 거듭제곱한다.", "틀린 설명입니다. 2 ** 3의 결과는 6이다. 거듭제곱 연산자 **는 밑과 지수를 사용한다."], "code": "print(2 ** 3)\nprint(5 ** 2)"}, {"number": 35, "title": "복합 대입 연산자", "options": ["score += 10은 score = score + 10과 같은 효과이다.", "score -= 5는 score 값을 -5로 새로 지정한다.", "첫 번째 출력은 90이다.", "복합 대입을 사용하면 원래 변수는 변경되지 않는다.", "score -= 5 이후 두 번째 출력은 85이다."], "answers": [0, 2, 4], "explanation": "복합 대입은 기존 변수 값을 이용해 계산한 뒤 그 결과를 같은 변수에 다시 저장한다.", "optionExplanations": ["옳은 설명입니다. score += 10은 score = score + 10과 같은 효과이다.", "틀린 설명입니다. score -= 5는 score 값을 -5로 새로 지정한다. 복합 대입은 기존 변수 값을 이용해 계산한 뒤 그 결과를 같은 변수에 다시 저장한다.", "옳은 설명입니다. 첫 번째 출력은 90이다.", "틀린 설명입니다. 복합 대입을 사용하면 원래 변수는 변경되지 않는다. 복합 대입은 기존 변수 값을 이용해 계산한 뒤 그 결과를 같은 변수에 다시 저장한다.", "옳은 설명입니다. score -= 5 이후 두 번째 출력은 85이다."], "code": "score = 80\nscore += 10\nprint(score)\n\nscore -= 5\nprint(score)"}, {"number": 36, "title": "비교 연산자", "options": ["10 > 5는 True이다.", "==는 오른쪽 값을 왼쪽 변수에 저장하는 대입 연산자이다.", "비교 연산 결과는 문자열 \"True\" 또는 \"False\"이다.", "10 < 5는 False이다.", "10 == 10과 10 != 5는 모두 True이다."], "answers": [0, 3, 4], "explanation": "비교식은 bool 값을 반환한다. ==는 동등 비교이고 =와 다르다.", "optionExplanations": ["옳은 설명입니다. 10 > 5는 True이다.", "틀린 설명입니다. ==는 오른쪽 값을 왼쪽 변수에 저장하는 대입 연산자이다. 비교식은 bool 값을 반환한다. ==는 동등 비교이고 =와 다르다.", "틀린 설명입니다. 비교 연산 결과는 문자열 \"True\" 또는 \"False\"이다. 비교식은 bool 값을 반환한다. ==는 동등 비교이고 =와 다르다.", "옳은 설명입니다. 10 < 5는 False이다.", "옳은 설명입니다. 10 == 10과 10 != 5는 모두 True이다."], "code": "print(10 > 5)\nprint(10 < 5)\nprint(10 == 10)\nprint(10 != 5)"}, {"number": 37, "title": "크거나 같음, 작거나 같음", "options": ["score >= 80은 80보다 클 때만 참이고 같은 경우는 거짓이다.", "score >= 80은 True이다.", "score <= 70은 False이다.", "경계값 80도 >= 80 조건에 포함된다.", "<=는 왼쪽 값을 오른쪽에 대입하는 연산자이다."], "answers": [1, 2, 3], "explanation": ">=와 <=는 같은 경우까지 포함하는 비교 연산자이다.", "optionExplanations": ["틀린 설명입니다. score >= 80은 80보다 클 때만 참이고 같은 경우는 거짓이다. >=와 <=는 같은 경우까지 포함하는 비교 연산자이다.", "옳은 설명입니다. score >= 80은 True이다.", "옳은 설명입니다. score <= 70은 False이다.", "옳은 설명입니다. 경계값 80도 >= 80 조건에 포함된다.", "틀린 설명입니다. <=는 왼쪽 값을 오른쪽에 대입하는 연산자이다. >=와 <=는 같은 경우까지 포함하는 비교 연산자이다."], "code": "score = 80\n\nprint(score >= 80)\nprint(score <= 70)"}, {"number": 38, "title": "논리 and", "options": ["and는 둘 중 하나만 참이어도 True를 반환한다.", "age >= 14는 True이다.", "has_ticket은 True이다.", "불리언 값에는 and를 사용할 수 없다.", "두 조건이 모두 참이므로 전체 결과는 True이다."], "answers": [1, 2, 4], "explanation": "and는 모든 피연산 조건이 참일 때 참이 된다.", "optionExplanations": ["틀린 설명입니다. and는 둘 중 하나만 참이어도 True를 반환한다. and는 모든 피연산 조건이 참일 때 참이 된다.", "옳은 설명입니다. age >= 14는 True이다.", "옳은 설명입니다. has_ticket은 True이다.", "틀린 설명입니다. 불리언 값에는 and를 사용할 수 없다. and는 모든 피연산 조건이 참일 때 참이 된다.", "옳은 설명입니다. 두 조건이 모두 참이므로 전체 결과는 True이다."], "code": "age = 15\nhas_ticket = True\n\nprint(age >= 14 and has_ticket)"}, {"number": 39, "title": "논리 or", "options": ["or는 두 조건이 모두 참일 때만 True이다.", "is_weekend은 False이다.", "False or True의 결과는 False이다.", "is_holiday는 True이다.", "or는 하나 이상이 참이므로 True를 반환한다."], "answers": [1, 3, 4], "explanation": "or는 조건 가운데 하나라도 참이면 참이다.", "optionExplanations": ["틀린 설명입니다. or는 두 조건이 모두 참일 때만 True이다. or는 조건 가운데 하나라도 참이면 참이다.", "옳은 설명입니다. is_weekend은 False이다.", "틀린 설명입니다. False or True의 결과는 False이다. or는 조건 가운데 하나라도 참이면 참이다.", "옳은 설명입니다. is_holiday는 True이다.", "옳은 설명입니다. or는 하나 이상이 참이므로 True를 반환한다."], "code": "is_weekend = False\nis_holiday = True\n\nprint(is_weekend or is_holiday)"}, {"number": 40, "title": "논리 not", "options": ["not True의 결과는 True이다.", "not은 숫자에만 사용할 수 있는 산술 연산자이다.", "is_raining의 값은 True이다.", "not은 불리언 값을 반대로 뒤집는다.", "not is_raining의 결과는 False이다."], "answers": [2, 3, 4], "explanation": "not은 참을 거짓으로, 거짓을 참으로 바꾸는 논리 연산자이다.", "optionExplanations": ["틀린 설명입니다. not True의 결과는 True이다. not은 참을 거짓으로, 거짓을 참으로 바꾸는 논리 연산자이다.", "틀린 설명입니다. not은 숫자에만 사용할 수 있는 산술 연산자이다. not은 참을 거짓으로, 거짓을 참으로 바꾸는 논리 연산자이다.", "옳은 설명입니다. is_raining의 값은 True이다.", "옳은 설명입니다. not은 불리언 값을 반대로 뒤집는다.", "옳은 설명입니다. not is_raining의 결과는 False이다."], "code": "is_raining = True\n\nprint(not is_raining)"}, {"number": 41, "title": "문자열 길이", "options": ["\"Python\"은 6개의 문자로 이루어져 있다.", "len(text)의 결과는 정수 6이다.", "len()은 문자열에 포함된 문자 개수를 센다.", "문자열 인덱스가 0부터 시작하므로 len(text)는 5이다.", "len()은 영문 문자열에는 사용할 수 없다."], "answers": [0, 1, 2], "explanation": "인덱스의 마지막 번호와 길이는 다르다. Python의 인덱스는 0~5지만 길이는 6이다.", "optionExplanations": ["옳은 설명입니다. \"Python\"은 6개의 문자로 이루어져 있다.", "옳은 설명입니다. len(text)의 결과는 정수 6이다.", "옳은 설명입니다. len()은 문자열에 포함된 문자 개수를 센다.", "틀린 설명입니다. 문자열 인덱스가 0부터 시작하므로 len(text)는 5이다. 인덱스의 마지막 번호와 길이는 다르다. Python의 인덱스는 0~5지만 길이는 6이다.", "틀린 설명입니다. len()은 영문 문자열에는 사용할 수 없다. 인덱스의 마지막 번호와 길이는 다르다. Python의 인덱스는 0~5지만 길이는 6이다."], "code": "text = \"Python\"\nprint(len(text))"}, {"number": 42, "title": "문자열 인덱싱", "options": ["text[0]은 P이다.", "text[1]은 y이다.", "파이썬 문자열의 첫 인덱스는 1이므로 text[0]은 오류이다.", "text[-1]은 마지막 문자 n이다.", "음수 인덱스는 사용할 수 없다."], "answers": [0, 1, 3], "explanation": "문자열 인덱스는 0부터 시작하고 -1은 맨 마지막 문자를 가리킨다.", "optionExplanations": ["옳은 설명입니다. text[0]은 P이다.", "옳은 설명입니다. text[1]은 y이다.", "틀린 설명입니다. 파이썬 문자열의 첫 인덱스는 1이므로 text[0]은 오류이다. 문자열 인덱스는 0부터 시작하고 -1은 맨 마지막 문자를 가리킨다.", "옳은 설명입니다. text[-1]은 마지막 문자 n이다.", "틀린 설명입니다. 음수 인덱스는 사용할 수 없다. 문자열 인덱스는 0부터 시작하고 -1은 맨 마지막 문자를 가리킨다."], "code": "text = \"Python\"\n\nprint(text[0])\nprint(text[1])\nprint(text[-1])"}, {"number": 43, "title": "문자열 슬라이싱", "options": ["text[0:6]은 Python이다.", "슬라이싱의 끝 인덱스 6에 있는 문자는 포함되지 않는다.", "text[0:6]은 인덱스 6의 공백까지 포함한다.", "시작 인덱스를 생략해야만 문자열 끝까지 가져올 수 있다.", "text[7:]은 7번 위치부터 끝까지인 Programming이다."], "answers": [0, 1, 4], "explanation": "슬라이싱은 시작 이상, 끝 미만 범위를 사용하며 끝을 생략하면 문자열 마지막까지 가져온다.", "optionExplanations": ["옳은 설명입니다. text[0:6]은 Python이다.", "옳은 설명입니다. 슬라이싱의 끝 인덱스 6에 있는 문자는 포함되지 않는다.", "틀린 설명입니다. text[0:6]은 인덱스 6의 공백까지 포함한다. 슬라이싱은 시작 이상, 끝 미만 범위를 사용하며 끝을 생략하면 문자열 마지막까지 가져온다.", "틀린 설명입니다. 시작 인덱스를 생략해야만 문자열 끝까지 가져올 수 있다. 슬라이싱은 시작 이상, 끝 미만 범위를 사용하며 끝을 생략하면 문자열 마지막까지 가져온다.", "옳은 설명입니다. text[7:]은 7번 위치부터 끝까지인 Programming이다."], "code": "text = \"Python Programming\"\n\nprint(text[0:6])\nprint(text[7:])"}, {"number": 44, "title": "문자열 연결", "options": ["first + \" \" + second는 세 문자열을 연결한다.", "문자열에는 + 연산자를 사용할 수 없다.", "중간의 \" \"가 두 단어 사이 공백을 만든다.", "출력 결과는 파이썬 프로그래밍이다.", "연결 후 first 변수의 값 자체가 파이썬 프로그래밍으로 바뀐다."], "answers": [0, 2, 3], "explanation": "+는 새 문자열을 만들 뿐 기존 문자열 변수의 값을 자동 변경하지 않는다.", "optionExplanations": ["옳은 설명입니다. first + \" \" + second는 세 문자열을 연결한다.", "틀린 설명입니다. 문자열에는 + 연산자를 사용할 수 없다. +는 새 문자열을 만들 뿐 기존 문자열 변수의 값을 자동 변경하지 않는다.", "옳은 설명입니다. 중간의 \" \"가 두 단어 사이 공백을 만든다.", "옳은 설명입니다. 출력 결과는 파이썬 프로그래밍이다.", "틀린 설명입니다. 연결 후 first 변수의 값 자체가 파이썬 프로그래밍으로 바뀐다. +는 새 문자열을 만들 뿐 기존 문자열 변수의 값을 자동 변경하지 않는다."], "code": "first = \"파이썬\"\nsecond = \"프로그래밍\"\n\nprint(first + \" \" + second)"}, {"number": 45, "title": "문자열 반복", "options": ["\"★\" * 5는 별 다섯 개를 만든다.", "문자열끼리 *를 사용하여 반복 횟수를 정한다.", "\"안녕! \" * 3은 같은 문자열을 세 번 반복한다.", "\"★\" * 5의 결과는 숫자 5이다.", "문자열과 정수의 곱셈은 반복 연산이다."], "answers": [0, 2, 4], "explanation": "문자열 반복은 문자열 × 정수 형태로 사용한다.", "optionExplanations": ["옳은 설명입니다. \"★\" * 5는 별 다섯 개를 만든다.", "틀린 설명입니다. 문자열끼리 *를 사용하여 반복 횟수를 정한다. 문자열 반복은 문자열 × 정수 형태로 사용한다.", "옳은 설명입니다. \"안녕! \" * 3은 같은 문자열을 세 번 반복한다.", "틀린 설명입니다. \"★\" * 5의 결과는 숫자 5이다. 문자열 반복은 문자열 × 정수 형태로 사용한다.", "옳은 설명입니다. 문자열과 정수의 곱셈은 반복 연산이다."], "code": "print(\"★\" * 5)\nprint(\"안녕! \" * 3)"}, {"number": 46, "title": "대문자와 소문자 변환", "options": ["text.upper()는 PYTHON을 반환한다.", "upper()를 호출하면 원래 text 변수도 자동으로 PYTHON으로 변경된다.", "lower()는 문자열의 길이를 소문자로 표시한다.", "text.lower()는 python을 반환한다.", "upper()와 lower()는 변환된 새 문자열을 만든다."], "answers": [0, 3, 4], "explanation": "문자열은 불변 객체이므로 메서드는 새 문자열을 반환하며 원본 변수는 재대입하지 않는 한 그대로이다.", "optionExplanations": ["옳은 설명입니다. text.upper()는 PYTHON을 반환한다.", "틀린 설명입니다. upper()를 호출하면 원래 text 변수도 자동으로 PYTHON으로 변경된다. 문자열은 불변 객체이므로 메서드는 새 문자열을 반환하며 원본 변수는 재대입하지 않는 한 그대로이다.", "틀린 설명입니다. lower()는 문자열의 길이를 소문자로 표시한다. 문자열은 불변 객체이므로 메서드는 새 문자열을 반환하며 원본 변수는 재대입하지 않는 한 그대로이다.", "옳은 설명입니다. text.lower()는 python을 반환한다.", "옳은 설명입니다. upper()와 lower()는 변환된 새 문자열을 만든다."], "code": "text = \"Python\"\n\nprint(text.upper())\nprint(text.lower())"}, {"number": 47, "title": "공백 제거", "options": ["strip()은 문자열 안의 모든 공백을 제거하여 PythonStudy를 만든다.", "strip()은 문자열 양쪽 끝의 공백을 제거한다.", "출력 결과는 Python Study이다.", "두 단어 사이의 내부 공백은 유지된다.", "strip()은 왼쪽 공백만 제거하고 오른쪽 공백은 남긴다."], "answers": [1, 2, 3], "explanation": "strip()은 양 끝 공백을 제거하며 내부 공백은 건드리지 않는다.", "optionExplanations": ["틀린 설명입니다. strip()은 문자열 안의 모든 공백을 제거하여 PythonStudy를 만든다. strip()은 양 끝 공백을 제거하며 내부 공백은 건드리지 않는다.", "옳은 설명입니다. strip()은 문자열 양쪽 끝의 공백을 제거한다.", "옳은 설명입니다. 출력 결과는 Python Study이다.", "옳은 설명입니다. 두 단어 사이의 내부 공백은 유지된다.", "틀린 설명입니다. strip()은 왼쪽 공백만 제거하고 오른쪽 공백은 남긴다. strip()은 양 끝 공백을 제거하며 내부 공백은 건드리지 않는다."], "code": "text = \"   Python Study   \"\n\nprint(text.strip())"}, {"number": 48, "title": "문자열 치환", "options": ["replace()는 원본 문자열 객체를 직접 수정한다.", "replace(\"자바\", \"파이썬\")은 해당 부분을 바꾼 새 문자열을 반환한다.", "new_text에는 나는 파이썬을 공부합니다.가 저장된다.", "찾을 문자열과 바꿀 문자열의 순서를 바꾸어도 결과는 같다.", "원래 text는 재대입하지 않았으므로 자바가 들어 있는 기존 문자열을 유지한다."], "answers": [1, 2, 4], "explanation": "replace(기존, 새값)는 새 문자열을 반환한다. 문자열은 불변이므로 원본은 자동 수정되지 않는다.", "optionExplanations": ["틀린 설명입니다. replace()는 원본 문자열 객체를 직접 수정한다. replace(기존, 새값)는 새 문자열을 반환한다. 문자열은 불변이므로 원본은 자동 수정되지 않는다.", "옳은 설명입니다. replace(\"자바\", \"파이썬\")은 해당 부분을 바꾼 새 문자열을 반환한다.", "옳은 설명입니다. new_text에는 나는 파이썬을 공부합니다.가 저장된다.", "틀린 설명입니다. 찾을 문자열과 바꿀 문자열의 순서를 바꾸어도 결과는 같다. replace(기존, 새값)는 새 문자열을 반환한다. 문자열은 불변이므로 원본은 자동 수정되지 않는다.", "옳은 설명입니다. 원래 text는 재대입하지 않았으므로 자바가 들어 있는 기존 문자열을 유지한다."], "code": "text = \"나는 자바를 공부합니다.\"\nnew_text = text.replace(\"자바\", \"파이썬\")\n\nprint(new_text)"}, {"number": 49, "title": "문자열 포함 여부", "options": ["in은 문자열에서 위치 번호를 반환하므로 첫 결과는 0이다.", "\"Python\" in text는 True이다.", "영문의 대소문자는 무시되므로 \"python\"도 반드시 True이다.", "\"Java\" in text는 False이다.", "in 연산의 결과는 bool 값이다."], "answers": [1, 3, 4], "explanation": "in은 포함 여부를 True/False로 반환하며 문자열 비교는 대소문자를 구분한다.", "optionExplanations": ["틀린 설명입니다. in은 문자열에서 위치 번호를 반환하므로 첫 결과는 0이다. in은 포함 여부를 True/False로 반환하며 문자열 비교는 대소문자를 구분한다.", "옳은 설명입니다. \"Python\" in text는 True이다.", "틀린 설명입니다. 영문의 대소문자는 무시되므로 \"python\"도 반드시 True이다. in은 포함 여부를 True/False로 반환하며 문자열 비교는 대소문자를 구분한다.", "옳은 설명입니다. \"Java\" in text는 False이다.", "옳은 설명입니다. in 연산의 결과는 bool 값이다."], "code": "text = \"Python Programming\"\n\nprint(\"Python\" in text)\nprint(\"Java\" in text)"}, {"number": 50, "title": "문자열 포맷 종합", "options": ["f-string에서는 문자열 변수만 중괄호 안에 넣을 수 있다.", "message에는 중괄호가 포함된 원문이 그대로 저장된다.", "f-string에서 {name}, {subject}, {score}가 각 변수 값으로 치환된다.", "정수 score도 f-string 안에서 문자열 표현으로 삽입된다.", "출력 결과는 도윤 학생은 파이썬 과목에서 98점을 받았습니다.이다."], "answers": [2, 3, 4], "explanation": "f-string은 서로 다른 자료형의 표현값을 문자열에 삽입해 새 문자열을 만든다.", "optionExplanations": ["틀린 설명입니다. f-string에서는 문자열 변수만 중괄호 안에 넣을 수 있다. f-string은 서로 다른 자료형의 표현값을 문자열에 삽입해 새 문자열을 만든다.", "틀린 설명입니다. message에는 중괄호가 포함된 원문이 그대로 저장된다. f-string은 서로 다른 자료형의 표현값을 문자열에 삽입해 새 문자열을 만든다.", "옳은 설명입니다. f-string에서 {name}, {subject}, {score}가 각 변수 값으로 치환된다.", "옳은 설명입니다. 정수 score도 f-string 안에서 문자열 표현으로 삽입된다.", "옳은 설명입니다. 출력 결과는 도윤 학생은 파이썬 과목에서 98점을 받았습니다.이다."], "code": "name = \"도윤\"\nsubject = \"파이썬\"\nscore = 98\n\nmessage = f\"{name} 학생은 {subject} 과목에서 {score}점을 받았습니다.\"\nprint(message)"}];
+const labels = ["①","②","③","④","⑤"];
+let submitted = false;
+
+function escapeHtml(text) {
+    return text.replace(/[&<>"']/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[ch]));
+}
+
+function renderQuiz() {
+    const container = document.getElementById("quizContainer");
+    container.innerHTML = questions.map(q => `
+      <article class="quiz-card" id="q${q.number}">
+        <h3>${q.number}번. ${q.title}</h3>
+        <div class="question-guide">다음 코드를 분석한 설명 중 옳은 것 3개를 모두 고르시오.</div>
+        <pre class="quiz-code"><code>${escapeHtml(q.code)}</code></pre>
+        <div>
+          ${q.options.map((opt, i) => `
+            <label class="choice">
+              <input type="checkbox" name="q${q.number}" value="${i}">
+              <strong>${labels[i]}</strong> ${escapeHtml(opt)}
+            </label>`).join("")}
+        </div>
+      </article>`).join("");
+}
+renderQuiz();
+
+function sameArray(a, b) {
+    return a.length === b.length && a.every((v, i) => v === b[i]);
+}
+
+function formatDate(d) {
+    const pad = n => String(n).padStart(2, "0");
+    return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}_${pad(d.getHours())}시${pad(d.getMinutes())}분${pad(d.getSeconds())}초`;
+}
+
+function safeName(s) {
+    return s.trim().replace(/[\\/:*?"<>|\s]+/g, "_");
+}
+
+function gradeQuiz() {
+    const sid = document.getElementById("studentId").value.trim();
+    const name = document.getElementById("studentName").value.trim();
+    if (!sid || !name) {
+        alert("학번과 이름을 모두 입력하세요.");
+        document.getElementById(!sid ? "studentId" : "studentName").focus();
+        return;
+    }
+
+    let correctCount = 0;
+    const reviews = [];
+    const txt = [];
+    const now = new Date();
+
+    questions.forEach(q => {
+        const selected = [...document.querySelectorAll(`input[name="q${q.number}"]:checked`)]
+            .map(el => Number(el.value)).sort((a,b) => a-b);
+        const answer = [...q.answers].sort((a,b) => a-b);
+        const ok = sameArray(selected, answer);
+        if (ok) correctCount++;
+
+        const selectedText = selected.length ? selected.map(i => labels[i]).join(", ") : "미응답";
+        const answerText = answer.map(i => labels[i]).join(", ");
+        const details = q.options.map((opt, i) =>
+            `<li><strong>${labels[i]}</strong> ${escapeHtml(q.optionExplanations[i])}</li>`).join("");
+
+        reviews.push(`
+          <div class="review ${ok ? "correct" : "wrong"}">
+            <h3>${q.number}번 · ${ok ? "정답" : "오답"}</h3>
+            <div class="answer-line">나의 선택: ${selectedText}</div>
+            <div class="answer-line">정답: ${answerText}</div>
+            <p><strong>핵심 풀이:</strong> ${escapeHtml(q.explanation)}</p>
+            <ul class="detail-list">${details}</ul>
+          </div>`);
+
+        txt.push(`[${q.number}번] ${q.title}`);
+        txt.push(`코드:\n${q.code}`);
+        txt.push(`나의 선택: ${selectedText}`);
+        txt.push(`정답: ${answerText}`);
+        txt.push(`채점 결과: ${ok ? "정답" : "오답"}`);
+        txt.push(`핵심 풀이: ${q.explanation}`);
+        q.optionExplanations.forEach((e, i) => txt.push(`${labels[i]} ${e}`));
+        txt.push("------------------------------------------------------------");
+    });
+
+    const score = correctCount * 2;
+    const resultBox = document.getElementById("resultBox");
+    resultBox.style.display = "block";
+    resultBox.innerHTML = `
+      <div class="result-summary">
+        ${escapeHtml(sid)} ${escapeHtml(name)} · ${score}점 / 100점
+        (정답 ${correctCount}문항, 오답 ${50-correctCount}문항)
+      </div>
+      <p>아래에서 각 문항의 정오답과 선택지별 상세 풀이를 확인할 수 있습니다.</p>
+      ${reviews.join("")}`;
+    resultBox.scrollIntoView({behavior:"smooth", block:"start"});
+
+    const header = [
+      "파이썬300A 코드 이해 평가 결과",
+      `학번: ${sid}`,
+      `이름: ${name}`,
+      `점수: ${score}점 / 100점`,
+      `정답 문항 수: ${correctCount} / 50`,
+      `응시 시각: ${now.toLocaleString("ko-KR")}`,
+      "============================================================"
+    ];
+    const content = "\uFEFF" + header.concat(txt).join("\r\n");
+    const blob = new Blob([content], {type:"text/plain;charset=utf-8"});
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = `${safeName(sid)}_${safeName(name)}_${score}점_파이썬300A_${formatDate(now)}.txt`;
+    document.body.appendChild(a);
+    a.click();
+    URL.revokeObjectURL(a.href);
+    a.remove();
+    submitted = true;
+}
+
+function scrollToTop() {
+    window.scrollTo({top:0, behavior:"smooth"});
+}
+
+window.addEventListener("beforeunload", function(e) {
+    if (!submitted) {
+        const checked = document.querySelectorAll('input[type="checkbox"]:checked').length;
+        if (checked > 0) {
+            e.preventDefault();
+            e.returnValue = "";
+        }
+    }
+});
+</script>
+
+</body>
+</html>

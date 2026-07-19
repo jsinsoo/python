@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>파이썬300D · 코드별 복수정답형 평가</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f8fafc;color:#1f2937;font-family:"Malgun Gothic","Apple SD Gothic Neo",Arial,sans-serif;line-height:1.75}
+header{padding:45px 20px;text-align:center;background:linear-gradient(135deg,#312e81,#6d28d9);color:#fff}
+header h1{margin:0 0 10px;font-size:2.1rem}
+header p{margin:0;opacity:.92}
+main{max-width:1120px;margin:0 auto;padding:25px 18px 60px}
+.notice,section{background:#fff;border-radius:14px;padding:24px;margin:22px 0;box-shadow:0 4px 14px rgba(31,41,55,.08)}
+h2{color:#4338ca;border-bottom:3px solid #c4b5fd;padding-bottom:9px}
+h3{color:#6d28d9;margin-top:34px}
+.tag{display:inline-block;padding:3px 10px;margin-right:7px;border-radius:20px;background:#ede9fe;color:#5b21b6;font-size:.85rem;font-weight:bold}
+pre{background:#111827;color:#f9fafb;padding:17px;border-radius:10px;overflow-x:auto;line-height:1.55}
+code{font-family:Consolas,"Courier New",monospace}
+.output{background:#ecfdf5;border-left:5px solid #10b981;padding:12px 15px;border-radius:6px;margin:12px 0}
+.explain{background:#eff6ff;border-left:5px solid #3b82f6;padding:12px 15px;border-radius:6px;margin:12px 0}
+.warning{background:#fff7ed;border-left:5px solid #f97316;padding:12px 15px;border-radius:6px;margin:12px 0}
+.summary{background:#f5f3ff;border-left:5px solid #7c3aed;padding:15px;border-radius:6px}
+table{width:100%;border-collapse:collapse;margin:14px 0}
+th,td{border:1px solid #cbd5e1;padding:10px;text-align:left}
+th{background:#ede9fe}
+footer{text-align:center;padding:25px;color:#64748b}
+
+.quiz-intro{background:linear-gradient(135deg,#f5f3ff,#eef2ff);border:2px solid #c4b5fd}
+.student-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:18px 0}
+.student-grid label{font-weight:800;color:#4338ca}.student-grid input{width:100%;margin-top:6px;padding:12px;border:1px solid #a78bfa;border-radius:9px;font-size:1rem}
+.quiz-card{border:1px solid #ddd6fe;border-left:7px solid #6d28d9;border-radius:13px;padding:20px;margin:22px 0;background:#fff;box-shadow:0 3px 10px rgba(76,29,149,.08)}
+.quiz-card h3{margin:0 0 12px}.question-guide{padding:10px 13px;background:#faf5ff;border-radius:8px;border-left:4px solid #8b5cf6;font-weight:800}
+.choice{display:block;padding:11px 12px;margin:8px 0;border:1px solid #ddd6fe;border-radius:9px;cursor:pointer;background:#fafafa}
+.choice:hover{background:#f5f3ff;border-color:#8b5cf6}.choice input{margin-right:9px;transform:scale(1.15)}
+.action-row{position:sticky;bottom:10px;z-index:20;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;padding:14px;background:rgba(255,255,255,.95);border:1px solid #c4b5fd;border-radius:14px;box-shadow:0 6px 22px rgba(15,23,42,.16)}
+.btn{border:0;border-radius:10px;padding:13px 22px;font-size:1rem;font-weight:900;cursor:pointer}.btn-primary{background:#6d28d9;color:#fff}.btn-secondary{background:#e2e8f0}
+.result-box{display:none;margin-top:24px;padding:22px;border-radius:14px;background:#f8fafc;border:2px solid #94a3b8}
+.result-summary{font-size:1.25rem;font-weight:900;color:#4338ca;padding:15px;background:#ede9fe;border-radius:10px}
+.review{margin:16px 0;padding:16px;border-radius:10px;border-left:6px solid #64748b;background:#fff}.review.correct{border-left-color:#16a34a;background:#f0fdf4}.review.wrong{border-left-color:#dc2626;background:#fef2f2}
+.answer-line{font-weight:800;margin:6px 0}.detail-list{margin:8px 0 0;padding-left:22px}.detail-list li{margin:5px 0}
+@media(max-width:720px){.student-grid{grid-template-columns:1fr}.quiz-card{padding:15px}}
+</style>
+</head>
+<body>
+<header>
+<h1>파이썬 완전 문법 300예제</h1>
+<p>4편 · 함수·람다·내장 함수 151~200예제</p>
+</header>
+
+<main>
+<div class="notice">
+<h2>4편 학습 범위</h2>
+<table>
+<tr><th>예제 범위</th><th>학습 주제</th></tr>
+<tr><td>151~165</td><td>함수 정의, 매개변수, 반환값</td></tr>
+<tr><td>166~175</td><td>기본값, 키워드 인자, 가변 인자, 재귀 함수</td></tr>
+<tr><td>176~185</td><td>람다 함수, map, filter, sorted의 key</td></tr>
+<tr><td>186~200</td><td>주요 내장 함수와 활용</td></tr>
+</table>
+</div>
+
+<section>
+<h2>1. 함수 기초 — 예제 151~165</h2>
+
+<h3>예제 151. 가장 기본적인 함수</h3>
+<span class="tag">def</span><span class="tag">함수</span>
+<pre><code>def hello():
+    print("안녕하세요!")
+
+hello()</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>안녕하세요!</div>
+<div class="explain"><strong>설명</strong><br><code>def</code>로 함수를 정의하고, 함수 이름 뒤에 괄호를 붙여 호출합니다.</div>
+
+<h3>예제 152. 여러 번 호출하는 함수</h3>
+<pre><code>def greet():
+    print("파이썬을 공부합니다.")
+
+greet()
+greet()
+greet()</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>파이썬을 공부합니다.<br>파이썬을 공부합니다.<br>파이썬을 공부합니다.</div>
+<div class="explain"><strong>설명</strong><br>한 번 정의한 함수는 필요한 만큼 반복해서 사용할 수 있습니다.</div>
+
+<h3>예제 153. 매개변수 하나</h3>
+<pre><code>def hello(name):
+    print(name, "님, 안녕하세요!")
+
+hello("민지")</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>민지 님, 안녕하세요!</div>
+<div class="explain"><strong>설명</strong><br>매개변수는 함수를 호출할 때 전달받는 값을 저장하는 변수입니다.</div>
+
+<h3>예제 154. 매개변수 두 개</h3>
+<pre><code>def add(a, b):
+    print(a + b)
+
+add(10, 20)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>30</div>
+<div class="explain"><strong>설명</strong><br>함수는 여러 개의 매개변수를 받을 수 있습니다.</div>
+
+<h3>예제 155. return으로 값 반환</h3>
+<pre><code>def add(a, b):
+    return a + b
+
+result = add(10, 20)
+print(result)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>30</div>
+<div class="explain"><strong>설명</strong><br><code>return</code>은 함수의 계산 결과를 함수 밖으로 돌려줍니다.</div>
+
+<h3>예제 156. 두 수의 곱</h3>
+<pre><code>def multiply(a, b):
+    return a * b
+
+print(multiply(4, 5))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>20</div>
+<div class="explain"><strong>설명</strong><br>반환값이 있는 함수는 다른 계산식 안에서도 사용할 수 있습니다.</div>
+
+<h3>예제 157. 짝수 판별 함수</h3>
+<pre><code>def is_even(number):
+    return number % 2 == 0
+
+print(is_even(10))
+print(is_even(7))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>True<br>False</div>
+<div class="explain"><strong>설명</strong><br>비교식의 결과는 True 또는 False이므로 조건 판별 함수에 적합합니다.</div>
+
+<h3>예제 158. 절댓값 함수 만들기</h3>
+<pre><code>def my_abs(number):
+    if number < 0:
+        return -number
+    return number
+
+print(my_abs(-15))
+print(my_abs(8))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>15<br>8</div>
+<div class="explain"><strong>설명</strong><br>함수 내부에서 조건문을 사용하여 입력값에 따라 다른 결과를 반환할 수 있습니다.</div>
+
+<h3>예제 159. 성적 등급 함수</h3>
+<pre><code>def get_grade(score):
+    if score >= 90:
+        return "A"
+    elif score >= 80:
+        return "B"
+    elif score >= 70:
+        return "C"
+    else:
+        return "D"
+
+print(get_grade(87))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>B</div>
+<div class="explain"><strong>설명</strong><br>복잡한 조건 판단을 함수로 만들면 프로그램의 구조가 더 깔끔해집니다.</div>
+
+<h3>예제 160. 여러 값 반환</h3>
+<pre><code>def calculate(a, b):
+    return a + b, a - b, a * b
+
+add_result, sub_result, mul_result = calculate(10, 3)
+
+print(add_result)
+print(sub_result)
+print(mul_result)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>13<br>7<br>30</div>
+<div class="explain"><strong>설명</strong><br>쉼표로 여러 값을 반환하면 실제로는 튜플 형태로 반환됩니다.</div>
+
+<h3>예제 161. 함수에서 문자열 반환</h3>
+<pre><code>def make_message(name):
+    return f"{name}님, 오늘도 좋은 하루입니다."
+
+message = make_message("지민")
+print(message)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>지민님, 오늘도 좋은 하루입니다.</div>
+<div class="explain"><strong>설명</strong><br>함수는 숫자뿐 아니라 문자열, 리스트, 딕셔너리 등 다양한 값을 반환할 수 있습니다.</div>
+
+<h3>예제 162. 리스트의 합계 함수</h3>
+<pre><code>def get_total(numbers):
+    total = 0
+
+```
+for number in numbers:
+    total += number
+
+return total
+```
+
+print(get_total([10, 20, 30]))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>60</div>
+<div class="explain"><strong>설명</strong><br>리스트를 함수의 인자로 전달하여 여러 데이터를 한 번에 처리할 수 있습니다.</div>
+
+<h3>예제 163. 리스트 평균 함수</h3>
+<pre><code>def get_average(numbers):
+    return sum(numbers) / len(numbers)
+
+scores = [80, 90, 100]
+print(get_average(scores))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>90.0</div>
+<div class="explain"><strong>설명</strong><br>함수 내부에서 기존 내장 함수도 자유롭게 사용할 수 있습니다.</div>
+
+<h3>예제 164. 함수 호출 순서</h3>
+<pre><code>def first():
+    print("첫 번째 함수")
+
+def second():
+print("두 번째 함수")
+
+first()
+second()</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>첫 번째 함수<br>두 번째 함수</div>
+<div class="explain"><strong>설명</strong><br>함수는 호출된 순서대로 실행됩니다.</div>
+
+<h3>예제 165. return 뒤의 코드는 실행되지 않음</h3>
+<pre><code>def test():
+    print("함수 시작")
+    return "완료"
+    print("이 문장은 실행되지 않습니다.")
+
+print(test())</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>함수 시작<br>완료</div>
+<div class="explain"><strong>설명</strong><br><code>return</code>이 실행되면 함수는 즉시 종료됩니다.</div>
+</section>
+
+<section>
+<h2>2. 함수 활용 — 예제 166~175</h2>
+
+<h3>예제 166. 기본값 매개변수</h3>
+<pre><code>def hello(name="학생"):
+    print(name, "님, 안녕하세요!")
+
+hello()
+hello("민수")</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>학생 님, 안녕하세요!<br>민수 님, 안녕하세요!</div>
+<div class="explain"><strong>설명</strong><br>매개변수에 기본값을 지정하면 인자를 전달하지 않아도 함수를 호출할 수 있습니다.</div>
+
+<h3>예제 167. 기본값을 이용한 인사</h3>
+<pre><code>def introduce(name, city="광주"):
+    print(f"{name}님은 {city}에 살고 있습니다.")
+
+introduce("지민")
+introduce("민수", "서울")</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>지민님은 광주에 살고 있습니다.<br>민수님은 서울에 살고 있습니다.</div>
+<div class="explain"><strong>설명</strong><br>기본값 매개변수는 일반 매개변수 뒤에 작성합니다.</div>
+
+<h3>예제 168. 키워드 인자</h3>
+<pre><code>def student_info(name, age, city):
+    print(name, age, city)
+
+student_info(city="광주", name="서연", age=16)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>서연 16 광주</div>
+<div class="explain"><strong>설명</strong><br>키워드 인자를 사용하면 매개변수 이름을 지정하여 순서와 관계없이 값을 전달할 수 있습니다.</div>
+
+<h3>예제 169. 위치 인자와 키워드 인자</h3>
+<pre><code>def order_menu(menu, count, size="보통"):
+    print(f"{menu} {count}잔, 크기: {size}")
+
+order_menu("아메리카노", 2, size="큰")</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>아메리카노 2잔, 크기: 큰</div>
+<div class="explain"><strong>설명</strong><br>위치 인자는 앞에, 키워드 인자는 뒤에 작성하는 것이 원칙입니다.</div>
+
+<h3>예제 170. 가변 위치 인자 *args</h3>
+<pre><code>def add_all(*numbers):
+    return sum(numbers)
+
+print(add_all(1, 2, 3))
+print(add_all(10, 20, 30, 40))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>6<br>100</div>
+<div class="explain"><strong>설명</strong><br><code>*args</code>는 개수가 정해지지 않은 여러 위치 인자를 튜플로 받습니다.</div>
+
+<h3>예제 171. 가변 인자 출력</h3>
+<pre><code>def print_names(*names):
+    for name in names:
+        print(name)
+
+print_names("민수", "지민", "서연")</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>민수<br>지민<br>서연</div>
+<div class="explain"><strong>설명</strong><br>가변 인자는 여러 개의 값을 받아 반복 처리할 때 유용합니다.</div>
+
+<h3>예제 172. 가변 키워드 인자 **kwargs</h3>
+<pre><code>def print_profile(**profile):
+    for key, value in profile.items():
+        print(key, ":", value)
+
+print_profile(name="지민", age=16, city="광주")</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>name : 지민<br>age : 16<br>city : 광주</div>
+<div class="explain"><strong>설명</strong><br><code>**kwargs</code>는 개수가 정해지지 않은 키워드 인자를 딕셔너리로 받습니다.</div>
+
+<h3>예제 173. 지역 변수</h3>
+<pre><code>def test():
+    message = "함수 안의 변수"
+    print(message)
+
+test()
+
+# print(message)</code></pre>
+
+<div class="explain"><strong>설명</strong><br>함수 안에서 만든 변수는 일반적으로 함수 밖에서 사용할 수 없습니다. 이를 지역 변수라고 합니다.</div>
+
+<h3>예제 174. 전역 변수 읽기</h3>
+<pre><code>message = "전역 변수"
+
+def show_message():
+print(message)
+
+show_message()</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>전역 변수</div>
+<div class="explain"><strong>설명</strong><br>함수 안에서는 함수 밖의 전역 변수를 읽을 수 있습니다.</div>
+
+<h3>예제 175. 재귀 함수: 팩토리얼</h3>
+<pre><code>def factorial(number):
+    if number == 1:
+        return 1
+    return number * factorial(number - 1)
+
+print(factorial(5))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>120</div>
+<div class="explain"><strong>설명</strong><br>재귀 함수는 함수가 자기 자신을 다시 호출하는 방식입니다. 반드시 종료 조건이 필요합니다.</div>
+</section>
+
+<section>
+<h2>3. 람다 함수와 함수형 도구 — 예제 176~185</h2>
+
+<h3>예제 176. 람다 함수 기본</h3>
+<span class="tag">lambda</span><span class="tag">익명 함수</span>
+<pre><code>add = lambda a, b: a + b
+
+print(add(10, 20))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>30</div>
+<div class="explain"><strong>설명</strong><br>람다 함수는 이름 없이 짧은 함수를 만들 때 사용합니다.</div>
+
+<h3>예제 177. 제곱 람다 함수</h3>
+<pre><code>square = lambda number: number ** 2
+
+print(square(5))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>25</div>
+<div class="explain"><strong>설명</strong><br>람다 함수는 보통 한 줄로 표현할 수 있는 간단한 계산에 사용합니다.</div>
+
+<h3>예제 178. 조건이 있는 람다 함수</h3>
+<pre><code>check_even = lambda number: "짝수" if number % 2 == 0 else "홀수"
+
+print(check_even(7))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>홀수</div>
+<div class="explain"><strong>설명</strong><br>람다 함수 안에서도 삼항 연산자를 이용해 간단한 조건 처리를 할 수 있습니다.</div>
+
+<h3>예제 179. map으로 제곱 리스트 만들기</h3>
+<pre><code>numbers = [1, 2, 3, 4, 5]
+
+result = list(map(lambda number: number ** 2, numbers))
+
+print(result)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>[1, 4, 9, 16, 25]</div>
+<div class="explain"><strong>설명</strong><br><code>map()</code>은 모든 요소에 같은 함수를 적용합니다. 결과를 리스트로 보려면 <code>list()</code>로 변환합니다.</div>
+
+<h3>예제 180. map으로 문자열 숫자 변환</h3>
+<pre><code>text_numbers = ["10", "20", "30"]
+
+numbers = list(map(int, text_numbers))
+
+print(numbers)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>[10, 20, 30]</div>
+<div class="explain"><strong>설명</strong><br><code>map(int, 리스트)</code>는 문자열 숫자를 정수로 한꺼번에 변환할 때 자주 사용합니다.</div>
+
+<h3>예제 181. filter로 짝수만 추출</h3>
+<pre><code>numbers = [1, 2, 3, 4, 5, 6]
+
+even_numbers = list(filter(lambda number: number % 2 == 0, numbers))
+
+print(even_numbers)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>[2, 4, 6]</div>
+<div class="explain"><strong>설명</strong><br><code>filter()</code>는 조건이 True인 요소만 남깁니다.</div>
+
+<h3>예제 182. filter로 긴 단어 찾기</h3>
+<pre><code>words = ["봄", "파이썬", "프로그래밍", "코드"]
+
+long_words = list(filter(lambda word: len(word) >= 3, words))
+
+print(long_words)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>['파이썬', '프로그래밍']</div>
+<div class="explain"><strong>설명</strong><br>filter와 lambda를 사용하면 조건에 맞는 데이터만 간단히 추출할 수 있습니다.</div>
+
+<h3>예제 183. sorted와 lambda</h3>
+<pre><code>students = [
+    {"name": "민수", "score": 80},
+    {"name": "지민", "score": 95},
+    {"name": "서연", "score": 88}
+]
+
+result = sorted(students, key=lambda student: student["score"])
+
+print(result)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>[{'name': '민수', 'score': 80}, {'name': '서연', 'score': 88}, {'name': '지민', 'score': 95}]</div>
+<div class="explain"><strong>설명</strong><br><code>key</code>에 람다 함수를 넣으면 원하는 기준으로 정렬할 수 있습니다.</div>
+
+<h3>예제 184. 문자열 길이 기준 정렬</h3>
+<pre><code>words = ["봄", "파이썬", "코딩", "프로그래밍"]
+
+result = sorted(words, key=lambda word: len(word))
+
+print(result)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>['봄', '코딩', '파이썬', '프로그래밍']</div>
+<div class="explain"><strong>설명</strong><br>단어 길이를 반환하는 람다 함수를 정렬 기준으로 사용했습니다.</div>
+
+<h3>예제 185. reduce로 누적 곱</h3>
+<pre><code>from functools import reduce
+
+numbers = [1, 2, 3, 4]
+
+result = reduce(lambda a, b: a * b, numbers)
+
+print(result)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>24</div>
+<div class="explain"><strong>설명</strong><br><code>reduce()</code>는 리스트의 요소를 앞에서부터 누적 계산합니다. 사용 전 <code>functools</code>에서 가져와야 합니다.</div>
+</section>
+
+<section>
+<h2>4. 주요 내장 함수 — 예제 186~200</h2>
+
+<h3>예제 186. len 함수</h3>
+<pre><code>text = "Python"
+numbers = [10, 20, 30]
+
+print(len(text))
+print(len(numbers))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>6<br>3</div>
+<div class="explain"><strong>설명</strong><br><code>len()</code>은 문자열, 리스트, 튜플, 딕셔너리 등의 길이를 구합니다.</div>
+
+<h3>예제 187. sum 함수</h3>
+<pre><code>scores = [80, 90, 100]
+
+print(sum(scores))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>270</div>
+<div class="explain"><strong>설명</strong><br><code>sum()</code>은 숫자 자료의 합계를 구합니다.</div>
+
+<h3>예제 188. max와 min 함수</h3>
+<pre><code>numbers = [12, 5, 30, 8]
+
+print(max(numbers))
+print(min(numbers))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>30<br>5</div>
+<div class="explain"><strong>설명</strong><br><code>max()</code>는 최댓값, <code>min()</code>은 최솟값을 반환합니다.</div>
+
+<h3>예제 189. abs 함수</h3>
+<pre><code>print(abs(-10))
+print(abs(7))</code></pre>
+<div class="output"><strong>실행 결과</strong><br>10<br>7</div>
+<div class="explain"><strong>설명</strong><br><code>abs()</code>는 절댓값을 구합니다.</div>
+
+<h3>예제 190. round 함수</h3>
+<pre><code>number = 3.141592
+
+print(round(number))
+print(round(number, 2))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>3<br>3.14</div>
+<div class="explain"><strong>설명</strong><br><code>round(값, 자릿수)</code>는 원하는 소수점 자리까지 반올림합니다.</div>
+
+<h3>예제 191. pow 함수</h3>
+<pre><code>print(pow(2, 3))
+print(pow(3, 2))</code></pre>
+<div class="output"><strong>실행 결과</strong><br>8<br>9</div>
+<div class="explain"><strong>설명</strong><br><code>pow(a, b)</code>는 a의 b제곱을 계산합니다.</div>
+
+<h3>예제 192. divmod 함수</h3>
+<pre><code>quotient, remainder = divmod(17, 5)
+
+print(quotient)
+print(remainder)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>3<br>2</div>
+<div class="explain"><strong>설명</strong><br><code>divmod(a, b)</code>는 몫과 나머지를 튜플로 반환합니다.</div>
+
+<h3>예제 193. enumerate 함수</h3>
+<pre><code>fruits = ["사과", "바나나", "포도"]
+
+for index, fruit in enumerate(fruits):
+print(index, fruit)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>0 사과<br>1 바나나<br>2 포도</div>
+<div class="explain"><strong>설명</strong><br><code>enumerate()</code>는 반복할 때 순서 번호와 값을 함께 제공합니다.</div>
+
+<h3>예제 194. zip 함수</h3>
+<pre><code>names = ["민수", "지민", "서연"]
+scores = [80, 95, 88]
+
+for name, score in zip(names, scores):
+print(name, score)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>민수 80<br>지민 95<br>서연 88</div>
+<div class="explain"><strong>설명</strong><br><code>zip()</code>은 여러 리스트의 같은 위치 요소를 묶어 반복합니다.</div>
+
+<h3>예제 195. all 함수</h3>
+<pre><code>checks1 = [True, True, True]
+checks2 = [True, False, True]
+
+print(all(checks1))
+print(all(checks2))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>True<br>False</div>
+<div class="explain"><strong>설명</strong><br><code>all()</code>은 모든 값이 True일 때만 True를 반환합니다.</div>
+
+<h3>예제 196. any 함수</h3>
+<pre><code>checks1 = [False, False, True]
+checks2 = [False, False, False]
+
+print(any(checks1))
+print(any(checks2))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>True<br>False</div>
+<div class="explain"><strong>설명</strong><br><code>any()</code>는 하나라도 True가 있으면 True를 반환합니다.</div>
+
+<h3>예제 197. list, tuple, set 변환</h3>
+<pre><code>text = "hello"
+
+print(list(text))
+print(tuple(text))
+print(set(text))</code></pre>
+
+<div class="output"><strong>실행 결과 예시</strong><br>['h', 'e', 'l', 'l', 'o']<br>('h', 'e', 'l', 'l', 'o')<br>{'h', 'e', 'l', 'o'}</div>
+<div class="explain"><strong>설명</strong><br>자료형 생성 함수로 데이터를 다른 자료형으로 변환할 수 있습니다.</div>
+
+<h3>예제 198. sorted 함수</h3>
+<pre><code>numbers = [5, 1, 4, 2, 3]
+
+print(sorted(numbers))
+print(sorted(numbers, reverse=True))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>[1, 2, 3, 4, 5]<br>[5, 4, 3, 2, 1]</div>
+<div class="explain"><strong>설명</strong><br><code>sorted()</code>는 원본을 바꾸지 않고 정렬된 새 리스트를 만듭니다.</div>
+
+<h3>예제 199. reversed 함수</h3>
+<pre><code>numbers = [1, 2, 3, 4, 5]
+
+result = list(reversed(numbers))
+
+print(result)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>[5, 4, 3, 2, 1]</div>
+<div class="explain"><strong>설명</strong><br><code>reversed()</code>는 순서를 반대로 하는 반복 객체를 반환합니다.</div>
+
+<h3>예제 200. 함수와 내장 함수 종합</h3>
+<pre><code>def analyze_scores(scores):
+    return {
+        "합계": sum(scores),
+        "평균": sum(scores) / len(scores),
+        "최고점": max(scores),
+        "최저점": min(scores)
+    }
+
+scores = [85, 92, 78, 100]
+result = analyze_scores(scores)
+
+for key, value in result.items():
+print(key, ":", value)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>합계 : 355<br>평균 : 88.75<br>최고점 : 100<br>최저점 : 78</div>
+<div class="explain"><strong>설명</strong><br>함수, 리스트, 딕셔너리, 반복문, 내장 함수를 결합하면 실제 데이터 처리 프로그램을 만들 수 있습니다.</div>
+
+<div class="summary">
+<h3>4편 핵심 요약</h3>
+<ul>
+<li><code>def</code>로 함수를 정의하고, 필요한 기능을 재사용할 수 있습니다.</li>
+<li><code>return</code>은 함수의 결과를 호출한 위치로 돌려줍니다.</li>
+<li>기본값, 키워드 인자, <code>*args</code>, <code>**kwargs</code>를 사용하면 유연한 함수를 만들 수 있습니다.</li>
+<li><code>lambda</code>, <code>map()</code>, <code>filter()</code>, <code>sorted()</code>는 데이터를 간결하게 처리할 때 유용합니다.</li>
+<li><code>len()</code>, <code>sum()</code>, <code>max()</code>, <code>zip()</code>, <code>enumerate()</code> 등 내장 함수는 자주 활용됩니다.</li>
+</ul>
+</div>
+</section>
+<section class="quiz-intro"><h2>파이썬300D 코드 이해 평가</h2>
+<p>각 코드의 설명 5개 중 <strong>옳은 것 3개를 모두 선택</strong>하세요. 세 정답만 정확하게 선택해야 정답으로 인정됩니다.</p>
+<div class="student-grid"><label>학번<input id="studentId" maxlength="20" placeholder="예: 1101"></label><label>이름<input id="studentName" maxlength="20" placeholder="예: 홍길동"></label></div>
+<p><strong>배점:</strong> 문항당 2점 · 50문항 · 총 100점</p></section>
+<section><h2>코드별 복수정답형 50문항</h2><div id="quizContainer"></div>
+<div class="action-row"><button class="btn btn-primary" onclick="gradeQuiz()">채점하고 TXT 저장</button><button class="btn btn-secondary" onclick="window.scrollTo({top:0,behavior:'smooth'})">맨 위로</button></div><div id="resultBox" class="result-box"></div></section></main>
+
+<footer>파이썬 완전 문법 300예제 · 4편 함수·람다·내장 함수 151~200</footer>
+<script>
+const questions=[{"number": 151, "title": "가장 기본적인 함수", "code": "def hello():\n    print(\"안녕하세요!\")\n\nhello()", "options": ["hello는 인자가 없는 함수로 정의된다.", "hello()를 호출하면 함수 본문의 print가 실행된다.", "출력은 안녕하세요! 한 줄이다.", "def 문만 작성해도 함수 본문이 즉시 실행된다.", "함수 호출에는 함수 이름 뒤의 괄호가 필요하지 않다."], "answers": [0, 1, 2], "explanation": "함수 정의와 호출은 구분되며 실제 실행은 hello() 호출 때 일어난다.", "optionExplanations": ["옳은 설명입니다. hello는 인자가 없는 함수로 정의된다.", "옳은 설명입니다. hello()를 호출하면 함수 본문의 print가 실행된다.", "옳은 설명입니다. 출력은 안녕하세요! 한 줄이다.", "틀린 설명입니다. def 문만 작성해도 함수 본문이 즉시 실행된다. 함수 정의와 호출은 구분되며 실제 실행은 hello() 호출 때 일어난다.", "틀린 설명입니다. 함수 호출에는 함수 이름 뒤의 괄호가 필요하지 않다. 함수 정의와 호출은 구분되며 실제 실행은 hello() 호출 때 일어난다."]}, {"number": 152, "title": "여러 번 호출하는 함수", "code": "def greet():\n    print(\"파이썬을 공부합니다.\")\n\ngreet()\ngreet()\ngreet()", "options": ["greet 함수는 한 번 정의된다.", "greet()가 세 번 호출된다.", "호출 횟수와 관계없이 함수 본문은 한 번만 실행된다.", "같은 문장이 세 줄 출력된다.", "세 번 호출하면 함수가 세 개 새로 정의된다."], "answers": [0, 1, 3], "explanation": "정의한 함수는 여러 번 재사용할 수 있으며 호출마다 본문이 실행된다.", "optionExplanations": ["옳은 설명입니다. greet 함수는 한 번 정의된다.", "옳은 설명입니다. greet()가 세 번 호출된다.", "틀린 설명입니다. 호출 횟수와 관계없이 함수 본문은 한 번만 실행된다. 정의한 함수는 여러 번 재사용할 수 있으며 호출마다 본문이 실행된다.", "옳은 설명입니다. 같은 문장이 세 줄 출력된다.", "틀린 설명입니다. 세 번 호출하면 함수가 세 개 새로 정의된다. 정의한 함수는 여러 번 재사용할 수 있으며 호출마다 본문이 실행된다."]}, {"number": 153, "title": "매개변수 하나", "code": "def hello(name):\n    print(name, \"님, 안녕하세요!\")\n\nhello(\"민지\")", "options": ["name은 호출 시 전달값을 받는 매개변수이다.", "민지가 name에 저장된다.", "hello 함수는 인자를 받을 수 없다.", "name은 함수 밖에서 미리 선언해야 한다.", "민지 님, 안녕하세요!가 출력된다."], "answers": [0, 1, 4], "explanation": "매개변수는 호출 시 전달된 인자를 함수 안에서 사용할 이름이다.", "optionExplanations": ["옳은 설명입니다. name은 호출 시 전달값을 받는 매개변수이다.", "옳은 설명입니다. 민지가 name에 저장된다.", "틀린 설명입니다. hello 함수는 인자를 받을 수 없다. 매개변수는 호출 시 전달된 인자를 함수 안에서 사용할 이름이다.", "틀린 설명입니다. name은 함수 밖에서 미리 선언해야 한다. 매개변수는 호출 시 전달된 인자를 함수 안에서 사용할 이름이다.", "옳은 설명입니다. 민지 님, 안녕하세요!가 출력된다."]}, {"number": 154, "title": "매개변수 두 개", "code": "def add(a, b):\n    print(a + b)\n\nadd(10, 20)", "options": ["a에는 10, b에는 20이 전달된다.", "add는 두 값을 곱한다.", "함수 안에서 a+b가 계산된다.", "30이 출력된다.", "print가 함수 밖에 없으므로 아무것도 출력되지 않는다."], "answers": [0, 2, 3], "explanation": "두 위치 인자가 순서대로 매개변수에 전달되고 합이 출력된다.", "optionExplanations": ["옳은 설명입니다. a에는 10, b에는 20이 전달된다.", "틀린 설명입니다. add는 두 값을 곱한다. 두 위치 인자가 순서대로 매개변수에 전달되고 합이 출력된다.", "옳은 설명입니다. 함수 안에서 a+b가 계산된다.", "옳은 설명입니다. 30이 출력된다.", "틀린 설명입니다. print가 함수 밖에 없으므로 아무것도 출력되지 않는다. 두 위치 인자가 순서대로 매개변수에 전달되고 합이 출력된다."]}, {"number": 155, "title": "return으로 값 반환", "code": "def add(a, b):\n    return a + b\n\nresult = add(10, 20)\nprint(result)", "options": ["return은 a+b 결과를 호출 위치로 돌려준다.", "return은 화면에만 출력하고 값을 반환하지 않는다.", "result에는 30이 저장된다.", "result에는 함수 객체 자체가 저장된다.", "print(result)는 30을 출력한다."], "answers": [0, 2, 4], "explanation": "반환값은 호출식의 결과가 되어 변수에 저장할 수 있다.", "optionExplanations": ["옳은 설명입니다. return은 a+b 결과를 호출 위치로 돌려준다.", "틀린 설명입니다. return은 화면에만 출력하고 값을 반환하지 않는다. 반환값은 호출식의 결과가 되어 변수에 저장할 수 있다.", "옳은 설명입니다. result에는 30이 저장된다.", "틀린 설명입니다. result에는 함수 객체 자체가 저장된다. 반환값은 호출식의 결과가 되어 변수에 저장할 수 있다.", "옳은 설명입니다. print(result)는 30을 출력한다."]}, {"number": 156, "title": "두 수의 곱", "code": "def multiply(a, b):\n    return a * b\n\nprint(multiply(4, 5))", "options": ["multiply(4,5)는 20을 반환한다.", "함수는 반환값을 다른 함수의 인자로 쓸 수 없다.", "a*b는 문자열 결합만 수행한다.", "반환값을 print의 인자로 바로 사용할 수 있다.", "출력 결과는 20이다."], "answers": [0, 3, 4], "explanation": "반환값이 있는 함수 호출은 하나의 값처럼 다른 표현식에서 사용할 수 있다.", "optionExplanations": ["옳은 설명입니다. multiply(4,5)는 20을 반환한다.", "틀린 설명입니다. 함수는 반환값을 다른 함수의 인자로 쓸 수 없다. 반환값이 있는 함수 호출은 하나의 값처럼 다른 표현식에서 사용할 수 있다.", "틀린 설명입니다. a*b는 문자열 결합만 수행한다. 반환값이 있는 함수 호출은 하나의 값처럼 다른 표현식에서 사용할 수 있다.", "옳은 설명입니다. 반환값을 print의 인자로 바로 사용할 수 있다.", "옳은 설명입니다. 출력 결과는 20이다."]}, {"number": 157, "title": "짝수 판별 함수", "code": "def is_even(number):\n    return number % 2 == 0\n\nprint(is_even(10))\nprint(is_even(7))", "options": ["is_even은 항상 문자열 짝수를 반환한다.", "10%2==0은 True이다.", "7%2==0은 False이다.", "두 출력은 True와 False 순서이다.", "비교식은 숫자 0 또는 1만 반환한다."], "answers": [1, 2, 3], "explanation": "비교식 결과는 bool이며 짝수 여부에 따라 True 또는 False가 된다.", "optionExplanations": ["틀린 설명입니다. is_even은 항상 문자열 짝수를 반환한다. 비교식 결과는 bool이며 짝수 여부에 따라 True 또는 False가 된다.", "옳은 설명입니다. 10%2==0은 True이다.", "옳은 설명입니다. 7%2==0은 False이다.", "옳은 설명입니다. 두 출력은 True와 False 순서이다.", "틀린 설명입니다. 비교식은 숫자 0 또는 1만 반환한다. 비교식 결과는 bool이며 짝수 여부에 따라 True 또는 False가 된다."]}, {"number": 158, "title": "절댓값 함수 만들기", "code": "def my_abs(number):\n    if number < 0:\n        return -number\n    return number\n\nprint(my_abs(-15))\nprint(my_abs(8))", "options": ["음수 입력은 그대로 -15가 반환된다.", "-15는 0보다 작아 -(-15)를 반환한다.", "8은 첫 return을 건너뛰고 그대로 반환된다.", "두 return 문은 한 호출에서 모두 실행된다.", "출력은 15와 8이다."], "answers": [1, 2, 4], "explanation": "return이 실행되면 함수가 종료되며 입력 부호에 따라 다른 경로를 따른다.", "optionExplanations": ["틀린 설명입니다. 음수 입력은 그대로 -15가 반환된다. return이 실행되면 함수가 종료되며 입력 부호에 따라 다른 경로를 따른다.", "옳은 설명입니다. -15는 0보다 작아 -(-15)를 반환한다.", "옳은 설명입니다. 8은 첫 return을 건너뛰고 그대로 반환된다.", "틀린 설명입니다. 두 return 문은 한 호출에서 모두 실행된다. return이 실행되면 함수가 종료되며 입력 부호에 따라 다른 경로를 따른다.", "옳은 설명입니다. 출력은 15와 8이다."]}, {"number": 159, "title": "성적 등급 함수", "code": "def get_grade(score):\n    if score >= 90:\n        return \"A\"\n    elif score >= 80:\n        return \"B\"\n    elif score >= 70:\n        return \"C\"\n    else:\n        return \"D\"\n\nprint(get_grade(87))", "options": ["87은 70 이상이므로 C가 반환된다.", "87은 90 이상이 아니다.", "조건이 여러 개 참이면 A,B,C를 모두 반환한다.", "87은 80 이상이므로 B를 반환한다.", "print 결과는 B이다."], "answers": [1, 3, 4], "explanation": "다중 조건은 위에서부터 검사해 처음 참인 분기의 return으로 종료된다.", "optionExplanations": ["틀린 설명입니다. 87은 70 이상이므로 C가 반환된다. 다중 조건은 위에서부터 검사해 처음 참인 분기의 return으로 종료된다.", "옳은 설명입니다. 87은 90 이상이 아니다.", "틀린 설명입니다. 조건이 여러 개 참이면 A,B,C를 모두 반환한다. 다중 조건은 위에서부터 검사해 처음 참인 분기의 return으로 종료된다.", "옳은 설명입니다. 87은 80 이상이므로 B를 반환한다.", "옳은 설명입니다. print 결과는 B이다."]}, {"number": 160, "title": "여러 값 반환", "code": "def calculate(a, b):\n    return a + b, a - b, a * b\n\nadd_result, sub_result, mul_result = calculate(10, 3)\n\nprint(add_result)\nprint(sub_result)\nprint(mul_result)", "options": ["여러 값을 return하면 마지막 값 30만 반환된다.", "변수 세 개보다 반환값이 많아 오류가 난다.", "calculate는 합, 차, 곱 세 값을 반환한다.", "여러 반환값은 튜플로 묶여 전달된다.", "언패킹 결과는 13,7,30이다."], "answers": [2, 3, 4], "explanation": "쉼표로 반환한 값들은 튜플이며 같은 개수의 변수로 언패킹할 수 있다.", "optionExplanations": ["틀린 설명입니다. 여러 값을 return하면 마지막 값 30만 반환된다. 쉼표로 반환한 값들은 튜플이며 같은 개수의 변수로 언패킹할 수 있다.", "틀린 설명입니다. 변수 세 개보다 반환값이 많아 오류가 난다. 쉼표로 반환한 값들은 튜플이며 같은 개수의 변수로 언패킹할 수 있다.", "옳은 설명입니다. calculate는 합, 차, 곱 세 값을 반환한다.", "옳은 설명입니다. 여러 반환값은 튜플로 묶여 전달된다.", "옳은 설명입니다. 언패킹 결과는 13,7,30이다."]}, {"number": 161, "title": "함수에서 문자열 반환", "code": "def make_message(name):\n    return f\"{name}님, 오늘도 좋은 하루입니다.\"\n\nmessage = make_message(\"지민\")\nprint(message)", "options": ["f-string에 name 값 지민이 삽입된다.", "make_message는 문자열을 반환한다.", "최종 문장은 지민님, 오늘도 좋은 하루입니다.이다.", "함수는 숫자만 반환할 수 있다.", "f-string의 {name}은 글자 그대로 출력된다."], "answers": [0, 1, 2], "explanation": "함수는 문자열도 반환할 수 있고 f-string은 변수값을 삽입한다.", "optionExplanations": ["옳은 설명입니다. f-string에 name 값 지민이 삽입된다.", "옳은 설명입니다. make_message는 문자열을 반환한다.", "옳은 설명입니다. 최종 문장은 지민님, 오늘도 좋은 하루입니다.이다.", "틀린 설명입니다. 함수는 숫자만 반환할 수 있다. 함수는 문자열도 반환할 수 있고 f-string은 변수값을 삽입한다.", "틀린 설명입니다. f-string의 {name}은 글자 그대로 출력된다. 함수는 문자열도 반환할 수 있고 f-string은 변수값을 삽입한다."]}, {"number": 162, "title": "리스트의 합계 함수", "code": "def get_total(numbers):\n    total = 0\n    for number in numbers:\n        total += number\n    return total\n\nprint(get_total([10, 20, 30]))", "options": ["numbers에는 [10,20,30]이 전달된다.", "for문으로 각 값을 total에 누적한다.", "return이 반복문 안에 있어 첫 값 10만 더하고 끝난다.", "함수 반환값은 60이다.", "리스트는 함수 인자로 전달할 수 없다."], "answers": [0, 1, 3], "explanation": "반복이 끝난 뒤 total을 반환하므로 전체 합 60이 된다.", "optionExplanations": ["옳은 설명입니다. numbers에는 [10,20,30]이 전달된다.", "옳은 설명입니다. for문으로 각 값을 total에 누적한다.", "틀린 설명입니다. return이 반복문 안에 있어 첫 값 10만 더하고 끝난다. 반복이 끝난 뒤 total을 반환하므로 전체 합 60이 된다.", "옳은 설명입니다. 함수 반환값은 60이다.", "틀린 설명입니다. 리스트는 함수 인자로 전달할 수 없다. 반복이 끝난 뒤 total을 반환하므로 전체 합 60이 된다."]}, {"number": 163, "title": "리스트 평균 함수", "code": "def get_average(numbers):\n    return sum(numbers) / len(numbers)\n\nscores = [80, 90, 100]\nprint(get_average(scores))", "options": ["sum(scores)는 270이다.", "len(scores)는 3이다.", "내장 함수는 사용자 정의 함수 안에서 사용할 수 없다.", "정수 나눗셈이므로 결과 자료형은 반드시 int이다.", "평균 반환값은 90.0이다."], "answers": [0, 1, 4], "explanation": "함수 내부에서도 내장 함수를 쓸 수 있으며 / 결과는 float이다.", "optionExplanations": ["옳은 설명입니다. sum(scores)는 270이다.", "옳은 설명입니다. len(scores)는 3이다.", "틀린 설명입니다. 내장 함수는 사용자 정의 함수 안에서 사용할 수 없다. 함수 내부에서도 내장 함수를 쓸 수 있으며 / 결과는 float이다.", "틀린 설명입니다. 정수 나눗셈이므로 결과 자료형은 반드시 int이다. 함수 내부에서도 내장 함수를 쓸 수 있으며 / 결과는 float이다.", "옳은 설명입니다. 평균 반환값은 90.0이다."]}, {"number": 164, "title": "함수 호출 순서", "code": "def first():\n    print(\"첫 번째 함수\")\n\ndef second():\n    print(\"두 번째 함수\")\n\nfirst()\nsecond()", "options": ["first()가 second()보다 먼저 호출된다.", "함수는 정의된 순서와 무관하게 자동 실행된다.", "첫 번째 함수가 먼저 출력된다.", "그 다음 두 번째 함수가 출력된다.", "second의 본문이 first보다 먼저 실행된다."], "answers": [0, 2, 3], "explanation": "정의 순서가 아니라 실제 호출 순서대로 함수 본문이 실행된다.", "optionExplanations": ["옳은 설명입니다. first()가 second()보다 먼저 호출된다.", "틀린 설명입니다. 함수는 정의된 순서와 무관하게 자동 실행된다. 정의 순서가 아니라 실제 호출 순서대로 함수 본문이 실행된다.", "옳은 설명입니다. 첫 번째 함수가 먼저 출력된다.", "옳은 설명입니다. 그 다음 두 번째 함수가 출력된다.", "틀린 설명입니다. second의 본문이 first보다 먼저 실행된다. 정의 순서가 아니라 실제 호출 순서대로 함수 본문이 실행된다."]}, {"number": 165, "title": "return 뒤의 코드는 실행되지 않음", "code": "def test():\n    print(\"함수 시작\")\n    return \"완료\"\n    print(\"이 문장은 실행되지 않습니다.\")\n\nprint(test())", "options": ["함수 시작이 먼저 출력된다.", "return 뒤의 print도 이어서 실행된다.", "return '완료'에서 함수가 즉시 종료된다.", "test()는 반환값이 없으므로 None을 출력한다.", "마지막 print(test())는 완료를 출력한다."], "answers": [0, 2, 4], "explanation": "return 이후 같은 함수의 코드는 도달할 수 없다.", "optionExplanations": ["옳은 설명입니다. 함수 시작이 먼저 출력된다.", "틀린 설명입니다. return 뒤의 print도 이어서 실행된다. return 이후 같은 함수의 코드는 도달할 수 없다.", "옳은 설명입니다. return '완료'에서 함수가 즉시 종료된다.", "틀린 설명입니다. test()는 반환값이 없으므로 None을 출력한다. return 이후 같은 함수의 코드는 도달할 수 없다.", "옳은 설명입니다. 마지막 print(test())는 완료를 출력한다."]}, {"number": 166, "title": "기본값 매개변수", "code": "def hello(name=\"학생\"):\n    print(name, \"님, 안녕하세요!\")\n\nhello()\nhello(\"민수\")", "options": ["hello()는 기본값 학생을 사용한다.", "기본값이 있어도 인자를 생략하면 오류가 난다.", "한 번 민수를 전달하면 기본값 자체가 영구히 민수로 바뀐다.", "hello('민수')는 기본값을 전달값으로 덮어쓴다.", "두 인사 문장이 순서대로 출력된다."], "answers": [0, 3, 4], "explanation": "기본값은 인자 생략 시만 사용되고 명시한 인자가 있으면 대체된다.", "optionExplanations": ["옳은 설명입니다. hello()는 기본값 학생을 사용한다.", "틀린 설명입니다. 기본값이 있어도 인자를 생략하면 오류가 난다. 기본값은 인자 생략 시만 사용되고 명시한 인자가 있으면 대체된다.", "틀린 설명입니다. 한 번 민수를 전달하면 기본값 자체가 영구히 민수로 바뀐다. 기본값은 인자 생략 시만 사용되고 명시한 인자가 있으면 대체된다.", "옳은 설명입니다. hello('민수')는 기본값을 전달값으로 덮어쓴다.", "옳은 설명입니다. 두 인사 문장이 순서대로 출력된다."]}, {"number": 167, "title": "기본값을 이용한 인사", "code": "def introduce(name, city=\"광주\"):\n    print(f\"{name}님은 {city}에 살고 있습니다.\")\n\nintroduce(\"지민\")\nintroduce(\"민수\", \"서울\")", "options": ["기본값 매개변수는 일반 매개변수보다 앞에만 놓을 수 있다.", "name은 필수 매개변수이다.", "첫 호출의 city는 기본값 광주이다.", "둘째 호출은 서울을 명시해 출력한다.", "introduce('지민')은 city가 없어 오류가 난다."], "answers": [1, 2, 3], "explanation": "필수 매개변수 뒤에 기본값 매개변수를 두면 선택적으로 인자를 전달할 수 있다.", "optionExplanations": ["틀린 설명입니다. 기본값 매개변수는 일반 매개변수보다 앞에만 놓을 수 있다. 필수 매개변수 뒤에 기본값 매개변수를 두면 선택적으로 인자를 전달할 수 있다.", "옳은 설명입니다. name은 필수 매개변수이다.", "옳은 설명입니다. 첫 호출의 city는 기본값 광주이다.", "옳은 설명입니다. 둘째 호출은 서울을 명시해 출력한다.", "틀린 설명입니다. introduce('지민')은 city가 없어 오류가 난다. 필수 매개변수 뒤에 기본값 매개변수를 두면 선택적으로 인자를 전달할 수 있다."]}, {"number": 168, "title": "키워드 인자", "code": "def student_info(name, age, city):\n    print(name, age, city)\n\nstudent_info(city=\"광주\", name=\"서연\", age=16)", "options": ["키워드 인자도 정의 순서대로만 작성해야 한다.", "키워드 인자는 매개변수 이름으로 값을 전달한다.", "작성 순서와 무관하게 name은 서연이다.", "city='광주'가 첫 매개변수 name에 전달된다.", "출력은 서연 16 광주이다."], "answers": [1, 2, 4], "explanation": "키워드 인자는 이름으로 연결되므로 호출 순서를 바꿀 수 있다.", "optionExplanations": ["틀린 설명입니다. 키워드 인자도 정의 순서대로만 작성해야 한다. 키워드 인자는 이름으로 연결되므로 호출 순서를 바꿀 수 있다.", "옳은 설명입니다. 키워드 인자는 매개변수 이름으로 값을 전달한다.", "옳은 설명입니다. 작성 순서와 무관하게 name은 서연이다.", "틀린 설명입니다. city='광주'가 첫 매개변수 name에 전달된다. 키워드 인자는 이름으로 연결되므로 호출 순서를 바꿀 수 있다.", "옳은 설명입니다. 출력은 서연 16 광주이다."]}, {"number": 169, "title": "위치 인자와 키워드 인자", "code": "def order_menu(menu, count, size=\"보통\"):\n    print(f\"{menu} {count}잔, 크기: {size}\")\n\norder_menu(\"아메리카노\", 2, size=\"큰\")", "options": ["키워드 인자는 위치 인자보다 반드시 앞에 써야 한다.", "메뉴와 개수는 위치 인자로 전달된다.", "size 기본값 보통이 사용되어 큰은 무시된다.", "size는 키워드 인자 큰으로 전달된다.", "출력은 아메리카노 2잔, 크기: 큰이다."], "answers": [1, 3, 4], "explanation": "위치 인자 뒤에 키워드 인자를 배치하며 명시값은 기본값을 대체한다.", "optionExplanations": ["틀린 설명입니다. 키워드 인자는 위치 인자보다 반드시 앞에 써야 한다. 위치 인자 뒤에 키워드 인자를 배치하며 명시값은 기본값을 대체한다.", "옳은 설명입니다. 메뉴와 개수는 위치 인자로 전달된다.", "틀린 설명입니다. size 기본값 보통이 사용되어 큰은 무시된다. 위치 인자 뒤에 키워드 인자를 배치하며 명시값은 기본값을 대체한다.", "옳은 설명입니다. size는 키워드 인자 큰으로 전달된다.", "옳은 설명입니다. 출력은 아메리카노 2잔, 크기: 큰이다."]}, {"number": 170, "title": "가변 위치 인자 *args", "code": "def add_all(*numbers):\n    return sum(numbers)\n\nprint(add_all(1, 2, 3))\nprint(add_all(10, 20, 30, 40))", "options": ["*numbers에는 딕셔너리가 저장된다.", "가변 인자는 정확히 두 개의 값만 받을 수 있다.", "*numbers는 여러 위치 인자를 튜플로 받는다.", "첫 호출의 합은 6이다.", "둘째 호출의 합은 100이다."], "answers": [2, 3, 4], "explanation": "*args 형태는 개수가 다른 위치 인자들을 튜플로 모은다.", "optionExplanations": ["틀린 설명입니다. *numbers에는 딕셔너리가 저장된다. *args 형태는 개수가 다른 위치 인자들을 튜플로 모은다.", "틀린 설명입니다. 가변 인자는 정확히 두 개의 값만 받을 수 있다. *args 형태는 개수가 다른 위치 인자들을 튜플로 모은다.", "옳은 설명입니다. *numbers는 여러 위치 인자를 튜플로 받는다.", "옳은 설명입니다. 첫 호출의 합은 6이다.", "옳은 설명입니다. 둘째 호출의 합은 100이다."]}, {"number": 171, "title": "가변 인자 출력", "code": "def print_names(*names):\n    for name in names:\n        print(name)\n\nprint_names(\"민수\", \"지민\", \"서연\")", "options": ["names에는 세 이름이 튜플로 저장된다.", "for문이 각 이름을 한 번씩 출력한다.", "출력 순서는 민수, 지민, 서연이다.", "*names는 전달된 문자열을 글자 단위로 분해한다.", "가변 인자는 반복문에서 사용할 수 없다."], "answers": [0, 1, 2], "explanation": "가변 위치 인자의 각 전달값은 튜플 요소로 보존된다.", "optionExplanations": ["옳은 설명입니다. names에는 세 이름이 튜플로 저장된다.", "옳은 설명입니다. for문이 각 이름을 한 번씩 출력한다.", "옳은 설명입니다. 출력 순서는 민수, 지민, 서연이다.", "틀린 설명입니다. *names는 전달된 문자열을 글자 단위로 분해한다. 가변 위치 인자의 각 전달값은 튜플 요소로 보존된다.", "틀린 설명입니다. 가변 인자는 반복문에서 사용할 수 없다. 가변 위치 인자의 각 전달값은 튜플 요소로 보존된다."]}, {"number": 172, "title": "가변 키워드 인자 **kwargs", "code": "def print_profile(**profile):\n    for key, value in profile.items():\n        print(key, \":\", value)\n\nprint_profile(name=\"지민\", age=16, city=\"광주\")", "options": ["**profile은 키워드 인자를 딕셔너리로 받는다.", "items()로 키와 값을 함께 반복한다.", "**kwargs는 값을 리스트로만 저장한다.", "name, age, city 항목이 출력된다.", "profile.items()는 값만 반환한다."], "answers": [0, 1, 3], "explanation": "가변 키워드 인자는 이름과 값을 딕셔너리 항목으로 수집한다.", "optionExplanations": ["옳은 설명입니다. **profile은 키워드 인자를 딕셔너리로 받는다.", "옳은 설명입니다. items()로 키와 값을 함께 반복한다.", "틀린 설명입니다. **kwargs는 값을 리스트로만 저장한다. 가변 키워드 인자는 이름과 값을 딕셔너리 항목으로 수집한다.", "옳은 설명입니다. name, age, city 항목이 출력된다.", "틀린 설명입니다. profile.items()는 값만 반환한다. 가변 키워드 인자는 이름과 값을 딕셔너리 항목으로 수집한다."]}, {"number": 173, "title": "지역 변수", "code": "def test():\n    message = \"함수 안의 변수\"\n    print(message)\n\ntest()\n\n# print(message)", "options": ["message는 test 함수의 지역 변수이다.", "test() 호출 중에는 message를 출력할 수 있다.", "지역 변수는 함수 종료 후 자동으로 전역 변수가 된다.", "함수 밖의 주석문도 실제로 실행된다.", "주석을 제거해 함수 밖에서 message를 출력하면 NameError가 난다."], "answers": [0, 1, 4], "explanation": "함수 안에서 만든 지역 이름은 일반적으로 함수 바깥 범위에서 보이지 않는다.", "optionExplanations": ["옳은 설명입니다. message는 test 함수의 지역 변수이다.", "옳은 설명입니다. test() 호출 중에는 message를 출력할 수 있다.", "틀린 설명입니다. 지역 변수는 함수 종료 후 자동으로 전역 변수가 된다. 함수 안에서 만든 지역 이름은 일반적으로 함수 바깥 범위에서 보이지 않는다.", "틀린 설명입니다. 함수 밖의 주석문도 실제로 실행된다. 함수 안에서 만든 지역 이름은 일반적으로 함수 바깥 범위에서 보이지 않는다.", "옳은 설명입니다. 주석을 제거해 함수 밖에서 message를 출력하면 NameError가 난다."]}, {"number": 174, "title": "전역 변수 읽기", "code": "message = \"전역 변수\"\n\ndef show_message():\n    print(message)\n\nshow_message()", "options": ["message는 함수 밖에서 정의된 전역 변수이다.", "함수 안에서는 global 선언 없이는 전역 변수를 읽을 수 없다.", "show_message 안에서 전역 변수를 읽을 수 있다.", "전역 변수가 출력된다.", "show_message가 message를 지역 변수로 새로 만든다."], "answers": [0, 2, 3], "explanation": "전역 변수는 함수 내부에서 읽을 수 있으며 재대입할 때 global이 필요하다.", "optionExplanations": ["옳은 설명입니다. message는 함수 밖에서 정의된 전역 변수이다.", "틀린 설명입니다. 함수 안에서는 global 선언 없이는 전역 변수를 읽을 수 없다. 전역 변수는 함수 내부에서 읽을 수 있으며 재대입할 때 global이 필요하다.", "옳은 설명입니다. show_message 안에서 전역 변수를 읽을 수 있다.", "옳은 설명입니다. 전역 변수가 출력된다.", "틀린 설명입니다. show_message가 message를 지역 변수로 새로 만든다. 전역 변수는 함수 내부에서 읽을 수 있으며 재대입할 때 global이 필요하다."]}, {"number": 175, "title": "재귀 함수: 팩토리얼", "code": "def factorial(number):\n    if number == 1:\n        return 1\n    return number * factorial(number - 1)\n\nprint(factorial(5))", "options": ["number==1은 재귀 종료 조건이다.", "종료 조건이 없어 무한 재귀가 발생한다.", "factorial(5)는 5×4×3×2×1로 계산된다.", "재귀 호출에서는 number가 매번 1씩 증가한다.", "출력 결과는 120이다."], "answers": [0, 2, 4], "explanation": "재귀 단계마다 number가 감소하고 1에서 멈춘 뒤 곱셈 결과가 돌아온다.", "optionExplanations": ["옳은 설명입니다. number==1은 재귀 종료 조건이다.", "틀린 설명입니다. 종료 조건이 없어 무한 재귀가 발생한다. 재귀 단계마다 number가 감소하고 1에서 멈춘 뒤 곱셈 결과가 돌아온다.", "옳은 설명입니다. factorial(5)는 5×4×3×2×1로 계산된다.", "틀린 설명입니다. 재귀 호출에서는 number가 매번 1씩 증가한다. 재귀 단계마다 number가 감소하고 1에서 멈춘 뒤 곱셈 결과가 돌아온다.", "옳은 설명입니다. 출력 결과는 120이다."]}, {"number": 176, "title": "람다 함수 기본", "code": "add = lambda a, b: a + b\n\nprint(add(10, 20))", "options": ["lambda는 두 인자를 더하는 익명 함수를 만든다.", "lambda 본문에는 반드시 return 키워드를 써야 한다.", "add는 호출할 수 없는 정수 변수이다.", "add 변수는 함수 객체를 가리킨다.", "add(10,20)의 결과는 30이다."], "answers": [0, 3, 4], "explanation": "람다는 표현식 결과를 자동 반환하는 짧은 함수이다.", "optionExplanations": ["옳은 설명입니다. lambda는 두 인자를 더하는 익명 함수를 만든다.", "틀린 설명입니다. lambda 본문에는 반드시 return 키워드를 써야 한다. 람다는 표현식 결과를 자동 반환하는 짧은 함수이다.", "틀린 설명입니다. add는 호출할 수 없는 정수 변수이다. 람다는 표현식 결과를 자동 반환하는 짧은 함수이다.", "옳은 설명입니다. add 변수는 함수 객체를 가리킨다.", "옳은 설명입니다. add(10,20)의 결과는 30이다."]}, {"number": 177, "title": "제곱 람다 함수", "code": "square = lambda number: number ** 2\n\nprint(square(5))", "options": ["**2는 2를 곱하는 연산이라 결과는 10이다.", "square는 인자 하나를 받는다.", "number**2는 제곱을 뜻한다.", "square(5)는 25를 반환한다.", "람다 함수는 매개변수를 가질 수 없다."], "answers": [1, 2, 3], "explanation": "거듭제곱 연산을 한 줄 람다로 정의했다.", "optionExplanations": ["틀린 설명입니다. **2는 2를 곱하는 연산이라 결과는 10이다. 거듭제곱 연산을 한 줄 람다로 정의했다.", "옳은 설명입니다. square는 인자 하나를 받는다.", "옳은 설명입니다. number**2는 제곱을 뜻한다.", "옳은 설명입니다. square(5)는 25를 반환한다.", "틀린 설명입니다. 람다 함수는 매개변수를 가질 수 없다. 거듭제곱 연산을 한 줄 람다로 정의했다."]}, {"number": 178, "title": "조건이 있는 람다 함수", "code": "check_even = lambda number: \"짝수\" if number % 2 == 0 else \"홀수\"\n\nprint(check_even(7))", "options": ["람다 안에서는 조건 표현식을 사용할 수 없다.", "7%2는 1이다.", "조건이 거짓이므로 else 값 홀수가 선택된다.", "7은 짝수 조건을 만족해 짝수가 출력된다.", "출력 결과는 홀수이다."], "answers": [1, 2, 4], "explanation": "람다의 단일 표현식으로 삼항 조건식을 사용할 수 있다.", "optionExplanations": ["틀린 설명입니다. 람다 안에서는 조건 표현식을 사용할 수 없다. 람다의 단일 표현식으로 삼항 조건식을 사용할 수 있다.", "옳은 설명입니다. 7%2는 1이다.", "옳은 설명입니다. 조건이 거짓이므로 else 값 홀수가 선택된다.", "틀린 설명입니다. 7은 짝수 조건을 만족해 짝수가 출력된다. 람다의 단일 표현식으로 삼항 조건식을 사용할 수 있다.", "옳은 설명입니다. 출력 결과는 홀수이다."]}, {"number": 179, "title": "map으로 제곱 리스트 만들기", "code": "numbers = [1, 2, 3, 4, 5]\n\nresult = list(map(lambda number: number ** 2, numbers))\n\nprint(result)", "options": ["map은 조건이 참인 요소만 남기는 함수이다.", "map은 numbers의 모든 요소에 람다를 적용한다.", "원본 numbers가 제곱값으로 직접 변경된다.", "각 요소가 제곱된다.", "list 변환 결과는 [1,4,9,16,25]이다."], "answers": [1, 3, 4], "explanation": "map은 변환을 적용하고 list()가 결과 반복 객체를 리스트로 만든다.", "optionExplanations": ["틀린 설명입니다. map은 조건이 참인 요소만 남기는 함수이다. map은 변환을 적용하고 list()가 결과 반복 객체를 리스트로 만든다.", "옳은 설명입니다. map은 numbers의 모든 요소에 람다를 적용한다.", "틀린 설명입니다. 원본 numbers가 제곱값으로 직접 변경된다. map은 변환을 적용하고 list()가 결과 반복 객체를 리스트로 만든다.", "옳은 설명입니다. 각 요소가 제곱된다.", "옳은 설명입니다. list 변환 결과는 [1,4,9,16,25]이다."]}, {"number": 180, "title": "map으로 문자열 숫자 변환", "code": "text_numbers = [\"10\", \"20\", \"30\"]\n\nnumbers = list(map(int, text_numbers))\n\nprint(numbers)", "options": ["map(int,...)는 세 문자열을 하나로 이어 102030을 만든다.", "원본 text_numbers의 문자열도 자동으로 정수로 변경된다.", "int가 각 문자열 요소에 적용된다.", "numbers의 요소는 정수 10,20,30이다.", "결과 리스트는 [10,20,30]이다."], "answers": [2, 3, 4], "explanation": "map은 새 결과를 만들며 원본 리스트는 그대로다.", "optionExplanations": ["틀린 설명입니다. map(int,...)는 세 문자열을 하나로 이어 102030을 만든다. map은 새 결과를 만들며 원본 리스트는 그대로다.", "틀린 설명입니다. 원본 text_numbers의 문자열도 자동으로 정수로 변경된다. map은 새 결과를 만들며 원본 리스트는 그대로다.", "옳은 설명입니다. int가 각 문자열 요소에 적용된다.", "옳은 설명입니다. numbers의 요소는 정수 10,20,30이다.", "옳은 설명입니다. 결과 리스트는 [10,20,30]이다."]}, {"number": 181, "title": "filter로 짝수만 추출", "code": "numbers = [1, 2, 3, 4, 5, 6]\n\neven_numbers = list(filter(lambda number: number % 2 == 0, numbers))\n\nprint(even_numbers)", "options": ["filter는 조건 결과가 참인 요소만 남긴다.", "람다 조건은 짝수 여부이다.", "결과는 [2,4,6]이다.", "filter는 모든 숫자를 제곱한다.", "홀수만 남아 [1,3,5]가 된다."], "answers": [0, 1, 2], "explanation": "나머지가 0인 요소만 필터 결과에 포함된다.", "optionExplanations": ["옳은 설명입니다. filter는 조건 결과가 참인 요소만 남긴다.", "옳은 설명입니다. 람다 조건은 짝수 여부이다.", "옳은 설명입니다. 결과는 [2,4,6]이다.", "틀린 설명입니다. filter는 모든 숫자를 제곱한다. 나머지가 0인 요소만 필터 결과에 포함된다.", "틀린 설명입니다. 홀수만 남아 [1,3,5]가 된다. 나머지가 0인 요소만 필터 결과에 포함된다."]}, {"number": 182, "title": "filter로 긴 단어 찾기", "code": "words = [\"봄\", \"파이썬\", \"프로그래밍\", \"코드\"]\n\nlong_words = list(filter(lambda word: len(word) >= 3, words))\n\nprint(long_words)", "options": ["len(word)>=3인 단어를 남긴다.", "파이썬과 프로그래밍이 조건을 만족한다.", "코드는 두 글자이지만 길이 3으로 계산된다.", "봄과 코드는 결과에서 제외된다.", "filter는 조건과 무관하게 원본 전체를 반환한다."], "answers": [0, 1, 3], "explanation": "한글 문자열 길이는 문자 수로 계산되어 세 글자 이상만 남는다.", "optionExplanations": ["옳은 설명입니다. len(word)>=3인 단어를 남긴다.", "옳은 설명입니다. 파이썬과 프로그래밍이 조건을 만족한다.", "틀린 설명입니다. 코드는 두 글자이지만 길이 3으로 계산된다. 한글 문자열 길이는 문자 수로 계산되어 세 글자 이상만 남는다.", "옳은 설명입니다. 봄과 코드는 결과에서 제외된다.", "틀린 설명입니다. filter는 조건과 무관하게 원본 전체를 반환한다. 한글 문자열 길이는 문자 수로 계산되어 세 글자 이상만 남는다."]}, {"number": 183, "title": "sorted와 lambda", "code": "students = [\n    {\"name\": \"민수\", \"score\": 80},\n    {\"name\": \"지민\", \"score\": 95},\n    {\"name\": \"서연\", \"score\": 88}\n]\n\nresult = sorted(students, key=lambda student: student[\"score\"])\n\nprint(result)", "options": ["정렬 기준은 각 딕셔너리의 score 값이다.", "기본 sorted는 오름차순이다.", "name 값을 기준으로 가나다순 정렬한다.", "sorted가 원본 students를 제자리에서 변경하고 None을 반환한다.", "점수 순서는 80,88,95가 된다."], "answers": [0, 1, 4], "explanation": "key 함수가 추출한 점수를 비교해 새 정렬 리스트를 만든다.", "optionExplanations": ["옳은 설명입니다. 정렬 기준은 각 딕셔너리의 score 값이다.", "옳은 설명입니다. 기본 sorted는 오름차순이다.", "틀린 설명입니다. name 값을 기준으로 가나다순 정렬한다. key 함수가 추출한 점수를 비교해 새 정렬 리스트를 만든다.", "틀린 설명입니다. sorted가 원본 students를 제자리에서 변경하고 None을 반환한다. key 함수가 추출한 점수를 비교해 새 정렬 리스트를 만든다.", "옳은 설명입니다. 점수 순서는 80,88,95가 된다."]}, {"number": 184, "title": "문자열 길이 기준 정렬", "code": "words = [\"봄\", \"파이썬\", \"코딩\", \"프로그래밍\"]\n\nresult = sorted(words, key=lambda word: len(word))\n\nprint(result)", "options": ["정렬 기준은 각 단어의 길이이다.", "문자열 자체의 가나다순만 사용한다.", "봄이 가장 먼저 온다.", "프로그래밍이 가장 마지막에 온다.", "길이가 긴 단어부터 자동 내림차순 정렬한다."], "answers": [0, 2, 3], "explanation": "reverse를 주지 않았으므로 길이 오름차순이다.", "optionExplanations": ["옳은 설명입니다. 정렬 기준은 각 단어의 길이이다.", "틀린 설명입니다. 문자열 자체의 가나다순만 사용한다. reverse를 주지 않았으므로 길이 오름차순이다.", "옳은 설명입니다. 봄이 가장 먼저 온다.", "옳은 설명입니다. 프로그래밍이 가장 마지막에 온다.", "틀린 설명입니다. 길이가 긴 단어부터 자동 내림차순 정렬한다. reverse를 주지 않았으므로 길이 오름차순이다."]}, {"number": 185, "title": "reduce로 누적 곱", "code": "from functools import reduce\n\nnumbers = [1, 2, 3, 4]\n\nresult = reduce(lambda a, b: a * b, numbers)\n\nprint(result)", "options": ["reduce를 functools에서 가져온다.", "reduce는 조건에 맞는 요소만 남긴다.", "앞에서부터 누적 곱을 계산한다.", "import 없이도 reduce는 항상 기본 내장 함수로 바로 쓸 수 있다.", "결과는 24이다."], "answers": [0, 2, 4], "explanation": "reduce는 이진 함수를 누적 적용하며 별도 모듈에서 가져와야 한다.", "optionExplanations": ["옳은 설명입니다. reduce를 functools에서 가져온다.", "틀린 설명입니다. reduce는 조건에 맞는 요소만 남긴다. reduce는 이진 함수를 누적 적용하며 별도 모듈에서 가져와야 한다.", "옳은 설명입니다. 앞에서부터 누적 곱을 계산한다.", "틀린 설명입니다. import 없이도 reduce는 항상 기본 내장 함수로 바로 쓸 수 있다. reduce는 이진 함수를 누적 적용하며 별도 모듈에서 가져와야 한다.", "옳은 설명입니다. 결과는 24이다."]}, {"number": 186, "title": "len 함수", "code": "text = \"Python\"\nnumbers = [10, 20, 30]\n\nprint(len(text))\nprint(len(numbers))", "options": ["len('Python')은 6이다.", "len은 문자열의 바이트 수만 계산한다.", "리스트의 len은 마지막 인덱스 2를 반환한다.", "numbers의 요소 수는 3이다.", "두 출력은 6과 3이다."], "answers": [0, 3, 4], "explanation": "len은 컨테이너의 요소 개수를 반환한다.", "optionExplanations": ["옳은 설명입니다. len('Python')은 6이다.", "틀린 설명입니다. len은 문자열의 바이트 수만 계산한다. len은 컨테이너의 요소 개수를 반환한다.", "틀린 설명입니다. 리스트의 len은 마지막 인덱스 2를 반환한다. len은 컨테이너의 요소 개수를 반환한다.", "옳은 설명입니다. numbers의 요소 수는 3이다.", "옳은 설명입니다. 두 출력은 6과 3이다."]}, {"number": 187, "title": "sum 함수", "code": "scores = [80, 90, 100]\n\nprint(sum(scores))", "options": ["sum은 평균 90을 반환한다.", "scores의 세 값 합은 270이다.", "sum은 숫자 요소를 누적한다.", "출력 결과는 270이다.", "sum은 리스트 길이 3을 반환한다."], "answers": [1, 2, 3], "explanation": "sum은 숫자 반복 가능 객체의 합계를 구한다.", "optionExplanations": ["틀린 설명입니다. sum은 평균 90을 반환한다. sum은 숫자 반복 가능 객체의 합계를 구한다.", "옳은 설명입니다. scores의 세 값 합은 270이다.", "옳은 설명입니다. sum은 숫자 요소를 누적한다.", "옳은 설명입니다. 출력 결과는 270이다.", "틀린 설명입니다. sum은 리스트 길이 3을 반환한다. sum은 숫자 반복 가능 객체의 합계를 구한다."]}, {"number": 188, "title": "max와 min 함수", "code": "numbers = [12, 5, 30, 8]\n\nprint(max(numbers))\nprint(min(numbers))", "options": ["max는 가장 마지막 요소 8을 반환한다.", "max(numbers)는 30이다.", "min(numbers)는 5이다.", "min은 요소 개수 4를 반환한다.", "출력 순서는 30 다음 5이다."], "answers": [1, 2, 4], "explanation": "max와 min은 각각 값의 크기를 비교해 최댓값과 최솟값을 찾는다.", "optionExplanations": ["틀린 설명입니다. max는 가장 마지막 요소 8을 반환한다. max와 min은 각각 값의 크기를 비교해 최댓값과 최솟값을 찾는다.", "옳은 설명입니다. max(numbers)는 30이다.", "옳은 설명입니다. min(numbers)는 5이다.", "틀린 설명입니다. min은 요소 개수 4를 반환한다. max와 min은 각각 값의 크기를 비교해 최댓값과 최솟값을 찾는다.", "옳은 설명입니다. 출력 순서는 30 다음 5이다."]}, {"number": 189, "title": "abs 함수", "code": "print(abs(-10))\nprint(abs(7))", "options": ["abs는 항상 입력 부호를 반대로 바꾼다.", "abs(-10)은 10이다.", "abs(7)은 -7이다.", "abs(7)은 7이다.", "절댓값은 0과의 거리를 나타내므로 음수가 아니다."], "answers": [1, 3, 4], "explanation": "양수는 그대로, 음수는 부호를 제거한 값을 반환한다.", "optionExplanations": ["틀린 설명입니다. abs는 항상 입력 부호를 반대로 바꾼다. 양수는 그대로, 음수는 부호를 제거한 값을 반환한다.", "옳은 설명입니다. abs(-10)은 10이다.", "틀린 설명입니다. abs(7)은 -7이다. 양수는 그대로, 음수는 부호를 제거한 값을 반환한다.", "옳은 설명입니다. abs(7)은 7이다.", "옳은 설명입니다. 절댓값은 0과의 거리를 나타내므로 음수가 아니다."]}, {"number": 190, "title": "round 함수", "code": "number = 3.141592\n\nprint(round(number))\nprint(round(number, 2))", "options": ["round(number,2)는 3.15가 된다.", "round는 숫자를 문자열로 변환한다.", "round(number)는 소수점 없이 3을 반환한다.", "round(number,2)는 3.14이다.", "두 번째 인수는 소수점 이하 자릿수이다."], "answers": [2, 3, 4], "explanation": "3.141592를 정수와 소수 둘째 자리 기준으로 반올림한다.", "optionExplanations": ["틀린 설명입니다. round(number,2)는 3.15가 된다. 3.141592를 정수와 소수 둘째 자리 기준으로 반올림한다.", "틀린 설명입니다. round는 숫자를 문자열로 변환한다. 3.141592를 정수와 소수 둘째 자리 기준으로 반올림한다.", "옳은 설명입니다. round(number)는 소수점 없이 3을 반환한다.", "옳은 설명입니다. round(number,2)는 3.14이다.", "옳은 설명입니다. 두 번째 인수는 소수점 이하 자릿수이다."]}, {"number": 191, "title": "pow 함수", "code": "print(pow(2, 3))\nprint(pow(3, 2))", "options": ["pow(2,3)은 2의 3제곱이다.", "첫 결과는 8이다.", "pow(3,2)의 결과는 9이다.", "pow(a,b)는 a와 b의 곱만 계산한다.", "두 호출 모두 같은 결과 6을 반환한다."], "answers": [0, 1, 2], "explanation": "pow는 거듭제곱을 계산한다.", "optionExplanations": ["옳은 설명입니다. pow(2,3)은 2의 3제곱이다.", "옳은 설명입니다. 첫 결과는 8이다.", "옳은 설명입니다. pow(3,2)의 결과는 9이다.", "틀린 설명입니다. pow(a,b)는 a와 b의 곱만 계산한다. pow는 거듭제곱을 계산한다.", "틀린 설명입니다. 두 호출 모두 같은 결과 6을 반환한다. pow는 거듭제곱을 계산한다."]}, {"number": 192, "title": "divmod 함수", "code": "quotient, remainder = divmod(17, 5)\n\nprint(quotient)\nprint(remainder)", "options": ["divmod(17,5)는 몫과 나머지를 함께 반환한다.", "quotient는 3이다.", "divmod는 실수 3.4 하나만 반환한다.", "remainder는 2이다.", "몫과 나머지의 대입 순서는 반대이다."], "answers": [0, 1, 3], "explanation": "divmod 결과 튜플은 (몫, 나머지) 순서다.", "optionExplanations": ["옳은 설명입니다. divmod(17,5)는 몫과 나머지를 함께 반환한다.", "옳은 설명입니다. quotient는 3이다.", "틀린 설명입니다. divmod는 실수 3.4 하나만 반환한다. divmod 결과 튜플은 (몫, 나머지) 순서다.", "옳은 설명입니다. remainder는 2이다.", "틀린 설명입니다. 몫과 나머지의 대입 순서는 반대이다. divmod 결과 튜플은 (몫, 나머지) 순서다."]}, {"number": 193, "title": "enumerate 함수", "code": "fruits = [\"사과\", \"바나나\", \"포도\"]\n\nfor index, fruit in enumerate(fruits):\n    print(index, fruit)", "options": ["enumerate의 기본 시작 번호는 0이다.", "각 과일과 인덱스가 함께 반복된다.", "기본 시작 번호는 1이다.", "enumerate는 값 없이 번호만 반환한다.", "마지막 출력은 2 포도이다."], "answers": [0, 1, 4], "explanation": "start를 생략하면 인덱스는 0부터 시작한다.", "optionExplanations": ["옳은 설명입니다. enumerate의 기본 시작 번호는 0이다.", "옳은 설명입니다. 각 과일과 인덱스가 함께 반복된다.", "틀린 설명입니다. 기본 시작 번호는 1이다. start를 생략하면 인덱스는 0부터 시작한다.", "틀린 설명입니다. enumerate는 값 없이 번호만 반환한다. start를 생략하면 인덱스는 0부터 시작한다.", "옳은 설명입니다. 마지막 출력은 2 포도이다."]}, {"number": 194, "title": "zip 함수", "code": "names = [\"민수\", \"지민\", \"서연\"]\nscores = [80, 95, 88]\n\nfor name, score in zip(names, scores):\n    print(name, score)", "options": ["zip은 같은 위치의 이름과 점수를 묶는다.", "zip은 두 리스트의 모든 가능한 조합 9개를 만든다.", "세 쌍이 반복된다.", "지민은 95와 함께 출력된다.", "점수 리스트가 이름보다 짧아도 항상 오류가 발생한다."], "answers": [0, 2, 3], "explanation": "zip은 병렬 위치 요소를 묶고 가장 짧은 반복 가능 객체 길이에서 멈춘다.", "optionExplanations": ["옳은 설명입니다. zip은 같은 위치의 이름과 점수를 묶는다.", "틀린 설명입니다. zip은 두 리스트의 모든 가능한 조합 9개를 만든다. zip은 병렬 위치 요소를 묶고 가장 짧은 반복 가능 객체 길이에서 멈춘다.", "옳은 설명입니다. 세 쌍이 반복된다.", "옳은 설명입니다. 지민은 95와 함께 출력된다.", "틀린 설명입니다. 점수 리스트가 이름보다 짧아도 항상 오류가 발생한다. zip은 병렬 위치 요소를 묶고 가장 짧은 반복 가능 객체 길이에서 멈춘다."]}, {"number": 195, "title": "all 함수", "code": "checks1 = [True, True, True]\nchecks2 = [True, False, True]\n\nprint(all(checks1))\nprint(all(checks2))", "options": ["checks1의 모든 값은 True이다.", "all은 하나라도 True면 True를 반환한다.", "all(checks1)은 True이다.", "빈 값이 아닌 리스트이면 내부 값과 관계없이 True이다.", "checks2에 False가 있어 all(checks2)는 False이다."], "answers": [0, 2, 4], "explanation": "all은 모든 요소가 참인지 검사한다.", "optionExplanations": ["옳은 설명입니다. checks1의 모든 값은 True이다.", "틀린 설명입니다. all은 하나라도 True면 True를 반환한다. all은 모든 요소가 참인지 검사한다.", "옳은 설명입니다. all(checks1)은 True이다.", "틀린 설명입니다. 빈 값이 아닌 리스트이면 내부 값과 관계없이 True이다. all은 모든 요소가 참인지 검사한다.", "옳은 설명입니다. checks2에 False가 있어 all(checks2)는 False이다."]}, {"number": 196, "title": "any 함수", "code": "checks1 = [False, False, True]\nchecks2 = [False, False, False]\n\nprint(any(checks1))\nprint(any(checks2))", "options": ["checks1에는 True가 하나 있다.", "any는 모든 요소가 True여야 True이다.", "False가 하나라도 있으면 any 결과는 항상 False이다.", "any(checks1)은 True이다.", "checks2는 모두 False라 결과도 False이다."], "answers": [0, 3, 4], "explanation": "any는 하나 이상의 참 요소가 있는지 검사한다.", "optionExplanations": ["옳은 설명입니다. checks1에는 True가 하나 있다.", "틀린 설명입니다. any는 모든 요소가 True여야 True이다. any는 하나 이상의 참 요소가 있는지 검사한다.", "틀린 설명입니다. False가 하나라도 있으면 any 결과는 항상 False이다. any는 하나 이상의 참 요소가 있는지 검사한다.", "옳은 설명입니다. any(checks1)은 True이다.", "옳은 설명입니다. checks2는 모두 False라 결과도 False이다."]}, {"number": 197, "title": "list, tuple, set 변환", "code": "text = \"hello\"\n\nprint(list(text))\nprint(tuple(text))\nprint(set(text))", "options": ["set(text)는 항상 h,e,l,o 순서로 출력된다.", "list(text)는 문자 순서를 보존하고 중복 l도 보존한다.", "tuple(text)도 다섯 문자를 순서대로 담는다.", "set(text)는 중복 l을 하나로 줄인다.", "list(text)는 문자열 hello를 한 요소로만 담는다."], "answers": [1, 2, 3], "explanation": "문자열은 문자 단위로 변환되며 집합은 중복과 순서를 보장하지 않는다.", "optionExplanations": ["틀린 설명입니다. set(text)는 항상 h,e,l,o 순서로 출력된다. 문자열은 문자 단위로 변환되며 집합은 중복과 순서를 보장하지 않는다.", "옳은 설명입니다. list(text)는 문자 순서를 보존하고 중복 l도 보존한다.", "옳은 설명입니다. tuple(text)도 다섯 문자를 순서대로 담는다.", "옳은 설명입니다. set(text)는 중복 l을 하나로 줄인다.", "틀린 설명입니다. list(text)는 문자열 hello를 한 요소로만 담는다. 문자열은 문자 단위로 변환되며 집합은 중복과 순서를 보장하지 않는다."]}, {"number": 198, "title": "sorted 함수", "code": "numbers = [5, 1, 4, 2, 3]\n\nprint(sorted(numbers))\nprint(sorted(numbers, reverse=True))", "options": ["sorted는 원본을 바꾸고 반환값은 None이다.", "첫 sorted 결과는 오름차순 [1,2,3,4,5]이다.", "reverse=True 결과는 [5,4,3,2,1]이다.", "reverse=True는 요소 순서를 무작위로 섞는다.", "원본 numbers는 직접 수정되지 않는다."], "answers": [1, 2, 4], "explanation": "sorted는 정렬된 새 리스트를 반환한다.", "optionExplanations": ["틀린 설명입니다. sorted는 원본을 바꾸고 반환값은 None이다. sorted는 정렬된 새 리스트를 반환한다.", "옳은 설명입니다. 첫 sorted 결과는 오름차순 [1,2,3,4,5]이다.", "옳은 설명입니다. reverse=True 결과는 [5,4,3,2,1]이다.", "틀린 설명입니다. reverse=True는 요소 순서를 무작위로 섞는다. sorted는 정렬된 새 리스트를 반환한다.", "옳은 설명입니다. 원본 numbers는 직접 수정되지 않는다."]}, {"number": 199, "title": "reversed 함수", "code": "numbers = [1, 2, 3, 4, 5]\n\nresult = list(reversed(numbers))\n\nprint(result)", "options": ["reversed는 원본 리스트를 제자리에서 뒤집고 None을 반환한다.", "reversed(numbers)는 역순 반복 객체를 반환한다.", "result는 [1,2,3,4,5]이다.", "list로 변환하면 [5,4,3,2,1]이다.", "원본 numbers의 순서는 그대로 유지된다."], "answers": [1, 3, 4], "explanation": "reversed는 새 역순 반복자를 제공한다.", "optionExplanations": ["틀린 설명입니다. reversed는 원본 리스트를 제자리에서 뒤집고 None을 반환한다. reversed는 새 역순 반복자를 제공한다.", "옳은 설명입니다. reversed(numbers)는 역순 반복 객체를 반환한다.", "틀린 설명입니다. result는 [1,2,3,4,5]이다. reversed는 새 역순 반복자를 제공한다.", "옳은 설명입니다. list로 변환하면 [5,4,3,2,1]이다.", "옳은 설명입니다. 원본 numbers의 순서는 그대로 유지된다."]}, {"number": 200, "title": "함수와 내장 함수 종합", "code": "def analyze_scores(scores):\n    return {\n        \"합계\": sum(scores),\n        \"평균\": sum(scores) / len(scores),\n        \"최고점\": max(scores),\n        \"최저점\": min(scores)\n    }\n\nscores = [85, 92, 78, 100]\nresult = analyze_scores(scores)\n\nfor key, value in result.items():\n    print(key, \":\", value)", "options": ["최고점은 92이고 최저점은 85이다.", "result.items()는 값만 반환하므로 key,value 언패킹이 불가능하다.", "합계는 355이다.", "평균은 88.75이다.", "딕셔너리에는 합계·평균·최고점·최저점 네 항목이 저장된다."], "answers": [2, 3, 4], "explanation": "sum, len, max, min으로 통계를 계산하고 딕셔너리 항목을 반복 출력한다.", "optionExplanations": ["틀린 설명입니다. 최고점은 92이고 최저점은 85이다. sum, len, max, min으로 통계를 계산하고 딕셔너리 항목을 반복 출력한다.", "틀린 설명입니다. result.items()는 값만 반환하므로 key,value 언패킹이 불가능하다. sum, len, max, min으로 통계를 계산하고 딕셔너리 항목을 반복 출력한다.", "옳은 설명입니다. 합계는 355이다.", "옳은 설명입니다. 평균은 88.75이다.", "옳은 설명입니다. 딕셔너리에는 합계·평균·최고점·최저점 네 항목이 저장된다."]}],labels=["①","②","③","④","⑤"];
+function esc(s){return s.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));}
+document.getElementById("quizContainer").innerHTML=questions.map(q=>`<article class="quiz-card"><h3>${q.number}번. ${q.title}</h3><div class="question-guide">다음 코드를 분석한 설명 중 옳은 것 3개를 모두 고르시오.</div><pre><code>${esc(q.code)}</code></pre>${q.options.map((o,i)=>`<label class="choice"><input type="checkbox" name="q${q.number}" value="${i}"><b>${labels[i]}</b> ${esc(o)}</label>`).join("")}</article>`).join("");
+const same=(a,b)=>a.length===b.length&&a.every((v,i)=>v===b[i]),safe=s=>s.trim().replace(/[\\/:*?"<>|\s]+/g,"_");
+const stamp=d=>{const p=n=>String(n).padStart(2,"0");return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}_${p(d.getHours())}시${p(d.getMinutes())}분${p(d.getSeconds())}초`;};
+function gradeQuiz(){
+ const sid=document.getElementById("studentId").value.trim(),name=document.getElementById("studentName").value.trim();if(!sid||!name){alert("학번과 이름을 모두 입력하세요.");return;}
+ let correct=0,reviews=[],lines=[],now=new Date();
+ questions.forEach(q=>{const sel=[...document.querySelectorAll(`input[name="q${q.number}"]:checked`)].map(x=>+x.value).sort((a,b)=>a-b),ans=[...q.answers].sort((a,b)=>a-b),ok=same(sel,ans);if(ok)correct++;
+ const st=sel.length?sel.map(i=>labels[i]).join(", "):"미응답",at=ans.map(i=>labels[i]).join(", ");
+ reviews.push(`<div class="review ${ok?"correct":"wrong"}"><h3>${q.number}번 · ${ok?"정답":"오답"}</h3><div class="answer-line">나의 선택: ${st}</div><div class="answer-line">정답: ${at}</div><p><b>핵심 풀이:</b> ${esc(q.explanation)}</p><ul class="detail-list">${q.optionExplanations.map((e,i)=>`<li><b>${labels[i]}</b> ${esc(e)}</li>`).join("")}</ul></div>`);
+ lines.push(`[${q.number}번] ${q.title}`,`코드:\n${q.code}`,`나의 선택: ${st}`,`정답: ${at}`,`채점 결과: ${ok?"정답":"오답"}`,`핵심 풀이: ${q.explanation}`);q.optionExplanations.forEach((e,i)=>lines.push(`${labels[i]} ${e}`));lines.push("------------------------------------------------------------");});
+ const score=correct*2,box=document.getElementById("resultBox");box.style.display="block";box.innerHTML=`<div class="result-summary">${esc(sid)} ${esc(name)} · ${score}점 / 100점 (정답 ${correct}문항, 오답 ${50-correct}문항)</div><p>문항별 정오답과 선택지별 상세 풀이입니다.</p>${reviews.join("")}`;box.scrollIntoView({behavior:"smooth"});
+ const head=["파이썬300D 코드 이해 평가 결과",`학번: ${sid}`,`이름: ${name}`,`점수: ${score}점 / 100점`,`정답 문항 수: ${correct} / 50`,`응시 시각: ${now.toLocaleString("ko-KR")}`,"============================================================"];
+ const blob=new Blob(["\uFEFF"+head.concat(lines).join("\r\n")],{type:"text/plain;charset=utf-8"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`${safe(sid)}_${safe(name)}_${score}점_파이썬300D_${stamp(now)}.txt`;a.click();URL.revokeObjectURL(a.href);
+}
+</script></body>
+</html>

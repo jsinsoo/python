@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>파이썬300B · 코드별 복수정답형 평가</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f4f7fb;color:#1f2937;font-family:"Malgun Gothic","Apple SD Gothic Neo",Arial,sans-serif;line-height:1.75}
+header{padding:45px 20px;text-align:center;background:linear-gradient(135deg,#065f46,#0f766e);color:#fff}
+header h1{margin:0 0 10px;font-size:2.1rem}
+header p{margin:0;opacity:.92}
+main{max-width:1120px;margin:0 auto;padding:25px 18px 60px}
+.notice,section{background:#fff;border-radius:14px;padding:24px;margin:22px 0;box-shadow:0 4px 14px rgba(31,41,55,.08)}
+h2{color:#065f46;border-bottom:3px solid #99f6e4;padding-bottom:9px}
+h3{color:#0f766e;margin-top:34px}
+.tag{display:inline-block;padding:3px 10px;margin-right:7px;border-radius:20px;background:#ccfbf1;color:#115e59;font-size:.85rem;font-weight:bold}
+pre{background:#111827;color:#f9fafb;padding:17px;border-radius:10px;overflow-x:auto;line-height:1.55}
+code{font-family:Consolas,"Courier New",monospace}
+.output{background:#ecfdf5;border-left:5px solid #10b981;padding:12px 15px;border-radius:6px;margin:12px 0}
+.explain{background:#eff6ff;border-left:5px solid #3b82f6;padding:12px 15px;border-radius:6px;margin:12px 0}
+.warning{background:#fff7ed;border-left:5px solid #f97316;padding:12px 15px;border-radius:6px;margin:12px 0}
+.summary{background:#f0fdfa;border-left:5px solid #14b8a6;padding:15px;border-radius:6px}
+table{width:100%;border-collapse:collapse;margin:14px 0}
+th,td{border:1px solid #cbd5e1;padding:10px;text-align:left}
+th{background:#ccfbf1}
+footer{text-align:center;padding:25px;color:#64748b}
+
+.quiz-intro{background:linear-gradient(135deg,#ecfdf5,#eff6ff);border:2px solid #99f6e4}
+.student-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:18px 0}
+.student-grid label{font-weight:800;color:#065f46}.student-grid input{width:100%;margin-top:6px;padding:12px;border:1px solid #5eead4;border-radius:9px;font-size:1rem}
+.quiz-card{border:1px solid #ccfbf1;border-left:7px solid #0f766e;border-radius:13px;padding:20px;margin:22px 0;background:#fff;box-shadow:0 3px 10px rgba(6,95,70,.07)}
+.quiz-card h3{margin:0 0 12px}.question-guide{padding:10px 13px;background:#fff7ed;border-radius:8px;border-left:4px solid #f97316;font-weight:800}
+.choice{display:block;padding:11px 12px;margin:8px 0;border:1px solid #d1fae5;border-radius:9px;cursor:pointer;background:#f8fafc}
+.choice:hover{background:#ecfdf5;border-color:#14b8a6}.choice input{margin-right:9px;transform:scale(1.15)}
+.action-row{position:sticky;bottom:10px;z-index:20;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;padding:14px;background:rgba(255,255,255,.95);border:1px solid #99f6e4;border-radius:14px;box-shadow:0 6px 22px rgba(15,23,42,.16)}
+.btn{border:0;border-radius:10px;padding:13px 22px;font-size:1rem;font-weight:900;cursor:pointer}.btn-primary{background:#0f766e;color:#fff}.btn-secondary{background:#e2e8f0}
+.result-box{display:none;margin-top:24px;padding:22px;border-radius:14px;background:#f8fafc;border:2px solid #94a3b8}
+.result-summary{font-size:1.25rem;font-weight:900;color:#065f46;padding:15px;background:#ccfbf1;border-radius:10px}
+.review{margin:16px 0;padding:16px;border-radius:10px;border-left:6px solid #64748b;background:#fff}.review.correct{border-left-color:#16a34a;background:#f0fdf4}.review.wrong{border-left-color:#dc2626;background:#fef2f2}
+.answer-line{font-weight:800;margin:6px 0}.detail-list{margin:8px 0 0;padding-left:22px}.detail-list li{margin:5px 0}
+@media(max-width:720px){.student-grid{grid-template-columns:1fr}.quiz-card{padding:15px}}
+</style>
+</head>
+<body>
+<header>
+<h1>파이썬 완전 문법 300예제</h1>
+<p>2편 · 자료구조 기초 51~100예제 — 리스트, 튜플, 딕셔너리, 집합</p>
+</header>
+
+<main>
+<div class="notice">
+<h2>2편 학습 범위</h2>
+<table>
+<tr><th>예제 범위</th><th>학습 주제</th></tr>
+<tr><td>51~65</td><td>리스트 생성, 인덱싱, 슬라이싱, 추가, 삭제</td></tr>
+<tr><td>66~75</td><td>리스트 정렬, 반복, 복사, 컴프리헨션</td></tr>
+<tr><td>76~82</td><td>튜플 생성, 인덱싱, 언패킹</td></tr>
+<tr><td>83~93</td><td>딕셔너리 생성, 추가, 수정, 삭제, 반복</td></tr>
+<tr><td>94~100</td><td>집합 생성, 연산, 중복 제거</td></tr>
+</table>
+</div>
+
+<section>
+<h2>1. 리스트 — 예제 51~75</h2>
+
+<h3>예제 51. 리스트 만들기</h3>
+<span class="tag">list</span><span class="tag">기초</span>
+<pre><code>fruits = ["사과", "바나나", "포도"]
+print(fruits)</code></pre>
+<div class="output"><strong>실행 결과</strong><br>['사과', '바나나', '포도']</div>
+<div class="explain"><strong>설명</strong><br>리스트는 대괄호 <code>[]</code> 안에 여러 값을 쉼표로 구분하여 저장하는 자료형입니다.</div>
+
+<h3>예제 52. 리스트 인덱싱</h3>
+<pre><code>fruits = ["사과", "바나나", "포도"]
+
+print(fruits[0])
+print(fruits[1])
+print(fruits[-1])</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>사과<br>바나나<br>포도</div>
+<div class="explain"><strong>설명</strong><br>리스트의 첫 번째 요소는 인덱스 0입니다. <code>-1</code>은 마지막 요소를 의미합니다.</div>
+
+<h3>예제 53. 리스트 값 수정</h3>
+<pre><code>fruits = ["사과", "바나나", "포도"]
+fruits[1] = "딸기"
+
+print(fruits)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>['사과', '딸기', '포도']</div>
+<div class="explain"><strong>설명</strong><br>리스트는 변경 가능한 자료형이므로 특정 위치의 값을 수정할 수 있습니다.</div>
+
+<h3>예제 54. 리스트 슬라이싱</h3>
+<pre><code>numbers = [10, 20, 30, 40, 50]
+
+print(numbers[1:4])
+print(numbers[:3])
+print(numbers[3:])</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>[20, 30, 40]<br>[10, 20, 30]<br>[40, 50]</div>
+<div class="explain"><strong>설명</strong><br><code>[시작:끝]</code> 범위에서 끝 인덱스는 포함하지 않습니다.</div>
+
+<h3>예제 55. append로 요소 추가</h3>
+<pre><code>animals = ["고양이", "강아지"]
+animals.append("토끼")
+
+print(animals)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>['고양이', '강아지', '토끼']</div>
+<div class="explain"><strong>설명</strong><br><code>append()</code>는 리스트의 맨 뒤에 요소 하나를 추가합니다.</div>
+
+<h3>예제 56. insert로 원하는 위치에 추가</h3>
+<pre><code>colors = ["빨강", "파랑"]
+colors.insert(1, "노랑")
+
+print(colors)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>['빨강', '노랑', '파랑']</div>
+<div class="explain"><strong>설명</strong><br><code>insert(위치, 값)</code>은 원하는 인덱스에 값을 삽입합니다.</div>
+
+<h3>예제 57. extend로 여러 요소 추가</h3>
+<pre><code>list1 = [1, 2, 3]
+list1.extend([4, 5, 6])
+
+print(list1)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>[1, 2, 3, 4, 5, 6]</div>
+<div class="explain"><strong>설명</strong><br><code>extend()</code>는 다른 리스트의 모든 요소를 현재 리스트 뒤에 추가합니다.</div>
+
+<h3>예제 58. remove로 값 삭제</h3>
+<pre><code>fruits = ["사과", "바나나", "포도"]
+fruits.remove("바나나")
+
+print(fruits)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>['사과', '포도']</div>
+<div class="explain"><strong>설명</strong><br><code>remove(값)</code>은 리스트에서 처음 발견한 해당 값을 삭제합니다.</div>
+
+<h3>예제 59. pop으로 마지막 값 삭제</h3>
+<pre><code>numbers = [10, 20, 30]
+removed = numbers.pop()
+
+print(removed)
+print(numbers)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>30<br>[10, 20]</div>
+<div class="explain"><strong>설명</strong><br><code>pop()</code>은 마지막 요소를 삭제하고, 삭제한 값을 반환합니다.</div>
+
+<h3>예제 60. pop으로 특정 위치 삭제</h3>
+<pre><code>numbers = [10, 20, 30, 40]
+removed = numbers.pop(1)
+
+print(removed)
+print(numbers)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>20<br>[10, 30, 40]</div>
+<div class="explain"><strong>설명</strong><br><code>pop(인덱스)</code>는 해당 위치의 값을 삭제하고 반환합니다.</div>
+
+<h3>예제 61. del로 요소 삭제</h3>
+<pre><code>cities = ["광주", "서울", "부산"]
+del cities[1]
+
+print(cities)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>['광주', '부산']</div>
+<div class="explain"><strong>설명</strong><br><code>del</code>은 인덱스를 이용해 요소를 삭제합니다.</div>
+
+<h3>예제 62. 리스트 길이 확인</h3>
+<pre><code>scores = [90, 85, 100, 78]
+print(len(scores))</code></pre>
+<div class="output"><strong>실행 결과</strong><br>4</div>
+<div class="explain"><strong>설명</strong><br><code>len()</code>은 리스트에 들어 있는 요소의 개수를 반환합니다.</div>
+
+<h3>예제 63. 리스트에 값이 있는지 확인</h3>
+<pre><code>fruits = ["사과", "바나나", "포도"]
+
+print("사과" in fruits)
+print("수박" in fruits)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>True<br>False</div>
+<div class="explain"><strong>설명</strong><br><code>in</code> 연산자는 특정 값이 리스트에 포함되어 있는지 확인합니다.</div>
+
+<h3>예제 64. 리스트 합계와 최댓값</h3>
+<pre><code>scores = [80, 95, 72, 100]
+
+print(sum(scores))
+print(max(scores))
+print(min(scores))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>347<br>100<br>72</div>
+<div class="explain"><strong>설명</strong><br><code>sum()</code>은 합계, <code>max()</code>는 최댓값, <code>min()</code>은 최솟값을 구합니다.</div>
+
+<h3>예제 65. 리스트 평균 구하기</h3>
+<pre><code>scores = [80, 90, 100]
+average = sum(scores) / len(scores)
+
+print(average)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>90.0</div>
+<div class="explain"><strong>설명</strong><br>평균은 전체 합계를 요소 개수로 나누어 구합니다.</div>
+
+<h3>예제 66. sort로 오름차순 정렬</h3>
+<pre><code>numbers = [5, 2, 9, 1, 7]
+numbers.sort()
+
+print(numbers)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>[1, 2, 5, 7, 9]</div>
+<div class="explain"><strong>설명</strong><br><code>sort()</code>는 원래 리스트 자체를 오름차순으로 정렬합니다.</div>
+
+<h3>예제 67. 내림차순 정렬</h3>
+<pre><code>numbers = [5, 2, 9, 1, 7]
+numbers.sort(reverse=True)
+
+print(numbers)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>[9, 7, 5, 2, 1]</div>
+<div class="explain"><strong>설명</strong><br><code>reverse=True</code>를 사용하면 내림차순으로 정렬합니다.</div>
+
+<h3>예제 68. sorted 함수</h3>
+<pre><code>numbers = [5, 2, 9, 1, 7]
+new_numbers = sorted(numbers)
+
+print(numbers)
+print(new_numbers)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>[5, 2, 9, 1, 7]<br>[1, 2, 5, 7, 9]</div>
+<div class="explain"><strong>설명</strong><br><code>sorted()</code>는 원본을 바꾸지 않고 정렬된 새 리스트를 반환합니다.</div>
+
+<h3>예제 69. reverse로 순서 뒤집기</h3>
+<pre><code>numbers = [1, 2, 3, 4, 5]
+numbers.reverse()
+
+print(numbers)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>[5, 4, 3, 2, 1]</div>
+<div class="explain"><strong>설명</strong><br><code>reverse()</code>는 현재 리스트의 순서를 반대로 뒤집습니다.</div>
+
+<h3>예제 70. 리스트 반복 출력</h3>
+<pre><code>fruits = ["사과", "바나나", "포도"]
+
+for fruit in fruits:
+print(fruit)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>사과<br>바나나<br>포도</div>
+<div class="explain"><strong>설명</strong><br><code>for</code>문을 사용하면 리스트의 요소를 하나씩 꺼내어 반복할 수 있습니다.</div>
+
+<h3>예제 71. enumerate로 번호와 함께 출력</h3>
+<pre><code>fruits = ["사과", "바나나", "포도"]
+
+for index, fruit in enumerate(fruits, start=1):
+print(index, fruit)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>1 사과<br>2 바나나<br>3 포도</div>
+<div class="explain"><strong>설명</strong><br><code>enumerate()</code>는 인덱스와 값을 함께 가져옵니다. <code>start=1</code>은 번호를 1부터 시작하게 합니다.</div>
+
+<h3>예제 72. 리스트 복사</h3>
+<pre><code>original = [1, 2, 3]
+copied = original.copy()
+
+copied.append(4)
+
+print(original)
+print(copied)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>[1, 2, 3]<br>[1, 2, 3, 4]</div>
+<div class="explain"><strong>설명</strong><br><code>copy()</code>를 사용하면 원본과 별개의 새 리스트를 만들 수 있습니다.</div>
+
+<h3>예제 73. 얕은 복사 주의</h3>
+<pre><code>original = [1, 2, 3]
+copied = original
+
+copied.append(4)
+
+print(original)
+print(copied)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>[1, 2, 3, 4]<br>[1, 2, 3, 4]</div>
+<div class="warning"><strong>주의</strong><br><code>copied = original</code>은 복사가 아니라 같은 리스트를 함께 가리키는 것입니다.</div>
+
+<h3>예제 74. 리스트 컴프리헨션</h3>
+<pre><code>squares = [number ** 2 for number in range(1, 6)]
+print(squares)</code></pre>
+<div class="output"><strong>실행 결과</strong><br>[1, 4, 9, 16, 25]</div>
+<div class="explain"><strong>설명</strong><br>리스트 컴프리헨션은 반복문으로 리스트를 만드는 짧고 편리한 문법입니다.</div>
+
+<h3>예제 75. 조건이 있는 리스트 컴프리헨션</h3>
+<pre><code>even_numbers = [number for number in range(1, 11) if number % 2 == 0]
+print(even_numbers)</code></pre>
+<div class="output"><strong>실행 결과</strong><br>[2, 4, 6, 8, 10]</div>
+<div class="explain"><strong>설명</strong><br><code>if</code> 조건을 추가하면 조건을 만족하는 값만 리스트에 넣을 수 있습니다.</div>
+</section>
+
+<section>
+<h2>2. 튜플 — 예제 76~82</h2>
+
+<h3>예제 76. 튜플 만들기</h3>
+<pre><code>colors = ("빨강", "노랑", "파랑")
+print(colors)</code></pre>
+<div class="output"><strong>실행 결과</strong><br>('빨강', '노랑', '파랑')</div>
+<div class="explain"><strong>설명</strong><br>튜플은 소괄호 <code>()</code>로 여러 값을 저장합니다. 기본적으로 값을 수정할 수 없습니다.</div>
+
+<h3>예제 77. 튜플 인덱싱</h3>
+<pre><code>colors = ("빨강", "노랑", "파랑")
+
+print(colors[0])
+print(colors[-1])</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>빨강<br>파랑</div>
+<div class="explain"><strong>설명</strong><br>튜플도 리스트처럼 인덱싱과 슬라이싱이 가능합니다.</div>
+
+<h3>예제 78. 튜플 슬라이싱</h3>
+<pre><code>numbers = (10, 20, 30, 40, 50)
+print(numbers[1:4])</code></pre>
+<div class="output"><strong>실행 결과</strong><br>(20, 30, 40)</div>
+<div class="explain"><strong>설명</strong><br>튜플 슬라이싱의 결과도 튜플입니다.</div>
+
+<h3>예제 79. 튜플은 수정할 수 없음</h3>
+<pre><code>colors = ("빨강", "노랑", "파랑")
+
+# colors[0] = "초록"
+
+print(colors)</code></pre>
+
+<div class="warning"><strong>주의</strong><br>튜플 요소를 수정하려 하면 <code>TypeError</code>가 발생합니다. 변경하지 않을 데이터를 저장할 때 사용합니다.</div>
+
+<h3>예제 80. 요소가 하나인 튜플</h3>
+<pre><code>number = (10,)
+print(number)
+print(type(number))</code></pre>
+<div class="output"><strong>실행 결과</strong><br>(10,)<br>&lt;class 'tuple'&gt;</div>
+<div class="explain"><strong>설명</strong><br>요소가 하나인 튜플은 값 뒤에 쉼표를 반드시 붙여야 합니다.</div>
+
+<h3>예제 81. 튜플 언패킹</h3>
+<pre><code>student = ("민지", 16, "광주")
+
+name, age, city = student
+
+print(name)
+print(age)
+print(city)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>민지<br>16<br>광주</div>
+<div class="explain"><strong>설명</strong><br>튜플의 여러 값을 각각 다른 변수에 나누어 저장하는 것을 언패킹이라고 합니다.</div>
+
+<h3>예제 82. 변수 값 교환</h3>
+<pre><code>a = 10
+b = 20
+
+a, b = b, a
+
+print(a, b)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>20 10</div>
+<div class="explain"><strong>설명</strong><br>파이썬에서는 튜플 언패킹을 이용해 임시 변수 없이 두 변수의 값을 바꿀 수 있습니다.</div>
+</section>
+
+<section>
+<h2>3. 딕셔너리 — 예제 83~93</h2>
+
+<h3>예제 83. 딕셔너리 만들기</h3>
+<pre><code>student = {
+    "이름": "지민",
+    "학년": 2,
+    "점수": 95
+}
+
+print(student)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>{'이름': '지민', '학년': 2, '점수': 95}</div>
+<div class="explain"><strong>설명</strong><br>딕셔너리는 <code>키: 값</code> 형태로 데이터를 저장합니다. 중괄호 <code>{}</code>를 사용합니다.</div>
+
+<h3>예제 84. 딕셔너리 값 가져오기</h3>
+<pre><code>student = {"이름": "지민", "점수": 95}
+
+print(student["이름"])
+print(student["점수"])</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>지민<br>95</div>
+<div class="explain"><strong>설명</strong><br>딕셔너리는 인덱스가 아니라 키를 이용해 값을 가져옵니다.</div>
+
+<h3>예제 85. get으로 안전하게 값 가져오기</h3>
+<pre><code>student = {"이름": "지민", "점수": 95}
+
+print(student.get("이름"))
+print(student.get("주소"))
+print(student.get("주소", "정보 없음"))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>지민<br>None<br>정보 없음</div>
+<div class="explain"><strong>설명</strong><br><code>get()</code>은 없는 키를 조회해도 오류가 발생하지 않습니다.</div>
+
+<h3>예제 86. 딕셔너리 값 수정</h3>
+<pre><code>student = {"이름": "지민", "점수": 95}
+student["점수"] = 100
+
+print(student)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>{'이름': '지민', '점수': 100}</div>
+<div class="explain"><strong>설명</strong><br>이미 존재하는 키에 새 값을 대입하면 해당 값이 수정됩니다.</div>
+
+<h3>예제 87. 딕셔너리에 새 항목 추가</h3>
+<pre><code>student = {"이름": "지민", "점수": 95}
+student["학년"] = 2
+
+print(student)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>{'이름': '지민', '점수': 95, '학년': 2}</div>
+<div class="explain"><strong>설명</strong><br>존재하지 않는 키에 값을 대입하면 새로운 항목이 추가됩니다.</div>
+
+<h3>예제 88. del로 항목 삭제</h3>
+<pre><code>student = {"이름": "지민", "점수": 95, "학년": 2}
+del student["학년"]
+
+print(student)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>{'이름': '지민', '점수': 95}</div>
+<div class="explain"><strong>설명</strong><br><code>del 딕셔너리[키]</code>로 특정 키와 값을 함께 삭제합니다.</div>
+
+<h3>예제 89. pop으로 항목 삭제하기</h3>
+<pre><code>student = {"이름": "지민", "점수": 95}
+score = student.pop("점수")
+
+print(score)
+print(student)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>95<br>{'이름': '지민'}</div>
+<div class="explain"><strong>설명</strong><br><code>pop(키)</code>는 항목을 삭제하면서 삭제한 값을 반환합니다.</div>
+
+<h3>예제 90. keys, values, items</h3>
+<pre><code>student = {"이름": "지민", "점수": 95, "학년": 2}
+
+print(student.keys())
+print(student.values())
+print(student.items())</code></pre>
+
+<div class="explain"><strong>설명</strong><br><code>keys()</code>는 키 목록, <code>values()</code>는 값 목록, <code>items()</code>는 키와 값의 쌍을 제공합니다.</div>
+
+<h3>예제 91. 딕셔너리 반복하기</h3>
+<pre><code>student = {"이름": "지민", "점수": 95, "학년": 2}
+
+for key, value in student.items():
+print(key, ":", value)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>이름 : 지민<br>점수 : 95<br>학년 : 2</div>
+<div class="explain"><strong>설명</strong><br><code>items()</code>와 반복문을 사용하면 키와 값을 함께 처리할 수 있습니다.</div>
+
+<h3>예제 92. 딕셔너리에 키가 있는지 확인</h3>
+<pre><code>student = {"이름": "지민", "점수": 95}
+
+print("이름" in student)
+print("주소" in student)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>True<br>False</div>
+<div class="explain"><strong>설명</strong><br>딕셔너리에서 <code>in</code>은 키가 존재하는지 확인합니다.</div>
+
+<h3>예제 93. 딕셔너리 컴프리헨션</h3>
+<pre><code>squares = {number: number ** 2 for number in range(1, 6)}
+print(squares)</code></pre>
+<div class="output"><strong>실행 결과</strong><br>{1: 1, 2: 4, 3: 9, 4: 16, 5: 25}</div>
+<div class="explain"><strong>설명</strong><br>딕셔너리 컴프리헨션은 반복문을 이용해 키와 값을 한 줄로 생성하는 문법입니다.</div>
+</section>
+
+<section>
+<h2>4. 집합 — 예제 94~100</h2>
+
+<h3>예제 94. 집합 만들기</h3>
+<pre><code>numbers = {1, 2, 3, 4, 5}
+print(numbers)</code></pre>
+<div class="explain"><strong>설명</strong><br>집합은 중괄호를 사용하지만, 딕셔너리처럼 키와 값의 쌍이 아닌 값만 저장합니다.</div>
+
+<h3>예제 95. 집합의 중복 제거</h3>
+<pre><code>numbers = {1, 2, 2, 3, 3, 3, 4}
+print(numbers)</code></pre>
+<div class="output"><strong>실행 결과 예시</strong><br>{1, 2, 3, 4}</div>
+<div class="explain"><strong>설명</strong><br>집합은 같은 값을 한 번만 저장합니다. 출력 순서는 일정하지 않을 수 있습니다.</div>
+
+<h3>예제 96. add로 요소 추가</h3>
+<pre><code>animals = {"고양이", "강아지"}
+animals.add("토끼")
+
+print(animals)</code></pre>
+
+<div class="explain"><strong>설명</strong><br><code>add()</code>는 집합에 요소 하나를 추가합니다.</div>
+
+<h3>예제 97. update로 여러 요소 추가</h3>
+<pre><code>animals = {"고양이", "강아지"}
+animals.update(["토끼", "햄스터"])
+
+print(animals)</code></pre>
+
+<div class="explain"><strong>설명</strong><br><code>update()</code>는 리스트, 튜플, 집합 등에 있는 여러 요소를 한 번에 추가합니다.</div>
+
+<h3>예제 98. remove와 discard</h3>
+<pre><code>animals = {"고양이", "강아지", "토끼"}
+
+animals.remove("토끼")
+animals.discard("햄스터")
+
+print(animals)</code></pre>
+
+<div class="output"><strong>실행 결과 예시</strong><br>{'고양이', '강아지'}</div>
+<div class="warning"><strong>주의</strong><br><code>remove()</code>는 없는 값을 삭제하면 오류가 나지만, <code>discard()</code>는 오류 없이 지나갑니다.</div>
+
+<h3>예제 99. 합집합</h3>
+<pre><code>class_a = {"민수", "지민", "서연"}
+class_b = {"지민", "도윤", "하늘"}
+
+print(class_a | class_b)
+print(class_a.union(class_b))</code></pre>
+
+<div class="explain"><strong>설명</strong><br>합집합은 두 집합의 모든 요소를 중복 없이 합친 결과입니다.</div>
+
+<h3>예제 100. 교집합과 차집합</h3>
+<pre><code>class_a = {"민수", "지민", "서연"}
+class_b = {"지민", "도윤", "하늘"}
+
+print(class_a & class_b)
+print(class_a - class_b)</code></pre>
+
+<div class="output"><strong>실행 결과 예시</strong><br>{'지민'}<br>{'민수', '서연'}</div>
+<div class="explain"><strong>설명</strong><br><code>&</code>는 교집합, <code>-</code>는 차집합을 구합니다.</div>
+
+<div class="summary">
+<h3>2편 핵심 요약</h3>
+<ul>
+<li>리스트는 순서가 있고 수정할 수 있는 자료형입니다.</li>
+<li>튜플은 순서가 있지만 수정할 수 없는 자료형입니다.</li>
+<li>딕셔너리는 키와 값의 쌍으로 데이터를 저장합니다.</li>
+<li>집합은 중복을 허용하지 않으며 합집합·교집합·차집합 연산에 유용합니다.</li>
+<li>자료구조를 적절히 선택하면 데이터를 더 효율적으로 저장하고 처리할 수 있습니다.</li>
+</ul>
+</div>
+</section>
+
+<section class="quiz-intro" id="assessment">
+<h2>파이썬300B 코드 이해 평가</h2>
+<p>각 코드에 대한 설명 5개 중 <strong>옳은 것 3개를 모두 선택</strong>하세요. 정답 세 개를 빠짐없이 선택하고 틀린 보기를 선택하지 않아야 정답입니다.</p>
+<div class="student-grid">
+<label>학번<input id="studentId" type="text" maxlength="20" placeholder="예: 1101"></label>
+<label>이름<input id="studentName" type="text" maxlength="20" placeholder="예: 홍길동"></label>
+</div>
+<p><strong>배점:</strong> 문항당 2점 · 50문항 · 총 100점</p>
+</section>
+<section><h2>코드별 복수정답형 50문항</h2><div id="quizContainer"></div>
+<div class="action-row"><button class="btn btn-primary" onclick="gradeQuiz()">채점하고 TXT 저장</button><button class="btn btn-secondary" onclick="window.scrollTo({top:0,behavior:'smooth'})">맨 위로</button></div>
+<div id="resultBox" class="result-box"></div></section>
+</main>
+
+<footer>파이썬 완전 문법 300예제 · 2편 자료구조 기초 51~100</footer>
+<script>
+const questions=[{"number": 51, "title": "리스트 만들기", "code": "fruits = [\"사과\", \"바나나\", \"포도\"]\nprint(fruits)", "options": ["fruits는 세 문자열을 순서대로 저장한 리스트이다.", "리스트 리터럴은 대괄호로 작성한다.", "출력 결과에는 사과, 바나나, 포도가 저장 순서대로 나타난다.", "fruits는 값을 수정할 수 없는 튜플이다.", "리스트는 서로 다른 값을 쉼표 없이 이어서 작성한다."], "answers": [0, 1, 2], "explanation": "리스트는 대괄호 안에 요소를 쉼표로 구분하며 순서를 유지하고 수정할 수 있다.", "optionExplanations": ["옳은 설명입니다. fruits는 세 문자열을 순서대로 저장한 리스트이다.", "옳은 설명입니다. 리스트 리터럴은 대괄호로 작성한다.", "옳은 설명입니다. 출력 결과에는 사과, 바나나, 포도가 저장 순서대로 나타난다.", "틀린 설명입니다. fruits는 값을 수정할 수 없는 튜플이다. 리스트는 대괄호 안에 요소를 쉼표로 구분하며 순서를 유지하고 수정할 수 있다.", "틀린 설명입니다. 리스트는 서로 다른 값을 쉼표 없이 이어서 작성한다. 리스트는 대괄호 안에 요소를 쉼표로 구분하며 순서를 유지하고 수정할 수 있다."]}, {"number": 52, "title": "리스트 인덱싱", "code": "fruits = [\"사과\", \"바나나\", \"포도\"]\n\nprint(fruits[0])\nprint(fruits[1])\nprint(fruits[-1])", "options": ["fruits[0]은 사과를 가리킨다.", "fruits[1]은 바나나를 가리킨다.", "리스트의 첫 인덱스는 1이므로 fruits[0]은 오류이다.", "fruits[-1]은 마지막 요소 포도를 가리킨다.", "음수 인덱스는 리스트에서 사용할 수 없다."], "answers": [0, 1, 3], "explanation": "리스트 인덱스는 0부터 시작하고 -1은 마지막 요소를 뜻한다.", "optionExplanations": ["옳은 설명입니다. fruits[0]은 사과를 가리킨다.", "옳은 설명입니다. fruits[1]은 바나나를 가리킨다.", "틀린 설명입니다. 리스트의 첫 인덱스는 1이므로 fruits[0]은 오류이다. 리스트 인덱스는 0부터 시작하고 -1은 마지막 요소를 뜻한다.", "옳은 설명입니다. fruits[-1]은 마지막 요소 포도를 가리킨다.", "틀린 설명입니다. 음수 인덱스는 리스트에서 사용할 수 없다. 리스트 인덱스는 0부터 시작하고 -1은 마지막 요소를 뜻한다."]}, {"number": 53, "title": "리스트 값 수정", "code": "fruits = [\"사과\", \"바나나\", \"포도\"]\nfruits[1] = \"딸기\"\n\nprint(fruits)", "options": ["fruits[1]의 바나나가 딸기로 바뀐다.", "리스트는 요소를 직접 수정할 수 있는 가변 자료형이다.", "대입 후에도 원래 바나나가 그대로 남는다.", "리스트 요소 수정에는 append()만 사용할 수 있다.", "최종 리스트는 ['사과', '딸기', '포도']이다."], "answers": [0, 1, 4], "explanation": "인덱스에 새 값을 대입하면 해당 위치의 요소가 교체된다.", "optionExplanations": ["옳은 설명입니다. fruits[1]의 바나나가 딸기로 바뀐다.", "옳은 설명입니다. 리스트는 요소를 직접 수정할 수 있는 가변 자료형이다.", "틀린 설명입니다. 대입 후에도 원래 바나나가 그대로 남는다. 인덱스에 새 값을 대입하면 해당 위치의 요소가 교체된다.", "틀린 설명입니다. 리스트 요소 수정에는 append()만 사용할 수 있다. 인덱스에 새 값을 대입하면 해당 위치의 요소가 교체된다.", "옳은 설명입니다. 최종 리스트는 ['사과', '딸기', '포도']이다."]}, {"number": 54, "title": "리스트 슬라이싱", "code": "numbers = [10, 20, 30, 40, 50]\n\nprint(numbers[1:4])\nprint(numbers[:3])\nprint(numbers[3:])", "options": ["numbers[1:4]는 [20, 30, 40]이다.", "슬라이싱의 끝 인덱스는 결과에 포함된다.", "numbers[:3]은 처음부터 인덱스 3 직전까지 가져온다.", "numbers[3:]은 [40, 50]이다.", "numbers[:3]의 결과는 [10, 20, 30, 40]이다."], "answers": [0, 2, 3], "explanation": "슬라이싱은 시작 이상, 끝 미만 범위를 사용한다.", "optionExplanations": ["옳은 설명입니다. numbers[1:4]는 [20, 30, 40]이다.", "틀린 설명입니다. 슬라이싱의 끝 인덱스는 결과에 포함된다. 슬라이싱은 시작 이상, 끝 미만 범위를 사용한다.", "옳은 설명입니다. numbers[:3]은 처음부터 인덱스 3 직전까지 가져온다.", "옳은 설명입니다. numbers[3:]은 [40, 50]이다.", "틀린 설명입니다. numbers[:3]의 결과는 [10, 20, 30, 40]이다. 슬라이싱은 시작 이상, 끝 미만 범위를 사용한다."]}, {"number": 55, "title": "append로 요소 추가", "code": "animals = [\"고양이\", \"강아지\"]\nanimals.append(\"토끼\")\n\nprint(animals)", "options": ["append('토끼')는 리스트 맨 뒤에 요소 하나를 추가한다.", "append()는 리스트의 맨 앞에 요소를 넣는다.", "최종 요소 개수는 3개이다.", "append()는 전달한 문자열의 글자를 하나씩 나누어 추가한다.", "출력 결과의 마지막 요소는 토끼이다."], "answers": [0, 2, 4], "explanation": "append()는 전달받은 객체 하나를 리스트 끝에 추가한다.", "optionExplanations": ["옳은 설명입니다. append('토끼')는 리스트 맨 뒤에 요소 하나를 추가한다.", "틀린 설명입니다. append()는 리스트의 맨 앞에 요소를 넣는다. append()는 전달받은 객체 하나를 리스트 끝에 추가한다.", "옳은 설명입니다. 최종 요소 개수는 3개이다.", "틀린 설명입니다. append()는 전달한 문자열의 글자를 하나씩 나누어 추가한다. append()는 전달받은 객체 하나를 리스트 끝에 추가한다.", "옳은 설명입니다. 출력 결과의 마지막 요소는 토끼이다."]}, {"number": 56, "title": "insert로 원하는 위치에 추가", "code": "colors = [\"빨강\", \"파랑\"]\ncolors.insert(1, \"노랑\")\n\nprint(colors)", "options": ["insert(1, '노랑')은 인덱스 1에 노랑을 삽입한다.", "insert()의 첫 인수는 삭제할 요소의 값이다.", "인덱스 1은 리스트의 첫 번째 위치이다.", "기존 파랑은 한 칸 뒤로 이동한다.", "최종 순서는 빨강, 노랑, 파랑이다."], "answers": [0, 3, 4], "explanation": "insert(위치, 값)은 지정한 위치에 값을 넣고 기존 요소를 뒤로 민다.", "optionExplanations": ["옳은 설명입니다. insert(1, '노랑')은 인덱스 1에 노랑을 삽입한다.", "틀린 설명입니다. insert()의 첫 인수는 삭제할 요소의 값이다. insert(위치, 값)은 지정한 위치에 값을 넣고 기존 요소를 뒤로 민다.", "틀린 설명입니다. 인덱스 1은 리스트의 첫 번째 위치이다. insert(위치, 값)은 지정한 위치에 값을 넣고 기존 요소를 뒤로 민다.", "옳은 설명입니다. 기존 파랑은 한 칸 뒤로 이동한다.", "옳은 설명입니다. 최종 순서는 빨강, 노랑, 파랑이다."]}, {"number": 57, "title": "extend로 여러 요소 추가", "code": "list1 = [1, 2, 3]\nlist1.extend([4, 5, 6])\n\nprint(list1)", "options": ["extend()는 [4,5,6] 전체를 하나의 중첩 리스트로 추가한다.", "extend([4,5,6])는 세 요소를 각각 추가한다.", "최종 리스트 길이는 6이다.", "출력 결과는 [1, 2, 3, 4, 5, 6]이다.", "extend()는 원본 list1을 변경하지 않는다."], "answers": [1, 2, 3], "explanation": "extend()는 반복 가능한 객체의 각 요소를 현재 리스트 뒤에 이어 붙인다.", "optionExplanations": ["틀린 설명입니다. extend()는 [4,5,6] 전체를 하나의 중첩 리스트로 추가한다. extend()는 반복 가능한 객체의 각 요소를 현재 리스트 뒤에 이어 붙인다.", "옳은 설명입니다. extend([4,5,6])는 세 요소를 각각 추가한다.", "옳은 설명입니다. 최종 리스트 길이는 6이다.", "옳은 설명입니다. 출력 결과는 [1, 2, 3, 4, 5, 6]이다.", "틀린 설명입니다. extend()는 원본 list1을 변경하지 않는다. extend()는 반복 가능한 객체의 각 요소를 현재 리스트 뒤에 이어 붙인다."]}, {"number": 58, "title": "remove로 값 삭제", "code": "fruits = [\"사과\", \"바나나\", \"포도\"]\nfruits.remove(\"바나나\")\n\nprint(fruits)", "options": ["remove()의 인수에는 반드시 인덱스를 넣어야 한다.", "remove('바나나')는 값이 바나나인 요소를 삭제한다.", "최종 리스트는 ['사과', '포도']이다.", "존재하지 않는 값을 remove()로 지워도 항상 조용히 넘어간다.", "remove()는 같은 값이 여러 개면 처음 발견한 값 하나를 지운다."], "answers": [1, 2, 4], "explanation": "remove(값)는 첫 일치 요소를 지우며 값이 없으면 ValueError가 발생한다.", "optionExplanations": ["틀린 설명입니다. remove()의 인수에는 반드시 인덱스를 넣어야 한다. remove(값)는 첫 일치 요소를 지우며 값이 없으면 ValueError가 발생한다.", "옳은 설명입니다. remove('바나나')는 값이 바나나인 요소를 삭제한다.", "옳은 설명입니다. 최종 리스트는 ['사과', '포도']이다.", "틀린 설명입니다. 존재하지 않는 값을 remove()로 지워도 항상 조용히 넘어간다. remove(값)는 첫 일치 요소를 지우며 값이 없으면 ValueError가 발생한다.", "옳은 설명입니다. remove()는 같은 값이 여러 개면 처음 발견한 값 하나를 지운다."]}, {"number": 59, "title": "pop으로 마지막 값 삭제", "code": "numbers = [10, 20, 30]\nremoved = numbers.pop()\n\nprint(removed)\nprint(numbers)", "options": ["pop()은 삭제한 값을 반환하지 않는다.", "인수 없는 pop()은 마지막 요소 30을 제거한다.", "pop()은 리스트의 첫 요소 10을 기본으로 삭제한다.", "removed에는 삭제된 값 30이 저장된다.", "numbers에는 [10, 20]이 남는다."], "answers": [1, 3, 4], "explanation": "pop()은 기본적으로 마지막 요소를 삭제하면서 그 값을 반환한다.", "optionExplanations": ["틀린 설명입니다. pop()은 삭제한 값을 반환하지 않는다. pop()은 기본적으로 마지막 요소를 삭제하면서 그 값을 반환한다.", "옳은 설명입니다. 인수 없는 pop()은 마지막 요소 30을 제거한다.", "틀린 설명입니다. pop()은 리스트의 첫 요소 10을 기본으로 삭제한다. pop()은 기본적으로 마지막 요소를 삭제하면서 그 값을 반환한다.", "옳은 설명입니다. removed에는 삭제된 값 30이 저장된다.", "옳은 설명입니다. numbers에는 [10, 20]이 남는다."]}, {"number": 60, "title": "pop으로 특정 위치 삭제", "code": "numbers = [10, 20, 30, 40]\nremoved = numbers.pop(1)\n\nprint(removed)\nprint(numbers)", "options": ["pop(1)은 값 1을 찾아 삭제한다.", "pop(1) 이후 20은 리스트에 그대로 남는다.", "pop(1)은 인덱스 1의 값 20을 제거한다.", "removed의 값은 20이다.", "삭제 후 numbers는 [10, 30, 40]이다."], "answers": [2, 3, 4], "explanation": "pop(인덱스)는 지정 위치의 요소를 제거하고 반환한다.", "optionExplanations": ["틀린 설명입니다. pop(1)은 값 1을 찾아 삭제한다. pop(인덱스)는 지정 위치의 요소를 제거하고 반환한다.", "틀린 설명입니다. pop(1) 이후 20은 리스트에 그대로 남는다. pop(인덱스)는 지정 위치의 요소를 제거하고 반환한다.", "옳은 설명입니다. pop(1)은 인덱스 1의 값 20을 제거한다.", "옳은 설명입니다. removed의 값은 20이다.", "옳은 설명입니다. 삭제 후 numbers는 [10, 30, 40]이다."]}, {"number": 61, "title": "del로 요소 삭제", "code": "cities = [\"광주\", \"서울\", \"부산\"]\ndel cities[1]\n\nprint(cities)", "options": ["del cities[1]은 서울을 삭제한다.", "최종 리스트는 ['광주', '부산']이다.", "del은 반환값을 변수에 저장하는 메서드가 아니라 삭제문이다.", "del cities[1]은 부산을 삭제한다.", "del은 값 '서울'을 인수로 받아야 한다."], "answers": [0, 1, 2], "explanation": "del 리스트[인덱스]는 해당 위치의 요소를 제거한다.", "optionExplanations": ["옳은 설명입니다. del cities[1]은 서울을 삭제한다.", "옳은 설명입니다. 최종 리스트는 ['광주', '부산']이다.", "옳은 설명입니다. del은 반환값을 변수에 저장하는 메서드가 아니라 삭제문이다.", "틀린 설명입니다. del cities[1]은 부산을 삭제한다. del 리스트[인덱스]는 해당 위치의 요소를 제거한다.", "틀린 설명입니다. del은 값 '서울'을 인수로 받아야 한다. del 리스트[인덱스]는 해당 위치의 요소를 제거한다."]}, {"number": 62, "title": "리스트 길이 확인", "code": "scores = [90, 85, 100, 78]\nprint(len(scores))", "options": ["scores에는 네 개의 요소가 있다.", "len(scores)는 정수 4를 반환한다.", "len(scores)는 점수 합계 353을 반환한다.", "len()은 리스트 요소의 개수를 구한다.", "인덱스가 0부터 시작하므로 길이는 3이다."], "answers": [0, 1, 3], "explanation": "길이는 마지막 인덱스와 달리 실제 요소 수를 의미한다.", "optionExplanations": ["옳은 설명입니다. scores에는 네 개의 요소가 있다.", "옳은 설명입니다. len(scores)는 정수 4를 반환한다.", "틀린 설명입니다. len(scores)는 점수 합계 353을 반환한다. 길이는 마지막 인덱스와 달리 실제 요소 수를 의미한다.", "옳은 설명입니다. len()은 리스트 요소의 개수를 구한다.", "틀린 설명입니다. 인덱스가 0부터 시작하므로 길이는 3이다. 길이는 마지막 인덱스와 달리 실제 요소 수를 의미한다."]}, {"number": 63, "title": "리스트에 값이 있는지 확인", "code": "fruits = [\"사과\", \"바나나\", \"포도\"]\n\nprint(\"사과\" in fruits)\nprint(\"수박\" in fruits)", "options": ["'사과' in fruits는 True이다.", "'수박' in fruits는 False이다.", "in은 요소의 인덱스를 반환한다.", "문자열 리스트에서는 in 연산을 사용할 수 없다.", "in 연산의 결과는 bool 값이다."], "answers": [0, 1, 4], "explanation": "in은 리스트에 값이 포함되어 있는지를 참과 거짓으로 판정한다.", "optionExplanations": ["옳은 설명입니다. '사과' in fruits는 True이다.", "옳은 설명입니다. '수박' in fruits는 False이다.", "틀린 설명입니다. in은 요소의 인덱스를 반환한다. in은 리스트에 값이 포함되어 있는지를 참과 거짓으로 판정한다.", "틀린 설명입니다. 문자열 리스트에서는 in 연산을 사용할 수 없다. in은 리스트에 값이 포함되어 있는지를 참과 거짓으로 판정한다.", "옳은 설명입니다. in 연산의 결과는 bool 값이다."]}, {"number": 64, "title": "리스트 합계와 최댓값", "code": "scores = [80, 95, 72, 100]\n\nprint(sum(scores))\nprint(max(scores))\nprint(min(scores))", "options": ["sum(scores)는 347이다.", "max(scores)는 요소 개수 4를 반환한다.", "max(scores)는 100이다.", "min(scores)는 72이다.", "sum(scores)는 평균 86.75를 반환한다."], "answers": [0, 2, 3], "explanation": "sum, max, min은 각각 합계, 최댓값, 최솟값을 구한다.", "optionExplanations": ["옳은 설명입니다. sum(scores)는 347이다.", "틀린 설명입니다. max(scores)는 요소 개수 4를 반환한다. sum, max, min은 각각 합계, 최댓값, 최솟값을 구한다.", "옳은 설명입니다. max(scores)는 100이다.", "옳은 설명입니다. min(scores)는 72이다.", "틀린 설명입니다. sum(scores)는 평균 86.75를 반환한다. sum, max, min은 각각 합계, 최댓값, 최솟값을 구한다."]}, {"number": 65, "title": "리스트 평균 구하기", "code": "scores = [80, 90, 100]\naverage = sum(scores) / len(scores)\n\nprint(average)", "options": ["sum(scores)는 270이다.", "정수끼리 나누므로 결과는 반드시 정수 90이다.", "len(scores)는 3이다.", "평균을 구하려면 최댓값을 요소 수로 나누어야 한다.", "average의 값은 90.0이다."], "answers": [0, 2, 4], "explanation": "평균은 합계를 개수로 나누며 / 연산 결과는 float이다.", "optionExplanations": ["옳은 설명입니다. sum(scores)는 270이다.", "틀린 설명입니다. 정수끼리 나누므로 결과는 반드시 정수 90이다. 평균은 합계를 개수로 나누며 / 연산 결과는 float이다.", "옳은 설명입니다. len(scores)는 3이다.", "틀린 설명입니다. 평균을 구하려면 최댓값을 요소 수로 나누어야 한다. 평균은 합계를 개수로 나누며 / 연산 결과는 float이다.", "옳은 설명입니다. average의 값은 90.0이다."]}, {"number": 66, "title": "sort로 오름차순 정렬", "code": "numbers = [5, 2, 9, 1, 7]\nnumbers.sort()\n\nprint(numbers)", "options": ["sort()는 numbers 자체를 오름차순으로 변경한다.", "sort()는 정렬된 새 리스트를 반환해 자동으로 출력한다.", "기본 sort()는 내림차순 정렬이다.", "정렬 후 첫 요소는 1이다.", "출력 결과는 [1, 2, 5, 7, 9]이다."], "answers": [0, 3, 4], "explanation": "list.sort()는 원본 리스트를 제자리에서 오름차순 정렬한다.", "optionExplanations": ["옳은 설명입니다. sort()는 numbers 자체를 오름차순으로 변경한다.", "틀린 설명입니다. sort()는 정렬된 새 리스트를 반환해 자동으로 출력한다. list.sort()는 원본 리스트를 제자리에서 오름차순 정렬한다.", "틀린 설명입니다. 기본 sort()는 내림차순 정렬이다. list.sort()는 원본 리스트를 제자리에서 오름차순 정렬한다.", "옳은 설명입니다. 정렬 후 첫 요소는 1이다.", "옳은 설명입니다. 출력 결과는 [1, 2, 5, 7, 9]이다."]}, {"number": 67, "title": "내림차순 정렬", "code": "numbers = [5, 2, 9, 1, 7]\nnumbers.sort(reverse=True)\n\nprint(numbers)", "options": ["reverse=True는 현재 순서만 단순히 뒤집고 크기 비교는 하지 않는다.", "reverse=True는 내림차순 정렬을 지정한다.", "정렬 후 첫 요소는 9이다.", "최종 결과는 [9, 7, 5, 2, 1]이다.", "sort(reverse=True)는 원본을 유지하고 새 리스트를 만든다."], "answers": [1, 2, 3], "explanation": "sort(reverse=True)는 원본 리스트를 큰 값부터 정렬한다.", "optionExplanations": ["틀린 설명입니다. reverse=True는 현재 순서만 단순히 뒤집고 크기 비교는 하지 않는다. sort(reverse=True)는 원본 리스트를 큰 값부터 정렬한다.", "옳은 설명입니다. reverse=True는 내림차순 정렬을 지정한다.", "옳은 설명입니다. 정렬 후 첫 요소는 9이다.", "옳은 설명입니다. 최종 결과는 [9, 7, 5, 2, 1]이다.", "틀린 설명입니다. sort(reverse=True)는 원본을 유지하고 새 리스트를 만든다. sort(reverse=True)는 원본 리스트를 큰 값부터 정렬한다."]}, {"number": 68, "title": "sorted 함수", "code": "numbers = [5, 2, 9, 1, 7]\nnew_numbers = sorted(numbers)\n\nprint(numbers)\nprint(new_numbers)", "options": ["sorted()는 원본 리스트를 직접 수정한다.", "sorted(numbers)는 정렬된 새 리스트를 반환한다.", "원본 numbers는 [5, 2, 9, 1, 7]로 유지된다.", "numbers와 new_numbers는 반드시 같은 리스트 객체이다.", "new_numbers는 [1, 2, 5, 7, 9]이다."], "answers": [1, 2, 4], "explanation": "sorted()는 원본을 보존하고 새 정렬 리스트를 만든다.", "optionExplanations": ["틀린 설명입니다. sorted()는 원본 리스트를 직접 수정한다. sorted()는 원본을 보존하고 새 정렬 리스트를 만든다.", "옳은 설명입니다. sorted(numbers)는 정렬된 새 리스트를 반환한다.", "옳은 설명입니다. 원본 numbers는 [5, 2, 9, 1, 7]로 유지된다.", "틀린 설명입니다. numbers와 new_numbers는 반드시 같은 리스트 객체이다. sorted()는 원본을 보존하고 새 정렬 리스트를 만든다.", "옳은 설명입니다. new_numbers는 [1, 2, 5, 7, 9]이다."]}, {"number": 69, "title": "reverse로 순서 뒤집기", "code": "numbers = [1, 2, 3, 4, 5]\nnumbers.reverse()\n\nprint(numbers)", "options": ["reverse()는 항상 내림차순 정렬을 수행한다.", "reverse()는 현재 요소 순서를 반대로 바꾼다.", "reverse()는 원본을 바꾸지 않고 새 리스트만 반환한다.", "최종 리스트는 [5, 4, 3, 2, 1]이다.", "reverse()는 값의 크기와 무관하게 위치만 뒤집는다."], "answers": [1, 3, 4], "explanation": "reverse()는 정렬이 아니라 현재 순서의 역순 변환이다.", "optionExplanations": ["틀린 설명입니다. reverse()는 항상 내림차순 정렬을 수행한다. reverse()는 정렬이 아니라 현재 순서의 역순 변환이다.", "옳은 설명입니다. reverse()는 현재 요소 순서를 반대로 바꾼다.", "틀린 설명입니다. reverse()는 원본을 바꾸지 않고 새 리스트만 반환한다. reverse()는 정렬이 아니라 현재 순서의 역순 변환이다.", "옳은 설명입니다. 최종 리스트는 [5, 4, 3, 2, 1]이다.", "옳은 설명입니다. reverse()는 값의 크기와 무관하게 위치만 뒤집는다."]}, {"number": 70, "title": "리스트 반복 출력", "code": "fruits = [\"사과\", \"바나나\", \"포도\"]\n\nfor fruit in fruits:\n    print(fruit)", "options": ["fruit에는 리스트 전체가 한 번만 저장된다.", "for 문의 본문은 들여쓰기하지 않아도 파이썬에서 같은 의미이다.", "for 문은 fruits의 요소를 앞에서부터 하나씩 fruit에 대입한다.", "정상적으로 들여쓰기하면 사과, 바나나, 포도가 각 줄에 출력된다.", "반복 횟수는 리스트 요소 수와 같은 3회이다."], "answers": [2, 3, 4], "explanation": "for 본문은 반드시 들여써야 하며 각 반복에서 요소 하나를 처리한다.", "optionExplanations": ["틀린 설명입니다. fruit에는 리스트 전체가 한 번만 저장된다. for 본문은 반드시 들여써야 하며 각 반복에서 요소 하나를 처리한다.", "틀린 설명입니다. for 문의 본문은 들여쓰기하지 않아도 파이썬에서 같은 의미이다. for 본문은 반드시 들여써야 하며 각 반복에서 요소 하나를 처리한다.", "옳은 설명입니다. for 문은 fruits의 요소를 앞에서부터 하나씩 fruit에 대입한다.", "옳은 설명입니다. 정상적으로 들여쓰기하면 사과, 바나나, 포도가 각 줄에 출력된다.", "옳은 설명입니다. 반복 횟수는 리스트 요소 수와 같은 3회이다."]}, {"number": 71, "title": "enumerate로 번호와 함께 출력", "code": "fruits = [\"사과\", \"바나나\", \"포도\"]\n\nfor index, fruit in enumerate(fruits, start=1):\n    print(index, fruit)", "options": ["enumerate(fruits, start=1)는 번호와 요소를 함께 만든다.", "첫 출력 번호는 1이다.", "정상 들여쓰기 시 마지막 줄은 3 포도이다.", "start=1은 fruits의 두 번째 요소부터 반복하라는 뜻이다.", "enumerate()는 값 없이 인덱스만 반환한다."], "answers": [0, 1, 2], "explanation": "enumerate는 (번호, 값) 쌍을 만들며 start는 번호의 시작값이다.", "optionExplanations": ["옳은 설명입니다. enumerate(fruits, start=1)는 번호와 요소를 함께 만든다.", "옳은 설명입니다. 첫 출력 번호는 1이다.", "옳은 설명입니다. 정상 들여쓰기 시 마지막 줄은 3 포도이다.", "틀린 설명입니다. start=1은 fruits의 두 번째 요소부터 반복하라는 뜻이다. enumerate는 (번호, 값) 쌍을 만들며 start는 번호의 시작값이다.", "틀린 설명입니다. enumerate()는 값 없이 인덱스만 반환한다. enumerate는 (번호, 값) 쌍을 만들며 start는 번호의 시작값이다."]}, {"number": 72, "title": "리스트 복사", "code": "original = [1, 2, 3]\ncopied = original.copy()\n\ncopied.append(4)\n\nprint(original)\nprint(copied)", "options": ["copy()는 별개의 새 리스트를 만든다.", "copied에 4를 추가해도 original은 [1,2,3]이다.", "copy() 후 두 변수는 같은 리스트 객체를 가리킨다.", "copied의 최종 값은 [1,2,3,4]이다.", "copied.append(4)는 original에도 반드시 4를 추가한다."], "answers": [0, 1, 3], "explanation": "단순 요소 리스트에서 copy()로 만든 새 리스트의 외부 구조는 독립적이다.", "optionExplanations": ["옳은 설명입니다. copy()는 별개의 새 리스트를 만든다.", "옳은 설명입니다. copied에 4를 추가해도 original은 [1,2,3]이다.", "틀린 설명입니다. copy() 후 두 변수는 같은 리스트 객체를 가리킨다. 단순 요소 리스트에서 copy()로 만든 새 리스트의 외부 구조는 독립적이다.", "옳은 설명입니다. copied의 최종 값은 [1,2,3,4]이다.", "틀린 설명입니다. copied.append(4)는 original에도 반드시 4를 추가한다. 단순 요소 리스트에서 copy()로 만든 새 리스트의 외부 구조는 독립적이다."]}, {"number": 73, "title": "얕은 복사 주의", "code": "original = [1, 2, 3]\ncopied = original\n\ncopied.append(4)\n\nprint(original)\nprint(copied)", "options": ["copied = original은 새 리스트를 만들지 않는다.", "두 변수는 같은 리스트 객체를 가리킨다.", "대입 연산은 자동으로 깊은 복사를 수행한다.", "copied를 바꾸어도 original은 [1,2,3]으로 유지된다.", "copied.append(4) 후 두 출력 모두 [1,2,3,4]이다."], "answers": [0, 1, 4], "explanation": "리스트 변수의 단순 대입은 객체 참조를 공유한다.", "optionExplanations": ["옳은 설명입니다. copied = original은 새 리스트를 만들지 않는다.", "옳은 설명입니다. 두 변수는 같은 리스트 객체를 가리킨다.", "틀린 설명입니다. 대입 연산은 자동으로 깊은 복사를 수행한다. 리스트 변수의 단순 대입은 객체 참조를 공유한다.", "틀린 설명입니다. copied를 바꾸어도 original은 [1,2,3]으로 유지된다. 리스트 변수의 단순 대입은 객체 참조를 공유한다.", "옳은 설명입니다. copied.append(4) 후 두 출력 모두 [1,2,3,4]이다."]}, {"number": 74, "title": "리스트 컴프리헨션", "code": "squares = [number ** 2 for number in range(1, 6)]\nprint(squares)", "options": ["range(1,6)은 1부터 5까지 만든다.", "컴프리헨션은 튜플만 생성할 수 있다.", "각 number를 제곱해 새 리스트에 넣는다.", "squares는 [1,4,9,16,25]이다.", "number ** 2는 number에 2를 곱하는 연산이다."], "answers": [0, 2, 3], "explanation": "리스트 컴프리헨션은 반복 결과를 대괄호 안에서 새 리스트로 생성한다.", "optionExplanations": ["옳은 설명입니다. range(1,6)은 1부터 5까지 만든다.", "틀린 설명입니다. 컴프리헨션은 튜플만 생성할 수 있다. 리스트 컴프리헨션은 반복 결과를 대괄호 안에서 새 리스트로 생성한다.", "옳은 설명입니다. 각 number를 제곱해 새 리스트에 넣는다.", "옳은 설명입니다. squares는 [1,4,9,16,25]이다.", "틀린 설명입니다. number ** 2는 number에 2를 곱하는 연산이다. 리스트 컴프리헨션은 반복 결과를 대괄호 안에서 새 리스트로 생성한다."]}, {"number": 75, "title": "조건이 있는 리스트 컴프리헨션", "code": "even_numbers = [number for number in range(1, 11) if number % 2 == 0]\nprint(even_numbers)", "options": ["number % 2 == 0은 짝수 조건이다.", "if 조건은 홀수만 선택한다.", "range(1,11)에서 조건을 만족하는 수만 저장한다.", "range(1,11)에는 11도 포함된다.", "결과는 [2,4,6,8,10]이다."], "answers": [0, 2, 4], "explanation": "나머지가 0인 수만 선택하며 range의 끝값 11은 포함되지 않는다.", "optionExplanations": ["옳은 설명입니다. number % 2 == 0은 짝수 조건이다.", "틀린 설명입니다. if 조건은 홀수만 선택한다. 나머지가 0인 수만 선택하며 range의 끝값 11은 포함되지 않는다.", "옳은 설명입니다. range(1,11)에서 조건을 만족하는 수만 저장한다.", "틀린 설명입니다. range(1,11)에는 11도 포함된다. 나머지가 0인 수만 선택하며 range의 끝값 11은 포함되지 않는다.", "옳은 설명입니다. 결과는 [2,4,6,8,10]이다."]}, {"number": 76, "title": "튜플 만들기", "code": "colors = (\"빨강\", \"노랑\", \"파랑\")\nprint(colors)", "options": ["colors는 세 요소를 가진 튜플이다.", "colors는 집합이므로 출력 순서가 일정하지 않다.", "튜플 요소는 append()로 자유롭게 추가할 수 있다.", "튜플 리터럴은 소괄호와 쉼표로 표현할 수 있다.", "튜플은 일반적으로 요소를 직접 변경할 수 없다."], "answers": [0, 3, 4], "explanation": "튜플은 순서가 있지만 불변인 자료형이다.", "optionExplanations": ["옳은 설명입니다. colors는 세 요소를 가진 튜플이다.", "틀린 설명입니다. colors는 집합이므로 출력 순서가 일정하지 않다. 튜플은 순서가 있지만 불변인 자료형이다.", "틀린 설명입니다. 튜플 요소는 append()로 자유롭게 추가할 수 있다. 튜플은 순서가 있지만 불변인 자료형이다.", "옳은 설명입니다. 튜플 리터럴은 소괄호와 쉼표로 표현할 수 있다.", "옳은 설명입니다. 튜플은 일반적으로 요소를 직접 변경할 수 없다."]}, {"number": 77, "title": "튜플 인덱싱", "code": "colors = (\"빨강\", \"노랑\", \"파랑\")\n\nprint(colors[0])\nprint(colors[-1])", "options": ["튜플은 인덱싱할 수 없다.", "colors[0]은 빨강이다.", "colors[-1]은 파랑이다.", "튜플도 인덱싱을 지원한다.", "colors[-1]은 빨강을 뜻한다."], "answers": [1, 2, 3], "explanation": "튜플의 인덱싱 규칙은 리스트와 같고 -1은 마지막 요소이다.", "optionExplanations": ["틀린 설명입니다. 튜플은 인덱싱할 수 없다. 튜플의 인덱싱 규칙은 리스트와 같고 -1은 마지막 요소이다.", "옳은 설명입니다. colors[0]은 빨강이다.", "옳은 설명입니다. colors[-1]은 파랑이다.", "옳은 설명입니다. 튜플도 인덱싱을 지원한다.", "틀린 설명입니다. colors[-1]은 빨강을 뜻한다. 튜플의 인덱싱 규칙은 리스트와 같고 -1은 마지막 요소이다."]}, {"number": 78, "title": "튜플 슬라이싱", "code": "numbers = (10, 20, 30, 40, 50)\nprint(numbers[1:4])", "options": ["튜플 슬라이싱 결과는 항상 list이다.", "numbers[1:4]는 (20,30,40)이다.", "슬라이싱 결과의 자료형도 tuple이다.", "numbers[1:4]에는 40이 포함되지 않는다.", "끝 인덱스 4의 값 50은 포함되지 않는다."], "answers": [1, 2, 4], "explanation": "튜플 슬라이싱은 끝 미포함 규칙을 따르며 튜플을 반환한다.", "optionExplanations": ["틀린 설명입니다. 튜플 슬라이싱 결과는 항상 list이다. 튜플 슬라이싱은 끝 미포함 규칙을 따르며 튜플을 반환한다.", "옳은 설명입니다. numbers[1:4]는 (20,30,40)이다.", "옳은 설명입니다. 슬라이싱 결과의 자료형도 tuple이다.", "틀린 설명입니다. numbers[1:4]에는 40이 포함되지 않는다. 튜플 슬라이싱은 끝 미포함 규칙을 따르며 튜플을 반환한다.", "옳은 설명입니다. 끝 인덱스 4의 값 50은 포함되지 않는다."]}, {"number": 79, "title": "튜플은 수정할 수 없음", "code": "colors = (\"빨강\", \"노랑\", \"파랑\")\n\n# colors[0] = \"초록\"\n\nprint(colors)", "options": ["튜플은 리스트처럼 요소를 직접 수정할 수 있다.", "주석 처리된 수정문은 실행되지 않는다.", "# 뒤의 수정문도 실제로 실행된다.", "현재 코드는 원래 튜플을 그대로 출력한다.", "주석을 제거해 colors[0]에 대입하면 TypeError가 발생한다."], "answers": [1, 3, 4], "explanation": "튜플은 불변이며 # 뒤 코드는 주석이라 실행되지 않는다.", "optionExplanations": ["틀린 설명입니다. 튜플은 리스트처럼 요소를 직접 수정할 수 있다. 튜플은 불변이며 # 뒤 코드는 주석이라 실행되지 않는다.", "옳은 설명입니다. 주석 처리된 수정문은 실행되지 않는다.", "틀린 설명입니다. # 뒤의 수정문도 실제로 실행된다. 튜플은 불변이며 # 뒤 코드는 주석이라 실행되지 않는다.", "옳은 설명입니다. 현재 코드는 원래 튜플을 그대로 출력한다.", "옳은 설명입니다. 주석을 제거해 colors[0]에 대입하면 TypeError가 발생한다."]}, {"number": 80, "title": "요소가 하나인 튜플", "code": "number = (10,)\nprint(number)\nprint(type(number))", "options": ["(10)은 항상 한 요소 튜플이므로 쉼표가 필요 없다.", "type(number)는 int를 출력한다.", "(10,)의 쉼표가 한 요소 튜플을 만든다.", "number의 자료형은 tuple이다.", "출력에는 (10,)처럼 쉼표가 보인다."], "answers": [2, 3, 4], "explanation": "한 요소 튜플은 값 뒤 쉼표가 핵심이며 괄호만으로는 충분하지 않다.", "optionExplanations": ["틀린 설명입니다. (10)은 항상 한 요소 튜플이므로 쉼표가 필요 없다. 한 요소 튜플은 값 뒤 쉼표가 핵심이며 괄호만으로는 충분하지 않다.", "틀린 설명입니다. type(number)는 int를 출력한다. 한 요소 튜플은 값 뒤 쉼표가 핵심이며 괄호만으로는 충분하지 않다.", "옳은 설명입니다. (10,)의 쉼표가 한 요소 튜플을 만든다.", "옳은 설명입니다. number의 자료형은 tuple이다.", "옳은 설명입니다. 출력에는 (10,)처럼 쉼표가 보인다."]}, {"number": 81, "title": "튜플 언패킹", "code": "student = (\"민지\", 16, \"광주\")\n\nname, age, city = student\n\nprint(name)\nprint(age)\nprint(city)", "options": ["student의 세 값이 name, age, city에 순서대로 대입된다.", "age에는 정수 16이 저장된다.", "언패킹할 변수 수와 요소 수가 같아 정상 실행된다.", "name에는 튜플 전체가 저장되고 나머지 변수는 비어 있다.", "언패킹은 딕셔너리에서만 사용할 수 있다."], "answers": [0, 1, 2], "explanation": "튜플 언패킹은 위치별 값을 여러 변수에 나누어 저장한다.", "optionExplanations": ["옳은 설명입니다. student의 세 값이 name, age, city에 순서대로 대입된다.", "옳은 설명입니다. age에는 정수 16이 저장된다.", "옳은 설명입니다. 언패킹할 변수 수와 요소 수가 같아 정상 실행된다.", "틀린 설명입니다. name에는 튜플 전체가 저장되고 나머지 변수는 비어 있다. 튜플 언패킹은 위치별 값을 여러 변수에 나누어 저장한다.", "틀린 설명입니다. 언패킹은 딕셔너리에서만 사용할 수 있다. 튜플 언패킹은 위치별 값을 여러 변수에 나누어 저장한다."]}, {"number": 82, "title": "변수 값 교환", "code": "a = 10\nb = 20\n\na, b = b, a\n\nprint(a, b)", "options": ["오른쪽의 b, a 값이 먼저 묶여 왼쪽 a, b에 대입된다.", "실행 후 a는 20, b는 10이다.", "대입이 왼쪽부터 즉시 진행되어 두 변수 모두 20이 된다.", "임시 변수 없이 두 값을 교환한다.", "a, b = b, a는 문법 오류이다."], "answers": [0, 1, 3], "explanation": "파이썬의 다중 대입은 오른쪽 값을 먼저 평가해 안전하게 교환한다.", "optionExplanations": ["옳은 설명입니다. 오른쪽의 b, a 값이 먼저 묶여 왼쪽 a, b에 대입된다.", "옳은 설명입니다. 실행 후 a는 20, b는 10이다.", "틀린 설명입니다. 대입이 왼쪽부터 즉시 진행되어 두 변수 모두 20이 된다. 파이썬의 다중 대입은 오른쪽 값을 먼저 평가해 안전하게 교환한다.", "옳은 설명입니다. 임시 변수 없이 두 값을 교환한다.", "틀린 설명입니다. a, b = b, a는 문법 오류이다. 파이썬의 다중 대입은 오른쪽 값을 먼저 평가해 안전하게 교환한다."]}, {"number": 83, "title": "딕셔너리 만들기", "code": "student = {\n    \"이름\": \"지민\",\n    \"학년\": 2,\n    \"점수\": 95\n}\n\nprint(student)", "options": ["student는 키와 값의 쌍을 저장하는 딕셔너리이다.", "'이름' 키의 값은 '지민'이다.", "중괄호를 사용했으므로 student는 집합이다.", "딕셔너리의 모든 값은 같은 자료형이어야 한다.", "'점수' 키의 값은 정수 95이다."], "answers": [0, 1, 4], "explanation": "콜론이 있는 키:값 쌍은 딕셔너리를 만들며 값 자료형은 서로 달라도 된다.", "optionExplanations": ["옳은 설명입니다. student는 키와 값의 쌍을 저장하는 딕셔너리이다.", "옳은 설명입니다. '이름' 키의 값은 '지민'이다.", "틀린 설명입니다. 중괄호를 사용했으므로 student는 집합이다. 콜론이 있는 키:값 쌍은 딕셔너리를 만들며 값 자료형은 서로 달라도 된다.", "틀린 설명입니다. 딕셔너리의 모든 값은 같은 자료형이어야 한다. 콜론이 있는 키:값 쌍은 딕셔너리를 만들며 값 자료형은 서로 달라도 된다.", "옳은 설명입니다. '점수' 키의 값은 정수 95이다."]}, {"number": 84, "title": "딕셔너리 값 가져오기", "code": "student = {\"이름\": \"지민\", \"점수\": 95}\n\nprint(student[\"이름\"])\nprint(student[\"점수\"])", "options": ["student['이름']은 지민을 반환한다.", "student[0]으로 첫 항목의 값을 항상 가져올 수 있다.", "student['점수']는 95를 반환한다.", "딕셔너리는 위치 인덱스가 아니라 키로 값을 조회한다.", "대괄호 조회는 키가 없어도 None을 반환한다."], "answers": [0, 2, 3], "explanation": "대괄호 키 조회는 해당 값을 반환하지만 없는 키이면 KeyError가 난다.", "optionExplanations": ["옳은 설명입니다. student['이름']은 지민을 반환한다.", "틀린 설명입니다. student[0]으로 첫 항목의 값을 항상 가져올 수 있다. 대괄호 키 조회는 해당 값을 반환하지만 없는 키이면 KeyError가 난다.", "옳은 설명입니다. student['점수']는 95를 반환한다.", "옳은 설명입니다. 딕셔너리는 위치 인덱스가 아니라 키로 값을 조회한다.", "틀린 설명입니다. 대괄호 조회는 키가 없어도 None을 반환한다. 대괄호 키 조회는 해당 값을 반환하지만 없는 키이면 KeyError가 난다."]}, {"number": 85, "title": "get으로 안전하게 값 가져오기", "code": "student = {\"이름\": \"지민\", \"점수\": 95}\n\nprint(student.get(\"이름\"))\nprint(student.get(\"주소\"))\nprint(student.get(\"주소\", \"정보 없음\"))", "options": ["get('이름')은 지민을 반환한다.", "get()은 없는 키를 조회하면 반드시 KeyError를 발생시킨다.", "없는 주소 키를 기본값 없이 get하면 None이다.", "두 번째와 세 번째 출력은 모두 같은 문자열 정보 없음이다.", "get('주소','정보 없음')은 정보 없음을 반환한다."], "answers": [0, 2, 4], "explanation": "get은 키가 없을 때 오류 대신 None 또는 지정한 기본값을 반환한다.", "optionExplanations": ["옳은 설명입니다. get('이름')은 지민을 반환한다.", "틀린 설명입니다. get()은 없는 키를 조회하면 반드시 KeyError를 발생시킨다. get은 키가 없을 때 오류 대신 None 또는 지정한 기본값을 반환한다.", "옳은 설명입니다. 없는 주소 키를 기본값 없이 get하면 None이다.", "틀린 설명입니다. 두 번째와 세 번째 출력은 모두 같은 문자열 정보 없음이다. get은 키가 없을 때 오류 대신 None 또는 지정한 기본값을 반환한다.", "옳은 설명입니다. get('주소','정보 없음')은 정보 없음을 반환한다."]}, {"number": 86, "title": "딕셔너리 값 수정", "code": "student = {\"이름\": \"지민\", \"점수\": 95}\nstudent[\"점수\"] = 100\n\nprint(student)", "options": ["이미 존재하는 '점수' 키의 값이 100으로 수정된다.", "같은 키를 다시 대입하면 점수 키가 두 개 생긴다.", "딕셔너리 값은 생성 후 수정할 수 없다.", "딕셔너리의 항목 수는 여전히 2개이다.", "최종 딕셔너리에서 점수는 100이다."], "answers": [0, 3, 4], "explanation": "기존 키에 대입하면 항목 추가가 아니라 값 갱신이 일어난다.", "optionExplanations": ["옳은 설명입니다. 이미 존재하는 '점수' 키의 값이 100으로 수정된다.", "틀린 설명입니다. 같은 키를 다시 대입하면 점수 키가 두 개 생긴다. 기존 키에 대입하면 항목 추가가 아니라 값 갱신이 일어난다.", "틀린 설명입니다. 딕셔너리 값은 생성 후 수정할 수 없다. 기존 키에 대입하면 항목 추가가 아니라 값 갱신이 일어난다.", "옳은 설명입니다. 딕셔너리의 항목 수는 여전히 2개이다.", "옳은 설명입니다. 최종 딕셔너리에서 점수는 100이다."]}, {"number": 87, "title": "딕셔너리에 새 항목 추가", "code": "student = {\"이름\": \"지민\", \"점수\": 95}\nstudent[\"학년\"] = 2\n\nprint(student)", "options": ["존재하지 않는 키에 대입하면 KeyError가 발생한다.", "'학년'은 기존에 없던 키이다.", "student['학년']=2는 새 항목을 추가한다.", "최종 딕셔너리에는 세 개의 키가 있다.", "새 항목은 항상 딕셔너리의 맨 앞에 삽입된다."], "answers": [1, 2, 3], "explanation": "없는 키에 값을 대입하면 새 키-값 쌍이 추가된다.", "optionExplanations": ["틀린 설명입니다. 존재하지 않는 키에 대입하면 KeyError가 발생한다. 없는 키에 값을 대입하면 새 키-값 쌍이 추가된다.", "옳은 설명입니다. '학년'은 기존에 없던 키이다.", "옳은 설명입니다. student['학년']=2는 새 항목을 추가한다.", "옳은 설명입니다. 최종 딕셔너리에는 세 개의 키가 있다.", "틀린 설명입니다. 새 항목은 항상 딕셔너리의 맨 앞에 삽입된다. 없는 키에 값을 대입하면 새 키-값 쌍이 추가된다."]}, {"number": 88, "title": "del로 항목 삭제", "code": "student = {\"이름\": \"지민\", \"점수\": 95, \"학년\": 2}\ndel student[\"학년\"]\n\nprint(student)", "options": ["del은 값 2만 지우고 학년 키는 None으로 남긴다.", "del student['학년']은 키와 값 2를 함께 삭제한다.", "삭제 후 키는 이름과 점수만 남는다.", "삭제한 학년 값이 자동으로 화면에 출력된다.", "del은 딕셔너리 원본을 직접 변경한다."], "answers": [1, 2, 4], "explanation": "del 딕셔너리[키]는 해당 항목 전체를 제거한다.", "optionExplanations": ["틀린 설명입니다. del은 값 2만 지우고 학년 키는 None으로 남긴다. del 딕셔너리[키]는 해당 항목 전체를 제거한다.", "옳은 설명입니다. del student['학년']은 키와 값 2를 함께 삭제한다.", "옳은 설명입니다. 삭제 후 키는 이름과 점수만 남는다.", "틀린 설명입니다. 삭제한 학년 값이 자동으로 화면에 출력된다. del 딕셔너리[키]는 해당 항목 전체를 제거한다.", "옳은 설명입니다. del은 딕셔너리 원본을 직접 변경한다."]}, {"number": 89, "title": "pop으로 항목 삭제하기", "code": "student = {\"이름\": \"지민\", \"점수\": 95}\nscore = student.pop(\"점수\")\n\nprint(score)\nprint(student)", "options": ["딕셔너리 pop()은 항상 마지막 항목만 삭제한다.", "pop('점수')는 점수 항목을 삭제한다.", "pop()은 삭제한 키 문자열 '점수'를 반환한다.", "score에는 삭제된 값 95가 저장된다.", "student에는 이름 항목만 남는다."], "answers": [1, 3, 4], "explanation": "딕셔너리 pop(키)는 지정 항목을 제거하고 그 값을 반환한다.", "optionExplanations": ["틀린 설명입니다. 딕셔너리 pop()은 항상 마지막 항목만 삭제한다. 딕셔너리 pop(키)는 지정 항목을 제거하고 그 값을 반환한다.", "옳은 설명입니다. pop('점수')는 점수 항목을 삭제한다.", "틀린 설명입니다. pop()은 삭제한 키 문자열 '점수'를 반환한다. 딕셔너리 pop(키)는 지정 항목을 제거하고 그 값을 반환한다.", "옳은 설명입니다. score에는 삭제된 값 95가 저장된다.", "옳은 설명입니다. student에는 이름 항목만 남는다."]}, {"number": 90, "title": "keys, values, items", "code": "student = {\"이름\": \"지민\", \"점수\": 95, \"학년\": 2}\n\nprint(student.keys())\nprint(student.values())\nprint(student.items())", "options": ["keys()는 값만 반환하고 values()는 키만 반환한다.", "items()는 딕셔너리의 요소 개수만 반환한다.", "keys()는 키를 볼 수 있는 뷰를 반환한다.", "values()는 값들을 제공한다.", "items()는 (키, 값) 쌍들을 제공한다."], "answers": [2, 3, 4], "explanation": "세 메서드는 각각 키, 값, 키-값 쌍의 뷰를 제공한다.", "optionExplanations": ["틀린 설명입니다. keys()는 값만 반환하고 values()는 키만 반환한다. 세 메서드는 각각 키, 값, 키-값 쌍의 뷰를 제공한다.", "틀린 설명입니다. items()는 딕셔너리의 요소 개수만 반환한다. 세 메서드는 각각 키, 값, 키-값 쌍의 뷰를 제공한다.", "옳은 설명입니다. keys()는 키를 볼 수 있는 뷰를 반환한다.", "옳은 설명입니다. values()는 값들을 제공한다.", "옳은 설명입니다. items()는 (키, 값) 쌍들을 제공한다."]}, {"number": 91, "title": "딕셔너리 반복하기", "code": "student = {\"이름\": \"지민\", \"점수\": 95, \"학년\": 2}\n\nfor key, value in student.items():\n    print(key, \":\", value)", "options": ["student.items()는 키와 값을 함께 반복하기에 적합하다.", "정상 들여쓰기하면 각 항목이 '키 : 값' 형태로 출력된다.", "딕셔너리 삽입 순서대로 이름, 점수, 학년이 처리된다.", "for key, value in student.items()에서 value에는 항상 키가 저장된다.", "반복문 본문은 들여쓰지 않아도 정상 실행된다."], "answers": [0, 1, 2], "explanation": "items()의 각 요소는 키와 값의 2개 튜플이며 for 본문은 들여써야 한다.", "optionExplanations": ["옳은 설명입니다. student.items()는 키와 값을 함께 반복하기에 적합하다.", "옳은 설명입니다. 정상 들여쓰기하면 각 항목이 '키 : 값' 형태로 출력된다.", "옳은 설명입니다. 딕셔너리 삽입 순서대로 이름, 점수, 학년이 처리된다.", "틀린 설명입니다. for key, value in student.items()에서 value에는 항상 키가 저장된다. items()의 각 요소는 키와 값의 2개 튜플이며 for 본문은 들여써야 한다.", "틀린 설명입니다. 반복문 본문은 들여쓰지 않아도 정상 실행된다. items()의 각 요소는 키와 값의 2개 튜플이며 for 본문은 들여써야 한다."]}, {"number": 92, "title": "딕셔너리에 키가 있는지 확인", "code": "student = {\"이름\": \"지민\", \"점수\": 95}\n\nprint(\"이름\" in student)\nprint(\"주소\" in student)", "options": ["'이름' in student는 True이다.", "'주소' in student는 False이다.", "in은 딕셔너리의 값만 검사하므로 '지민' in student가 True이다.", "딕셔너리에서 in은 기본적으로 키 존재 여부를 검사한다.", "존재하지 않는 키를 검사하면 KeyError가 발생한다."], "answers": [0, 1, 3], "explanation": "딕셔너리의 in은 오류 없이 키 포함 여부를 bool로 반환한다.", "optionExplanations": ["옳은 설명입니다. '이름' in student는 True이다.", "옳은 설명입니다. '주소' in student는 False이다.", "틀린 설명입니다. in은 딕셔너리의 값만 검사하므로 '지민' in student가 True이다. 딕셔너리의 in은 오류 없이 키 포함 여부를 bool로 반환한다.", "옳은 설명입니다. 딕셔너리에서 in은 기본적으로 키 존재 여부를 검사한다.", "틀린 설명입니다. 존재하지 않는 키를 검사하면 KeyError가 발생한다. 딕셔너리의 in은 오류 없이 키 포함 여부를 bool로 반환한다."]}, {"number": 93, "title": "딕셔너리 컴프리헨션", "code": "squares = {number: number ** 2 for number in range(1, 6)}\nprint(squares)", "options": ["range(1,6)은 키 1부터 5를 만든다.", "각 값은 해당 키의 제곱이다.", "컴프리헨션 결과는 리스트 [1,4,9,16,25]이다.", "number:number**2에서 콜론은 나눗셈을 뜻한다.", "결과에는 5:25 항목이 포함된다."], "answers": [0, 1, 4], "explanation": "딕셔너리 컴프리헨션은 키:값 표현식을 반복하여 딕셔너리를 만든다.", "optionExplanations": ["옳은 설명입니다. range(1,6)은 키 1부터 5를 만든다.", "옳은 설명입니다. 각 값은 해당 키의 제곱이다.", "틀린 설명입니다. 컴프리헨션 결과는 리스트 [1,4,9,16,25]이다. 딕셔너리 컴프리헨션은 키:값 표현식을 반복하여 딕셔너리를 만든다.", "틀린 설명입니다. number:number**2에서 콜론은 나눗셈을 뜻한다. 딕셔너리 컴프리헨션은 키:값 표현식을 반복하여 딕셔너리를 만든다.", "옳은 설명입니다. 결과에는 5:25 항목이 포함된다."]}, {"number": 94, "title": "집합 만들기", "code": "numbers = {1, 2, 3, 4, 5}\nprint(numbers)", "options": ["numbers는 다섯 정수를 저장한 집합이다.", "중괄호를 사용한 모든 객체는 딕셔너리이다.", "집합은 중복 없는 값 모음이다.", "집합의 출력 순서는 코드 작성 순서와 다를 수 있다.", "집합은 인덱스 0으로 첫 요소를 조회할 수 있다."], "answers": [0, 2, 3], "explanation": "콜론 없는 중괄호 값들은 집합이며 순서와 인덱스를 보장하지 않는다.", "optionExplanations": ["옳은 설명입니다. numbers는 다섯 정수를 저장한 집합이다.", "틀린 설명입니다. 중괄호를 사용한 모든 객체는 딕셔너리이다. 콜론 없는 중괄호 값들은 집합이며 순서와 인덱스를 보장하지 않는다.", "옳은 설명입니다. 집합은 중복 없는 값 모음이다.", "옳은 설명입니다. 집합의 출력 순서는 코드 작성 순서와 다를 수 있다.", "틀린 설명입니다. 집합은 인덱스 0으로 첫 요소를 조회할 수 있다. 콜론 없는 중괄호 값들은 집합이며 순서와 인덱스를 보장하지 않는다."]}, {"number": 95, "title": "집합의 중복 제거", "code": "numbers = {1, 2, 2, 3, 3, 3, 4}\nprint(numbers)", "options": ["중복된 2와 3은 각각 한 번만 저장된다.", "집합은 중복을 그대로 보존하므로 요소 수는 7개이다.", "집합의 고유 요소 수는 4개이다.", "항상 정확히 {1,2,3,4} 순서로 출력됨이 보장된다.", "출력 순서는 환경에 따라 달라질 수 있다."], "answers": [0, 2, 4], "explanation": "집합은 중복을 제거하며 반복 및 출력 순서를 규약상 보장하지 않는다.", "optionExplanations": ["옳은 설명입니다. 중복된 2와 3은 각각 한 번만 저장된다.", "틀린 설명입니다. 집합은 중복을 그대로 보존하므로 요소 수는 7개이다. 집합은 중복을 제거하며 반복 및 출력 순서를 규약상 보장하지 않는다.", "옳은 설명입니다. 집합의 고유 요소 수는 4개이다.", "틀린 설명입니다. 항상 정확히 {1,2,3,4} 순서로 출력됨이 보장된다. 집합은 중복을 제거하며 반복 및 출력 순서를 규약상 보장하지 않는다.", "옳은 설명입니다. 출력 순서는 환경에 따라 달라질 수 있다."]}, {"number": 96, "title": "add로 요소 추가", "code": "animals = {\"고양이\", \"강아지\"}\nanimals.add(\"토끼\")\n\nprint(animals)", "options": ["add('토끼')는 요소 하나를 집합에 추가한다.", "add()는 문자열 토끼의 두 글자를 각각 추가한다.", "add()는 여러 요소를 담은 리스트만 인수로 받을 수 있다.", "추가 후 토끼는 animals의 구성원이다.", "집합이므로 출력 순서는 예측과 다를 수 있다."], "answers": [0, 3, 4], "explanation": "set.add는 객체 하나를 집합에 추가한다.", "optionExplanations": ["옳은 설명입니다. add('토끼')는 요소 하나를 집합에 추가한다.", "틀린 설명입니다. add()는 문자열 토끼의 두 글자를 각각 추가한다. set.add는 객체 하나를 집합에 추가한다.", "틀린 설명입니다. add()는 여러 요소를 담은 리스트만 인수로 받을 수 있다. set.add는 객체 하나를 집합에 추가한다.", "옳은 설명입니다. 추가 후 토끼는 animals의 구성원이다.", "옳은 설명입니다. 집합이므로 출력 순서는 예측과 다를 수 있다."]}, {"number": 97, "title": "update로 여러 요소 추가", "code": "animals = {\"고양이\", \"강아지\"}\nanimals.update([\"토끼\", \"햄스터\"])\n\nprint(animals)", "options": ["update()는 리스트 전체를 하나의 집합 요소로 넣는다.", "update()는 반복 가능한 객체의 여러 요소를 추가한다.", "토끼와 햄스터가 각각 집합 요소가 된다.", "기존 고양이와 강아지도 유지된다.", "update()를 호출하면 기존 요소가 모두 삭제된다."], "answers": [1, 2, 3], "explanation": "set.update는 전달된 반복 가능 객체의 각 원소를 합쳐 넣는다.", "optionExplanations": ["틀린 설명입니다. update()는 리스트 전체를 하나의 집합 요소로 넣는다. set.update는 전달된 반복 가능 객체의 각 원소를 합쳐 넣는다.", "옳은 설명입니다. update()는 반복 가능한 객체의 여러 요소를 추가한다.", "옳은 설명입니다. 토끼와 햄스터가 각각 집합 요소가 된다.", "옳은 설명입니다. 기존 고양이와 강아지도 유지된다.", "틀린 설명입니다. update()를 호출하면 기존 요소가 모두 삭제된다. set.update는 전달된 반복 가능 객체의 각 원소를 합쳐 넣는다."]}, {"number": 98, "title": "remove와 discard", "code": "animals = {\"고양이\", \"강아지\", \"토끼\"}\n\nanimals.remove(\"토끼\")\nanimals.discard(\"햄스터\")\n\nprint(animals)", "options": ["remove()와 discard()는 없는 값에 대해 완전히 같은 오류를 낸다.", "remove('토끼')는 존재하는 토끼를 삭제한다.", "discard('햄스터')는 값이 없어도 오류를 내지 않는다.", "discard()는 집합의 모든 요소를 삭제한다.", "최종 집합에는 고양이와 강아지가 남는다."], "answers": [1, 2, 4], "explanation": "remove는 없는 값에서 KeyError, discard는 없는 값을 무시한다.", "optionExplanations": ["틀린 설명입니다. remove()와 discard()는 없는 값에 대해 완전히 같은 오류를 낸다. remove는 없는 값에서 KeyError, discard는 없는 값을 무시한다.", "옳은 설명입니다. remove('토끼')는 존재하는 토끼를 삭제한다.", "옳은 설명입니다. discard('햄스터')는 값이 없어도 오류를 내지 않는다.", "틀린 설명입니다. discard()는 집합의 모든 요소를 삭제한다. remove는 없는 값에서 KeyError, discard는 없는 값을 무시한다.", "옳은 설명입니다. 최종 집합에는 고양이와 강아지가 남는다."]}, {"number": 99, "title": "합집합", "code": "class_a = {\"민수\", \"지민\", \"서연\"}\nclass_b = {\"지민\", \"도윤\", \"하늘\"}\n\nprint(class_a | class_b)\nprint(class_a.union(class_b))", "options": ["합집합에는 두 반 모두에 공통인 학생만 포함된다.", "| 연산자는 합집합을 구한다.", "class_a | class_b는 원본 두 집합을 빈 집합으로 만든다.", "union()도 같은 합집합 결과를 만든다.", "지민은 중복 없이 결과에 한 번만 포함된다."], "answers": [1, 3, 4], "explanation": "합집합은 양쪽의 모든 고유 요소를 포함하며 원본을 변경하지 않는다.", "optionExplanations": ["틀린 설명입니다. 합집합에는 두 반 모두에 공통인 학생만 포함된다. 합집합은 양쪽의 모든 고유 요소를 포함하며 원본을 변경하지 않는다.", "옳은 설명입니다. | 연산자는 합집합을 구한다.", "틀린 설명입니다. class_a | class_b는 원본 두 집합을 빈 집합으로 만든다. 합집합은 양쪽의 모든 고유 요소를 포함하며 원본을 변경하지 않는다.", "옳은 설명입니다. union()도 같은 합집합 결과를 만든다.", "옳은 설명입니다. 지민은 중복 없이 결과에 한 번만 포함된다."]}, {"number": 100, "title": "교집합과 차집합", "code": "class_a = {\"민수\", \"지민\", \"서연\"}\nclass_b = {\"지민\", \"도윤\", \"하늘\"}\n\nprint(class_a & class_b)\nprint(class_a - class_b)", "options": ["class_a - class_b에는 도윤과 하늘이 들어간다.", "교집합 연산은 두 집합의 모든 요소를 합친다.", "class_a & class_b의 결과는 {'지민'}이다.", "class_a - class_b에는 민수와 서연이 남는다.", "&는 교집합, -는 왼쪽 집합 기준 차집합이다."], "answers": [2, 3, 4], "explanation": "교집합은 공통 요소, 차집합은 왼쪽에만 있는 요소를 구한다.", "optionExplanations": ["틀린 설명입니다. class_a - class_b에는 도윤과 하늘이 들어간다. 교집합은 공통 요소, 차집합은 왼쪽에만 있는 요소를 구한다.", "틀린 설명입니다. 교집합 연산은 두 집합의 모든 요소를 합친다. 교집합은 공통 요소, 차집합은 왼쪽에만 있는 요소를 구한다.", "옳은 설명입니다. class_a & class_b의 결과는 {'지민'}이다.", "옳은 설명입니다. class_a - class_b에는 민수와 서연이 남는다.", "옳은 설명입니다. &는 교집합, -는 왼쪽 집합 기준 차집합이다."]}], labels=["①","②","③","④","⑤"];
+function esc(s){return s.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));}
+document.getElementById("quizContainer").innerHTML=questions.map(q=>`<article class="quiz-card"><h3>${q.number}번. ${q.title}</h3><div class="question-guide">다음 코드를 분석한 설명 중 옳은 것 3개를 모두 고르시오.</div><pre><code>${esc(q.code)}</code></pre>${q.options.map((o,i)=>`<label class="choice"><input type="checkbox" name="q${q.number}" value="${i}"><b>${labels[i]}</b> ${esc(o)}</label>`).join("")}</article>`).join("");
+const same=(a,b)=>a.length===b.length&&a.every((v,i)=>v===b[i]);
+const safe=s=>s.trim().replace(/[\\/:*?"<>|\s]+/g,"_");
+const stamp=d=>{const p=n=>String(n).padStart(2,"0");return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}_${p(d.getHours())}시${p(d.getMinutes())}분${p(d.getSeconds())}초`;};
+function gradeQuiz(){
+ const sid=document.getElementById("studentId").value.trim(), name=document.getElementById("studentName").value.trim();
+ if(!sid||!name){alert("학번과 이름을 모두 입력하세요.");return;}
+ let correct=0,reviews=[],lines=[],now=new Date();
+ questions.forEach(q=>{
+  const sel=[...document.querySelectorAll(`input[name="q${q.number}"]:checked`)].map(x=>+x.value).sort((a,b)=>a-b);
+  const ans=[...q.answers].sort((a,b)=>a-b),ok=same(sel,ans);if(ok)correct++;
+  const st=sel.length?sel.map(i=>labels[i]).join(", "):"미응답",at=ans.map(i=>labels[i]).join(", ");
+  reviews.push(`<div class="review ${ok?"correct":"wrong"}"><h3>${q.number}번 · ${ok?"정답":"오답"}</h3><div class="answer-line">나의 선택: ${st}</div><div class="answer-line">정답: ${at}</div><p><b>핵심 풀이:</b> ${esc(q.explanation)}</p><ul class="detail-list">${q.optionExplanations.map((e,i)=>`<li><b>${labels[i]}</b> ${esc(e)}</li>`).join("")}</ul></div>`);
+  lines.push(`[${q.number}번] ${q.title}`,`코드:\n${q.code}`,`나의 선택: ${st}`,`정답: ${at}`,`채점 결과: ${ok?"정답":"오답"}`,`핵심 풀이: ${q.explanation}`);
+  q.optionExplanations.forEach((e,i)=>lines.push(`${labels[i]} ${e}`));lines.push("------------------------------------------------------------");
+ });
+ const score=correct*2,box=document.getElementById("resultBox");box.style.display="block";box.innerHTML=`<div class="result-summary">${esc(sid)} ${esc(name)} · ${score}점 / 100점 (정답 ${correct}문항, 오답 ${50-correct}문항)</div><p>각 문항의 정오답과 선택지별 상세 풀이입니다.</p>${reviews.join("")}`;box.scrollIntoView({behavior:"smooth"});
+ const head=["파이썬300B 코드 이해 평가 결과",`학번: ${sid}`,`이름: ${name}`,`점수: ${score}점 / 100점`,`정답 문항 수: ${correct} / 50`,`응시 시각: ${now.toLocaleString("ko-KR")}`,"============================================================"];
+ const blob=new Blob(["\uFEFF"+head.concat(lines).join("\r\n")],{type:"text/plain;charset=utf-8"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`${safe(sid)}_${safe(name)}_${score}점_파이썬300B_${stamp(now)}.txt`;a.click();URL.revokeObjectURL(a.href);
+}
+</script></body>
+</html>

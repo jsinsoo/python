@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>파이썬300F · 코드별 복수정답형 평가</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f8fafc;color:#1f2937;font-family:"Malgun Gothic","Apple SD Gothic Neo",Arial,sans-serif;line-height:1.75}
+header{padding:45px 20px;text-align:center;background:linear-gradient(135deg,#7c2d12,#ea580c);color:#fff}
+header h1{margin:0 0 10px;font-size:2.1rem}
+header p{margin:0;opacity:.94}
+main{max-width:1120px;margin:auto;padding:25px 18px 60px}
+section,.notice{background:#fff;border-radius:14px;padding:24px;margin:22px 0;box-shadow:0 4px 14px rgba(31,41,55,.08)}
+h2{color:#c2410c;border-bottom:3px solid #fdba74;padding-bottom:9px}
+h3{color:#9a3412;margin-top:34px}
+.tag{display:inline-block;padding:3px 10px;margin-right:7px;border-radius:20px;background:#ffedd5;color:#9a3412;font-size:.85rem;font-weight:bold}
+pre{background:#111827;color:#f9fafb;padding:17px;border-radius:10px;overflow-x:auto;line-height:1.55}
+code{font-family:Consolas,"Courier New",monospace}
+.output{background:#ecfdf5;border-left:5px solid #10b981;padding:12px 15px;border-radius:6px;margin:12px 0}
+.explain{background:#eff6ff;border-left:5px solid #3b82f6;padding:12px 15px;border-radius:6px;margin:12px 0}
+.warning{background:#fff7ed;border-left:5px solid #f97316;padding:12px 15px;border-radius:6px;margin:12px 0}
+.summary{background:#fff7ed;border-left:5px solid #ea580c;padding:15px;border-radius:6px}
+table{width:100%;border-collapse:collapse;margin:14px 0}
+th,td{border:1px solid #cbd5e1;padding:10px;text-align:left}
+th{background:#ffedd5}
+footer{text-align:center;padding:25px;color:#64748b}
+
+.quiz-intro{background:linear-gradient(135deg,#fff7ed,#fffbeb);border:2px solid #fdba74}
+.student-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:18px 0}
+.student-grid label{font-weight:800;color:#9a3412}.student-grid input{width:100%;margin-top:6px;padding:12px;border:1px solid #fb923c;border-radius:9px;font-size:1rem}
+.quiz-card{border:1px solid #fed7aa;border-left:7px solid #ea580c;border-radius:13px;padding:20px;margin:22px 0;background:#fff;box-shadow:0 3px 10px rgba(154,52,18,.08)}
+.quiz-card h3{margin:0 0 12px}.question-guide{padding:10px 13px;background:#fff7ed;border-radius:8px;border-left:4px solid #f97316;font-weight:800}
+.choice{display:block;padding:11px 12px;margin:8px 0;border:1px solid #fed7aa;border-radius:9px;cursor:pointer;background:#fffdfb}
+.choice:hover{background:#fff7ed;border-color:#ea580c}.choice input{margin-right:9px;transform:scale(1.15)}
+.choice code{background:#ffedd5;color:#9a3412;padding:2px 5px;border-radius:5px}
+.hidden-choice-id{display:none!important}
+.action-row{position:sticky;bottom:10px;z-index:20;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;padding:14px;background:rgba(255,255,255,.96);border:1px solid #fdba74;border-radius:14px;box-shadow:0 6px 22px rgba(15,23,42,.16)}
+.btn{border:0;border-radius:10px;padding:13px 22px;font-size:1rem;font-weight:900;cursor:pointer}.btn-primary{background:#ea580c;color:#fff}.btn-secondary{background:#e2e8f0}
+.result-box{display:none;margin-top:24px;padding:22px;border-radius:14px;background:#f8fafc;border:2px solid #94a3b8}
+.result-summary{font-size:1.25rem;font-weight:900;color:#9a3412;padding:15px;background:#ffedd5;border-radius:10px}
+.review{margin:16px 0;padding:16px;border-radius:10px;border-left:6px solid #64748b;background:#fff}.review.correct{border-left-color:#16a34a;background:#f0fdf4}.review.wrong{border-left-color:#dc2626;background:#fef2f2}
+.answer-line{font-weight:800;margin:6px 0}.detail-list{margin:8px 0 0;padding-left:22px}.detail-list li{margin:5px 0}
+@media(max-width:720px){.student-grid{grid-template-columns:1fr}.quiz-card{padding:15px}}
+</style>
+</head>
+<body>
+<header>
+<h1>파이썬 완전 문법 300예제</h1>
+<p>6편 · 모듈·패키지·날짜와 시간·정규표현식·이터레이터와 제너레이터 251~300예제</p>
+</header>
+
+<main>
+<div class="notice">
+<h2>6편 학습 범위</h2>
+<table>
+<tr><th>예제 범위</th><th>학습 주제</th></tr>
+<tr><td>251~260</td><td>모듈과 패키지</td></tr>
+<tr><td>261~270</td><td>날짜와 시간</td></tr>
+<tr><td>271~285</td><td>정규표현식</td></tr>
+<tr><td>286~300</td><td>이터레이터와 제너레이터</td></tr>
+</table>
+</div>
+
+<section>
+<h2>1. 모듈과 패키지 — 예제 251~260</h2>
+
+<h3>예제 251. math 모듈 가져오기</h3>
+<span class="tag">import</span><span class="tag">module</span>
+<pre><code>import math
+
+print(math.sqrt(25))
+print(math.pi)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>5.0<br>3.141592653589793</div>
+<div class="explain"><strong>설명</strong><br><code>import math</code>로 수학 관련 기능이 들어 있는 math 모듈을 사용할 수 있습니다.</div>
+
+<h3>예제 252. math.ceil과 math.floor</h3>
+<pre><code>import math
+
+print(math.ceil(3.2))
+print(math.floor(3.8))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>4<br>3</div>
+<div class="explain"><strong>설명</strong><br><code>ceil()</code>은 올림, <code>floor()</code>는 내림을 수행합니다.</div>
+
+<h3>예제 253. math.pow 사용</h3>
+<pre><code>import math
+
+print(math.pow(2, 5))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>32.0</div>
+<div class="explain"><strong>설명</strong><br><code>math.pow(a, b)</code>는 a의 b제곱을 실수 형태로 반환합니다.</div>
+
+<h3>예제 254. random 모듈</h3>
+<pre><code>import random
+
+print(random.randint(1, 10))</code></pre>
+
+<div class="output"><strong>실행 결과 예시</strong><br>7</div>
+<div class="explain"><strong>설명</strong><br><code>randint(1, 10)</code>은 1부터 10까지의 정수 중 하나를 무작위로 선택합니다.</div>
+
+<h3>예제 255. 리스트에서 무작위 선택</h3>
+<pre><code>import random
+
+foods = ["김밥", "라면", "비빔밥", "떡볶이"]
+
+print(random.choice(foods))</code></pre>
+
+<div class="output"><strong>실행 결과 예시</strong><br>비빔밥</div>
+<div class="explain"><strong>설명</strong><br><code>choice()</code>는 리스트에서 요소 하나를 무작위로 선택합니다.</div>
+
+<h3>예제 256. 리스트 섞기</h3>
+<pre><code>import random
+
+numbers = [1, 2, 3, 4, 5]
+
+random.shuffle(numbers)
+
+print(numbers)</code></pre>
+
+<div class="output"><strong>실행 결과 예시</strong><br>[3, 1, 5, 2, 4]</div>
+<div class="explain"><strong>설명</strong><br><code>shuffle()</code>은 원본 리스트의 순서를 무작위로 섞습니다.</div>
+
+<h3>예제 257. 별칭으로 모듈 가져오기</h3>
+<pre><code>import math as m
+
+print(m.sqrt(81))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>9.0</div>
+<div class="explain"><strong>설명</strong><br><code>as</code>를 사용하면 모듈 이름을 짧은 별칭으로 사용할 수 있습니다.</div>
+
+<h3>예제 258. 필요한 기능만 가져오기</h3>
+<pre><code>from math import sqrt, pi
+
+print(sqrt(16))
+print(pi)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>4.0<br>3.141592653589793</div>
+<div class="explain"><strong>설명</strong><br><code>from 모듈 import 이름</code>을 사용하면 필요한 기능만 직접 가져올 수 있습니다.</div>
+
+<h3>예제 259. 사용자 모듈 만들기</h3>
+<pre><code># my_module.py 파일
+
+def add(a, b):
+return a + b
+
+# main.py 파일
+
+import my_module
+
+print(my_module.add(10, 20))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>30</div>
+<div class="explain"><strong>설명</strong><br>직접 만든 파이썬 파일도 모듈로 불러와 사용할 수 있습니다.</div>
+
+<h3>예제 260. 패키지 구조 예시</h3>
+<pre><code>my_package/
+    __init__.py
+    calculator.py
+
+# calculator.py
+
+def multiply(a, b):
+return a * b
+
+# main.py
+
+from my_package.calculator import multiply
+
+print(multiply(3, 4))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>12</div>
+<div class="explain"><strong>설명</strong><br>패키지는 여러 모듈을 폴더 단위로 정리한 구조입니다.</div>
+</section>
+
+<section>
+<h2>2. 날짜와 시간 — 예제 261~270</h2>
+
+<h3>예제 261. 현재 날짜와 시간</h3>
+<span class="tag">datetime</span><span class="tag">time</span>
+<pre><code>from datetime import datetime
+
+now = datetime.now()
+
+print(now)</code></pre>
+
+<div class="output"><strong>실행 결과 예시</strong><br>2026-07-04 12:30:45.123456</div>
+<div class="explain"><strong>설명</strong><br><code>datetime.now()</code>는 현재 날짜와 시간을 가져옵니다.</div>
+
+<h3>예제 262. 현재 연도, 월, 일</h3>
+<pre><code>from datetime import datetime
+
+now = datetime.now()
+
+print(now.year)
+print(now.month)
+print(now.day)</code></pre>
+
+<div class="output"><strong>실행 결과 예시</strong><br>2026<br>7<br>4</div>
+<div class="explain"><strong>설명</strong><br>datetime 객체의 <code>year</code>, <code>month</code>, <code>day</code> 속성으로 날짜 정보를 얻습니다.</div>
+
+<h3>예제 263. 현재 시각</h3>
+<pre><code>from datetime import datetime
+
+now = datetime.now()
+
+print(now.hour)
+print(now.minute)
+print(now.second)</code></pre>
+
+<div class="output"><strong>실행 결과 예시</strong><br>12<br>30<br>45</div>
+<div class="explain"><strong>설명</strong><br><code>hour</code>, <code>minute</code>, <code>second</code> 속성으로 시각 정보를 확인합니다.</div>
+
+<h3>예제 264. 날짜 직접 만들기</h3>
+<pre><code>from datetime import datetime
+
+birthday = datetime(2010, 5, 10)
+
+print(birthday)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>2010-05-10 00:00:00</div>
+<div class="explain"><strong>설명</strong><br><code>datetime(연도, 월, 일)</code>로 원하는 날짜를 직접 만들 수 있습니다.</div>
+
+<h3>예제 265. 날짜 형식 바꾸기</h3>
+<pre><code>from datetime import datetime
+
+now = datetime.now()
+
+print(now.strftime("%Y년 %m월 %d일"))</code></pre>
+
+<div class="output"><strong>실행 결과 예시</strong><br>2026년 07월 04일</div>
+<div class="explain"><strong>설명</strong><br><code>strftime()</code>는 날짜와 시간을 원하는 문자열 형식으로 바꿉니다.</div>
+
+<h3>예제 266. 시간 형식 바꾸기</h3>
+<pre><code>from datetime import datetime
+
+now = datetime.now()
+
+print(now.strftime("%H:%M:%S"))</code></pre>
+
+<div class="output"><strong>실행 결과 예시</strong><br>12:30:45</div>
+<div class="explain"><strong>설명</strong><br><code>%H</code>는 시, <code>%M</code>은 분, <code>%S</code>는 초를 뜻합니다.</div>
+
+<h3>예제 267. 문자열을 날짜로 변환</h3>
+<pre><code>from datetime import datetime
+
+text = "2026-07-04"
+
+date = datetime.strptime(text, "%Y-%m-%d")
+
+print(date)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>2026-07-04 00:00:00</div>
+<div class="explain"><strong>설명</strong><br><code>strptime()</code>는 문자열을 날짜와 시간 객체로 변환합니다.</div>
+
+<h3>예제 268. 날짜 더하기</h3>
+<pre><code>from datetime import datetime, timedelta
+
+today = datetime.now()
+after_7_days = today + timedelta(days=7)
+
+print(after_7_days.strftime("%Y-%m-%d"))</code></pre>
+
+<div class="explain"><strong>설명</strong><br><code>timedelta</code>를 사용하면 날짜에 일, 시간, 분 등을 더하거나 뺄 수 있습니다.</div>
+
+<h3>예제 269. 날짜 차이 계산</h3>
+<pre><code>from datetime import datetime
+
+start = datetime(2026, 7, 1)
+end = datetime(2026, 7, 10)
+
+difference = end - start
+
+print(difference.days)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>9</div>
+<div class="explain"><strong>설명</strong><br>두 날짜를 빼면 날짜 차이를 나타내는 timedelta 객체가 만들어집니다.</div>
+
+<h3>예제 270. time 모듈로 잠시 멈추기</h3>
+<pre><code>import time
+
+print("시작")
+time.sleep(2)
+print("2초 후 실행")</code></pre>
+
+<div class="explain"><strong>설명</strong><br><code>sleep(2)</code>는 프로그램 실행을 2초 동안 멈춥니다.</div>
+</section>
+
+<section>
+<h2>3. 정규표현식 — 예제 271~285</h2>
+
+<h3>예제 271. re 모듈 가져오기</h3>
+<span class="tag">re</span><span class="tag">regex</span>
+<pre><code>import re
+
+text = "Python is fun"
+
+result = re.search("Python", text)
+
+print(result)</code></pre>
+
+<div class="output"><strong>실행 결과 예시</strong><br>&lt;re.Match object; span=(0, 6), match='Python'&gt;</div>
+<div class="explain"><strong>설명</strong><br><code>re.search()</code>는 문자열 안에서 패턴을 찾습니다.</div>
+
+<h3>예제 272. 검색 결과 확인</h3>
+<pre><code>import re
+
+text = "Python is fun"
+
+if re.search("Python", text):
+print("찾았습니다.")</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>찾았습니다.</div>
+<div class="explain"><strong>설명</strong><br>패턴을 찾으면 Match 객체가 반환되므로 조건문에서 True처럼 사용할 수 있습니다.</div>
+
+<h3>예제 273. 숫자 찾기</h3>
+<pre><code>import re
+
+text = "학생 번호는 2026입니다."
+
+result = re.findall(r"\d+", text)
+
+print(result)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>['2026']</div>
+<div class="explain"><strong>설명</strong><br><code>\d</code>는 숫자 한 자리, <code>+</code>는 하나 이상 반복을 뜻합니다.</div>
+
+<h3>예제 274. 영문자 찾기</h3>
+<pre><code>import re
+
+text = "Python 3.14"
+
+result = re.findall(r"[A-Za-z]+", text)
+
+print(result)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>['Python']</div>
+<div class="explain"><strong>설명</strong><br><code>[A-Za-z]</code>는 영어 대문자와 소문자를 의미합니다.</div>
+
+<h3>예제 275. 한글 찾기</h3>
+<pre><code>import re
+
+text = "Python 파이썬 123"
+
+result = re.findall(r"[가-힣]+", text)
+
+print(result)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>['파이썬']</div>
+<div class="explain"><strong>설명</strong><br><code>[가-힣]</code> 범위를 사용하면 한글 문자열을 찾을 수 있습니다.</div>
+
+<h3>예제 276. 공백 기준 분리</h3>
+<pre><code>import re
+
+text = "사과   바나나 포도"
+
+result = re.split(r"\s+", text)
+
+print(result)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>['사과', '바나나', '포도']</div>
+<div class="explain"><strong>설명</strong><br><code>\s+</code>는 하나 이상의 공백 문자를 의미합니다.</div>
+
+<h3>예제 277. 숫자를 별표로 바꾸기</h3>
+<pre><code>import re
+
+text = "비밀번호는 1234입니다."
+
+result = re.sub(r"\d", "*", text)
+
+print(result)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>비밀번호는 ****입니다.</div>
+<div class="explain"><strong>설명</strong><br><code>re.sub()</code>는 정규표현식 패턴에 맞는 부분을 다른 문자열로 바꿉니다.</div>
+
+<h3>예제 278. 이메일 형식 간단 검사</h3>
+<pre><code>import re
+
+email = "[student@example.com](mailto:student@example.com)"
+
+pattern = r"^[\w.-]+@[\w.-]+.[A-Za-z]{2,}$"
+
+print(bool(re.match(pattern, email)))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>True</div>
+<div class="explain"><strong>설명</strong><br><code>^</code>는 시작, <code>$</code>는 끝을 뜻합니다. 이 예제는 간단한 이메일 형식만 검사합니다.</div>
+
+<h3>예제 279. 전화번호 형식 검사</h3>
+<pre><code>import re
+
+phone = "010-1234-5678"
+
+pattern = r"^010-\d{4}-\d{4}$"
+
+print(bool(re.match(pattern, phone)))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>True</div>
+<div class="explain"><strong>설명</strong><br><code>{4}</code>는 앞의 패턴이 정확히 4번 반복됨을 뜻합니다.</div>
+
+<h3>예제 280. 단어 시작 검사</h3>
+<pre><code>import re
+
+text = "Python programming"
+
+print(bool(re.match(r"Python", text)))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>True</div>
+<div class="explain"><strong>설명</strong><br><code>re.match()</code>는 문자열의 처음부터 패턴이 맞는지 확인합니다.</div>
+
+<h3>예제 281. 단어 전체 검사</h3>
+<pre><code>import re
+
+word = "Python"
+
+print(bool(re.fullmatch(r"[A-Za-z]+", word)))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>True</div>
+<div class="explain"><strong>설명</strong><br><code>fullmatch()</code>는 문자열 전체가 패턴과 일치해야 True를 반환합니다.</div>
+
+<h3>예제 282. 여러 단어 찾기</h3>
+<pre><code>import re
+
+text = "cat dog cat bird cat"
+
+result = re.findall(r"cat|dog", text)
+
+print(result)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>['cat', 'dog', 'cat', 'cat']</div>
+<div class="explain"><strong>설명</strong><br><code>|</code>는 또는(or)를 의미합니다.</div>
+
+<h3>예제 283. 대소문자 구분 없이 찾기</h3>
+<pre><code>import re
+
+text = "Python python PYTHON"
+
+result = re.findall("python", text, re.IGNORECASE)
+
+print(result)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>['Python', 'python', 'PYTHON']</div>
+<div class="explain"><strong>설명</strong><br><code>re.IGNORECASE</code>를 사용하면 대소문자를 구분하지 않고 검색합니다.</div>
+
+<h3>예제 284. 패턴 미리 컴파일하기</h3>
+<pre><code>import re
+
+pattern = re.compile(r"\d+")
+
+print(pattern.findall("점수: 80, 나이: 16"))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>['80', '16']</div>
+<div class="explain"><strong>설명</strong><br>같은 패턴을 여러 번 사용할 때는 <code>compile()</code>로 미리 준비할 수 있습니다.</div>
+
+<h3>예제 285. 정규표현식 종합</h3>
+<pre><code>import re
+
+text = "홍길동: 90점, 김민수: 85점, 이서연: 100점"
+
+scores = re.findall(r"\d+", text)
+
+scores = list(map(int, scores))
+
+print(scores)
+print("평균:", sum(scores) / len(scores))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>[90, 85, 100]<br>평균: 91.66666666666667</div>
+<div class="explain"><strong>설명</strong><br>정규표현식으로 숫자를 추출한 뒤 정수로 변환하여 계산할 수 있습니다.</div>
+</section>
+
+<section>
+<h2>4. 이터레이터와 제너레이터 — 예제 286~300</h2>
+
+<h3>예제 286. 반복 가능한 객체</h3>
+<span class="tag">iterator</span><span class="tag">generator</span>
+<pre><code>numbers = [10, 20, 30]
+
+for number in numbers:
+print(number)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>10<br>20<br>30</div>
+<div class="explain"><strong>설명</strong><br>리스트처럼 반복문에서 하나씩 꺼낼 수 있는 객체를 반복 가능한 객체라고 합니다.</div>
+
+<h3>예제 287. iter 함수</h3>
+<pre><code>numbers = [10, 20, 30]
+
+iterator = iter(numbers)
+
+print(iterator)</code></pre>
+
+<div class="output"><strong>실행 결과 예시</strong><br>&lt;list_iterator object at ...&gt;</div>
+<div class="explain"><strong>설명</strong><br><code>iter()</code>는 반복 가능한 객체를 이터레이터로 변환합니다.</div>
+
+<h3>예제 288. next 함수</h3>
+<pre><code>numbers = [10, 20, 30]
+
+iterator = iter(numbers)
+
+print(next(iterator))
+print(next(iterator))
+print(next(iterator))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>10<br>20<br>30</div>
+<div class="explain"><strong>설명</strong><br><code>next()</code>는 이터레이터에서 다음 값을 하나씩 꺼냅니다.</div>
+
+<h3>예제 289. StopIteration</h3>
+<pre><code>numbers = [1, 2]
+
+iterator = iter(numbers)
+
+print(next(iterator))
+print(next(iterator))
+
+# print(next(iterator))</code></pre>
+
+<div class="warning"><strong>주의</strong><br>더 이상 꺼낼 값이 없는데 <code>next()</code>를 호출하면 StopIteration 오류가 발생합니다.</div>
+
+<h3>예제 290. 직접 이터레이터 만들기</h3>
+<pre><code>class CountUp:
+    def __init__(self, limit):
+        self.current = 1
+        self.limit = limit
+
+```
+def __iter__(self):
+    return self
+
+def __next__(self):
+    if self.current > self.limit:
+        raise StopIteration
+
+    value = self.current
+    self.current += 1
+
+    return value
+```
+
+for number in CountUp(3):
+print(number)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>1<br>2<br>3</div>
+<div class="explain"><strong>설명</strong><br><code>__iter__()</code>와 <code>__next__()</code>를 정의하면 직접 이터레이터를 만들 수 있습니다.</div>
+
+<h3>예제 291. 가장 기본적인 제너레이터</h3>
+<pre><code>def generator():
+    yield 1
+    yield 2
+    yield 3
+
+for number in generator():
+print(number)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>1<br>2<br>3</div>
+<div class="explain"><strong>설명</strong><br><code>yield</code>를 사용한 함수는 값을 한 번에 모두 만들지 않고 필요할 때 하나씩 생성합니다.</div>
+
+<h3>예제 292. 제너레이터와 next</h3>
+<pre><code>def generator():
+    yield "첫 번째"
+    yield "두 번째"
+
+g = generator()
+
+print(next(g))
+print(next(g))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>첫 번째<br>두 번째</div>
+<div class="explain"><strong>설명</strong><br>제너레이터도 이터레이터이므로 <code>next()</code>로 값을 하나씩 가져올 수 있습니다.</div>
+
+<h3>예제 293. 숫자 제너레이터</h3>
+<pre><code>def count_up(limit):
+    for number in range(1, limit + 1):
+        yield number
+
+for number in count_up(5):
+print(number)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>1<br>2<br>3<br>4<br>5</div>
+<div class="explain"><strong>설명</strong><br>반복문 안에서 yield를 사용하면 순서대로 값을 생성할 수 있습니다.</div>
+
+<h3>예제 294. 짝수 제너레이터</h3>
+<pre><code>def even_numbers(limit):
+    for number in range(limit + 1):
+        if number % 2 == 0:
+            yield number
+
+print(list(even_numbers(10)))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>[0, 2, 4, 6, 8, 10]</div>
+<div class="explain"><strong>설명</strong><br>제너레이터는 조건에 맞는 값만 순서대로 만들어 낼 수 있습니다.</div>
+
+<h3>예제 295. 무한 제너레이터</h3>
+<pre><code>def infinite_numbers():
+    number = 1
+
+```
+while True:
+    yield number
+    number += 1
+```
+
+g = infinite_numbers()
+
+print(next(g))
+print(next(g))
+print(next(g))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>1<br>2<br>3</div>
+<div class="warning"><strong>주의</strong><br>무한 제너레이터는 끝나지 않으므로 반복문에서 사용할 때 종료 조건을 반드시 고려해야 합니다.</div>
+
+<h3>예제 296. 제너레이터 표현식</h3>
+<pre><code>numbers = (number ** 2 for number in range(1, 6))
+
+print(list(numbers))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>[1, 4, 9, 16, 25]</div>
+<div class="explain"><strong>설명</strong><br>리스트 컴프리헨션의 대괄호를 소괄호로 바꾸면 제너레이터 표현식이 됩니다.</div>
+
+<h3>예제 297. 리스트와 제너레이터 차이</h3>
+<pre><code>list_data = [number ** 2 for number in range(5)]
+generator_data = (number ** 2 for number in range(5))
+
+print(list_data)
+print(generator_data)</code></pre>
+
+<div class="output"><strong>실행 결과 예시</strong><br>[0, 1, 4, 9, 16]<br>&lt;generator object ...&gt;</div>
+<div class="explain"><strong>설명</strong><br>리스트는 모든 값을 즉시 저장하지만, 제너레이터는 필요할 때 값을 생성하므로 메모리를 절약할 수 있습니다.</div>
+
+<h3>예제 298. yield from</h3>
+<pre><code>def numbers():
+    yield from [1, 2, 3]
+    yield from [4, 5]
+
+print(list(numbers()))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>[1, 2, 3, 4, 5]</div>
+<div class="explain"><strong>설명</strong><br><code>yield from</code>은 다른 반복 가능한 객체의 값을 차례대로 전달합니다.</div>
+
+<h3>예제 299. 파일 한 줄씩 읽는 제너레이터</h3>
+<pre><code>def read_lines(filename):
+    with open(filename, "r", encoding="utf-8") as file:
+        for line in file:
+            yield line.strip()
+
+for line in read_lines("memo.txt"):
+print(line)</code></pre>
+
+<div class="explain"><strong>설명</strong><br>큰 파일을 한 번에 모두 읽지 않고 한 줄씩 처리할 때 제너레이터가 유용합니다.</div>
+
+<h3>예제 300. 제너레이터 종합: 피보나치 수열</h3>
+<pre><code>def fibonacci(limit):
+    a, b = 0, 1
+
+```
+for _ in range(limit):
+    yield a
+    a, b = b, a + b
+```
+
+print(list(fibonacci(10)))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>[0, 1, 1, 2, 3, 5, 8, 13, 21, 34]</div>
+<div class="explain"><strong>설명</strong><br>제너레이터를 사용하면 피보나치 수열처럼 순서대로 계산되는 값을 효율적으로 생성할 수 있습니다.</div>
+
+<div class="summary">
+<h3>6편 핵심 요약</h3>
+<ul>
+<li>모듈은 기능을 담은 파이썬 파일이고, 패키지는 여러 모듈을 정리한 폴더 구조입니다.</li>
+<li><code>datetime</code>과 <code>timedelta</code>를 사용하면 날짜와 시간을 다룰 수 있습니다.</li>
+<li>정규표현식은 문자열에서 특정 형식의 데이터를 검색·검사·변환하는 데 사용합니다.</li>
+<li>이터레이터는 값을 하나씩 꺼내는 객체이며, <code>next()</code>로 다음 값을 가져옵니다.</li>
+<li>제너레이터는 <code>yield</code>를 사용하여 필요한 순간에 값을 생성하므로 메모리 효율이 좋습니다.</li>
+</ul>
+</div>
+</section>
+<section class="quiz-intro"><h2>파이썬300F 코드 이해 평가</h2>
+<p>각 코드의 보기 5개 중 <strong>옳은 것 3개를 모두 선택</strong>하세요. 모든 문항에는 실제 파이썬 코드가 포함된 보기가 있습니다.</p>
+<div class="student-grid"><label>학번<input id="studentId" maxlength="20" placeholder="예: 1101"></label><label>이름<input id="studentName" maxlength="20" placeholder="예: 홍길동"></label></div>
+<p><strong>배점:</strong> 문항당 2점 · 50문항 · 총 100점</p></section>
+<section><h2>코드별 복수정답형 50문항</h2><div id="quizContainer"></div>
+<div class="action-row"><button class="btn btn-primary" onclick="gradeQuiz()">채점하고 TXT 저장</button><button class="btn btn-secondary" onclick="window.scrollTo({top:0,behavior:'smooth'})">맨 위로</button></div><div id="resultBox" class="result-box"></div></section></main>
+
+<footer>파이썬 완전 문법 300예제 · 6편 모듈·패키지·날짜와 시간·정규표현식·이터레이터와 제너레이터 251~300</footer>
+<script>
+const questions=[{"number":251,"title":"math 모듈 가져오기","code":"import math\n\nprint(math.sqrt(25))\nprint(math.pi)","options":["[251-가] `math.sqrt(25)`는 25의 제곱근을 계산하여 `5.0`을 반환한다.","[251-나] `math.pi`는 원주율을 나타내는 math 모듈의 상수이다.","[251-다] 이 코드를 실행하려면 먼저 `import math`가 필요하다.","[251-라] `math.sqrt(25)`의 결과 자료형은 정수형 `int`이다.","[251-마] `math.pi()`처럼 괄호를 붙여 호출해야 원주율을 얻을 수 있다."],"answers":[0,1,2],"explanation":"import math 로 수학 관련 기능이 들어 있는 math 모듈을 사용할 수 있습니다. 코드의 실제 실행 순서와 자료형 변화까지 함께 살펴보면 세 정답을 구별할 수 있습니다.","optionExplanations":["옳은 보기입니다. sqrt 함수는 제곱근을 실수형으로 돌려준다.","옳은 보기입니다. math.pi에는 원주율의 근삿값이 저장되어 있다.","옳은 보기입니다. 모듈 이름을 붙여 기능을 호출하려면 해당 모듈을 가져와야 한다.","틀린 보기입니다. 결과는 5가 아니라 실수형 5.0이다.","틀린 보기입니다. pi는 함수가 아니라 상수이므로 괄호 없이 사용한다."]},{"number":252,"title":"math.ceil과 math.floor","code":"import math\n\nprint(math.ceil(3.2))\nprint(math.floor(3.8))","options":["[252-가] `math.ceil(3.2)`는 3.2보다 작지 않은 최소 정수인 4를 반환한다.","[252-나] `math.floor(3.8)`는 3.8보다 크지 않은 최대 정수인 3을 반환한다.","[252-다] `ceil()`은 소수점 이하를 무조건 버리는 함수이다.","[252-라] 두 함수의 결과는 각각 4와 3의 정수형 값이다.","[252-마] `floor(3.8)`의 실행 결과는 4이다."],"answers":[0,1,3],"explanation":"ceil() 은 올림, floor() 는 내림을 수행합니다. 코드의 실제 실행 순서와 자료형 변화까지 함께 살펴보면 세 정답을 구별할 수 있습니다.","optionExplanations":["옳은 보기입니다. ceil은 올림값을 구한다.","옳은 보기입니다. floor는 내림값을 구한다.","틀린 보기입니다. 소수점 이하를 버리는 동작은 floor와도 다르며 ceil은 위쪽 정수로 올린다.","옳은 보기입니다. ceil과 floor는 정수를 반환한다.","틀린 보기입니다. 3.8을 아래쪽 정수로 내리면 3이다."]},{"number":253,"title":"math.pow 사용","code":"import math\n\nprint(math.pow(2, 5))","options":["[253-가] `math.pow(2, 5)`는 2의 5제곱을 계산한다.","[253-나] 출력값은 `32.0`으로 실수형이다.","[253-다] `math.pow(2, 5)`는 2와 5를 곱해 10을 반환한다.","[253-라] 이 코드는 random 모듈을 가져와야 실행된다.","[253-마] 같은 수학적 값은 기본 연산식 `2 ** 5`로도 계산할 수 있다."],"answers":[0,1,4],"explanation":"math.pow(a, b) 는 a의 b제곱을 실수 형태로 반환합니다. 코드의 실제 실행 순서와 자료형 변화까지 함께 살펴보면 세 정답을 구별할 수 있습니다.","optionExplanations":["옳은 보기입니다. 첫 번째 인수를 밑, 두 번째 인수를 지수로 사용한다.","옳은 보기입니다. math.pow는 계산 결과를 float로 반환한다.","틀린 보기입니다. pow는 곱셈이 아니라 거듭제곱을 수행한다.","틀린 보기입니다. 사용하는 모듈은 random이 아니라 math이다.","옳은 보기입니다. 거듭제곱 연산자 **도 같은 값을 만든다."]},{"number":254,"title":"random 모듈","code":"import random\n\nprint(random.randint(1, 10))","options":["[254-가] `random.randint(1, 10)`은 1과 10을 모두 포함한 범위에서 정수 하나를 고른다.","[254-나] 이 함수는 항상 예시처럼 7만 출력한다.","[254-다] 프로그램을 여러 번 실행하면 출력값이 달라질 수 있다.","[254-라] 출력 가능한 값의 개수는 10개이다.","[254-마] `randint(1, 10)`은 1 이상 10 미만의 실수를 반환한다."],"answers":[0,2,3],"explanation":"randint(1, 10) 은 1부터 10까지의 정수 중 하나를 무작위로 선택합니다. 코드의 실제 실행 순서와 자료형 변화까지 함께 살펴보면 세 정답을 구별할 수 있습니다.","optionExplanations":["옳은 보기입니다. randint의 양 끝값은 포함된다.","틀린 보기입니다. 7은 가능한 실행 결과 중 하나일 뿐 고정값이 아니다.","옳은 보기입니다. 난수 선택이므로 실행마다 결과가 달라질 수 있다.","옳은 보기입니다. 1부터 10까지 정수는 모두 10개이다.","틀린 보기입니다. 정수를 반환하며 상한 10도 포함한다."]},{"number":255,"title":"리스트에서 무작위 선택","code":"import random\n\nfoods = [\"김밥\", \"라면\", \"비빔밥\", \"떡볶이\"]\n\nprint(random.choice(foods))","options":["[255-가] `random.choice(foods)`는 네 음식 중 한 요소를 선택한다.","[255-나] `choice()`는 리스트의 모든 요소를 무작위 순서로 재배열한다.","[255-다] 선택 결과는 `foods` 리스트에 들어 있는 문자열 중 하나이다.","[255-라] 리스트가 비어 있어도 `random.choice([])`는 빈 문자열을 반환한다.","[255-마] 원본 `foods` 리스트의 순서와 내용은 choice 호출만으로 바뀌지 않는다."],"answers":[0,2,4],"explanation":"choice() 는 리스트에서 요소 하나를 무작위로 선택합니다. 코드의 실제 실행 순서와 자료형 변화까지 함께 살펴보면 세 정답을 구별할 수 있습니다.","optionExplanations":["옳은 보기입니다. choice는 시퀀스에서 요소 하나를 반환한다.","틀린 보기입니다. 전체 순서를 섞는 함수는 shuffle이다.","옳은 보기입니다. 리스트 밖의 새로운 음식 이름을 생성하지 않는다.","틀린 보기입니다. 빈 시퀀스에서는 IndexError가 발생한다.","옳은 보기입니다. choice는 요소를 읽어 반환할 뿐 리스트를 수정하지 않는다."]},{"number":256,"title":"리스트 섞기","code":"import random\n\nnumbers = [1, 2, 3, 4, 5]\n\nrandom.shuffle(numbers)\n\nprint(numbers)","options":["[256-가] `random.shuffle(numbers)`는 리스트 자체의 요소 순서를 바꾼다.","[256-나] `random.shuffle(numbers)`는 새 리스트를 반환하고 원본은 그대로 둔다.","[256-다] 실행할 때마다 반드시 `[3, 1, 5, 2, 4]`가 나온다.","[256-라] 섞은 뒤에도 1부터 5까지의 모든 값은 한 번씩 남아 있다.","[256-마] `shuffle()`의 반환값을 출력하는 대신 변경된 `numbers`를 출력해야 섞인 결과를 볼 수 있다."],"answers":[0,3,4],"explanation":"shuffle() 은 원본 리스트의 순서를 무작위로 섞습니다. 코드의 실제 실행 순서와 자료형 변화까지 함께 살펴보면 세 정답을 구별할 수 있습니다.","optionExplanations":["옳은 보기입니다. shuffle은 원본 리스트를 제자리에서 수정한다.","틀린 보기입니다. 새 리스트가 아니라 원본 리스트를 변경한다.","틀린 보기입니다. 제시된 배열은 실행 결과의 한 예일 뿐이다.","옳은 보기입니다. 순서만 변하고 요소의 구성은 유지된다.","옳은 보기입니다. shuffle의 반환값은 None이며 리스트가 직접 수정된다."]},{"number":257,"title":"별칭으로 모듈 가져오기","code":"import math as m\n\nprint(m.sqrt(81))","options":["[257-가] 별칭을 사용한 뒤에도 반드시 `math.sqrt(81)`만 써야 한다.","[257-나] `import math as m`은 math 모듈에 `m`이라는 별칭을 붙인다.","[257-다] 제곱근 함수는 `m.sqrt(81)`처럼 별칭을 통해 호출한다.","[257-라] 출력 결과는 `9.0`이다.","[257-마] `as m`은 sqrt 함수의 이름을 m으로 바꾸는 문법이다."],"answers":[1,2,3],"explanation":"as 를 사용하면 모듈 이름을 짧은 별칭으로 사용할 수 있습니다. 코드의 실제 실행 순서와 자료형 변화까지 함께 살펴보면 세 정답을 구별할 수 있습니다.","optionExplanations":["틀린 보기입니다. 현재 이름 공간에는 m이 바인딩되므로 m.sqrt를 사용할 수 있다.","옳은 보기입니다. as 뒤의 이름으로 모듈을 참조할 수 있다.","옳은 보기입니다. 원래 모듈명 대신 별칭 m을 사용한다.","옳은 보기입니다. 81의 제곱근은 실수형 9.0이다.","틀린 보기입니다. 함수가 아니라 모듈 전체에 별칭을 지정한다."]},{"number":258,"title":"필요한 기능만 가져오기","code":"from math import sqrt, pi\n\nprint(sqrt(16))\nprint(pi)","options":["[258-가] 이 코드에서는 `math.sqrt(16)`만 유효하고 `sqrt(16)`은 오류이다.","[258-나] `from math import sqrt, pi`는 sqrt 함수와 pi 상수만 현재 이름 공간으로 가져온다.","[258-다] 따라서 `sqrt(16)`처럼 `math.`를 붙이지 않고 호출할 수 있다.","[258-라] `pi`는 호출 가능한 함수이므로 `pi()`로 써야 한다.","[258-마] 두 출력은 각각 `4.0`과 원주율의 근삿값이다."],"answers":[1,2,4],"explanation":"from 모듈 import 이름 을 사용하면 필요한 기능만 직접 가져올 수 있습니다. 코드의 실제 실행 순서와 자료형 변화까지 함께 살펴보면 세 정답을 구별할 수 있습니다.","optionExplanations":["틀린 보기입니다. sqrt를 직접 가져왔으므로 sqrt(16)이 유효하다.","옳은 보기입니다. 선택한 이름을 모듈 접두사 없이 사용할 수 있다.","옳은 보기입니다. 직접 가져온 이름은 바로 참조할 수 있다.","틀린 보기입니다. pi는 숫자 상수이다.","옳은 보기입니다. sqrt(16)은 4.0이고 pi는 원주율 상수이다."]},{"number":259,"title":"사용자 모듈 만들기","code":"# my_module.py\n\ndef add(a, b):\n    return a + b\n\n# main.py\n\nimport my_module\nprint(my_module.add(10, 20))","options":["[259-가] `import my_module`은 my_module.py의 파일 내용을 문자열로 읽는 명령이다.","[259-나] `my_module.py`에 정의한 `add()`를 다른 파일에서 가져와 재사용한다.","[259-다] add 함수에는 반환문이 없으므로 출력은 `None`이다.","[259-라] `my_module.add(10, 20)`은 두 인수를 더해 30을 반환한다.","[259-마] 두 파일이 같은 모듈 탐색 경로에 있어야 일반적인 방식으로 import할 수 있다."],"answers":[1,3,4],"explanation":"직접 만든 파이썬 파일도 모듈로 불러와 사용할 수 있습니다. 코드의 실제 실행 순서와 자료형 변화까지 함께 살펴보면 세 정답을 구별할 수 있습니다.","optionExplanations":["틀린 보기입니다. import는 모듈 객체를 로드하고 이름을 바인딩한다.","옳은 보기입니다. 별도 파이썬 파일의 함수를 모듈 기능으로 활용한다.","틀린 보기입니다. 함수에 return a+b가 있어 30을 반환한다.","옳은 보기입니다. add 함수의 return 식이 a+b이다.","옳은 보기입니다. 파이썬이 my_module.py를 찾을 수 있어야 한다."]},{"number":260,"title":"패키지 구조 예시","code":"my_package/\n    __init__.py\n    calculator.py\n\n# calculator.py\n\ndef multiply(a, b):\n    return a * b\n\n# main.py\n\nfrom my_package.calculator import multiply\nprint(multiply(3, 4))","options":["[260-가] `__init__.py`는 multiply 함수의 실행 결과를 자동으로 0으로 바꾼다.","[260-나] 패키지는 오직 하나의 파이썬 파일만 담을 수 있다.","[260-다] `my_package` 폴더 안의 `calculator.py`는 패키지에 속한 모듈이다.","[260-라] `from my_package.calculator import multiply`는 multiply 함수를 직접 가져온다.","[260-마] `multiply(3, 4)`의 결과는 12이다."],"answers":[2,3,4],"explanation":"패키지는 여러 모듈을 폴더 단위로 정리한 구조입니다. 코드의 실제 실행 순서와 자료형 변화까지 함께 살펴보면 세 정답을 구별할 수 있습니다.","optionExplanations":["틀린 보기입니다. __init__.py는 패키지 초기화와 인식에 관련되며 결과를 바꾸지 않는다.","틀린 보기입니다. 패키지는 여러 모듈을 폴더 단위로 묶기 위한 구조이다.","옳은 보기입니다. 패키지 폴더가 여러 모듈을 구조화한다.","옳은 보기입니다. 가져온 뒤 모듈 접두사 없이 호출할 수 있다.","옳은 보기입니다. 함수는 두 값을 곱해 반환한다."]},{"number":261,"title":"현재 날짜와 시간","code":"from datetime import datetime\n\nnow = datetime.now()\n\nprint(now)","options":["[261-가] `datetime.now()`는 코드를 실행하는 시점의 날짜와 시간을 담은 객체를 만든다.","[261-나] 출력에는 연·월·일뿐 아니라 시·분·초와 마이크로초가 나타날 수 있다.","[261-다] 실행 시점이 바뀌면 출력값도 달라진다.","[261-라] `now`에는 날짜 형식의 문자열만 저장된다.","[261-마] `datetime.now()`는 항상 2026년 7월 4일을 반환한다."],"answers":[0,1,2],"explanation":"datetime.now() 는 현재 날짜와 시간을 가져옵니다. 코드의 실제 실행 순서와 자료형 변화까지 함께 살펴보면 세 정답을 구별할 수 있습니다.","optionExplanations":["옳은 보기입니다. 현재 시각을 datetime 객체로 반환한다.","옳은 보기입니다. datetime의 기본 문자열 표현에는 세부 시각이 포함될 수 있다.","옳은 보기입니다. 현재 시각을 읽기 때문에 고정된 결과가 아니다.","틀린 보기입니다. now는 문자열이 아니라 datetime 객체이다.","틀린 보기입니다. 제시된 날짜는 실행 결과 예시일 뿐이다."]},{"number":262,"title":"현재 연도, 월, 일","code":"from datetime import datetime\n\nnow = datetime.now()\n\nprint(now.year)\nprint(now.month)\nprint(now.day)","options":["[262-가] `now.year`, `now.month`, `now.day`는 각각 연도·월·일 정수를 제공한다.","[262-나] 세 번의 print는 날짜 정보를 세 줄로 나누어 출력한다.","[262-다] `now.month`는 \"7월\"이라는 문자열을 반환한다.","[262-라] 현재 날짜가 2026년 7월 4일이라면 2026, 7, 4가 순서대로 출력된다.","[262-마] `now.day`는 요일 번호를 의미한다."],"answers":[0,1,3],"explanation":"datetime 객체의 year , month , day 속성으로 날짜 정보를 얻습니다. 코드의 실제 실행 순서와 자료형 변화까지 함께 살펴보면 세 정답을 구별할 수 있습니다.","optionExplanations":["옳은 보기입니다. datetime 객체의 날짜 속성이다.","옳은 보기입니다. 각 print가 한 속성을 출력한다.","틀린 보기입니다. month 속성은 정수 7을 반환한다.","옳은 보기입니다. 각 속성값이 그대로 출력된다.","틀린 보기입니다. day는 월 안에서의 날짜를 의미한다."]},{"number":263,"title":"현재 시각","code":"from datetime import datetime\n\nnow = datetime.now()\n\nprint(now.hour)\nprint(now.minute)\nprint(now.second)","options":["[263-가] `now.hour`, `now.minute`, `now.second`는 현재 시각의 시·분·초를 나타낸다.","[263-나] 각 속성값은 정수형으로 얻어진다.","[263-다] `now.hour`는 항상 1부터 12 사이의 값만 반환한다.","[263-라] `now.second`에는 마이크로초까지 함께 들어 있다.","[263-마] 현재 시각이 12시 30분 45초라면 세 값이 각각 한 줄씩 출력된다."],"answers":[0,1,4],"explanation":"hour , minute , second 속성으로 시각 정보를 확인합니다. 코드의 실제 실행 순서와 자료형 변화까지 함께 살펴보면 세 정답을 구별할 수 있습니다.","optionExplanations":["옳은 보기입니다. datetime 객체의 시간 속성이다.","옳은 보기입니다. 시간 구성 요소는 정수이다.","틀린 보기입니다. hour는 24시간 형식으로 0부터 23까지 가능하다.","틀린 보기입니다. second는 초만, microsecond는 별도 속성이다.","옳은 보기입니다. 세 print 문이 순서대로 실행된다."]},{"number":264,"title":"날짜 직접 만들기","code":"from datetime import datetime\n\nbirthday = datetime(2010, 5, 10)\n\nprint(birthday)","options":["[264-가] `datetime(2010, 5, 10)`은 2010년 5월 10일을 나타내는 객체를 만든다.","[264-나] 두 번째 인수 5는 금요일을 뜻한다.","[264-다] 시각을 따로 지정하지 않았으므로 시·분·초는 모두 0이다.","[264-라] 출력은 `2010-05-10 00:00:00` 형태가 된다.","[264-마] 월과 일은 문자열로 전달해야 하므로 현재 코드는 오류이다."],"answers":[0,2,3],"explanation":"datetime(연도, 월, 일) 로 원하는 날짜를 직접 만들 수 있습니다. 코드의 실제 실행 순서와 자료형 변화까지 함께 살펴보면 세 정답을 구별할 수 있습니다.","optionExplanations":["옳은 보기입니다. 연·월·일을 직접 지정한다.","틀린 보기입니다. 두 번째 인수는 월을 뜻한다.","옳은 보기입니다. 생략된 시간 인수는 0으로 설정된다.","옳은 보기입니다. datetime의 기본 표시 형식이다.","틀린 보기입니다. datetime 생성자는 연·월·일을 정수로 받는다."]},{"number":265,"title":"날짜 형식 바꾸기","code":"from datetime import datetime\n\nnow = datetime.now()\n\nprint(now.strftime(\"%Y년 %m월 %d일\"))","options":["[265-가] `strftime(\"%Y년 %m월 %d일\")`은 datetime 객체를 지정한 형식의 문자열로 바꾼다.","[265-나] strftime 호출은 now 객체 자체의 날짜를 영구적으로 변경한다.","[265-다] `%Y`, `%m`, `%d`는 각각 네 자리 연도, 두 자리 월, 두 자리 일을 뜻한다.","[265-라] `%Y`는 현재 시각의 초를 출력하는 코드이다.","[265-마] 7월과 4일은 기본적으로 `07`, `04`처럼 두 자리로 표현된다."],"answers":[0,2,4],"explanation":"strftime() 는 날짜와 시간을 원하는 문자열 형식으로 바꿉니다. 코드의 실제 실행 순서와 자료형 변화까지 함께 살펴보면 세 정답을 구별할 수 있습니다.","optionExplanations":["옳은 보기입니다. strftime은 형식화된 문자열을 만든다.","틀린 보기입니다. 새 문자열을 반환할 뿐 원본 datetime은 바뀌지 않는다.","옳은 보기입니다. 각 형식 코드의 의미이다.","틀린 보기입니다. %Y는 연도를 나타낸다.","옳은 보기입니다. %m과 %d는 두 자리 숫자를 사용한다."]},{"number":266,"title":"시간 형식 바꾸기","code":"from datetime import datetime\n\nnow = datetime.now()\n\nprint(now.strftime(\"%H:%M:%S\"))","options":["[266-가] `%H:%M:%S`는 시·분·초를 콜론으로 구분해 출력한다.","[266-나] `%M`은 월을, `%S`는 연도를 뜻한다.","[266-다] 오전 9시에는 `%H`가 반드시 `9` 한 자리로 출력된다.","[266-라] `%H`는 24시간제 시각을 두 자리로 표현한다.","[266-마] 결과는 datetime 객체가 아니라 형식화된 문자열이다."],"answers":[0,3,4],"explanation":"%H 는 시, %M 은 분, %S 는 초를 뜻합니다. 코드의 실제 실행 순서와 자료형 변화까지 함께 살펴보면 세 정답을 구별할 수 있습니다.","optionExplanations":["옳은 보기입니다. 각 형식 코드 사이의 콜론이 그대로 포함된다.","틀린 보기입니다. %M은 분, %S는 초이다.","틀린 보기입니다. %H는 09처럼 두 자리로 출력된다.","옳은 보기입니다. %H는 00부터 23까지의 시를 나타낸다.","옳은 보기입니다. strftime의 반환값은 str이다."]},{"number":267,"title":"문자열을 날짜로 변환","code":"from datetime import datetime\n\ntext = \"2026-07-04\"\n\ndate = datetime.strptime(text, \"%Y-%m-%d\")\n\nprint(date)","options":["[267-가] strptime은 datetime 객체를 문자열로 바꾸는 함수이다.","[267-나] `datetime.strptime(text, \"%Y-%m-%d\")`는 문자열을 datetime 객체로 해석한다.","[267-다] 문자열의 하이픈 위치와 형식 문자열의 하이픈 위치가 일치해야 한다.","[267-라] 시각 정보가 없으므로 변환된 객체의 시·분·초는 0이다.","[267-마] 형식을 `%d/%m/%Y`로 바꾸어도 같은 text가 그대로 성공한다."],"answers":[1,2,3],"explanation":"strptime() 는 문자열을 날짜와 시간 객체로 변환합니다. 코드의 실제 실행 순서와 자료형 변화까지 함께 살펴보면 세 정답을 구별할 수 있습니다.","optionExplanations":["틀린 보기입니다. 그 역할은 strftime이며 strptime은 반대 방향이다.","옳은 보기입니다. strptime은 문자열 파싱 함수이다.","옳은 보기입니다. 입력 형식과 패턴이 맞아야 변환된다.","옳은 보기입니다. 날짜만 파싱하면 자정으로 설정된다.","틀린 보기입니다. 입력 문자열과 형식이 맞지 않아 ValueError가 발생한다."]},{"number":268,"title":"날짜 더하기","code":"from datetime import datetime, timedelta\n\ntoday = datetime.now()\nafter_7_days = today + timedelta(days=7)\n\nprint(after_7_days.strftime(\"%Y-%m-%d\"))","options":["[268-가] 이 연산은 today 객체에서 7일을 빼는 동작이다.","[268-나] `timedelta(days=7)`은 7일 길이의 시간 간격을 만든다.","[268-다] `today + timedelta(days=7)`은 today보다 7일 뒤의 datetime을 계산한다.","[268-라] timedelta는 오직 초 단위만 지정할 수 있다.","[268-마] strftime은 계산된 날짜를 `연-월-일` 문자열로 출력하는 데 사용된다."],"answers":[1,2,4],"explanation":"timedelta 를 사용하면 날짜에 일, 시간, 분 등을 더하거나 뺄 수 있습니다. 코드의 실제 실행 순서와 자료형 변화까지 함께 살펴보면 세 정답을 구별할 수 있습니다.","optionExplanations":["틀린 보기입니다. 더하기 연산이므로 7일 뒤를 구한다.","옳은 보기입니다. timedelta는 기간을 표현한다.","옳은 보기입니다. datetime과 기간을 더할 수 있다.","틀린 보기입니다. days, seconds, minutes, hours 등 여러 단위를 사용할 수 있다.","옳은 보기입니다. 마지막 출력에서 날짜 형식을 정한다."]},{"number":269,"title":"날짜 차이 계산","code":"from datetime import datetime\n\nstart = datetime(2026, 7, 1)\nend = datetime(2026, 7, 10)\n\ndifference = end - start\n\nprint(difference.days)","options":["[269-가] 날짜를 빼면 결과가 문자열 `\"9일\"`로 반환된다.","[269-나] `end - start`는 두 날짜 사이의 기간을 timedelta 객체로 만든다.","[269-다] start와 end의 순서를 바꾸어도 항상 양수 9가 나온다.","[269-라] 7월 1일부터 7월 10일까지의 차이는 9일이다.","[269-마] `difference.days`로 전체 일수 성분을 얻는다."],"answers":[1,3,4],"explanation":"두 날짜를 빼면 날짜 차이를 나타내는 timedelta 객체가 만들어집니다. 코드의 실제 실행 순서와 자료형 변화까지 함께 살펴보면 세 정답을 구별할 수 있습니다.","optionExplanations":["틀린 보기입니다. 반환값은 timedelta 객체이다.","옳은 보기입니다. datetime끼리 뺀 결과는 timedelta이다.","틀린 보기입니다. 순서를 바꾸면 -9일이 된다.","옳은 보기입니다. 날짜 간 경과 일수는 9이다.","옳은 보기입니다. days 속성이 일 수를 제공한다."]},{"number":270,"title":"time 모듈로 잠시 멈추기","code":"import time\n\nprint(\"시작\")\ntime.sleep(2)\nprint(\"2초 후 실행\")","options":["[270-가] sleep은 컴퓨터의 현재 시각을 2초 뒤로 변경한다.","[270-나] 두 print 문은 동시에 실행된다.","[270-다] `time.sleep(2)`는 현재 실행 흐름을 약 2초 동안 일시 정지한다.","[270-라] \"시작\"이 먼저 출력되고 잠시 뒤 \"2초 후 실행\"이 출력된다.","[270-마] sleep의 인수는 초 단위이며 소수도 사용할 수 있다."],"answers":[2,3,4],"explanation":"sleep(2) 는 프로그램 실행을 2초 동안 멈춥니다. 코드의 실제 실행 순서와 자료형 변화까지 함께 살펴보면 세 정답을 구별할 수 있습니다.","optionExplanations":["틀린 보기입니다. 프로그램 실행만 지연하며 시스템 시각을 바꾸지 않는다.","틀린 보기입니다. 첫 출력 후 지연을 거쳐 두 번째 출력이 실행된다.","옳은 보기입니다. sleep은 지정한 시간만큼 실행을 멈춘다.","옳은 보기입니다. sleep 앞뒤의 print 순서가 유지된다.","옳은 보기입니다. 예를 들어 sleep(0.5)도 가능하다."]},{"number":271,"title":"re 모듈 가져오기","code":"import re\n\ntext = \"Python is fun\"\n\nresult = re.search(\"Python\", text)\n\nprint(result)","options":["[271-가] `re.search(\"Python\", text)`는 문자열 전체에서 첫 번째 일치 위치를 찾는다.","[271-나] 일치하면 Match 객체가 반환된다.","[271-다] 이 예제에서는 Python이 인덱스 0부터 6 직전까지 일치한다.","[271-라] search의 결과는 항상 True 또는 False만 반환한다.","[271-마] 패턴이 없으면 빈 문자열이 반환된다."],"answers":[0,1,2],"explanation":"re.search() 는 문자열 안에서 패턴을 찾습니다. 코드의 실제 실행 순서와 자료형 변화까지 함께 살펴보면 세 정답을 구별할 수 있습니다.","optionExplanations":["옳은 보기입니다. search는 시작 위치와 관계없이 패턴을 탐색한다.","옳은 보기입니다. 검색 성공 결과는 Match 객체이다.","옳은 보기입니다. 문자열 첫 여섯 글자가 Python이다.","틀린 보기입니다. Match 객체 또는 None을 반환한다.","틀린 보기입니다. 일치하지 않으면 None이 반환된다."]},{"number":272,"title":"검색 결과 확인","code":"import re\n\ntext = \"Python is fun\"\n\nif re.search(\"Python\", text):\n    print(\"찾았습니다.\")","options":["[272-가] `re.search(\"Python\", text)`의 결과는 조건문에서 참으로 평가된다.","[272-나] 패턴이 발견되므로 \"찾았습니다.\"가 출력된다.","[272-다] re.search는 일치 여부와 관계없이 항상 참이다.","[272-라] 검색에 실패하면 if 블록은 실행되지 않는다.","[272-마] 이 코드는 text가 정확히 \"Python\" 한 단어일 때만 성공한다."],"answers":[0,1,3],"explanation":"패턴을 찾으면 Match 객체가 반환되므로 조건문에서 True처럼 사용할 수 있습니다. 코드의 실제 실행 순서와 자료형 변화까지 함께 살펴보면 세 정답을 구별할 수 있습니다.","optionExplanations":["옳은 보기입니다. Match 객체는 불리언 문맥에서 True이다.","옳은 보기입니다. if 블록이 실행된다.","틀린 보기입니다. 실패하면 None을 반환한다.","옳은 보기입니다. None은 거짓으로 평가된다.","틀린 보기입니다. search는 문자열 일부에서도 패턴을 찾는다."]},{"number":273,"title":"숫자 찾기","code":"import re\n\ntext = \"학생 번호는 2026입니다.\"\n\nresult = re.findall(r\"\\d+\", text)\n\nprint(result)","options":["[273-가] 정규식 `\\d+`는 연속된 숫자 한 묶음을 찾는다.","[273-나] `re.findall()`은 찾은 모든 일치를 리스트로 반환한다.","[273-다] `\\d+`는 숫자를 한 자리씩 네 개의 요소로 분리한다.","[273-라] findall의 결과 요소는 자동으로 정수형이 된다.","[273-마] 이 문장에서는 `\"2026\"`이 하나의 요소로 추출된다."],"answers":[0,1,4],"explanation":"\\d 는 숫자 한 자리, + 는 하나 이상 반복을 뜻합니다. 코드의 실제 실행 순서와 자료형 변화까지 함께 살펴보면 세 정답을 구별할 수 있습니다.","optionExplanations":["옳은 보기입니다. \\d는 숫자, +는 하나 이상 반복이다.","옳은 보기입니다. 결과는 문자열 목록이다.","틀린 보기입니다. 플러스 수량자가 연속 숫자를 하나의 일치로 묶는다.","틀린 보기입니다. 정규식으로 추출한 값은 문자열이다.","옳은 보기입니다. 연속된 네 숫자가 한 묶음으로 잡힌다."]},{"number":274,"title":"영문자 찾기","code":"import re\n\ntext = \"Python 3.14\"\n\nresult = re.findall(r\"[A-Za-z]+\", text)\n\nprint(result)","options":["[274-가] `[A-Za-z]+`는 영어 대문자 또는 소문자가 연속된 부분을 찾는다.","[274-나] 이 패턴은 숫자 3과 14도 함께 찾는다.","[274-다] 문자열에서 `Python`만 추출된다.","[274-라] findall의 결과는 `[Python]` 형태의 리스트이다.","[274-마] 대괄호 안의 하이픈은 문자열에서 실제 하이픈만 찾으라는 뜻이다."],"answers":[0,2,3],"explanation":"[A-Za-z] 는 영어 대문자와 소문자를 의미합니다. 코드의 실제 실행 순서와 자료형 변화까지 함께 살펴보면 세 정답을 구별할 수 있습니다.","optionExplanations":["옳은 보기입니다. 문자 범위와 + 수량자를 사용한다.","틀린 보기입니다. 패턴에 숫자 범위가 없다.","옳은 보기입니다. 숫자와 마침표는 패턴에 포함되지 않는다.","옳은 보기입니다. 일치 문자열 하나가 리스트에 담긴다.","틀린 보기입니다. 여기서는 A-Z와 a-z의 문자 범위를 지정한다."]},{"number":275,"title":"한글 찾기","code":"import re\n\ntext = \"Python 파이썬 123\"\n\nresult = re.findall(r\"[가-힣]+\", text)\n\nprint(result)","options":["[275-가] `[가-힣]+`는 완성형 한글 음절이 이어진 부분을 찾는다.","[275-나] 이 패턴은 영어 단어 Python도 함께 추출한다.","[275-다] 결과 리스트에는 `파이썬`만 들어간다.","[275-라] findall은 원본 문자열에서 한글을 삭제한다.","[275-마] `+`가 있으므로 연속된 세 글자가 하나의 일치로 묶인다."],"answers":[0,2,4],"explanation":"[가-힣] 범위를 사용하면 한글 문자열을 찾을 수 있습니다. 코드의 실제 실행 순서와 자료형 변화까지 함께 살펴보면 세 정답을 구별할 수 있습니다.","optionExplanations":["옳은 보기입니다. 가부터 힣까지의 한글 범위를 사용한다.","틀린 보기입니다. 영문자는 가-힣 범위에 속하지 않는다.","옳은 보기입니다. 영문자와 숫자는 패턴에 맞지 않는다.","틀린 보기입니다. findall은 검색만 하며 원본을 변경하지 않는다.","옳은 보기입니다. 하나 이상의 반복을 한 덩어리로 찾는다."]},{"number":276,"title":"공백 기준 분리","code":"import re\n\ntext = \"사과   바나나 포도\"\n\nresult = re.split(r\"\\s+\", text)\n\nprint(result)","options":["[276-가] `\\s+`는 하나 이상의 공백 문자를 뜻한다.","[276-나] re.split은 공백 개수만큼 빈 문자열을 반드시 삽입한다.","[276-다] `\\s+`는 숫자가 연속된 부분을 뜻한다.","[276-라] 여러 칸의 공백도 하나의 구분자로 처리된다.","[276-마] 결과는 사과, 바나나, 포도 세 문자열의 리스트이다."],"answers":[0,3,4],"explanation":"\\s+ 는 하나 이상의 공백 문자를 의미합니다. 코드의 실제 실행 순서와 자료형 변화까지 함께 살펴보면 세 정답을 구별할 수 있습니다.","optionExplanations":["옳은 보기입니다. \\s는 공백류, +는 반복을 의미한다.","틀린 보기입니다. \\s+가 연속 공백을 하나의 구분자로 처리해 중간 빈 항목이 생기지 않는다.","틀린 보기입니다. 숫자 패턴은 \\d+이다.","옳은 보기입니다. 연속 공백 전체가 한 번에 매칭된다.","옳은 보기입니다. 공백을 기준으로 세 부분으로 나뉜다."]},{"number":277,"title":"숫자를 별표로 바꾸기","code":"import re\n\ntext = \"비밀번호는 1234입니다.\"\n\nresult = re.sub(r\"\\d\", \"*\", text)\n\nprint(result)","options":["[277-가] 패턴을 `\\d+`로 바꾸어도 결과는 반드시 별표 네 개가 된다.","[277-나] `re.sub(r\"\\d\", \"*\", text)`는 각 숫자 한 자리를 별표로 바꾼다.","[277-다] 1234의 네 자리가 각각 치환되어 `****`가 된다.","[277-라] 원본 text 변수는 바뀌지 않고 치환된 새 문자열이 result에 저장된다.","[277-마] re.sub는 일치한 숫자를 리스트로 반환한다."],"answers":[1,2,3],"explanation":"re.sub() 는 정규표현식 패턴에 맞는 부분을 다른 문자열로 바꿉니다. 코드의 실제 실행 순서와 자료형 변화까지 함께 살펴보면 세 정답을 구별할 수 있습니다.","optionExplanations":["틀린 보기입니다. 연속 숫자 전체가 한 번 매칭되므로 대체 문자열 별표 하나로 바뀐다.","옳은 보기입니다. \\d가 숫자 한 자리에 매칭된다.","옳은 보기입니다. 일치하는 모든 숫자가 대체된다.","옳은 보기입니다. 문자열은 불변이며 sub가 새 문자열을 반환한다.","틀린 보기입니다. 리스트가 아니라 치환된 문자열을 반환한다."]},{"number":278,"title":"이메일 형식 간단 검사","code":"import re\n\nemail = \"student@example.com\"\npattern = r\"^[\\w.-]+@[\\w.-]+\\.[A-Za-z]{2,}$\"\nprint(bool(re.match(pattern, email)))","options":["[278-가] 이 정규식은 국제 표준의 모든 유효한 이메일을 완벽하게 판별한다.","[278-나] `re.match()`는 문자열의 시작부터 이메일 패턴을 검사한다.","[278-다] `bool(...)`은 Match 객체 또는 None을 True/False로 바꾼다.","[278-라] 패턴의 `^`와 `$`는 각각 숫자의 시작과 끝을 의미한다.","[278-마] `{2,}`는 영문자가 두 번 이상 이어져야 함을 뜻한다."],"answers":[1,2,4],"explanation":"^ 는 시작, $ 는 끝을 뜻합니다. 이 예제는 간단한 이메일 형식만 검사합니다. 코드의 실제 실행 순서와 자료형 변화까지 함께 살펴보면 세 정답을 구별할 수 있습니다.","optionExplanations":["틀린 보기입니다. 교육용의 단순화된 패턴이라 모든 경우를 포괄하지 못한다.","옳은 보기입니다. match는 시작 위치에서 일치를 확인한다.","옳은 보기입니다. 형식 검사 결과를 논리값으로 표현한다.","틀린 보기입니다. 문자열 전체의 시작과 끝을 고정한다.","옳은 보기입니다. 도메인 끝부분 길이를 제한한다."]},{"number":279,"title":"전화번호 형식 검사","code":"import re\n\nphone = \"010-1234-5678\"\n\npattern = r\"^010-\\d{4}-\\d{4}$\"\n\nprint(bool(re.match(pattern, phone)))","options":["[279-가] `\\d{4}`는 숫자가 최대 네 번 나올 수 있다는 뜻이다.","[279-나] 패턴은 `010-` 뒤에 숫자 4자리, 하이픈, 숫자 4자리를 요구한다.","[279-다] `010-123-5678`도 같은 패턴에 일치한다.","[279-라] 전화번호 `010-1234-5678`은 패턴 전체와 일치한다.","[279-마] `^`와 `$` 때문에 앞뒤에 다른 문자가 붙으면 일치하지 않는다."],"answers":[1,3,4],"explanation":"{4} 는 앞의 패턴이 정확히 4번 반복됨을 뜻합니다. 코드의 실제 실행 순서와 자료형 변화까지 함께 살펴보면 세 정답을 구별할 수 있습니다.","optionExplanations":["틀린 보기입니다. 정확히 네 번 반복을 뜻한다.","옳은 보기입니다. 각 구간이 정규식에 명시되어 있다.","틀린 보기입니다. 가운데 구간이 네 자리가 아니므로 실패한다.","옳은 보기입니다. 형식이 정확히 맞는다.","옳은 보기입니다. 전체 문자열 형식을 검사한다."]},{"number":280,"title":"단어 시작 검사","code":"import re\n\ntext = \"Python programming\"\n\nprint(bool(re.match(r\"Python\", text)))","options":["[280-가] re.match는 문자열 어디에 있든 Python을 찾는다.","[280-나] bool을 사용하면 일치 문자열 자체가 출력된다.","[280-다] `re.match(r\"Python\", text)`는 text의 첫 부분이 Python인지 검사한다.","[280-라] 주어진 text는 Python으로 시작하므로 결과는 True이다.","[280-마] text가 `I like Python`이라면 같은 match 호출은 실패한다."],"answers":[2,3,4],"explanation":"re.match() 는 문자열의 처음부터 패턴이 맞는지 확인합니다. 코드의 실제 실행 순서와 자료형 변화까지 함께 살펴보면 세 정답을 구별할 수 있습니다.","optionExplanations":["틀린 보기입니다. 문자열 전체 탐색은 search가 담당한다.","틀린 보기입니다. bool은 True 또는 False로 변환한다.","옳은 보기입니다. match는 문자열 시작에서 패턴을 맞춘다.","옳은 보기입니다. 시작 여섯 글자가 패턴과 일치한다.","옳은 보기입니다. Python이 시작 위치에 없기 때문이다."]},{"number":281,"title":"단어 전체 검사","code":"import re\n\nword = \"Python\"\n\nprint(bool(re.fullmatch(r\"[A-Za-z]+\", word)))","options":["[281-가] `fullmatch()`는 문자열 전체가 패턴과 일치해야 성공한다.","[281-나] `[A-Za-z]+`는 한 글자 이상의 영문자만 허용한다.","[281-다] word가 Python이므로 결과는 True이다.","[281-라] word가 `Python3`이어도 숫자를 무시하고 True가 된다.","[281-마] fullmatch는 문자열의 첫 글자만 검사한다."],"answers":[0,1,2],"explanation":"fullmatch() 는 문자열 전체가 패턴과 일치해야 True를 반환합니다. 코드의 실제 실행 순서와 자료형 변화까지 함께 살펴보면 세 정답을 구별할 수 있습니다.","optionExplanations":["옳은 보기입니다. 부분 일치가 아니라 전체 일치를 검사한다.","옳은 보기입니다. 영문 문자 범위와 반복 조건이다.","옳은 보기입니다. 모든 글자가 영문자이다.","틀린 보기입니다. 숫자는 패턴에 포함되지 않아 전체 일치가 실패한다.","틀린 보기입니다. 문자열 전체를 검사한다."]},{"number":282,"title":"여러 단어 찾기","code":"import re\n\ntext = \"cat dog cat bird cat\"\n\nresult = re.findall(r\"cat|dog\", text)\n\nprint(result)","options":["[282-가] `cat|dog`는 cat 또는 dog에 일치하는 대안 패턴이다.","[282-나] findall은 왼쪽부터 발견된 순서대로 네 개의 일치를 반환한다.","[282-다] 세로줄은 cat과 dog가 연속해서 붙어 있어야 한다는 뜻이다.","[282-라] bird는 패턴에 없으므로 결과에서 제외된다.","[282-마] 결과에는 중복된 cat이 한 번만 저장된다."],"answers":[0,1,3],"explanation":"| 는 또는(or)를 의미합니다. 코드의 실제 실행 순서와 자료형 변화까지 함께 살펴보면 세 정답을 구별할 수 있습니다.","optionExplanations":["옳은 보기입니다. 세로줄은 OR를 의미한다.","옳은 보기입니다. cat, dog, cat, cat 순서이다.","틀린 보기입니다. 연결이 아니라 선택을 뜻한다.","옳은 보기입니다. 대안 목록에 bird가 없다.","틀린 보기입니다. findall은 모든 발생을 그대로 반환한다."]},{"number":283,"title":"대소문자 구분 없이 찾기","code":"import re\n\ntext = \"Python python PYTHON\"\n\nresult = re.findall(\"python\", text, re.IGNORECASE)\n\nprint(result)","options":["[283-가] `re.IGNORECASE`는 검색할 때 영문 대소문자 차이를 무시한다.","[283-나] 세 형태 Python, python, PYTHON이 모두 결과에 포함된다.","[283-다] IGNORECASE를 사용하면 결과가 모두 소문자 python으로 변환된다.","[283-라] 이 플래그는 숫자를 영문자로 바꾸어 검색한다.","[283-마] findall은 원문에 쓰인 대소문자 형태를 유지해 반환한다."],"answers":[0,1,4],"explanation":"re.IGNORECASE 를 사용하면 대소문자를 구분하지 않고 검색합니다. 코드의 실제 실행 순서와 자료형 변화까지 함께 살펴보면 세 정답을 구별할 수 있습니다.","optionExplanations":["옳은 보기입니다. 대소문자 비구분 플래그이다.","옳은 보기입니다. 모두 같은 패턴으로 인식된다.","틀린 보기입니다. 검색 기준만 바뀌며 원문 표기는 유지된다.","틀린 보기입니다. 대소문자 비교에만 관련된다.","옳은 보기입니다. 일치한 실제 문자열을 반환한다."]},{"number":284,"title":"패턴 미리 컴파일하기","code":"import re\n\npattern = re.compile(r\"\\d+\")\n\nprint(pattern.findall(\"점수: 80, 나이: 16\"))","options":["[284-가] `re.compile(r\"\\d+\")`는 숫자 패턴을 재사용 가능한 객체로 만든다.","[284-나] compile을 사용하면 패턴이 한 번만 일치하고 이후에는 사용할 수 없다.","[284-다] `pattern.findall(...)`처럼 객체의 메서드로 검색할 수 있다.","[284-라] 문자열에서 80과 16이 각각 문자열로 추출된다.","[284-마] 결과는 두 숫자의 합인 96이다."],"answers":[0,2,3],"explanation":"같은 패턴을 여러 번 사용할 때는 compile() 로 미리 준비할 수 있습니다. 코드의 실제 실행 순서와 자료형 변화까지 함께 살펴보면 세 정답을 구별할 수 있습니다.","optionExplanations":["옳은 보기입니다. 컴파일된 정규식 객체를 생성한다.","틀린 보기입니다. 같은 패턴을 반복해서 재사용할 수 있다.","옳은 보기입니다. 컴파일된 패턴이 findall 메서드를 제공한다.","옳은 보기입니다. 두 연속 숫자 묶음이 발견된다.","틀린 보기입니다. findall은 계산하지 않고 문자열을 추출한다."]},{"number":285,"title":"정규표현식 종합","code":"import re\n\ntext = \"홍길동: 90점, 김민수: 85점, 이서연: 100점\"\n\nscores = re.findall(r\"\\d+\", text)\n\nscores = list(map(int, scores))\n\nprint(scores)\nprint(\"평균:\", sum(scores) / len(scores))","options":["[285-가] `re.findall(r\"\\d+\", text)`는 세 점수 문자열을 추출한다.","[285-나] 정규식은 학생 이름만 추출하고 점수는 제외한다.","[285-다] `map(int, scores)`는 문자열 점수를 정수로 변환한다.","[285-라] list(map(int, scores))를 생략해도 문자열 리스트에 sum을 바로 적용할 수 있다.","[285-마] 평균은 세 점수의 합을 개수 3으로 나누어 계산한다."],"answers":[0,2,4],"explanation":"정규표현식으로 숫자를 추출한 뒤 정수로 변환하여 계산할 수 있습니다. 코드의 실제 실행 순서와 자료형 변화까지 함께 살펴보면 세 정답을 구별할 수 있습니다.","optionExplanations":["옳은 보기입니다. 90, 85, 100이 검색된다.","틀린 보기입니다. 사용한 패턴은 숫자만 찾는다.","옳은 보기입니다. 평균 계산 전에 자료형을 바꾼다.","틀린 보기입니다. 문자열에는 수치 합계를 위한 sum을 적용할 수 없다.","옳은 보기입니다. sum(scores)/len(scores) 식이다."]},{"number":286,"title":"반복 가능한 객체","code":"numbers = [10, 20, 30]\n\nfor number in numbers:\n    print(number)","options":["[286-가] 리스트 `numbers`는 for 문에서 순서대로 값을 제공하는 반복 가능한 객체이다.","[286-나] for 문은 리스트의 마지막 값 30만 출력한다.","[286-다] 반복이 끝나면 numbers 리스트가 빈 리스트로 변한다.","[286-라] 반복 변수 number에는 차례로 10, 20, 30이 대입된다.","[286-마] 세 값은 각각 별도의 줄에 출력된다."],"answers":[0,3,4],"explanation":"리스트처럼 반복문에서 하나씩 꺼낼 수 있는 객체를 반복 가능한 객체라고 합니다. 코드의 실제 실행 순서와 자료형 변화까지 함께 살펴보면 세 정답을 구별할 수 있습니다.","optionExplanations":["옳은 보기입니다. 리스트는 iterable이다.","틀린 보기입니다. 모든 요소를 순회한다.","틀린 보기입니다. 순회는 리스트 요소를 제거하지 않는다.","옳은 보기입니다. 리스트 순서대로 순회한다.","옳은 보기입니다. 반복마다 print가 한 번 실행된다."]},{"number":287,"title":"iter 함수","code":"numbers = [10, 20, 30]\n\niterator = iter(numbers)\n\nprint(iterator)","options":["[287-가] iter 호출은 numbers를 튜플로 변환한다.","[287-나] `iter(numbers)`는 리스트를 순회할 수 있는 list_iterator 객체를 만든다.","[287-다] iterator는 다음 요소를 꺼낼 위치 상태를 내부에 가진다.","[287-라] iterator 자체를 출력하면 요소 목록이 아니라 객체 표현이 보인다.","[287-마] iterator를 출력하면 자동으로 10, 20, 30이 모두 출력된다."],"answers":[1,2,3],"explanation":"iter() 는 반복 가능한 객체를 이터레이터로 변환합니다. 코드의 실제 실행 순서와 자료형 변화까지 함께 살펴보면 세 정답을 구별할 수 있습니다.","optionExplanations":["틀린 보기입니다. 자료형 변환이 아니라 이터레이터를 만든다.","옳은 보기입니다. 리스트의 이터레이터를 반환한다.","옳은 보기입니다. 이터레이터는 순회 진행 상태를 관리한다.","옳은 보기입니다. 아직 next로 값을 꺼내지 않았기 때문이다.","틀린 보기입니다. 객체 자체 출력은 요소를 순회하지 않는다."]},{"number":288,"title":"next 함수","code":"numbers = [10, 20, 30]\n\niterator = iter(numbers)\n\nprint(next(iterator))\nprint(next(iterator))\nprint(next(iterator))","options":["[288-가] 세 번 모두 같은 첫 값 10을 반환한다.","[288-나] 첫 번째 `next(iterator)`는 10을 반환한다.","[288-다] next를 호출할 때마다 내부 위치가 다음 요소로 이동한다.","[288-라] next는 원본 리스트에서 값을 삭제하면서 반환한다.","[288-마] 세 번 호출하면 10, 20, 30이 차례대로 출력된다."],"answers":[1,2,4],"explanation":"next() 는 이터레이터에서 다음 값을 하나씩 꺼냅니다. 코드의 실제 실행 순서와 자료형 변화까지 함께 살펴보면 세 정답을 구별할 수 있습니다.","optionExplanations":["틀린 보기입니다. 호출할 때마다 다음 값으로 이동한다.","옳은 보기입니다. 이터레이터의 첫 요소이다.","옳은 보기입니다. 이터레이터 상태가 전진한다.","틀린 보기입니다. 이터레이터 위치만 바뀌고 리스트는 유지된다.","옳은 보기입니다. 리스트 순서와 같다."]},{"number":289,"title":"StopIteration","code":"numbers = [1, 2]\n\niterator = iter(numbers)\n\nprint(next(iterator))\nprint(next(iterator))\n\n# print(next(iterator))","options":["[289-가] 값이 없을 때 next는 자동으로 0을 반환한다.","[289-나] 두 번의 next 호출은 각각 1과 2를 반환한다.","[289-다] StopIteration은 파이썬 문법을 잘못 썼을 때만 발생한다.","[289-라] 그 다음 next를 한 번 더 호출하면 StopIteration이 발생한다.","[289-마] 주석 처리된 마지막 줄을 해제하면 예외 처리가 없는 현재 코드는 중단된다."],"answers":[1,3,4],"explanation":"더 이상 꺼낼 값이 없는데 next() 를 호출하면 StopIteration 오류가 발생합니다. 코드의 실제 실행 순서와 자료형 변화까지 함께 살펴보면 세 정답을 구별할 수 있습니다.","optionExplanations":["틀린 보기입니다. 기본값 인수를 주지 않으면 StopIteration을 발생시킨다.","옳은 보기입니다. 리스트에 두 요소가 있다.","틀린 보기입니다. 이터레이터 소진을 알리는 정상적인 제어 신호이기도 하다.","옳은 보기입니다. 더 꺼낼 요소가 없기 때문이다.","옳은 보기입니다. StopIteration이 처리되지 않는다."]},{"number":290,"title":"직접 이터레이터 만들기","code":"class CountUp:\n    def __init__(self, limit):\n        self.current = 1\n        self.limit = limit\n\n    def __iter__(self):\n        return self\n\n    def __next__(self):\n        if self.current > self.limit:\n            raise StopIteration\n        value = self.current\n        self.current += 1\n        return value\n\nfor number in CountUp(3):\n    print(number)","options":["[290-가] CountUp(3)은 0, 1, 2를 출력한다.","[290-나] `__next__()`에서 StopIteration을 발생시키면 for 문이 오류 메시지를 출력한다.","[290-다] `__iter__()`가 self를 반환하므로 CountUp 객체 자체가 이터레이터 역할을 한다.","[290-라] `__next__()`는 current 값을 반환한 뒤 1 증가시킨다.","[290-마] current가 limit보다 커지면 StopIteration을 발생시켜 반복을 끝낸다."],"answers":[2,3,4],"explanation":"__iter__() 와 __next__() 를 정의하면 직접 이터레이터를 만들 수 있습니다. 코드의 실제 실행 순서와 자료형 변화까지 함께 살펴보면 세 정답을 구별할 수 있습니다.","optionExplanations":["틀린 보기입니다. 초기 current가 1이므로 1, 2, 3을 출력한다.","틀린 보기입니다. for 문은 이를 반복 종료 신호로 처리한다.","옳은 보기입니다. 이터러블과 이터레이터를 같은 객체로 구현했다.","옳은 보기입니다. 상태를 갱신하며 다음 수를 준비한다.","옳은 보기입니다. 종료 조건이 명시되어 있다."]},{"number":291,"title":"가장 기본적인 제너레이터","code":"def generator():\n    yield 1\n    yield 2\n    yield 3\n\nfor number in generator():\n    print(number)","options":["[291-가] yield가 들어 있는 generator 함수는 호출 시 제너레이터 객체를 반환한다.","[291-나] for 문은 yield된 1, 2, 3을 순서대로 받는다.","[291-다] 각 yield 뒤에서 함수 상태가 보존되었다가 다음 반복에서 이어진다.","[291-라] 첫 번째 yield를 만나면 함수가 완전히 종료되어 1만 출력된다.","[291-마] yield는 세 값을 동시에 리스트로 만들어 반환한다."],"answers":[0,1,2],"explanation":"yield 를 사용한 함수는 값을 한 번에 모두 만들지 않고 필요할 때 하나씩 생성합니다. 코드의 실제 실행 순서와 자료형 변화까지 함께 살펴보면 세 정답을 구별할 수 있습니다.","optionExplanations":["옳은 보기입니다. 함수 본문은 next가 호출될 때 진행된다.","옳은 보기입니다. 각 yield가 값을 하나씩 제공한다.","옳은 보기입니다. 제너레이터의 핵심 동작이다.","틀린 보기입니다. yield는 일시 중지이며 다음 호출에서 재개된다.","틀린 보기입니다. 값을 하나씩 지연 생성한다."]},{"number":292,"title":"제너레이터와 next","code":"def generator():\n    yield \"첫 번째\"\n    yield \"두 번째\"\n\ng = generator()\n\nprint(next(g))\nprint(next(g))","options":["[292-가] `g = generator()`는 아직 문자열을 출력하지 않고 제너레이터 객체를 만든다.","[292-나] 첫 next는 \"첫 번째\", 두 번째 next는 \"두 번째\"를 반환한다.","[292-다] generator()를 호출하는 순간 두 문자열이 모두 메모리 리스트로 만들어진다.","[292-라] 두 번째 값을 얻은 뒤 다시 next를 호출하면 StopIteration이 발생한다.","[292-마] next(g)는 항상 첫 번째 yield로 되돌아간다."],"answers":[0,1,3],"explanation":"제너레이터도 이터레이터이므로 next() 로 값을 하나씩 가져올 수 있습니다. 코드의 실제 실행 순서와 자료형 변화까지 함께 살펴보면 세 정답을 구별할 수 있습니다.","optionExplanations":["옳은 보기입니다. 함수 실행은 next 호출 때 시작된다.","옳은 보기입니다. yield 순서대로 값이 나온다.","틀린 보기입니다. 제너레이터는 필요할 때 값을 생성한다.","옳은 보기입니다. 더 이상의 yield가 없다.","틀린 보기입니다. 제너레이터는 이전 중단 지점 다음에서 재개한다."]},{"number":293,"title":"숫자 제너레이터","code":"def count_up(limit):\n    for number in range(1, limit + 1):\n        yield number\n\nfor number in count_up(5):\n    print(number)","options":["[293-가] `range(1, limit + 1)`은 limit 값까지 포함하도록 범위를 만든다.","[293-나] yield number가 1부터 5까지를 한 번씩 제공한다.","[293-다] 출력에는 0부터 4까지가 나타난다.","[293-라] limit + 1은 숫자를 하나 더 yield하므로 6도 출력된다.","[293-마] count_up(5)는 리스트가 아니라 제너레이터 객체를 반환한다."],"answers":[0,1,4],"explanation":"반복문 안에서 yield를 사용하면 순서대로 값을 생성할 수 있습니다. 코드의 실제 실행 순서와 자료형 변화까지 함께 살펴보면 세 정답을 구별할 수 있습니다.","optionExplanations":["옳은 보기입니다. range의 끝값은 제외되므로 1을 더한다.","옳은 보기입니다. 반복 변수의 각 값을 순서대로 생성한다.","틀린 보기입니다. 범위가 1부터 limit까지이다.","틀린 보기입니다. range의 끝값 limit+1은 포함되지 않는다.","옳은 보기입니다. yield가 포함된 함수이기 때문이다."]},{"number":294,"title":"짝수 제너레이터","code":"def even_numbers(limit):\n    for number in range(limit + 1):\n        if number % 2 == 0:\n            yield number\n\nprint(list(even_numbers(10)))","options":["[294-가] `number % 2 == 0`은 짝수인지 검사하는 조건이다.","[294-나] 이 제너레이터는 1부터 시작하므로 0은 결과에 없다.","[294-다] range(limit + 1)이므로 limit이 10일 때 10도 검사 대상에 포함된다.","[294-라] list로 변환하면 `[0, 2, 4, 6, 8, 10]`이 된다.","[294-마] 조건식은 홀수만 yield하도록 작성되어 있다."],"answers":[0,2,3],"explanation":"제너레이터는 조건에 맞는 값만 순서대로 만들어 낼 수 있습니다. 코드의 실제 실행 순서와 자료형 변화까지 함께 살펴보면 세 정답을 구별할 수 있습니다.","optionExplanations":["옳은 보기입니다. 2로 나눈 나머지가 0인 수를 고른다.","틀린 보기입니다. range는 기본적으로 0부터 시작한다.","옳은 보기입니다. range(11)은 0부터 10까지 만든다.","옳은 보기입니다. 조건을 만족한 값들이 순서대로 수집된다.","틀린 보기입니다. 나머지가 0인 짝수만 통과한다."]},{"number":295,"title":"무한 제너레이터","code":"def infinite_numbers():\n    number = 1\n    while True:\n        yield number\n        number += 1\n\ng = infinite_numbers()\nprint(next(g))\nprint(next(g))\nprint(next(g))","options":["[295-가] `while True` 때문에 제너레이터는 이론상 끝없이 값을 만들 수 있다.","[295-나] infinite_numbers()를 호출하는 순간 무한 반복이 즉시 실행되어 프로그램이 멈춘다.","[295-다] 각 next 호출은 현재 number를 yield한 뒤 값을 1 증가시킨다.","[295-라] yield 뒤의 `number += 1`은 실행되지 않는다.","[295-마] 세 번의 next 호출만 수행하므로 프로그램은 1, 2, 3을 출력하고 끝난다."],"answers":[0,2,4],"explanation":"무한 제너레이터는 끝나지 않으므로 반복문에서 사용할 때 종료 조건을 반드시 고려해야 합니다. 코드의 실제 실행 순서와 자료형 변화까지 함께 살펴보면 세 정답을 구별할 수 있습니다.","optionExplanations":["옳은 보기입니다. 명시적 종료 조건이 없다.","틀린 보기입니다. 제너레이터 본문은 next를 호출할 때만 진행된다.","옳은 보기입니다. 1, 2, 3 순서로 진행된다.","틀린 보기입니다. 다음 next 호출 때 yield 다음 줄부터 재개된다.","옳은 보기입니다. 무한 제너레이터라도 요청한 만큼만 실행된다."]},{"number":296,"title":"제너레이터 표현식","code":"numbers = (number ** 2 for number in range(1, 6))\n\nprint(list(numbers))","options":["[296-가] 소괄호 컴프리헨션은 제곱값을 지연 생성하는 제너레이터 표현식이다.","[296-나] numbers는 처음부터 완성된 리스트이다.","[296-다] 같은 numbers를 list로 한 번 더 변환하면 동일한 값이 다시 모두 나온다.","[296-라] range(1, 6)은 1부터 5까지를 제공한다.","[296-마] list(numbers)는 제너레이터를 모두 소비해 `[1, 4, 9, 16, 25]`를 만든다."],"answers":[0,3,4],"explanation":"리스트 컴프리헨션의 대괄호를 소괄호로 바꾸면 제너레이터 표현식이 됩니다. 코드의 실제 실행 순서와 자료형 변화까지 함께 살펴보면 세 정답을 구별할 수 있습니다.","optionExplanations":["옳은 보기입니다. 리스트를 즉시 만들지 않는다.","틀린 보기입니다. generator 객체이다.","틀린 보기입니다. 이미 소비된 제너레이터는 비어 있다.","옳은 보기입니다. 끝값 6은 제외된다.","옳은 보기입니다. 각 수의 제곱을 차례로 수집한다."]},{"number":297,"title":"리스트와 제너레이터 차이","code":"list_data = [number ** 2 for number in range(5)]\ngenerator_data = (number ** 2 for number in range(5))\n\nprint(list_data)\nprint(generator_data)","options":["[297-가] 두 변수는 자료형과 메모리 사용 방식이 완전히 같다.","[297-나] 리스트 컴프리헨션은 다섯 제곱값을 즉시 계산해 저장한다.","[297-다] 제너레이터 표현식은 값을 필요할 때 계산하도록 준비한다.","[297-라] generator_data 자체를 출력하면 값 목록 대신 generator 객체 표현이 나온다.","[297-마] generator_data를 출력하는 것만으로 모든 제곱값이 소비된다."],"answers":[1,2,3],"explanation":"리스트는 모든 값을 즉시 저장하지만, 제너레이터는 필요할 때 값을 생성하므로 메모리를 절약할 수 있습니다. 코드의 실제 실행 순서와 자료형 변화까지 함께 살펴보면 세 정답을 구별할 수 있습니다.","optionExplanations":["틀린 보기입니다. 하나는 리스트, 다른 하나는 제너레이터이다.","옳은 보기입니다. list_data가 완성된 리스트가 된다.","옳은 보기입니다. generator_data는 지연 평가된다.","옳은 보기입니다. 아직 순회하거나 list로 변환하지 않았다.","틀린 보기입니다. 객체 표현만 출력하고 순회하지 않는다."]},{"number":298,"title":"yield from","code":"def numbers():\n    yield from [1, 2, 3]\n    yield from [4, 5]\n\nprint(list(numbers()))","options":["[298-가] yield from은 리스트 전체를 하나의 요소로 한 번만 반환한다.","[298-나] 첫 번째 `yield from [1, 2, 3]`은 세 값을 차례대로 전달한다.","[298-다] 두 번째 yield from이 이어서 4와 5를 제공한다.","[298-라] 첫 번째 yield from이 끝나면 함수 전체가 즉시 종료된다.","[298-마] list(numbers())의 결과는 1부터 5까지 순서대로 담긴 리스트이다."],"answers":[1,2,4],"explanation":"yield from 은 다른 반복 가능한 객체의 값을 차례대로 전달합니다. 코드의 실제 실행 순서와 자료형 변화까지 함께 살펴보면 세 정답을 구별할 수 있습니다.","optionExplanations":["틀린 보기입니다. 각 요소를 개별적으로 전달한다.","옳은 보기입니다. 내부 반복 가능한 객체의 요소를 위임해 yield한다.","옳은 보기입니다. 앞 반복이 끝난 뒤 다음 목록을 처리한다.","틀린 보기입니다. 다음 문장인 두 번째 yield from으로 계속 진행한다.","옳은 보기입니다. 모든 yield 값이 수집된다."]},{"number":299,"title":"파일 한 줄씩 읽는 제너레이터","code":"def read_lines(filename):\n    with open(filename, \"r\", encoding=\"utf-8\") as file:\n        for line in file:\n            yield line.strip()\n\nfor line in read_lines(\"memo.txt\"):\n    print(line)","options":["[299-가] read_lines는 파일의 모든 줄을 먼저 리스트로 만든 뒤 반환한다.","[299-나] with 문은 파일 사용이 끝난 뒤 파일 객체를 자동으로 닫아 준다.","[299-다] memo.txt가 없어도 빈 제너레이터가 조용히 반환된다.","[299-라] for line in file은 큰 파일을 한꺼번에 읽지 않고 한 줄씩 순회한다.","[299-마] `line.strip()`은 각 줄 양끝의 공백과 줄바꿈을 제거한 값을 yield한다."],"answers":[1,3,4],"explanation":"큰 파일을 한 번에 모두 읽지 않고 한 줄씩 처리할 때 제너레이터가 유용합니다. 코드의 실제 실행 순서와 자료형 변화까지 함께 살펴보면 세 정답을 구별할 수 있습니다.","optionExplanations":["틀린 보기입니다. yield를 사용하여 한 줄씩 지연 생성한다.","옳은 보기입니다. 컨텍스트 관리자가 자원 정리를 담당한다.","틀린 보기입니다. 파일을 열 수 없으면 FileNotFoundError가 발생한다.","옳은 보기입니다. 파일 객체 자체가 줄 단위 이터레이터이다.","옳은 보기입니다. strip 처리된 문자열을 전달한다."]},{"number":300,"title":"제너레이터 종합: 피보나치 수열","code":"def fibonacci(limit):\n    a, b = 0, 1\n    for _ in range(limit):\n        yield a\n        a, b = b, a + b\n\nprint(list(fibonacci(10)))","options":["[300-가] 출력 수열은 매 항이 바로 앞 항에 2를 더해 만들어진다.","[300-나] fibonacci(10)는 즉시 완성된 리스트를 반환한다.","[300-다] 초기값 a=0, b=1에서 시작하므로 첫 번째 yield 값은 0이다.","[300-라] `a, b = b, a + b`는 두 값을 동시에 다음 피보나치 상태로 갱신한다.","[300-마] limit이 10이면 정확히 열 개의 수가 생성된다."],"answers":[2,3,4],"explanation":"제너레이터를 사용하면 피보나치 수열처럼 순서대로 계산되는 값을 효율적으로 생성할 수 있습니다. 코드의 실제 실행 순서와 자료형 변화까지 함께 살펴보면 세 정답을 구별할 수 있습니다.","optionExplanations":["틀린 보기입니다. 앞의 두 항을 더해 다음 항을 만든다.","틀린 보기입니다. 제너레이터를 반환하며 list가 이를 소비한다.","옳은 보기입니다. 피보나치 수열의 첫 항을 a로 둔다.","옳은 보기입니다. 기존 값을 기준으로 병렬 대입한다.","옳은 보기입니다. range(limit)이 열 번 반복된다."]}],labels=["①","②","③","④","⑤"];
+function esc(s){return s.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));}
+function formatChoice(s){return esc(s).replace(/`([^`]+)`/g,"<code>$1</code>");}
+function formatVisibleChoice(s){
+  const match=s.match(/^(\[\d+-[^\]]+\])\s*/);
+  if(!match) return formatChoice(s);
+  const hiddenId=`<span class="hidden-choice-id">${esc(match[1])}</span>`;
+  return hiddenId+formatChoice(s.slice(match[0].length));
+}
+document.getElementById("quizContainer").innerHTML=questions.map(q=>`<article class="quiz-card"><h3>${q.number}번. ${q.title}</h3><div class="question-guide">다음 코드를 분석한 설명 중 옳은 것 3개를 모두 고르시오.</div><pre><code>${esc(q.code)}</code></pre>${q.options.map((o,i)=>`<label class="choice"><input type="checkbox" name="q${q.number}" value="${i}"><b>${labels[i]}</b> ${formatVisibleChoice(o)}</label>`).join("")}</article>`).join("");
+const same=(a,b)=>a.length===b.length&&a.every((v,i)=>v===b[i]),safe=s=>s.trim().replace(/[\\/:*?"<>|\s]+/g,"_");
+const stamp=d=>{const p=n=>String(n).padStart(2,"0");return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}_${p(d.getHours())}시${p(d.getMinutes())}분${p(d.getSeconds())}초`;};
+function gradeQuiz(){
+ const sid=document.getElementById("studentId").value.trim(),name=document.getElementById("studentName").value.trim();
+ if(!sid||!name){alert("학번과 이름을 모두 입력하세요.");return;}
+ let correct=0,reviews=[],lines=[],now=new Date();
+ questions.forEach(q=>{
+  const sel=[...document.querySelectorAll(`input[name="q${q.number}"]:checked`)].map(x=>+x.value).sort((a,b)=>a-b),ans=[...q.answers].sort((a,b)=>a-b),ok=same(sel,ans);
+  if(ok)correct++;
+  const st=sel.length?sel.map(i=>labels[i]).join(", "):"미응답",at=ans.map(i=>labels[i]).join(", ");
+  reviews.push(`<div class="review ${ok?"correct":"wrong"}"><h3>${q.number}번 · ${ok?"정답":"오답"}</h3><div class="answer-line">나의 선택: ${st}</div><div class="answer-line">정답: ${at}</div><p><b>핵심 풀이:</b> ${esc(q.explanation)}</p><ul class="detail-list">${q.optionExplanations.map((e,i)=>`<li><b>${labels[i]}</b> ${formatChoice(e)}</li>`).join("")}</ul></div>`);
+  lines.push(`[${q.number}번] ${q.title}`,`코드:\n${q.code}`,`나의 선택: ${st}`,`정답: ${at}`,`채점 결과: ${ok?"정답":"오답"}`,`핵심 풀이: ${q.explanation}`);
+  q.optionExplanations.forEach((e,i)=>lines.push(`${labels[i]} ${e}`)); lines.push("------------------------------------------------------------");
+ });
+ const score=correct*2,box=document.getElementById("resultBox"); box.style.display="block";
+ box.innerHTML=`<div class="result-summary">${esc(sid)} ${esc(name)} · ${score}점 / 100점 (정답 ${correct}문항, 오답 ${50-correct}문항)</div><p>문항별 정오답과 선택지별 상세 풀이입니다.</p>${reviews.join("")}`; box.scrollIntoView({behavior:"smooth"});
+ const head=["파이썬300F 코드 이해 평가 결과",`학번: ${sid}`,`이름: ${name}`,`점수: ${score}점 / 100점`,`정답 문항 수: ${correct} / 50`,`응시 시각: ${now.toLocaleString("ko-KR")}`,"============================================================"];
+ const blob=new Blob(["\uFEFF"+head.concat(lines).join("\r\n")],{type:"text/plain;charset=utf-8"}),a=document.createElement("a");
+ a.href=URL.createObjectURL(blob); a.download=`${safe(sid)}_${safe(name)}_${score}_파이썬300F_${stamp(now)}.txt`; a.click(); URL.revokeObjectURL(a.href);
+}
+</script></body>
+</html>

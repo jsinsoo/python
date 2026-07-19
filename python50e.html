@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>파이썬300E · 코드별 복수정답형 평가</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f8fafc;color:#1f2937;font-family:"Malgun Gothic","Apple SD Gothic Neo",Arial,sans-serif;line-height:1.75}
+header{padding:45px 20px;text-align:center;background:linear-gradient(135deg,#164e63,#0e7490);color:#fff}
+header h1{margin:0 0 10px;font-size:2.1rem}
+header p{margin:0;opacity:.92}
+main{max-width:1120px;margin:0 auto;padding:25px 18px 60px}
+.notice,section{background:#fff;border-radius:14px;padding:24px;margin:22px 0;box-shadow:0 4px 14px rgba(31,41,55,.08)}
+h2{color:#0e7490;border-bottom:3px solid #a5f3fc;padding-bottom:9px}
+h3{color:#155e75;margin-top:34px}
+.tag{display:inline-block;padding:3px 10px;margin-right:7px;border-radius:20px;background:#cffafe;color:#155e75;font-size:.85rem;font-weight:bold}
+pre{background:#111827;color:#f9fafb;padding:17px;border-radius:10px;overflow-x:auto;line-height:1.55}
+code{font-family:Consolas,"Courier New",monospace}
+.output{background:#ecfdf5;border-left:5px solid #10b981;padding:12px 15px;border-radius:6px;margin:12px 0}
+.explain{background:#eff6ff;border-left:5px solid #3b82f6;padding:12px 15px;border-radius:6px;margin:12px 0}
+.warning{background:#fff7ed;border-left:5px solid #f97316;padding:12px 15px;border-radius:6px;margin:12px 0}
+.summary{background:#ecfeff;border-left:5px solid #0891b2;padding:15px;border-radius:6px}
+table{width:100%;border-collapse:collapse;margin:14px 0}
+th,td{border:1px solid #cbd5e1;padding:10px;text-align:left}
+th{background:#cffafe}
+footer{text-align:center;padding:25px;color:#64748b}
+
+.quiz-intro{background:linear-gradient(135deg,#f5f3ff,#eef2ff);border:2px solid #c4b5fd}
+.student-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:18px 0}
+.student-grid label{font-weight:800;color:#4338ca}.student-grid input{width:100%;margin-top:6px;padding:12px;border:1px solid #a78bfa;border-radius:9px;font-size:1rem}
+.quiz-card{border:1px solid #ddd6fe;border-left:7px solid #6d28d9;border-radius:13px;padding:20px;margin:22px 0;background:#fff;box-shadow:0 3px 10px rgba(76,29,149,.08)}
+.quiz-card h3{margin:0 0 12px}.question-guide{padding:10px 13px;background:#faf5ff;border-radius:8px;border-left:4px solid #8b5cf6;font-weight:800}
+.choice{display:block;padding:11px 12px;margin:8px 0;border:1px solid #ddd6fe;border-radius:9px;cursor:pointer;background:#fafafa}
+.choice:hover{background:#f5f3ff;border-color:#8b5cf6}.choice input{margin-right:9px;transform:scale(1.15)}
+.action-row{position:sticky;bottom:10px;z-index:20;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;padding:14px;background:rgba(255,255,255,.95);border:1px solid #c4b5fd;border-radius:14px;box-shadow:0 6px 22px rgba(15,23,42,.16)}
+.btn{border:0;border-radius:10px;padding:13px 22px;font-size:1rem;font-weight:900;cursor:pointer}.btn-primary{background:#6d28d9;color:#fff}.btn-secondary{background:#e2e8f0}
+.result-box{display:none;margin-top:24px;padding:22px;border-radius:14px;background:#f8fafc;border:2px solid #94a3b8}
+.result-summary{font-size:1.25rem;font-weight:900;color:#4338ca;padding:15px;background:#ede9fe;border-radius:10px}
+.review{margin:16px 0;padding:16px;border-radius:10px;border-left:6px solid #64748b;background:#fff}.review.correct{border-left-color:#16a34a;background:#f0fdf4}.review.wrong{border-left-color:#dc2626;background:#fef2f2}
+.answer-line{font-weight:800;margin:6px 0}.detail-list{margin:8px 0 0;padding-left:22px}.detail-list li{margin:5px 0}
+@media(max-width:720px){.student-grid{grid-template-columns:1fr}.quiz-card{padding:15px}}
+</style>
+</head>
+<body>
+<header>
+<h1>파이썬 완전 문법 300예제</h1>
+<p>5편 · 객체지향 프로그래밍·예외 처리·파일 입출력 201~250예제</p>
+</header>
+
+<main>
+<div class="notice">
+<h2>5편 학습 범위</h2>
+<table>
+<tr><th>예제 범위</th><th>학습 주제</th></tr>
+<tr><td>201~220</td><td>클래스, 객체, 생성자, 인스턴스 변수와 메서드</td></tr>
+<tr><td>221~230</td><td>상속, 오버라이딩, 클래스 변수, 특수 메서드</td></tr>
+<tr><td>231~240</td><td>try, except, else, finally, raise</td></tr>
+<tr><td>241~250</td><td>텍스트 파일 읽기·쓰기, with문, CSV 기초</td></tr>
+</table>
+</div>
+
+<section>
+<h2>1. 객체지향 프로그래밍 기초 — 예제 201~220</h2>
+
+<h3>예제 201. 가장 기본적인 클래스</h3>
+<span class="tag">class</span><span class="tag">OOP</span>
+<pre><code>class Student:
+    pass
+
+student = Student()
+
+print(type(student))</code></pre>
+
+<div class="output"><strong>실행 결과 예시</strong><br>&lt;class '__main__.Student'&gt;</div>
+<div class="explain"><strong>설명</strong><br><code>class</code>는 객체를 만들기 위한 설계도입니다. <code>Student()</code>로 만든 실제 객체를 인스턴스라고 합니다.</div>
+
+<h3>예제 202. 인스턴스 변수 만들기</h3>
+<pre><code>class Student:
+    pass
+
+student = Student()
+student.name = "민수"
+student.score = 90
+
+print(student.name)
+print(student.score)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>민수<br>90</div>
+<div class="explain"><strong>설명</strong><br>객체에 점 표기법을 사용하여 속성(인스턴스 변수)을 추가할 수 있습니다.</div>
+
+<h3>예제 203. 생성자 __init__</h3>
+<pre><code>class Student:
+    def __init__(self, name):
+        self.name = name
+
+student = Student("지민")
+
+print(student.name)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>지민</div>
+<div class="explain"><strong>설명</strong><br><code>__init__</code>은 객체가 생성될 때 자동으로 실행되는 생성자입니다.</div>
+
+<h3>예제 204. 생성자로 여러 속성 저장</h3>
+<pre><code>class Student:
+    def __init__(self, name, age, score):
+        self.name = name
+        self.age = age
+        self.score = score
+
+student = Student("서연", 16, 95)
+
+print(student.name)
+print(student.age)
+print(student.score)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>서연<br>16<br>95</div>
+<div class="explain"><strong>설명</strong><br><code>self.변수</code>는 각 객체가 독립적으로 가지는 속성입니다.</div>
+
+<h3>예제 205. 인스턴스 메서드</h3>
+<pre><code>class Student:
+    def __init__(self, name):
+        self.name = name
+
+```
+def introduce(self):
+    print(f"안녕하세요. 저는 {self.name}입니다.")
+```
+
+student = Student("민수")
+student.introduce()</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>안녕하세요. 저는 민수입니다.</div>
+<div class="explain"><strong>설명</strong><br>클래스 안에 정의한 함수를 메서드라고 합니다. 인스턴스 메서드의 첫 번째 매개변수는 보통 <code>self</code>입니다.</div>
+
+<h3>예제 206. 점수 출력 메서드</h3>
+<pre><code>class Student:
+    def __init__(self, name, score):
+        self.name = name
+        self.score = score
+
+```
+def show_score(self):
+    print(f"{self.name}의 점수는 {self.score}점입니다.")
+```
+
+student = Student("지민", 98)
+student.show_score()</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>지민의 점수는 98점입니다.</div>
+<div class="explain"><strong>설명</strong><br>메서드는 객체의 속성을 이용해 동작을 수행합니다.</div>
+
+<h3>예제 207. 객체마다 다른 값 저장</h3>
+<pre><code>class Student:
+    def __init__(self, name):
+        self.name = name
+
+student1 = Student("민수")
+student2 = Student("지민")
+
+print(student1.name)
+print(student2.name)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>민수<br>지민</div>
+<div class="explain"><strong>설명</strong><br>같은 클래스로 만든 객체라도 각자 다른 속성값을 가질 수 있습니다.</div>
+
+<h3>예제 208. 객체의 상태 변경</h3>
+<pre><code>class Student:
+    def __init__(self, name, score):
+        self.name = name
+        self.score = score
+
+```
+def add_score(self, point):
+    self.score += point
+```
+
+student = Student("서연", 80)
+student.add_score(10)
+
+print(student.score)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>90</div>
+<div class="explain"><strong>설명</strong><br>메서드를 통해 객체 내부의 상태를 변경할 수 있습니다.</div>
+
+<h3>예제 209. 잔액 관리 클래스</h3>
+<pre><code>class Account:
+    def __init__(self, owner, balance):
+        self.owner = owner
+        self.balance = balance
+
+```
+def deposit(self, money):
+    self.balance += money
+```
+
+account = Account("민수", 10000)
+account.deposit(5000)
+
+print(account.balance)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>15000</div>
+<div class="explain"><strong>설명</strong><br>객체는 현실의 대상이나 데이터를 관리하는 구조로 표현할 수 있습니다.</div>
+
+<h3>예제 210. 출금 메서드</h3>
+<pre><code>class Account:
+    def __init__(self, balance):
+        self.balance = balance
+
+```
+def withdraw(self, money):
+    if money <= self.balance:
+        self.balance -= money
+        print("출금 완료")
+    else:
+        print("잔액이 부족합니다.")
+```
+
+account = Account(10000)
+account.withdraw(3000)
+
+print(account.balance)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>출금 완료<br>7000</div>
+<div class="explain"><strong>설명</strong><br>메서드 안에서 조건문을 사용하면 객체의 상태를 안전하게 관리할 수 있습니다.</div>
+
+<h3>예제 211. 클래스 안의 함수 호출</h3>
+<pre><code>class Calculator:
+    def add(self, a, b):
+        return a + b
+
+```
+def multiply(self, a, b):
+    return a * b
+```
+
+calculator = Calculator()
+
+print(calculator.add(3, 4))
+print(calculator.multiply(3, 4))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>7<br>12</div>
+<div class="explain"><strong>설명</strong><br>하나의 클래스에 관련된 기능을 여러 메서드로 묶을 수 있습니다.</div>
+
+<h3>예제 212. 인스턴스 변수와 지역 변수</h3>
+<pre><code>class Example:
+    def __init__(self):
+        self.value = 10
+
+```
+def show(self):
+    local_value = 20
+    print(self.value)
+    print(local_value)
+```
+
+example = Example()
+example.show()</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>10<br>20</div>
+<div class="explain"><strong>설명</strong><br><code>self.value</code>는 객체가 유지하는 인스턴스 변수이고, <code>local_value</code>는 메서드 안에서만 사용하는 지역 변수입니다.</div>
+
+<h3>예제 213. 학생 합격 여부 메서드</h3>
+<pre><code>class Student:
+    def __init__(self, name, score):
+        self.name = name
+        self.score = score
+
+```
+def is_pass(self):
+    return self.score >= 80
+```
+
+student = Student("지민", 85)
+
+print(student.is_pass())</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>True</div>
+<div class="explain"><strong>설명</strong><br>메서드는 True 또는 False를 반환하여 조건문에 활용할 수 있습니다.</div>
+
+<h3>예제 214. 객체 리스트 만들기</h3>
+<pre><code>class Student:
+    def __init__(self, name, score):
+        self.name = name
+        self.score = score
+
+students = [
+Student("민수", 80),
+Student("지민", 95),
+Student("서연", 88)
+]
+
+for student in students:
+print(student.name, student.score)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>민수 80<br>지민 95<br>서연 88</div>
+<div class="explain"><strong>설명</strong><br>객체를 리스트에 저장하면 여러 개의 데이터를 구조적으로 관리할 수 있습니다.</div>
+
+<h3>예제 215. 객체 리스트 평균</h3>
+<pre><code>class Student:
+    def __init__(self, name, score):
+        self.name = name
+        self.score = score
+
+students = [
+Student("민수", 80),
+Student("지민", 95),
+Student("서연", 85)
+]
+
+total = sum(student.score for student in students)
+average = total / len(students)
+
+print(average)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>86.66666666666667</div>
+<div class="explain"><strong>설명</strong><br>객체의 속성값을 반복하여 합계와 평균을 계산할 수 있습니다.</div>
+
+<h3>예제 216. 객체를 반환하는 함수</h3>
+<pre><code>class Student:
+    def __init__(self, name, score):
+        self.name = name
+        self.score = score
+
+def create_student(name, score):
+return Student(name, score)
+
+student = create_student("하늘", 92)
+
+print(student.name, student.score)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>하늘 92</div>
+<div class="explain"><strong>설명</strong><br>함수에서 객체를 만들어 반환할 수도 있습니다.</div>
+
+<h3>예제 217. 메서드 체인 기초</h3>
+<pre><code>class Counter:
+    def __init__(self):
+        self.value = 0
+
+```
+def increase(self):
+    self.value += 1
+    return self
+```
+
+counter = Counter()
+counter.increase().increase().increase()
+
+print(counter.value)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>3</div>
+<div class="explain"><strong>설명</strong><br>메서드에서 <code>self</code>를 반환하면 메서드를 이어서 호출할 수 있습니다.</div>
+
+<h3>예제 218. 클래스 내부에 리스트 저장</h3>
+<pre><code>class TodoList:
+    def __init__(self):
+        self.todos = []
+
+```
+def add(self, todo):
+    self.todos.append(todo)
+```
+
+todo_list = TodoList()
+todo_list.add("파이썬 공부")
+todo_list.add("운동")
+
+print(todo_list.todos)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>['파이썬 공부', '운동']</div>
+<div class="explain"><strong>설명</strong><br>객체의 속성으로 리스트를 두면 여러 데이터를 함께 관리할 수 있습니다.</div>
+
+<h3>예제 219. 객체 속성 삭제</h3>
+<pre><code>class Student:
+    def __init__(self, name):
+        self.name = name
+        self.temp = "임시 데이터"
+
+student = Student("민수")
+
+del student.temp
+
+print(student.name)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>민수</div>
+<div class="explain"><strong>설명</strong><br><code>del 객체.속성</code>으로 필요 없는 속성을 삭제할 수 있습니다.</div>
+
+<h3>예제 220. isinstance 확인</h3>
+<pre><code>class Student:
+    pass
+
+student = Student()
+
+print(isinstance(student, Student))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>True</div>
+<div class="explain"><strong>설명</strong><br><code>isinstance()</code>는 객체가 특정 클래스의 인스턴스인지 확인합니다.</div>
+</section>
+
+<section>
+<h2>2. 상속과 특수 메서드 — 예제 221~230</h2>
+
+<h3>예제 221. 기본 상속</h3>
+<pre><code>class Animal:
+    def eat(self):
+        print("먹습니다.")
+
+class Dog(Animal):
+pass
+
+dog = Dog()
+dog.eat()</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>먹습니다.</div>
+<div class="explain"><strong>설명</strong><br>상속을 사용하면 자식 클래스가 부모 클래스의 속성과 메서드를 물려받습니다.</div>
+
+<h3>예제 222. 자식 클래스 메서드 추가</h3>
+<pre><code>class Animal:
+    def eat(self):
+        print("먹습니다.")
+
+class Dog(Animal):
+def bark(self):
+print("멍멍!")
+
+dog = Dog()
+dog.eat()
+dog.bark()</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>먹습니다.<br>멍멍!</div>
+<div class="explain"><strong>설명</strong><br>자식 클래스는 부모 기능을 물려받으면서 새로운 기능을 추가할 수 있습니다.</div>
+
+<h3>예제 223. 메서드 오버라이딩</h3>
+<pre><code>class Animal:
+    def sound(self):
+        print("동물 소리")
+
+class Cat(Animal):
+def sound(self):
+print("야옹")
+
+cat = Cat()
+cat.sound()</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>야옹</div>
+<div class="explain"><strong>설명</strong><br>자식 클래스에서 부모와 같은 이름의 메서드를 다시 정의하는 것을 오버라이딩이라고 합니다.</div>
+
+<h3>예제 224. super로 부모 생성자 호출</h3>
+<pre><code>class Animal:
+    def __init__(self, name):
+        self.name = name
+
+class Dog(Animal):
+def **init**(self, name, breed):
+super().**init**(name)
+self.breed = breed
+
+dog = Dog("초코", "푸들")
+
+print(dog.name)
+print(dog.breed)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>초코<br>푸들</div>
+<div class="explain"><strong>설명</strong><br><code>super()</code>는 부모 클래스의 메서드나 생성자를 호출할 때 사용합니다.</div>
+
+<h3>예제 225. 클래스 변수</h3>
+<pre><code>class Student:
+    school = "파이썬 중학교"
+
+```
+def __init__(self, name):
+    self.name = name
+```
+
+student1 = Student("민수")
+student2 = Student("지민")
+
+print(student1.school)
+print(student2.school)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>파이썬 중학교<br>파이썬 중학교</div>
+<div class="explain"><strong>설명</strong><br>클래스 변수는 모든 객체가 함께 사용하는 값입니다.</div>
+
+<h3>예제 226. 클래스 변수 변경</h3>
+<pre><code>class Counter:
+    count = 0
+
+```
+def __init__(self):
+    Counter.count += 1
+```
+
+a = Counter()
+b = Counter()
+c = Counter()
+
+print(Counter.count)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>3</div>
+<div class="explain"><strong>설명</strong><br>클래스 이름으로 접근하면 모든 객체가 공유하는 값을 관리할 수 있습니다.</div>
+
+<h3>예제 227. __str__ 특수 메서드</h3>
+<pre><code>class Student:
+    def __init__(self, name, score):
+        self.name = name
+        self.score = score
+
+```
+def __str__(self):
+    return f"{self.name}: {self.score}점"
+```
+
+student = Student("지민", 95)
+
+print(student)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>지민: 95점</div>
+<div class="explain"><strong>설명</strong><br><code>__str__</code>을 정의하면 객체를 print할 때 보기 좋은 문자열을 출력할 수 있습니다.</div>
+
+<h3>예제 228. __len__ 특수 메서드</h3>
+<pre><code>class Word:
+    def __init__(self, text):
+        self.text = text
+
+```
+def __len__(self):
+    return len(self.text)
+```
+
+word = Word("Python")
+
+print(len(word))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>6</div>
+<div class="explain"><strong>설명</strong><br><code>__len__</code>을 정의하면 사용자 클래스 객체에도 <code>len()</code>을 사용할 수 있습니다.</div>
+
+<h3>예제 229. 다형성 기초</h3>
+<pre><code>class Dog:
+    def sound(self):
+        return "멍멍"
+
+class Cat:
+def sound(self):
+return "야옹"
+
+animals = [Dog(), Cat()]
+
+for animal in animals:
+print(animal.sound())</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>멍멍<br>야옹</div>
+<div class="explain"><strong>설명</strong><br>서로 다른 클래스라도 같은 이름의 메서드를 사용하면 비슷한 방식으로 처리할 수 있습니다.</div>
+
+<h3>예제 230. 상속 종합</h3>
+<pre><code>class Person:
+    def __init__(self, name):
+        self.name = name
+
+```
+def introduce(self):
+    print(f"저는 {self.name}입니다.")
+```
+
+class Teacher(Person):
+def teach(self):
+print("수업을 진행합니다.")
+
+teacher = Teacher("김선생님")
+
+teacher.introduce()
+teacher.teach()</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>저는 김선생님입니다.<br>수업을 진행합니다.</div>
+<div class="explain"><strong>설명</strong><br>상속을 이용하면 공통 기능은 부모 클래스에 두고, 역할별 기능은 자식 클래스에 추가할 수 있습니다.</div>
+</section>
+
+<section>
+<h2>3. 예외 처리 — 예제 231~240</h2>
+
+<h3>예제 231. 예외가 발생하는 코드</h3>
+<span class="tag">try</span><span class="tag">except</span>
+<pre><code>number = 10
+# print(number / 0)</code></pre>
+<div class="warning"><strong>주의</strong><br>0으로 나누면 <code>ZeroDivisionError</code>가 발생합니다. 예외 처리를 사용하면 프로그램이 갑자기 종료되는 것을 줄일 수 있습니다.</div>
+
+<h3>예제 232. ZeroDivisionError 처리</h3>
+<pre><code>try:
+    result = 10 / 0
+    print(result)
+except ZeroDivisionError:
+    print("0으로 나눌 수 없습니다.")</code></pre>
+<div class="output"><strong>실행 결과</strong><br>0으로 나눌 수 없습니다.</div>
+<div class="explain"><strong>설명</strong><br><code>try</code>에서 오류가 발생하면 해당 예외를 처리하는 <code>except</code>가 실행됩니다.</div>
+
+<h3>예제 233. ValueError 처리</h3>
+<pre><code>try:
+    age = int("열여섯")
+    print(age)
+except ValueError:
+    print("숫자로 변환할 수 없습니다.")</code></pre>
+<div class="output"><strong>실행 결과</strong><br>숫자로 변환할 수 없습니다.</div>
+<div class="explain"><strong>설명</strong><br>숫자가 아닌 문자열을 <code>int()</code>로 변환하면 ValueError가 발생합니다.</div>
+
+<h3>예제 234. 사용자 입력 예외 처리</h3>
+<pre><code>try:
+    number = int(input("숫자를 입력하세요: "))
+    print(number * 2)
+except ValueError:
+    print("숫자만 입력하세요.")</code></pre>
+<div class="explain"><strong>설명</strong><br>입력값이 잘못되었을 때 프로그램이 멈추지 않도록 예외 처리를 할 수 있습니다.</div>
+
+<h3>예제 235. 여러 예외 처리</h3>
+<pre><code>try:
+    number = int(input("숫자 입력: "))
+    print(100 / number)
+except ValueError:
+    print("숫자를 입력해야 합니다.")
+except ZeroDivisionError:
+    print("0으로 나눌 수 없습니다.")</code></pre>
+<div class="explain"><strong>설명</strong><br>발생할 수 있는 오류 종류에 따라 여러 개의 except를 작성할 수 있습니다.</div>
+
+<h3>예제 236. Exception으로 모든 예외 처리</h3>
+<pre><code>try:
+    numbers = [1, 2, 3]
+    print(numbers[10])
+except Exception as error:
+    print("오류 발생:", error)</code></pre>
+<div class="output"><strong>실행 결과 예시</strong><br>오류 발생: list index out of range</div>
+<div class="warning"><strong>주의</strong><br><code>Exception</code>은 많은 오류를 한 번에 처리하지만, 가능하면 구체적인 예외 종류를 처리하는 것이 좋습니다.</div>
+
+<h3>예제 237. else 사용</h3>
+<pre><code>try:
+    number = int("10")
+except ValueError:
+    print("변환 실패")
+else:
+    print("변환 성공:", number)</code></pre>
+<div class="output"><strong>실행 결과</strong><br>변환 성공: 10</div>
+<div class="explain"><strong>설명</strong><br><code>else</code>는 try 블록에서 예외가 발생하지 않았을 때 실행됩니다.</div>
+
+<h3>예제 238. finally 사용</h3>
+<pre><code>try:
+    print(10 / 2)
+except ZeroDivisionError:
+    print("오류 발생")
+finally:
+    print("항상 실행됩니다.")</code></pre>
+<div class="output"><strong>실행 결과</strong><br>5.0<br>항상 실행됩니다.</div>
+<div class="explain"><strong>설명</strong><br><code>finally</code>는 오류 발생 여부와 관계없이 마지막에 항상 실행됩니다.</div>
+
+<h3>예제 239. raise로 예외 발생시키기</h3>
+<pre><code>age = -1
+
+if age < 0:
+raise ValueError("나이는 0 이상이어야 합니다.")</code></pre>
+
+<div class="warning"><strong>설명</strong><br><code>raise</code>는 프로그램에서 직접 예외를 발생시킬 때 사용합니다.</div>
+
+<h3>예제 240. 예외 처리 종합</h3>
+<pre><code>try:
+    score = int(input("점수 입력: "))
+
+```
+if not 0 <= score <= 100:
+    raise ValueError("점수는 0~100 사이여야 합니다.")
+
+print("입력한 점수:", score)
+```
+
+except ValueError as error:
+print("입력 오류:", error)
+
+finally:
+print("점수 입력을 종료합니다.")</code></pre>
+
+<div class="explain"><strong>설명</strong><br>입력 변환, 범위 검사, 오류 메시지, 마무리 작업을 함께 구성한 예제입니다.</div>
+</section>
+
+<section>
+<h2>4. 파일 입출력 — 예제 241~250</h2>
+
+<h3>예제 241. 파일 쓰기 w 모드</h3>
+<span class="tag">open</span><span class="tag">file</span>
+<pre><code>file = open("hello.txt", "w", encoding="utf-8")
+
+file.write("안녕하세요.\n")
+file.write("파이썬 파일 입출력입니다.")
+
+file.close()</code></pre>
+
+<div class="explain"><strong>설명</strong><br><code>"w"</code> 모드는 새 파일을 만들거나 기존 파일 내용을 새로 씁니다. 한글 처리를 위해 <code>encoding="utf-8"</code>을 지정합니다.</div>
+
+<h3>예제 242. 파일 읽기 r 모드</h3>
+<pre><code>file = open("hello.txt", "r", encoding="utf-8")
+
+content = file.read()
+
+file.close()
+
+print(content)</code></pre>
+
+<div class="output"><strong>실행 결과 예시</strong><br>안녕하세요.<br>파이썬 파일 입출력입니다.</div>
+<div class="explain"><strong>설명</strong><br><code>read()</code>는 파일 전체 내용을 문자열로 읽습니다.</div>
+
+<h3>예제 243. with문으로 파일 쓰기</h3>
+<pre><code>with open("memo.txt", "w", encoding="utf-8") as file:
+    file.write("첫 번째 메모\n")
+    file.write("두 번째 메모")</code></pre>
+<div class="explain"><strong>설명</strong><br><code>with</code>문을 사용하면 작업이 끝난 뒤 파일이 자동으로 닫히므로 <code>close()</code>를 직접 호출하지 않아도 됩니다.</div>
+
+<h3>예제 244. with문으로 파일 읽기</h3>
+<pre><code>with open("memo.txt", "r", encoding="utf-8") as file:
+    content = file.read()
+
+print(content)</code></pre>
+
+<div class="output"><strong>실행 결과 예시</strong><br>첫 번째 메모<br>두 번째 메모</div>
+<div class="explain"><strong>설명</strong><br>파일 읽기에도 with문을 사용하는 것이 일반적으로 권장됩니다.</div>
+
+<h3>예제 245. 파일에 내용 추가 a 모드</h3>
+<pre><code>with open("memo.txt", "a", encoding="utf-8") as file:
+    file.write("\n세 번째 메모")</code></pre>
+<div class="explain"><strong>설명</strong><br><code>"a"</code> 모드는 기존 내용을 지우지 않고 파일 끝에 새 내용을 추가합니다.</div>
+
+<h3>예제 246. readline으로 한 줄 읽기</h3>
+<pre><code>with open("memo.txt", "r", encoding="utf-8") as file:
+    line = file.readline()
+
+print(line)</code></pre>
+
+<div class="explain"><strong>설명</strong><br><code>readline()</code>은 파일에서 한 줄만 읽습니다.</div>
+
+<h3>예제 247. 파일을 한 줄씩 반복</h3>
+<pre><code>with open("memo.txt", "r", encoding="utf-8") as file:
+    for line in file:
+        print(line.strip())</code></pre>
+<div class="explain"><strong>설명</strong><br>파일 객체를 반복하면 한 줄씩 읽을 수 있습니다. <code>strip()</code>은 줄바꿈 문자를 제거합니다.</div>
+
+<h3>예제 248. writelines로 여러 줄 저장</h3>
+<pre><code>lines = [
+    "사과\n",
+    "바나나\n",
+    "포도\n"
+]
+
+with open("fruits.txt", "w", encoding="utf-8") as file:
+file.writelines(lines)</code></pre>
+
+<div class="explain"><strong>설명</strong><br><code>writelines()</code>는 문자열이 들어 있는 리스트를 파일에 여러 줄로 저장할 때 사용합니다.</div>
+
+<h3>예제 249. CSV 파일 쓰기</h3>
+<pre><code>import csv
+
+rows = [
+["이름", "점수"],
+["민수", 80],
+["지민", 95]
+]
+
+with open("scores.csv", "w", newline="", encoding="utf-8-sig") as file:
+writer = csv.writer(file)
+writer.writerows(rows)</code></pre>
+
+<div class="explain"><strong>설명</strong><br><code>csv</code> 모듈을 사용하면 표 형태의 데이터를 CSV 파일로 저장할 수 있습니다. <code>utf-8-sig</code>은 스프레드시트 프로그램에서 한글이 깨지는 문제를 줄이는 데 도움이 됩니다.</div>
+
+<h3>예제 250. CSV 파일 읽기</h3>
+<pre><code>import csv
+
+with open("scores.csv", "r", encoding="utf-8-sig") as file:
+reader = csv.reader(file)
+
+```
+for row in reader:
+    print(row)</code></pre>
+```
+
+<div class="output"><strong>실행 결과 예시</strong><br>['이름', '점수']<br>['민수', '80']<br>['지민', '95']</div>
+<div class="explain"><strong>설명</strong><br><code>csv.reader()</code>는 CSV 파일의 각 행을 리스트 형태로 읽어 옵니다.</div>
+
+<div class="summary">
+<h3>5편 핵심 요약</h3>
+<ul>
+<li>클래스는 객체를 만들기 위한 설계도이고, 객체는 클래스에서 만든 실제 데이터입니다.</li>
+<li><code>__init__</code>은 객체 생성 시 실행되는 생성자이며, <code>self</code>는 현재 객체를 의미합니다.</li>
+<li>상속을 사용하면 부모 클래스의 기능을 재사용하고 확장할 수 있습니다.</li>
+<li><code>try-except</code>를 사용하면 오류가 발생해도 프로그램이 안전하게 처리되도록 만들 수 있습니다.</li>
+<li><code>with open()</code>을 사용하면 텍스트 파일과 CSV 파일을 편리하고 안전하게 읽고 쓸 수 있습니다.</li>
+</ul>
+</div>
+</section>
+<section class="quiz-intro"><h2>파이썬300D 코드 이해 평가</h2>
+<p>각 코드의 설명 5개 중 <strong>옳은 것 3개를 모두 선택</strong>하세요. 세 정답만 정확하게 선택해야 정답으로 인정됩니다.</p>
+<div class="student-grid"><label>학번<input id="studentId" maxlength="20" placeholder="예: 1101"></label><label>이름<input id="studentName" maxlength="20" placeholder="예: 홍길동"></label></div>
+<p><strong>배점:</strong> 문항당 2점 · 50문항 · 총 100점</p></section>
+<section><h2>코드별 복수정답형 50문항</h2><div id="quizContainer"></div>
+<div class="action-row"><button class="btn btn-primary" onclick="gradeQuiz()">채점하고 TXT 저장</button><button class="btn btn-secondary" onclick="window.scrollTo({top:0,behavior:'smooth'})">맨 위로</button></div><div id="resultBox" class="result-box"></div></section></main>
+
+<footer>파이썬 완전 문법 300예제 · 5편 객체지향 프로그래밍·예외 처리·파일 입출력 201~250</footer>
+<script>
+const questions=[{"number": 201, "title": "가장 기본적인 클래스", "code": "class Student:\n    pass\n\nstudent = Student()\n\nprint(type(student))", "options": ["출력에는 Student 인스턴스의 자료형이 표시된다.", "`student = Student()`는 Student 클래스의 인스턴스를 생성한다.", "class는 객체 생성을 위한 설계도이며 pass는 빈 클래스 본문을 허용한다.", "`student = Student`로 작성해도 같은 인스턴스가 생성된다.", "`pass`로 바꾸면 201번 코드의 핵심 동작과 결과가 그대로 유지된다."], "answers": [0, 1, 2], "explanation": "class 는 객체를 만들기 위한 설계도입니다. Student() 로 만든 실제 객체를 인스턴스라고 합니다.", "optionExplanations": ["옳은 설명입니다. 출력에는 Student 인스턴스의 자료형이 표시된다.", "옳은 설명입니다. `student = Student()`는 Student 클래스의 인스턴스를 생성한다.", "옳은 설명입니다. class는 객체 생성을 위한 설계도이며 pass는 빈 클래스 본문을 허용한다.", "틀린 설명입니다. `student = Student`로 작성해도 같은 인스턴스가 생성된다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "틀린 설명입니다. `pass`로 바꾸면 201번 코드의 핵심 동작과 결과가 그대로 유지된다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다."]}, {"number": 202, "title": "인스턴스 변수 만들기", "code": "class Student:\n    pass\n\nstudent = Student()\nstudent.name = \"민수\"\nstudent.score = 90\n\nprint(student.name)\nprint(student.score)", "options": ["민수와 90이 차례로 출력된다.", "`student.score = 90`은 객체에 score 속성을 추가한다.", "`student.score`는 모든 Student 객체가 반드시 공유하는 클래스 변수이다.", "점 표기법으로 생성 후에도 인스턴스 속성을 추가할 수 있다.", "`pass`로 바꾸면 202번 코드의 핵심 동작과 결과가 그대로 유지된다."], "answers": [0, 1, 3], "explanation": "객체에 점 표기법을 사용하여 속성(인스턴스 변수)을 추가할 수 있습니다.", "optionExplanations": ["옳은 설명입니다. 민수와 90이 차례로 출력된다.", "옳은 설명입니다. `student.score = 90`은 객체에 score 속성을 추가한다.", "틀린 설명입니다. `student.score`는 모든 Student 객체가 반드시 공유하는 클래스 변수이다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "옳은 설명입니다. 점 표기법으로 생성 후에도 인스턴스 속성을 추가할 수 있다.", "틀린 설명입니다. `pass`로 바꾸면 202번 코드의 핵심 동작과 결과가 그대로 유지된다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다."]}, {"number": 203, "title": "생성자 __init__", "code": "class Student:\n    def __init__(self, name):\n        self.name = name\n\nstudent = Student(\"지민\")\n\nprint(student.name)", "options": ["지민이 출력된다.", "`self.name = name`은 전달받은 이름을 인스턴스 속성에 저장한다.", "`__init__`은 객체를 삭제할 때 자동 실행되는 메서드이다.", "`pass`로 바꾸면 203번 코드의 핵심 동작과 결과가 그대로 유지된다.", "__init__은 인스턴스 생성 과정에서 자동 호출된다."], "answers": [0, 1, 4], "explanation": "__init__ 은 객체가 생성될 때 자동으로 실행되는 생성자입니다.", "optionExplanations": ["옳은 설명입니다. 지민이 출력된다.", "옳은 설명입니다. `self.name = name`은 전달받은 이름을 인스턴스 속성에 저장한다.", "틀린 설명입니다. `__init__`은 객체를 삭제할 때 자동 실행되는 메서드이다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "틀린 설명입니다. `pass`로 바꾸면 203번 코드의 핵심 동작과 결과가 그대로 유지된다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "옳은 설명입니다. __init__은 인스턴스 생성 과정에서 자동 호출된다."]}, {"number": 204, "title": "생성자로 여러 속성 저장", "code": "class Student:\n    def __init__(self, name, age, score):\n        self.name = name\n        self.age = age\n        self.score = score\n\nstudent = Student(\"서연\", 16, 95)\n\nprint(student.name)\nprint(student.age)\nprint(student.score)", "options": ["서연, 16, 95가 순서대로 출력된다.", "`self.age`는 함수 호출이 끝나면 사라지는 지역 변수이다.", "`Student('서연', 16, 95)`는 세 값을 생성자에 전달한다.", "각 객체는 self를 통해 자신의 name, age, score 상태를 가진다.", "`pass`로 바꾸면 204번 코드의 핵심 동작과 결과가 그대로 유지된다."], "answers": [0, 2, 3], "explanation": "self.변수 는 각 객체가 독립적으로 가지는 속성입니다.", "optionExplanations": ["옳은 설명입니다. 서연, 16, 95가 순서대로 출력된다.", "틀린 설명입니다. `self.age`는 함수 호출이 끝나면 사라지는 지역 변수이다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "옳은 설명입니다. `Student('서연', 16, 95)`는 세 값을 생성자에 전달한다.", "옳은 설명입니다. 각 객체는 self를 통해 자신의 name, age, score 상태를 가진다.", "틀린 설명입니다. `pass`로 바꾸면 204번 코드의 핵심 동작과 결과가 그대로 유지된다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다."]}, {"number": 205, "title": "인스턴스 메서드", "code": "class Student:\n    def __init__(self, name):\n        self.name = name\n\n    def introduce(self):\n        print(f\"안녕하세요. 저는 {self.name}입니다.\")\n\nstudent = Student(\"민수\")\nstudent.introduce()", "options": ["안녕하세요. 저는 민수입니다.가 출력된다.", "`def introduce(name):`로 바꾸어도 현재 객체의 self.name을 그대로 사용할 수 있다.", "`student.introduce()`는 현재 객체를 self로 전달해 메서드를 실행한다.", "`pass`로 바꾸면 205번 코드의 핵심 동작과 결과가 그대로 유지된다.", "인스턴스 메서드의 첫 매개변수 self는 현재 호출 객체를 가리킨다."], "answers": [0, 2, 4], "explanation": "클래스 안에 정의한 함수를 메서드라고 합니다. 인스턴스 메서드의 첫 번째 매개변수는 보통 self 입니다.", "optionExplanations": ["옳은 설명입니다. 안녕하세요. 저는 민수입니다.가 출력된다.", "틀린 설명입니다. `def introduce(name):`로 바꾸어도 현재 객체의 self.name을 그대로 사용할 수 있다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "옳은 설명입니다. `student.introduce()`는 현재 객체를 self로 전달해 메서드를 실행한다.", "틀린 설명입니다. `pass`로 바꾸면 205번 코드의 핵심 동작과 결과가 그대로 유지된다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "옳은 설명입니다. 인스턴스 메서드의 첫 매개변수 self는 현재 호출 객체를 가리킨다."]}, {"number": 206, "title": "점수 출력 메서드", "code": "class Student:\n    def __init__(self, name, score):\n        self.name = name\n        self.score = score\n\n    def show_score(self):\n        print(f\"{self.name}의 점수는 {self.score}점입니다.\")\n\nstudent = Student(\"지민\", 98)\nstudent.show_score()", "options": ["지민의 점수는 98점입니다.가 출력된다.", "`student.show_score`처럼 괄호 없이 쓰면 메서드 본문이 즉시 실행된다.", "`pass`로 바꾸면 206번 코드의 핵심 동작과 결과가 그대로 유지된다.", "`self.score`를 사용하므로 메서드는 해당 학생 객체의 점수를 읽는다.", "메서드는 객체 속성을 조합해 해당 객체에 맞는 동작을 수행한다."], "answers": [0, 3, 4], "explanation": "메서드는 객체의 속성을 이용해 동작을 수행합니다.", "optionExplanations": ["옳은 설명입니다. 지민의 점수는 98점입니다.가 출력된다.", "틀린 설명입니다. `student.show_score`처럼 괄호 없이 쓰면 메서드 본문이 즉시 실행된다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "틀린 설명입니다. `pass`로 바꾸면 206번 코드의 핵심 동작과 결과가 그대로 유지된다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "옳은 설명입니다. `self.score`를 사용하므로 메서드는 해당 학생 객체의 점수를 읽는다.", "옳은 설명입니다. 메서드는 객체 속성을 조합해 해당 객체에 맞는 동작을 수행한다."]}, {"number": 207, "title": "객체마다 다른 값 저장", "code": "class Student:\n    def __init__(self, name):\n        self.name = name\n\nstudent1 = Student(\"민수\")\nstudent2 = Student(\"지민\")\n\nprint(student1.name)\nprint(student2.name)", "options": ["`student2.name = '지민'`은 student1.name도 지민으로 바꾼다.", "민수와 지민이 차례로 출력된다.", "`student1.name`과 `student2.name`은 서로 독립된 인스턴스 속성이다.", "같은 클래스에서 만든 인스턴스도 서로 다른 상태를 저장할 수 있다.", "`pass`로 바꾸면 207번 코드의 핵심 동작과 결과가 그대로 유지된다."], "answers": [1, 2, 3], "explanation": "같은 클래스로 만든 객체라도 각자 다른 속성값을 가질 수 있습니다.", "optionExplanations": ["틀린 설명입니다. `student2.name = '지민'`은 student1.name도 지민으로 바꾼다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "옳은 설명입니다. 민수와 지민이 차례로 출력된다.", "옳은 설명입니다. `student1.name`과 `student2.name`은 서로 독립된 인스턴스 속성이다.", "옳은 설명입니다. 같은 클래스에서 만든 인스턴스도 서로 다른 상태를 저장할 수 있다.", "틀린 설명입니다. `pass`로 바꾸면 207번 코드의 핵심 동작과 결과가 그대로 유지된다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다."]}, {"number": 208, "title": "객체의 상태 변경", "code": "class Student:\n    def __init__(self, name, score):\n        self.name = name\n        self.score = score\n\n    def add_score(self, point):\n        self.score += point\n\nstudent = Student(\"서연\", 80)\nstudent.add_score(10)\nprint(student.score)", "options": ["`self.score = point`로 바꾸어도 최종 점수는 똑같이 90이다.", "최종 점수 90이 출력된다.", "`self.score += point`는 기존 점수에 전달값을 누적한다.", "`pass`로 바꾸면 208번 코드의 핵심 동작과 결과가 그대로 유지된다.", "메서드는 객체의 상태를 읽을 뿐 아니라 변경할 수도 있다."], "answers": [1, 2, 4], "explanation": "메서드를 통해 객체 내부의 상태를 변경할 수 있습니다.", "optionExplanations": ["틀린 설명입니다. `self.score = point`로 바꾸어도 최종 점수는 똑같이 90이다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "옳은 설명입니다. 최종 점수 90이 출력된다.", "옳은 설명입니다. `self.score += point`는 기존 점수에 전달값을 누적한다.", "틀린 설명입니다. `pass`로 바꾸면 208번 코드의 핵심 동작과 결과가 그대로 유지된다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "옳은 설명입니다. 메서드는 객체의 상태를 읽을 뿐 아니라 변경할 수도 있다."]}, {"number": 209, "title": "잔액 관리 클래스", "code": "class Account:\n    def __init__(self, owner, balance):\n        self.owner = owner\n        self.balance = balance\n\n    def deposit(self, money):\n        self.balance += money\n\naccount = Account(\"민수\", 10000)\naccount.deposit(5000)\nprint(account.balance)", "options": ["`self.balance + money`만 작성해도 balance 속성이 자동 갱신된다.", "최종 잔액 15000이 출력된다.", "`pass`로 바꾸면 209번 코드의 핵심 동작과 결과가 그대로 유지된다.", "`account.deposit(5000)`은 balance를 15000으로 증가시킨다.", "Account 객체는 소유자와 잔액이라는 관련 데이터를 함께 관리한다."], "answers": [1, 3, 4], "explanation": "객체는 현실의 대상이나 데이터를 관리하는 구조로 표현할 수 있습니다.", "optionExplanations": ["틀린 설명입니다. `self.balance + money`만 작성해도 balance 속성이 자동 갱신된다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "옳은 설명입니다. 최종 잔액 15000이 출력된다.", "틀린 설명입니다. `pass`로 바꾸면 209번 코드의 핵심 동작과 결과가 그대로 유지된다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "옳은 설명입니다. `account.deposit(5000)`은 balance를 15000으로 증가시킨다.", "옳은 설명입니다. Account 객체는 소유자와 잔액이라는 관련 데이터를 함께 관리한다."]}, {"number": 210, "title": "출금 메서드", "code": "class Account:\n    def __init__(self, balance):\n        self.balance = balance\n\n    def withdraw(self, money):\n        if money <= self.balance:\n            self.balance -= money\n            print(\"출금 완료\")\n        else:\n            print(\"잔액이 부족합니다.\")\n\naccount = Account(10000)\naccount.withdraw(3000)\nprint(account.balance)", "options": ["`account.withdraw(3000)` 뒤의 잔액은 13000이다.", "`pass`로 바꾸면 210번 코드의 핵심 동작과 결과가 그대로 유지된다.", "출금 완료 다음에 7000이 출력된다.", "`if money <= self.balance:`는 잔액 범위 안에서만 출금하게 한다.", "조건 검사를 메서드 안에 두어 잘못된 상태 변경을 막을 수 있다."], "answers": [2, 3, 4], "explanation": "메서드 안에서 조건문을 사용하면 객체의 상태를 안전하게 관리할 수 있습니다.", "optionExplanations": ["틀린 설명입니다. `account.withdraw(3000)` 뒤의 잔액은 13000이다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "틀린 설명입니다. `pass`로 바꾸면 210번 코드의 핵심 동작과 결과가 그대로 유지된다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "옳은 설명입니다. 출금 완료 다음에 7000이 출력된다.", "옳은 설명입니다. `if money <= self.balance:`는 잔액 범위 안에서만 출금하게 한다.", "옳은 설명입니다. 조건 검사를 메서드 안에 두어 잘못된 상태 변경을 막을 수 있다."]}, {"number": 211, "title": "클래스 안의 함수 호출", "code": "class Calculator:\n    def add(self, a, b):\n        return a + b\n\n    def multiply(self, a, b):\n        return a * b\n\ncalculator = Calculator()\nprint(calculator.add(3, 4))\nprint(calculator.multiply(3, 4))", "options": ["7과 12가 차례로 출력된다.", "`calculator.multiply(3, 4)`는 12를 반환한다.", "관련 계산 기능을 한 클래스의 여러 메서드로 묶을 수 있다.", "`return a * b`를 `print(a * b)`로 바꾸어도 바깥 print의 결과가 완전히 같다.", "`pass`로 바꾸면 211번 코드의 핵심 동작과 결과가 그대로 유지된다."], "answers": [0, 1, 2], "explanation": "하나의 클래스에 관련된 기능을 여러 메서드로 묶을 수 있습니다.", "optionExplanations": ["옳은 설명입니다. 7과 12가 차례로 출력된다.", "옳은 설명입니다. `calculator.multiply(3, 4)`는 12를 반환한다.", "옳은 설명입니다. 관련 계산 기능을 한 클래스의 여러 메서드로 묶을 수 있다.", "틀린 설명입니다. `return a * b`를 `print(a * b)`로 바꾸어도 바깥 print의 결과가 완전히 같다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "틀린 설명입니다. `pass`로 바꾸면 211번 코드의 핵심 동작과 결과가 그대로 유지된다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다."]}, {"number": 212, "title": "인스턴스 변수와 지역 변수", "code": "class Example:\n    def __init__(self):\n        self.value = 10\n\n    def show(self):\n        local_value = 20\n        print(self.value)\n        print(local_value)\n\nexample = Example()\nexample.show()", "options": ["10과 20이 차례로 출력된다.", "`self.value`는 객체가 유지하지만 `local_value`는 show 안에서만 유효하다.", "`example.local_value`로 메서드 밖에서도 20을 읽을 수 있다.", "인스턴스 변수와 지역 변수는 생존 범위가 다르다.", "`pass`로 바꾸면 212번 코드의 핵심 동작과 결과가 그대로 유지된다."], "answers": [0, 1, 3], "explanation": "self.value 는 객체가 유지하는 인스턴스 변수이고, local_value 는 메서드 안에서만 사용하는 지역 변수입니다.", "optionExplanations": ["옳은 설명입니다. 10과 20이 차례로 출력된다.", "옳은 설명입니다. `self.value`는 객체가 유지하지만 `local_value`는 show 안에서만 유효하다.", "틀린 설명입니다. `example.local_value`로 메서드 밖에서도 20을 읽을 수 있다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "옳은 설명입니다. 인스턴스 변수와 지역 변수는 생존 범위가 다르다.", "틀린 설명입니다. `pass`로 바꾸면 212번 코드의 핵심 동작과 결과가 그대로 유지된다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다."]}, {"number": 213, "title": "학생 합격 여부 메서드", "code": "class Student:\n    def __init__(self, name, score):\n        self.name = name\n        self.score = score\n\n    def is_pass(self):\n        return self.score >= 80\n\nstudent = Student(\"지민\", 85)\nprint(student.is_pass())", "options": ["점수 85가 합격 기준 80 이상이므로 True가 출력된다.", "`return self.score >= 80`은 bool 값을 반환한다.", "`student.is_pass()`의 결과는 문자열 `'True'`이다.", "`pass`로 바꾸면 213번 코드의 핵심 동작과 결과가 그대로 유지된다.", "bool 반환 메서드는 조건 판단에 바로 활용할 수 있다."], "answers": [0, 1, 4], "explanation": "메서드는 True 또는 False를 반환하여 조건문에 활용할 수 있습니다.", "optionExplanations": ["옳은 설명입니다. 점수 85가 합격 기준 80 이상이므로 True가 출력된다.", "옳은 설명입니다. `return self.score >= 80`은 bool 값을 반환한다.", "틀린 설명입니다. `student.is_pass()`의 결과는 문자열 `'True'`이다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "틀린 설명입니다. `pass`로 바꾸면 213번 코드의 핵심 동작과 결과가 그대로 유지된다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "옳은 설명입니다. bool 반환 메서드는 조건 판단에 바로 활용할 수 있다."]}, {"number": 214, "title": "객체 리스트 만들기", "code": "class Student:\n    def __init__(self, name, score):\n        self.name = name\n        self.score = score\n\nstudents = [Student(\"민수\", 80), Student(\"지민\", 95), Student(\"서연\", 88)]\nfor student in students:\n    print(student.name, student.score)", "options": ["세 학생의 이름과 점수가 입력 순서대로 출력된다.", "리스트에는 클래스만 저장할 수 있고 실제 객체는 저장할 수 없다.", "`for student in students:`는 객체를 하나씩 꺼내 속성에 접근한다.", "객체 리스트를 사용하면 구조화된 여러 레코드를 반복 처리할 수 있다.", "`pass`로 바꾸면 214번 코드의 핵심 동작과 결과가 그대로 유지된다."], "answers": [0, 2, 3], "explanation": "객체를 리스트에 저장하면 여러 개의 데이터를 구조적으로 관리할 수 있습니다.", "optionExplanations": ["옳은 설명입니다. 세 학생의 이름과 점수가 입력 순서대로 출력된다.", "틀린 설명입니다. 리스트에는 클래스만 저장할 수 있고 실제 객체는 저장할 수 없다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "옳은 설명입니다. `for student in students:`는 객체를 하나씩 꺼내 속성에 접근한다.", "옳은 설명입니다. 객체 리스트를 사용하면 구조화된 여러 레코드를 반복 처리할 수 있다.", "틀린 설명입니다. `pass`로 바꾸면 214번 코드의 핵심 동작과 결과가 그대로 유지된다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다."]}, {"number": 215, "title": "객체 리스트 평균", "code": "class Student:\n    def __init__(self, name, score):\n        self.name = name\n        self.score = score\n\nstudents = [Student(\"민수\", 80), Student(\"지민\", 95), Student(\"서연\", 85)]\ntotal = sum(student.score for student in students)\naverage = total / len(students)\nprint(average)", "options": ["평균은 약 86.67이다.", "`len(students)`는 각 학생의 점수 합 260을 반환한다.", "`sum(student.score for student in students)`는 세 객체의 점수를 합한다.", "`pass`로 바꾸면 215번 코드의 핵심 동작과 결과가 그대로 유지된다.", "생성기 표현식으로 객체 속성만 선택해 합계를 계산할 수 있다."], "answers": [0, 2, 4], "explanation": "객체의 속성값을 반복하여 합계와 평균을 계산할 수 있습니다.", "optionExplanations": ["옳은 설명입니다. 평균은 약 86.67이다.", "틀린 설명입니다. `len(students)`는 각 학생의 점수 합 260을 반환한다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "옳은 설명입니다. `sum(student.score for student in students)`는 세 객체의 점수를 합한다.", "틀린 설명입니다. `pass`로 바꾸면 215번 코드의 핵심 동작과 결과가 그대로 유지된다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "옳은 설명입니다. 생성기 표현식으로 객체 속성만 선택해 합계를 계산할 수 있다."]}, {"number": 216, "title": "객체를 반환하는 함수", "code": "class Student:\n    def __init__(self, name, score):\n        self.name = name\n        self.score = score\n\ndef create_student(name, score):\n    return Student(name, score)\n\nstudent = create_student(\"하늘\", 92)\nprint(student.name, student.score)", "options": ["하늘 92가 출력된다.", "`create_student`의 반환값은 항상 튜플 `(name, score)`이다.", "`pass`로 바꾸면 216번 코드의 핵심 동작과 결과가 그대로 유지된다.", "`return Student(name, score)`는 새 객체를 생성해 반환한다.", "함수의 반환값으로 사용자 정의 객체도 사용할 수 있다."], "answers": [0, 3, 4], "explanation": "함수에서 객체를 만들어 반환할 수도 있습니다.", "optionExplanations": ["옳은 설명입니다. 하늘 92가 출력된다.", "틀린 설명입니다. `create_student`의 반환값은 항상 튜플 `(name, score)`이다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "틀린 설명입니다. `pass`로 바꾸면 216번 코드의 핵심 동작과 결과가 그대로 유지된다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "옳은 설명입니다. `return Student(name, score)`는 새 객체를 생성해 반환한다.", "옳은 설명입니다. 함수의 반환값으로 사용자 정의 객체도 사용할 수 있다."]}, {"number": 217, "title": "메서드 체인 기초", "code": "class Counter:\n    def __init__(self):\n        self.value = 0\n\n    def increase(self):\n        self.value += 1\n        return self\n\ncounter = Counter()\ncounter.increase().increase().increase()\nprint(counter.value)", "options": ["increase가 정수 값을 반환하므로 메서드 체인이 가능하다.", "increase가 세 번 실행되어 3이 출력된다.", "`return self` 덕분에 `increase().increase()`처럼 연속 호출할 수 있다.", "self를 반환하는 설계는 메서드 체인을 가능하게 한다.", "`pass`로 바꾸면 217번 코드의 핵심 동작과 결과가 그대로 유지된다."], "answers": [1, 2, 3], "explanation": "메서드에서 self 를 반환하면 메서드를 이어서 호출할 수 있습니다.", "optionExplanations": ["틀린 설명입니다. increase가 정수 값을 반환하므로 메서드 체인이 가능하다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "옳은 설명입니다. increase가 세 번 실행되어 3이 출력된다.", "옳은 설명입니다. `return self` 덕분에 `increase().increase()`처럼 연속 호출할 수 있다.", "옳은 설명입니다. self를 반환하는 설계는 메서드 체인을 가능하게 한다.", "틀린 설명입니다. `pass`로 바꾸면 217번 코드의 핵심 동작과 결과가 그대로 유지된다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다."]}, {"number": 218, "title": "클래스 내부에 리스트 저장", "code": "class TodoList:\n    def __init__(self):\n        self.todos = []\n\n    def add(self, todo):\n        self.todos.append(todo)\n\ntodo_list = TodoList()\ntodo_list.add(\"파이썬 공부\")\ntodo_list.add(\"운동\")\nprint(todo_list.todos)", "options": ["`self.todos = []`가 add를 호출할 때마다 자동으로 초기화된다.", "두 할 일이 들어 있는 리스트가 출력된다.", "`self.todos.append(todo)`는 객체 내부 리스트 끝에 할 일을 추가한다.", "`pass`로 바꾸면 218번 코드의 핵심 동작과 결과가 그대로 유지된다.", "가변 자료구조를 인스턴스 속성으로 두어 여러 항목을 관리할 수 있다."], "answers": [1, 2, 4], "explanation": "객체의 속성으로 리스트를 두면 여러 데이터를 함께 관리할 수 있습니다.", "optionExplanations": ["틀린 설명입니다. `self.todos = []`가 add를 호출할 때마다 자동으로 초기화된다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "옳은 설명입니다. 두 할 일이 들어 있는 리스트가 출력된다.", "옳은 설명입니다. `self.todos.append(todo)`는 객체 내부 리스트 끝에 할 일을 추가한다.", "틀린 설명입니다. `pass`로 바꾸면 218번 코드의 핵심 동작과 결과가 그대로 유지된다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "옳은 설명입니다. 가변 자료구조를 인스턴스 속성으로 두어 여러 항목을 관리할 수 있다."]}, {"number": 219, "title": "객체 속성 삭제", "code": "class Student:\n    def __init__(self, name):\n        self.name = name\n        self.temp = \"임시 데이터\"\n\nstudent = Student(\"민수\")\n\ndel student.temp\n\nprint(student.name)", "options": ["`del student.temp`를 실행하면 student 객체 전체가 삭제된다.", "민수가 출력된다.", "`pass`로 바꾸면 219번 코드의 핵심 동작과 결과가 그대로 유지된다.", "`del student.temp`는 temp 속성만 삭제하고 name은 남긴다.", "속성 삭제와 객체 삭제는 서로 다른 연산이다."], "answers": [1, 3, 4], "explanation": "del 객체.속성 으로 필요 없는 속성을 삭제할 수 있습니다.", "optionExplanations": ["틀린 설명입니다. `del student.temp`를 실행하면 student 객체 전체가 삭제된다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "옳은 설명입니다. 민수가 출력된다.", "틀린 설명입니다. `pass`로 바꾸면 219번 코드의 핵심 동작과 결과가 그대로 유지된다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "옳은 설명입니다. `del student.temp`는 temp 속성만 삭제하고 name은 남긴다.", "옳은 설명입니다. 속성 삭제와 객체 삭제는 서로 다른 연산이다."]}, {"number": 220, "title": "isinstance 확인", "code": "class Student:\n    pass\n\nstudent = Student()\n\nprint(isinstance(student, Student))", "options": ["`isinstance`는 두 값이 같은 문자열인지 비교하는 함수이다.", "`pass`로 바꾸면 220번 코드의 핵심 동작과 결과가 그대로 유지된다.", "student가 Student의 인스턴스이므로 True가 출력된다.", "`isinstance(student, Student)`는 객체와 클래스의 관계를 검사한다.", "isinstance는 상속 관계까지 고려해 인스턴스 여부를 판단한다."], "answers": [2, 3, 4], "explanation": "isinstance() 는 객체가 특정 클래스의 인스턴스인지 확인합니다.", "optionExplanations": ["틀린 설명입니다. `isinstance`는 두 값이 같은 문자열인지 비교하는 함수이다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "틀린 설명입니다. `pass`로 바꾸면 220번 코드의 핵심 동작과 결과가 그대로 유지된다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "옳은 설명입니다. student가 Student의 인스턴스이므로 True가 출력된다.", "옳은 설명입니다. `isinstance(student, Student)`는 객체와 클래스의 관계를 검사한다.", "옳은 설명입니다. isinstance는 상속 관계까지 고려해 인스턴스 여부를 판단한다."]}, {"number": 221, "title": "기본 상속", "code": "class Animal:\n    def eat(self):\n        print(\"먹습니다.\")\n\nclass Dog(Animal):\n    pass\n\ndog = Dog()\ndog.eat()", "options": ["먹습니다.가 출력된다.", "`class Dog(Animal):`은 Dog가 Animal을 상속한다는 뜻이다.", "상속은 부모 클래스의 기능을 자식 클래스에서 재사용하게 한다.", "자식 클래스는 부모의 메서드를 사용하려면 반드시 복사해 다시 정의해야 한다.", "`pass`로 바꾸면 221번 코드의 핵심 동작과 결과가 그대로 유지된다."], "answers": [0, 1, 2], "explanation": "상속을 사용하면 자식 클래스가 부모 클래스의 속성과 메서드를 물려받습니다.", "optionExplanations": ["옳은 설명입니다. 먹습니다.가 출력된다.", "옳은 설명입니다. `class Dog(Animal):`은 Dog가 Animal을 상속한다는 뜻이다.", "옳은 설명입니다. 상속은 부모 클래스의 기능을 자식 클래스에서 재사용하게 한다.", "틀린 설명입니다. 자식 클래스는 부모의 메서드를 사용하려면 반드시 복사해 다시 정의해야 한다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "틀린 설명입니다. `pass`로 바꾸면 221번 코드의 핵심 동작과 결과가 그대로 유지된다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다."]}, {"number": 222, "title": "자식 클래스 메서드 추가", "code": "class Animal:\n    def eat(self):\n        print(\"먹습니다.\")\n\nclass Dog(Animal):\n    def bark(self):\n        print(\"멍멍!\")\n\ndog = Dog()\ndog.eat()\ndog.bark()", "options": ["먹습니다.와 멍멍!이 출력된다.", "`dog.eat()`은 상속받은 메서드이고 `dog.bark()`는 자식이 추가한 메서드이다.", "`Dog` 객체는 부모 메서드를 상속받으면 자식 메서드를 추가할 수 없다.", "자식 클래스는 상속한 기능에 새로운 기능을 덧붙일 수 있다.", "`pass`로 바꾸면 222번 코드의 핵심 동작과 결과가 그대로 유지된다."], "answers": [0, 1, 3], "explanation": "자식 클래스는 부모 기능을 물려받으면서 새로운 기능을 추가할 수 있습니다.", "optionExplanations": ["옳은 설명입니다. 먹습니다.와 멍멍!이 출력된다.", "옳은 설명입니다. `dog.eat()`은 상속받은 메서드이고 `dog.bark()`는 자식이 추가한 메서드이다.", "틀린 설명입니다. `Dog` 객체는 부모 메서드를 상속받으면 자식 메서드를 추가할 수 없다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "옳은 설명입니다. 자식 클래스는 상속한 기능에 새로운 기능을 덧붙일 수 있다.", "틀린 설명입니다. `pass`로 바꾸면 222번 코드의 핵심 동작과 결과가 그대로 유지된다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다."]}, {"number": 223, "title": "메서드 오버라이딩", "code": "class Animal:\n    def sound(self):\n        print(\"동물 소리\")\n\nclass Cat(Animal):\n    def sound(self):\n        print(\"야옹\")\n\ncat = Cat()\ncat.sound()", "options": ["야옹이 출력된다.", "`Cat.sound`가 부모의 같은 이름 메서드를 오버라이딩한다.", "`cat.sound()`는 부모의 '동물 소리'와 자식의 '야옹'을 모두 출력한다.", "`pass`로 바꾸면 223번 코드의 핵심 동작과 결과가 그대로 유지된다.", "오버라이딩은 같은 메서드 이름의 동작을 자식에 맞게 바꾸는 것이다."], "answers": [0, 1, 4], "explanation": "자식 클래스에서 부모와 같은 이름의 메서드를 다시 정의하는 것을 오버라이딩이라고 합니다.", "optionExplanations": ["옳은 설명입니다. 야옹이 출력된다.", "옳은 설명입니다. `Cat.sound`가 부모의 같은 이름 메서드를 오버라이딩한다.", "틀린 설명입니다. `cat.sound()`는 부모의 '동물 소리'와 자식의 '야옹'을 모두 출력한다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "틀린 설명입니다. `pass`로 바꾸면 223번 코드의 핵심 동작과 결과가 그대로 유지된다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "옳은 설명입니다. 오버라이딩은 같은 메서드 이름의 동작을 자식에 맞게 바꾸는 것이다."]}, {"number": 224, "title": "super로 부모 생성자 호출", "code": "class Animal:\n    def __init__(self, name):\n        self.name = name\n\nclass Dog(Animal):\n    def __init__(self, name, breed):\n        super().__init__(name)\n        self.breed = breed\n\ndog = Dog(\"초코\", \"푸들\")\nprint(dog.name)\nprint(dog.breed)", "options": ["초코와 푸들이 차례로 출력된다.", "`super()`는 현재 클래스의 메서드만 다시 호출한다.", "`super().__init__(name)`은 부모 생성자를 호출해 name을 저장한다.", "super를 사용하면 부모의 초기화 로직을 중복 없이 재사용할 수 있다.", "`pass`로 바꾸면 224번 코드의 핵심 동작과 결과가 그대로 유지된다."], "answers": [0, 2, 3], "explanation": "super() 는 부모 클래스의 메서드나 생성자를 호출할 때 사용합니다.", "optionExplanations": ["옳은 설명입니다. 초코와 푸들이 차례로 출력된다.", "틀린 설명입니다. `super()`는 현재 클래스의 메서드만 다시 호출한다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "옳은 설명입니다. `super().__init__(name)`은 부모 생성자를 호출해 name을 저장한다.", "옳은 설명입니다. super를 사용하면 부모의 초기화 로직을 중복 없이 재사용할 수 있다.", "틀린 설명입니다. `pass`로 바꾸면 224번 코드의 핵심 동작과 결과가 그대로 유지된다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다."]}, {"number": 225, "title": "클래스 변수", "code": "class Student:\n    school = \"파이썬 중학교\"\n\n    def __init__(self, name):\n        self.name = name\n\nstudent1 = Student(\"민수\")\nstudent2 = Student(\"지민\")\nprint(student1.school)\nprint(student2.school)", "options": ["두 객체 모두 파이썬 중학교를 출력한다.", "`student1.school`과 `student2.school`은 반드시 서로 다른 메모리의 값이다.", "`school = '파이썬 중학교'`는 두 객체가 공유하는 클래스 변수이다.", "`pass`로 바꾸면 225번 코드의 핵심 동작과 결과가 그대로 유지된다.", "클래스 변수는 기본적으로 모든 인스턴스가 공유한다."], "answers": [0, 2, 4], "explanation": "클래스 변수는 모든 객체가 함께 사용하는 값입니다.", "optionExplanations": ["옳은 설명입니다. 두 객체 모두 파이썬 중학교를 출력한다.", "틀린 설명입니다. `student1.school`과 `student2.school`은 반드시 서로 다른 메모리의 값이다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "옳은 설명입니다. `school = '파이썬 중학교'`는 두 객체가 공유하는 클래스 변수이다.", "틀린 설명입니다. `pass`로 바꾸면 225번 코드의 핵심 동작과 결과가 그대로 유지된다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "옳은 설명입니다. 클래스 변수는 기본적으로 모든 인스턴스가 공유한다."]}, {"number": 226, "title": "클래스 변수 변경", "code": "class Counter:\n    count = 0\n\n    def __init__(self):\n        Counter.count += 1\n\na = Counter()\nb = Counter()\nc = Counter()\nprint(Counter.count)", "options": ["Counter.count는 3이 된다.", "`self.count += 1`과 `Counter.count += 1`은 어떤 상황에서도 완전히 동일하다.", "`pass`로 바꾸면 226번 코드의 핵심 동작과 결과가 그대로 유지된다.", "`Counter.count += 1`은 객체가 생성될 때 공유 계수를 증가시킨다.", "클래스 이름으로 공유 변수에 접근하면 전체 생성 개수를 관리할 수 있다."], "answers": [0, 3, 4], "explanation": "클래스 이름으로 접근하면 모든 객체가 공유하는 값을 관리할 수 있습니다.", "optionExplanations": ["옳은 설명입니다. Counter.count는 3이 된다.", "틀린 설명입니다. `self.count += 1`과 `Counter.count += 1`은 어떤 상황에서도 완전히 동일하다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "틀린 설명입니다. `pass`로 바꾸면 226번 코드의 핵심 동작과 결과가 그대로 유지된다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "옳은 설명입니다. `Counter.count += 1`은 객체가 생성될 때 공유 계수를 증가시킨다.", "옳은 설명입니다. 클래스 이름으로 공유 변수에 접근하면 전체 생성 개수를 관리할 수 있다."]}, {"number": 227, "title": "__str__ 특수 메서드", "code": "class Student:\n    def __init__(self, name, score):\n        self.name = name\n        self.score = score\n\n    def __str__(self):\n        return f\"{self.name}: {self.score}점\"\n\nstudent = Student(\"지민\", 95)\nprint(student)", "options": ["`__str__`은 반드시 숫자를 반환해야 한다.", "지민: 95점이 출력된다.", "`__str__`은 `print(student)`에서 사용할 문자열을 반환한다.", "특수 메서드는 내장 동작과 사용자 객체를 연결한다.", "`pass`로 바꾸면 227번 코드의 핵심 동작과 결과가 그대로 유지된다."], "answers": [1, 2, 3], "explanation": "__str__ 을 정의하면 객체를 print할 때 보기 좋은 문자열을 출력할 수 있습니다.", "optionExplanations": ["틀린 설명입니다. `__str__`은 반드시 숫자를 반환해야 한다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "옳은 설명입니다. 지민: 95점이 출력된다.", "옳은 설명입니다. `__str__`은 `print(student)`에서 사용할 문자열을 반환한다.", "옳은 설명입니다. 특수 메서드는 내장 동작과 사용자 객체를 연결한다.", "틀린 설명입니다. `pass`로 바꾸면 227번 코드의 핵심 동작과 결과가 그대로 유지된다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다."]}, {"number": 228, "title": "__len__ 특수 메서드", "code": "class Word:\n    def __init__(self, text):\n        self.text = text\n\n    def __len__(self):\n        return len(self.text)\n\nword = Word(\"Python\")\nprint(len(word))", "options": ["`__len__`은 문자열 자체를 반환해야 한다.", "6이 출력된다.", "`__len__`을 정의했기 때문에 `len(word)`가 6을 반환한다.", "`pass`로 바꾸면 228번 코드의 핵심 동작과 결과가 그대로 유지된다.", "__len__은 0 이상의 정수를 반환해야 한다."], "answers": [1, 2, 4], "explanation": "__len__ 을 정의하면 사용자 클래스 객체에도 len() 을 사용할 수 있습니다.", "optionExplanations": ["틀린 설명입니다. `__len__`은 문자열 자체를 반환해야 한다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "옳은 설명입니다. 6이 출력된다.", "옳은 설명입니다. `__len__`을 정의했기 때문에 `len(word)`가 6을 반환한다.", "틀린 설명입니다. `pass`로 바꾸면 228번 코드의 핵심 동작과 결과가 그대로 유지된다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "옳은 설명입니다. __len__은 0 이상의 정수를 반환해야 한다."]}, {"number": 229, "title": "다형성 기초", "code": "class Dog:\n    def sound(self):\n        return \"멍멍\"\n\nclass Cat:\n    def sound(self):\n        return \"야옹\"\n\nanimals = [Dog(), Cat()]\nfor animal in animals:\n    print(animal.sound())", "options": ["다형성을 사용하려면 Dog와 Cat이 반드시 같은 부모를 상속해야만 한다.", "멍멍과 야옹이 차례로 출력된다.", "`pass`로 바꾸면 229번 코드의 핵심 동작과 결과가 그대로 유지된다.", "`animal.sound()`는 객체의 실제 클래스에 맞는 메서드를 호출한다.", "같은 인터페이스 이름으로 서로 다른 객체를 일관되게 처리할 수 있다."], "answers": [1, 3, 4], "explanation": "서로 다른 클래스라도 같은 이름의 메서드를 사용하면 비슷한 방식으로 처리할 수 있습니다.", "optionExplanations": ["틀린 설명입니다. 다형성을 사용하려면 Dog와 Cat이 반드시 같은 부모를 상속해야만 한다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "옳은 설명입니다. 멍멍과 야옹이 차례로 출력된다.", "틀린 설명입니다. `pass`로 바꾸면 229번 코드의 핵심 동작과 결과가 그대로 유지된다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "옳은 설명입니다. `animal.sound()`는 객체의 실제 클래스에 맞는 메서드를 호출한다.", "옳은 설명입니다. 같은 인터페이스 이름으로 서로 다른 객체를 일관되게 처리할 수 있다."]}, {"number": 230, "title": "상속 종합", "code": "class Person:\n    def __init__(self, name):\n        self.name = name\n\n    def introduce(self):\n        print(f\"저는 {self.name}입니다.\")\n\nclass Teacher(Person):\n    def teach(self):\n        print(\"수업을 진행합니다.\")\n\nteacher = Teacher(\"김선생님\")\nteacher.introduce()\nteacher.teach()", "options": ["Teacher는 Person을 상속하므로 새로운 `teach` 메서드를 가질 수 없다.", "`pass`로 바꾸면 230번 코드의 핵심 동작과 결과가 그대로 유지된다.", "자기소개와 수업 진행 문장이 출력된다.", "`teacher.introduce()`는 Person에서 물려받은 메서드 호출이다.", "공통 기능은 부모에, 역할별 기능은 자식에 배치할 수 있다."], "answers": [2, 3, 4], "explanation": "상속을 이용하면 공통 기능은 부모 클래스에 두고, 역할별 기능은 자식 클래스에 추가할 수 있습니다.", "optionExplanations": ["틀린 설명입니다. Teacher는 Person을 상속하므로 새로운 `teach` 메서드를 가질 수 없다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "틀린 설명입니다. `pass`로 바꾸면 230번 코드의 핵심 동작과 결과가 그대로 유지된다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "옳은 설명입니다. 자기소개와 수업 진행 문장이 출력된다.", "옳은 설명입니다. `teacher.introduce()`는 Person에서 물려받은 메서드 호출이다.", "옳은 설명입니다. 공통 기능은 부모에, 역할별 기능은 자식에 배치할 수 있다."]}, {"number": 231, "title": "예외가 발생하는 코드", "code": "number = 10\n# print(number / 0)", "options": ["현재는 나눗셈 문장이 주석이어서 오류가 실행되지 않는다.", "주석을 제거한 `print(number / 0)`은 ZeroDivisionError를 발생시킨다.", "0으로 나누는 연산은 정상적인 산술 결과가 아니라 예외를 만든다.", "`10 / 0`은 파이썬에서 무한대 값을 정상 반환한다.", "`print(\"오류 없음\")`로 바꾸면 231번 코드의 핵심 동작과 결과가 그대로 유지된다."], "answers": [0, 1, 2], "explanation": "0으로 나누면 ZeroDivisionError 가 발생합니다. 예외 처리를 사용하면 프로그램이 갑자기 종료되는 것을 줄일 수 있습니다.", "optionExplanations": ["옳은 설명입니다. 현재는 나눗셈 문장이 주석이어서 오류가 실행되지 않는다.", "옳은 설명입니다. 주석을 제거한 `print(number / 0)`은 ZeroDivisionError를 발생시킨다.", "옳은 설명입니다. 0으로 나누는 연산은 정상적인 산술 결과가 아니라 예외를 만든다.", "틀린 설명입니다. `10 / 0`은 파이썬에서 무한대 값을 정상 반환한다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "틀린 설명입니다. `print(\"오류 없음\")`로 바꾸면 231번 코드의 핵심 동작과 결과가 그대로 유지된다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다."]}, {"number": 232, "title": "ZeroDivisionError 처리", "code": "try:\n    result = 10 / 0\n    print(result)\nexcept ZeroDivisionError:\n    print(\"0으로 나눌 수 없습니다.\")", "options": ["0으로 나눌 수 없습니다.가 출력된다.", "`except ZeroDivisionError:`가 0 나누기 오류를 처리한다.", "예외가 발생해도 try 안의 `print(result)`가 먼저 실행된다.", "try에서 예외가 나면 남은 try 문장을 건너뛰고 일치하는 except로 이동한다.", "`print(\"오류 없음\")`로 바꾸면 232번 코드의 핵심 동작과 결과가 그대로 유지된다."], "answers": [0, 1, 3], "explanation": "try 에서 오류가 발생하면 해당 예외를 처리하는 except 가 실행됩니다.", "optionExplanations": ["옳은 설명입니다. 0으로 나눌 수 없습니다.가 출력된다.", "옳은 설명입니다. `except ZeroDivisionError:`가 0 나누기 오류를 처리한다.", "틀린 설명입니다. 예외가 발생해도 try 안의 `print(result)`가 먼저 실행된다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "옳은 설명입니다. try에서 예외가 나면 남은 try 문장을 건너뛰고 일치하는 except로 이동한다.", "틀린 설명입니다. `print(\"오류 없음\")`로 바꾸면 232번 코드의 핵심 동작과 결과가 그대로 유지된다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다."]}, {"number": 233, "title": "ValueError 처리", "code": "try:\n    age = int(\"열여섯\")\n    print(age)\nexcept ValueError:\n    print(\"숫자로 변환할 수 없습니다.\")", "options": ["숫자로 변환할 수 없습니다.가 출력된다.", "`int('열여섯')`은 ValueError를 발생시킨다.", "`int()`는 모든 한글 수 표현을 자동으로 정수로 변환한다.", "`print(\"오류 없음\")`로 바꾸면 233번 코드의 핵심 동작과 결과가 그대로 유지된다.", "잘못된 형변환은 ValueError의 대표적인 발생 원인이다."], "answers": [0, 1, 4], "explanation": "숫자가 아닌 문자열을 int() 로 변환하면 ValueError가 발생합니다.", "optionExplanations": ["옳은 설명입니다. 숫자로 변환할 수 없습니다.가 출력된다.", "옳은 설명입니다. `int('열여섯')`은 ValueError를 발생시킨다.", "틀린 설명입니다. `int()`는 모든 한글 수 표현을 자동으로 정수로 변환한다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "틀린 설명입니다. `print(\"오류 없음\")`로 바꾸면 233번 코드의 핵심 동작과 결과가 그대로 유지된다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "옳은 설명입니다. 잘못된 형변환은 ValueError의 대표적인 발생 원인이다."]}, {"number": 234, "title": "사용자 입력 예외 처리", "code": "try:\n    number = int(input(\"숫자를 입력하세요: \"))\n    print(number * 2)\nexcept ValueError:\n    print(\"숫자만 입력하세요.\")", "options": ["정수 입력이면 두 배가, 잘못된 입력이면 안내문이 출력된다.", "`input()`이 숫자가 아닌 값을 받으면 ValueError는 input에서 바로 발생한다.", "숫자가 아닌 입력은 `except ValueError:`에서 처리된다.", "예외 처리는 잘못된 사용자 입력 때문에 프로그램이 갑자기 끝나는 것을 줄인다.", "`print(\"오류 없음\")`로 바꾸면 234번 코드의 핵심 동작과 결과가 그대로 유지된다."], "answers": [0, 2, 3], "explanation": "입력값이 잘못되었을 때 프로그램이 멈추지 않도록 예외 처리를 할 수 있습니다.", "optionExplanations": ["옳은 설명입니다. 정수 입력이면 두 배가, 잘못된 입력이면 안내문이 출력된다.", "틀린 설명입니다. `input()`이 숫자가 아닌 값을 받으면 ValueError는 input에서 바로 발생한다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "옳은 설명입니다. 숫자가 아닌 입력은 `except ValueError:`에서 처리된다.", "옳은 설명입니다. 예외 처리는 잘못된 사용자 입력 때문에 프로그램이 갑자기 끝나는 것을 줄인다.", "틀린 설명입니다. `print(\"오류 없음\")`로 바꾸면 234번 코드의 핵심 동작과 결과가 그대로 유지된다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다."]}, {"number": 235, "title": "여러 예외 처리", "code": "try:\n    number = int(input(\"숫자 입력: \"))\n    print(100 / number)\nexcept ValueError:\n    print(\"숫자를 입력해야 합니다.\")\nexcept ZeroDivisionError:\n    print(\"0으로 나눌 수 없습니다.\")", "options": ["입력 종류에 따라 정상 계산, ValueError, ZeroDivisionError 중 한 흐름이 실행된다.", "문자를 입력해도 100으로 나누는 단계까지 정상 진행된다.", "0을 입력하면 `except ZeroDivisionError:`가 실행된다.", "`print(\"오류 없음\")`로 바꾸면 235번 코드의 핵심 동작과 결과가 그대로 유지된다.", "서로 다른 예외 유형마다 별도의 except 블록을 작성할 수 있다."], "answers": [0, 2, 4], "explanation": "발생할 수 있는 오류 종류에 따라 여러 개의 except를 작성할 수 있습니다.", "optionExplanations": ["옳은 설명입니다. 입력 종류에 따라 정상 계산, ValueError, ZeroDivisionError 중 한 흐름이 실행된다.", "틀린 설명입니다. 문자를 입력해도 100으로 나누는 단계까지 정상 진행된다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "옳은 설명입니다. 0을 입력하면 `except ZeroDivisionError:`가 실행된다.", "틀린 설명입니다. `print(\"오류 없음\")`로 바꾸면 235번 코드의 핵심 동작과 결과가 그대로 유지된다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "옳은 설명입니다. 서로 다른 예외 유형마다 별도의 except 블록을 작성할 수 있다."]}, {"number": 236, "title": "Exception으로 모든 예외 처리", "code": "try:\n    numbers = [1, 2, 3]\n    print(numbers[10])\nexcept Exception as error:\n    print(\"오류 발생:\", error)", "options": ["인덱스 오류 메시지가 출력된다.", "`numbers[10]`은 리스트의 마지막 요소 3을 반환한다.", "`print(\"오류 없음\")`로 바꾸면 236번 코드의 핵심 동작과 결과가 그대로 유지된다.", "`except Exception as error:`는 오류 객체를 error에 저장한다.", "가능하면 Exception보다 구체적인 예외를 잡는 편이 오류 원인 파악에 유리하다."], "answers": [0, 3, 4], "explanation": "Exception 은 많은 오류를 한 번에 처리하지만, 가능하면 구체적인 예외 종류를 처리하는 것이 좋습니다.", "optionExplanations": ["옳은 설명입니다. 인덱스 오류 메시지가 출력된다.", "틀린 설명입니다. `numbers[10]`은 리스트의 마지막 요소 3을 반환한다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "틀린 설명입니다. `print(\"오류 없음\")`로 바꾸면 236번 코드의 핵심 동작과 결과가 그대로 유지된다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "옳은 설명입니다. `except Exception as error:`는 오류 객체를 error에 저장한다.", "옳은 설명입니다. 가능하면 Exception보다 구체적인 예외를 잡는 편이 오류 원인 파악에 유리하다."]}, {"number": 237, "title": "else 사용", "code": "try:\n    number = int(\"10\")\nexcept ValueError:\n    print(\"변환 실패\")\nelse:\n    print(\"변환 성공:\", number)", "options": ["try의 else는 예외가 발생했을 때만 실행된다.", "변환 성공: 10이 출력된다.", "`int('10')`이 성공하므로 else 블록이 실행된다.", "else는 try가 예외 없이 끝났을 때 실행된다.", "`print(\"오류 없음\")`로 바꾸면 237번 코드의 핵심 동작과 결과가 그대로 유지된다."], "answers": [1, 2, 3], "explanation": "else 는 try 블록에서 예외가 발생하지 않았을 때 실행됩니다.", "optionExplanations": ["틀린 설명입니다. try의 else는 예외가 발생했을 때만 실행된다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "옳은 설명입니다. 변환 성공: 10이 출력된다.", "옳은 설명입니다. `int('10')`이 성공하므로 else 블록이 실행된다.", "옳은 설명입니다. else는 try가 예외 없이 끝났을 때 실행된다.", "틀린 설명입니다. `print(\"오류 없음\")`로 바꾸면 237번 코드의 핵심 동작과 결과가 그대로 유지된다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다."]}, {"number": 238, "title": "finally 사용", "code": "try:\n    print(10 / 2)\nexcept ZeroDivisionError:\n    print(\"오류 발생\")\nfinally:\n    print(\"항상 실행됩니다.\")", "options": ["finally는 try에서 예외가 없으면 건너뛴다.", "5.0과 항상 실행됩니다.가 출력된다.", "`finally:`는 예외 발생 여부와 관계없이 실행된다.", "`print(\"오류 없음\")`로 바꾸면 238번 코드의 핵심 동작과 결과가 그대로 유지된다.", "finally는 파일 닫기 같은 마무리 작업에 적합하다."], "answers": [1, 2, 4], "explanation": "finally 는 오류 발생 여부와 관계없이 마지막에 항상 실행됩니다.", "optionExplanations": ["틀린 설명입니다. finally는 try에서 예외가 없으면 건너뛴다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "옳은 설명입니다. 5.0과 항상 실행됩니다.가 출력된다.", "옳은 설명입니다. `finally:`는 예외 발생 여부와 관계없이 실행된다.", "틀린 설명입니다. `print(\"오류 없음\")`로 바꾸면 238번 코드의 핵심 동작과 결과가 그대로 유지된다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "옳은 설명입니다. finally는 파일 닫기 같은 마무리 작업에 적합하다."]}, {"number": 239, "title": "raise로 예외 발생시키기", "code": "age = -1\n\nif age < 0:\n    raise ValueError(\"나이는 0 이상이어야 합니다.\")", "options": ["raise는 오류를 무시하고 다음 줄로 계속 진행하게 한다.", "ValueError가 발생해 프로그램의 정상 흐름이 중단된다.", "`print(\"오류 없음\")`로 바꾸면 239번 코드의 핵심 동작과 결과가 그대로 유지된다.", "`raise ValueError(...)`는 조건이 참일 때 직접 예외를 발생시킨다.", "raise는 입력 조건 위반을 명시적인 예외로 바꾸는 데 사용할 수 있다."], "answers": [1, 3, 4], "explanation": "raise 는 프로그램에서 직접 예외를 발생시킬 때 사용합니다.", "optionExplanations": ["틀린 설명입니다. raise는 오류를 무시하고 다음 줄로 계속 진행하게 한다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "옳은 설명입니다. ValueError가 발생해 프로그램의 정상 흐름이 중단된다.", "틀린 설명입니다. `print(\"오류 없음\")`로 바꾸면 239번 코드의 핵심 동작과 결과가 그대로 유지된다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "옳은 설명입니다. `raise ValueError(...)`는 조건이 참일 때 직접 예외를 발생시킨다.", "옳은 설명입니다. raise는 입력 조건 위반을 명시적인 예외로 바꾸는 데 사용할 수 있다."]}, {"number": 240, "title": "예외 처리 종합", "code": "try:\n    score = int(input(\"점수 입력: \"))\n    if not 0 <= score <= 100:\n        raise ValueError(\"점수는 0~100 사이여야 합니다.\")\n    print(\"입력한 점수:\", score)\nexcept ValueError as error:\n    print(\"입력 오류:\", error)\nfinally:\n    print(\"점수 입력을 종료합니다.\")", "options": ["finally는 ValueError가 발생한 경우에는 실행되지 않는다.", "`print(\"오류 없음\")`로 바꾸면 240번 코드의 핵심 동작과 결과가 그대로 유지된다.", "어떤 입력이든 finally의 종료 문장은 마지막에 출력된다.", "`if not 0 <= score <= 100:`은 점수 범위를 벗어난 값을 검사한다.", "형변환 오류와 범위 오류를 같은 ValueError 처리 흐름으로 묶을 수 있다."], "answers": [2, 3, 4], "explanation": "입력 변환, 범위 검사, 오류 메시지, 마무리 작업을 함께 구성한 예제입니다.", "optionExplanations": ["틀린 설명입니다. finally는 ValueError가 발생한 경우에는 실행되지 않는다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "틀린 설명입니다. `print(\"오류 없음\")`로 바꾸면 240번 코드의 핵심 동작과 결과가 그대로 유지된다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "옳은 설명입니다. 어떤 입력이든 finally의 종료 문장은 마지막에 출력된다.", "옳은 설명입니다. `if not 0 <= score <= 100:`은 점수 범위를 벗어난 값을 검사한다.", "옳은 설명입니다. 형변환 오류와 범위 오류를 같은 ValueError 처리 흐름으로 묶을 수 있다."]}, {"number": 241, "title": "파일 쓰기 w 모드", "code": "file = open(\"hello.txt\", \"w\", encoding=\"utf-8\")\n\nfile.write(\"안녕하세요.\\n\")\nfile.write(\"파이썬 파일 입출력입니다.\")\n\nfile.close()", "options": ["hello.txt에 두 문장이 기록된다.", "`open('hello.txt', 'w', encoding='utf-8')`은 쓰기 모드로 파일을 연다.", "파일 작업 후 close를 호출해 자원을 정리해야 한다.", "w 모드는 기존 내용 뒤에만 추가하고 기존 파일을 절대 비우지 않는다.", "`print(\"오류 없음\")`로 바꾸면 241번 코드의 핵심 동작과 결과가 그대로 유지된다."], "answers": [0, 1, 2], "explanation": "\"w\" 모드는 새 파일을 만들거나 기존 파일 내용을 새로 씁니다. 한글 처리를 위해 encoding=\"utf-8\" 을 지정합니다.", "optionExplanations": ["옳은 설명입니다. hello.txt에 두 문장이 기록된다.", "옳은 설명입니다. `open('hello.txt', 'w', encoding='utf-8')`은 쓰기 모드로 파일을 연다.", "옳은 설명입니다. 파일 작업 후 close를 호출해 자원을 정리해야 한다.", "틀린 설명입니다. w 모드는 기존 내용 뒤에만 추가하고 기존 파일을 절대 비우지 않는다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "틀린 설명입니다. `print(\"오류 없음\")`로 바꾸면 241번 코드의 핵심 동작과 결과가 그대로 유지된다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다."]}, {"number": 242, "title": "파일 읽기 r 모드", "code": "file = open(\"hello.txt\", \"r\", encoding=\"utf-8\")\n\ncontent = file.read()\n\nfile.close()\n\nprint(content)", "options": ["hello.txt 전체 내용이 출력된다.", "`content = file.read()`는 파일 전체를 문자열로 읽는다.", "r 모드는 파일이 없어도 항상 새 파일을 자동 생성한다.", "read는 현재 파일 위치부터 끝까지 읽는다.", "`print(\"오류 없음\")`로 바꾸면 242번 코드의 핵심 동작과 결과가 그대로 유지된다."], "answers": [0, 1, 3], "explanation": "read() 는 파일 전체 내용을 문자열로 읽습니다.", "optionExplanations": ["옳은 설명입니다. hello.txt 전체 내용이 출력된다.", "옳은 설명입니다. `content = file.read()`는 파일 전체를 문자열로 읽는다.", "틀린 설명입니다. r 모드는 파일이 없어도 항상 새 파일을 자동 생성한다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "옳은 설명입니다. read는 현재 파일 위치부터 끝까지 읽는다.", "틀린 설명입니다. `print(\"오류 없음\")`로 바꾸면 242번 코드의 핵심 동작과 결과가 그대로 유지된다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다."]}, {"number": 243, "title": "with문으로 파일 쓰기", "code": "with open(\"memo.txt\", \"w\", encoding=\"utf-8\") as file:\n    file.write(\"첫 번째 메모\\n\")\n    file.write(\"두 번째 메모\")", "options": ["memo.txt에 두 메모가 기록된다.", "`with open(...) as file:`을 사용하면 블록 종료 시 파일이 자동으로 닫힌다.", "with문 안에서도 반드시 `file.close()`를 호출해야만 파일이 저장된다.", "`print(\"오류 없음\")`로 바꾸면 243번 코드의 핵심 동작과 결과가 그대로 유지된다.", "with문은 파일 자원 관리를 더 안전하고 간결하게 만든다."], "answers": [0, 1, 4], "explanation": "with 문을 사용하면 작업이 끝난 뒤 파일이 자동으로 닫히므로 close() 를 직접 호출하지 않아도 됩니다.", "optionExplanations": ["옳은 설명입니다. memo.txt에 두 메모가 기록된다.", "옳은 설명입니다. `with open(...) as file:`을 사용하면 블록 종료 시 파일이 자동으로 닫힌다.", "틀린 설명입니다. with문 안에서도 반드시 `file.close()`를 호출해야만 파일이 저장된다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "틀린 설명입니다. `print(\"오류 없음\")`로 바꾸면 243번 코드의 핵심 동작과 결과가 그대로 유지된다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "옳은 설명입니다. with문은 파일 자원 관리를 더 안전하고 간결하게 만든다."]}, {"number": 244, "title": "with문으로 파일 읽기", "code": "with open(\"memo.txt\", \"r\", encoding=\"utf-8\") as file:\n    content = file.read()\n\nprint(content)", "options": ["memo.txt 전체 내용이 출력된다.", "with 블록이 끝나면 content 변수도 자동 삭제된다.", "with 블록에서 읽은 `content`는 블록 밖에서 출력할 수 있다.", "파일은 닫혀도 이미 읽어 변수에 저장한 문자열은 사용할 수 있다.", "`print(\"오류 없음\")`로 바꾸면 244번 코드의 핵심 동작과 결과가 그대로 유지된다."], "answers": [0, 2, 3], "explanation": "파일 읽기에도 with문을 사용하는 것이 일반적으로 권장됩니다.", "optionExplanations": ["옳은 설명입니다. memo.txt 전체 내용이 출력된다.", "틀린 설명입니다. with 블록이 끝나면 content 변수도 자동 삭제된다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "옳은 설명입니다. with 블록에서 읽은 `content`는 블록 밖에서 출력할 수 있다.", "옳은 설명입니다. 파일은 닫혀도 이미 읽어 변수에 저장한 문자열은 사용할 수 있다.", "틀린 설명입니다. `print(\"오류 없음\")`로 바꾸면 244번 코드의 핵심 동작과 결과가 그대로 유지된다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다."]}, {"number": 245, "title": "파일에 내용 추가 a 모드", "code": "with open(\"memo.txt\", \"a\", encoding=\"utf-8\") as file:\n    file.write(\"\\n세 번째 메모\")", "options": ["세 번째 메모가 기존 파일 끝에 추가된다.", "a 모드는 파일을 열 때 기존 내용을 모두 지운다.", "`open('memo.txt', 'a', ...)`는 기존 내용 끝에 새 문장을 추가한다.", "`print(\"오류 없음\")`로 바꾸면 245번 코드의 핵심 동작과 결과가 그대로 유지된다.", "a 모드에서 파일이 없으면 새 파일이 만들어질 수 있다."], "answers": [0, 2, 4], "explanation": "\"a\" 모드는 기존 내용을 지우지 않고 파일 끝에 새 내용을 추가합니다.", "optionExplanations": ["옳은 설명입니다. 세 번째 메모가 기존 파일 끝에 추가된다.", "틀린 설명입니다. a 모드는 파일을 열 때 기존 내용을 모두 지운다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "옳은 설명입니다. `open('memo.txt', 'a', ...)`는 기존 내용 끝에 새 문장을 추가한다.", "틀린 설명입니다. `print(\"오류 없음\")`로 바꾸면 245번 코드의 핵심 동작과 결과가 그대로 유지된다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "옳은 설명입니다. a 모드에서 파일이 없으면 새 파일이 만들어질 수 있다."]}, {"number": 246, "title": "readline으로 한 줄 읽기", "code": "with open(\"memo.txt\", \"r\", encoding=\"utf-8\") as file:\n    line = file.readline()\n\nprint(line)", "options": ["memo.txt의 첫 줄만 읽어 출력한다.", "readline은 언제나 파일 전체를 리스트로 반환한다.", "`print(\"오류 없음\")`로 바꾸면 246번 코드의 핵심 동작과 결과가 그대로 유지된다.", "`file.readline()`은 현재 위치에서 한 줄을 읽는다.", "readline 결과에는 줄 끝의 개행 문자가 포함될 수 있다."], "answers": [0, 3, 4], "explanation": "readline() 은 파일에서 한 줄만 읽습니다.", "optionExplanations": ["옳은 설명입니다. memo.txt의 첫 줄만 읽어 출력한다.", "틀린 설명입니다. readline은 언제나 파일 전체를 리스트로 반환한다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "틀린 설명입니다. `print(\"오류 없음\")`로 바꾸면 246번 코드의 핵심 동작과 결과가 그대로 유지된다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "옳은 설명입니다. `file.readline()`은 현재 위치에서 한 줄을 읽는다.", "옳은 설명입니다. readline 결과에는 줄 끝의 개행 문자가 포함될 수 있다."]}, {"number": 247, "title": "파일을 한 줄씩 반복", "code": "with open(\"memo.txt\", \"r\", encoding=\"utf-8\") as file:\n    for line in file:\n        print(line.strip())", "options": ["`line.strip()`은 파일 원본의 줄바꿈 문자를 직접 삭제한다.", "각 줄을 개행이 겹치지 않게 출력한다.", "`for line in file:`은 파일을 한 줄씩 반복한다.", "strip은 출력할 문자열 양끝의 공백과 개행을 제거한다.", "`print(\"오류 없음\")`로 바꾸면 247번 코드의 핵심 동작과 결과가 그대로 유지된다."], "answers": [1, 2, 3], "explanation": "파일 객체를 반복하면 한 줄씩 읽을 수 있습니다. strip() 은 줄바꿈 문자를 제거합니다.", "optionExplanations": ["틀린 설명입니다. `line.strip()`은 파일 원본의 줄바꿈 문자를 직접 삭제한다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "옳은 설명입니다. 각 줄을 개행이 겹치지 않게 출력한다.", "옳은 설명입니다. `for line in file:`은 파일을 한 줄씩 반복한다.", "옳은 설명입니다. strip은 출력할 문자열 양끝의 공백과 개행을 제거한다.", "틀린 설명입니다. `print(\"오류 없음\")`로 바꾸면 247번 코드의 핵심 동작과 결과가 그대로 유지된다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다."]}, {"number": 248, "title": "writelines로 여러 줄 저장", "code": "lines = [\"사과\\n\", \"바나나\\n\", \"포도\\n\"]\n\nwith open(\"fruits.txt\", \"w\", encoding=\"utf-8\") as file:\n    file.writelines(lines)", "options": ["writelines가 각 문자열 뒤에 줄바꿈을 자동으로 추가하므로 `\\n`은 필요 없다.", "fruits.txt에 세 과일이 줄별로 저장된다.", "`file.writelines(lines)`는 문자열 목록을 순서대로 기록한다.", "`print(\"오류 없음\")`로 바꾸면 248번 코드의 핵심 동작과 결과가 그대로 유지된다.", "writelines는 문자열들을 이어 쓰므로 줄 구분은 데이터에 포함해야 한다."], "answers": [1, 2, 4], "explanation": "writelines() 는 문자열이 들어 있는 리스트를 파일에 여러 줄로 저장할 때 사용합니다.", "optionExplanations": ["틀린 설명입니다. writelines가 각 문자열 뒤에 줄바꿈을 자동으로 추가하므로 `\\n`은 필요 없다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "옳은 설명입니다. fruits.txt에 세 과일이 줄별로 저장된다.", "옳은 설명입니다. `file.writelines(lines)`는 문자열 목록을 순서대로 기록한다.", "틀린 설명입니다. `print(\"오류 없음\")`로 바꾸면 248번 코드의 핵심 동작과 결과가 그대로 유지된다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "옳은 설명입니다. writelines는 문자열들을 이어 쓰므로 줄 구분은 데이터에 포함해야 한다."]}, {"number": 249, "title": "CSV 파일 쓰기", "code": "import csv\n\nrows = [[\"이름\", \"점수\"], [\"민수\", 80], [\"지민\", 95]]\n\nwith open(\"scores.csv\", \"w\", newline=\"\", encoding=\"utf-8-sig\") as file:\n    writer = csv.writer(file)\n    writer.writerows(rows)", "options": ["CSV로 쓰면 숫자 80과 95가 반드시 이진 정수 형식으로 저장된다.", "scores.csv에 머리글과 두 학생 행이 저장된다.", "`print(\"오류 없음\")`로 바꾸면 249번 코드의 핵심 동작과 결과가 그대로 유지된다.", "`csv.writer(file).writerows(rows)`는 여러 행을 CSV에 기록한다.", "newline=''은 CSV 작성 시 불필요한 빈 줄 문제를 줄이는 데 도움이 된다."], "answers": [1, 3, 4], "explanation": "csv 모듈을 사용하면 표 형태의 데이터를 CSV 파일로 저장할 수 있습니다. utf-8-sig 은 스프레드시트 프로그램에서 한글이 깨지는 문제를 줄이는 데 도움이 됩니다.", "optionExplanations": ["틀린 설명입니다. CSV로 쓰면 숫자 80과 95가 반드시 이진 정수 형식으로 저장된다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "옳은 설명입니다. scores.csv에 머리글과 두 학생 행이 저장된다.", "틀린 설명입니다. `print(\"오류 없음\")`로 바꾸면 249번 코드의 핵심 동작과 결과가 그대로 유지된다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "옳은 설명입니다. `csv.writer(file).writerows(rows)`는 여러 행을 CSV에 기록한다.", "옳은 설명입니다. newline=''은 CSV 작성 시 불필요한 빈 줄 문제를 줄이는 데 도움이 된다."]}, {"number": 250, "title": "CSV 파일 읽기", "code": "import csv\n\nwith open(\"scores.csv\", \"r\", encoding=\"utf-8-sig\") as file:\n    reader = csv.reader(file)\n    for row in reader:\n        print(row)", "options": ["csv.reader는 모든 숫자 문자열을 자동으로 int로 변환한다.", "`print(\"오류 없음\")`로 바꾸면 250번 코드의 핵심 동작과 결과가 그대로 유지된다.", "세 CSV 행이 각각 리스트로 출력된다.", "`csv.reader(file)`가 각 행을 리스트 형태로 읽게 한다.", "CSV에서 읽은 필드는 기본적으로 문자열로 제공된다."], "answers": [2, 3, 4], "explanation": "csv.reader() 는 CSV 파일의 각 행을 리스트 형태로 읽어 옵니다.", "optionExplanations": ["틀린 설명입니다. csv.reader는 모든 숫자 문자열을 자동으로 int로 변환한다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "틀린 설명입니다. `print(\"오류 없음\")`로 바꾸면 250번 코드의 핵심 동작과 결과가 그대로 유지된다. 원래 코드의 문법과 실행 흐름을 기준으로 판단해야 합니다.", "옳은 설명입니다. 세 CSV 행이 각각 리스트로 출력된다.", "옳은 설명입니다. `csv.reader(file)`가 각 행을 리스트 형태로 읽게 한다.", "옳은 설명입니다. CSV에서 읽은 필드는 기본적으로 문자열로 제공된다."]}],labels=["①","②","③","④","⑤"];
+function esc(s){return s.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));}
+function formatChoice(s){return esc(s).replace(/`([^`]+)`/g,"<code>$1</code>");}
+document.getElementById("quizContainer").innerHTML=questions.map(q=>`<article class="quiz-card"><h3>${q.number}번. ${q.title}</h3><div class="question-guide">다음 코드를 분석한 설명 중 옳은 것 3개를 모두 고르시오.</div><pre><code>${esc(q.code)}</code></pre>${q.options.map((o,i)=>`<label class="choice"><input type="checkbox" name="q${q.number}" value="${i}"><b>${labels[i]}</b> ${formatChoice(o)}</label>`).join("")}</article>`).join("");
+const same=(a,b)=>a.length===b.length&&a.every((v,i)=>v===b[i]),safe=s=>s.trim().replace(/[\\/:*?"<>|\s]+/g,"_");
+const stamp=d=>{const p=n=>String(n).padStart(2,"0");return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}_${p(d.getHours())}시${p(d.getMinutes())}분${p(d.getSeconds())}초`;};
+function gradeQuiz(){
+ const sid=document.getElementById("studentId").value.trim(),name=document.getElementById("studentName").value.trim();if(!sid||!name){alert("학번과 이름을 모두 입력하세요.");return;}
+ let correct=0,reviews=[],lines=[],now=new Date();
+ questions.forEach(q=>{const sel=[...document.querySelectorAll(`input[name="q${q.number}"]:checked`)].map(x=>+x.value).sort((a,b)=>a-b),ans=[...q.answers].sort((a,b)=>a-b),ok=same(sel,ans);if(ok)correct++;
+ const st=sel.length?sel.map(i=>labels[i]).join(", "):"미응답",at=ans.map(i=>labels[i]).join(", ");
+ reviews.push(`<div class="review ${ok?"correct":"wrong"}"><h3>${q.number}번 · ${ok?"정답":"오답"}</h3><div class="answer-line">나의 선택: ${st}</div><div class="answer-line">정답: ${at}</div><p><b>핵심 풀이:</b> ${esc(q.explanation)}</p><ul class="detail-list">${q.optionExplanations.map((e,i)=>`<li><b>${labels[i]}</b> ${formatChoice(e)}</li>`).join("")}</ul></div>`);
+ lines.push(`[${q.number}번] ${q.title}`,`코드:\n${q.code}`,`나의 선택: ${st}`,`정답: ${at}`,`채점 결과: ${ok?"정답":"오답"}`,`핵심 풀이: ${q.explanation}`);q.optionExplanations.forEach((e,i)=>lines.push(`${labels[i]} ${e}`));lines.push("------------------------------------------------------------");});
+ const score=correct*2,box=document.getElementById("resultBox");box.style.display="block";box.innerHTML=`<div class="result-summary">${esc(sid)} ${esc(name)} · ${score}점 / 100점 (정답 ${correct}문항, 오답 ${50-correct}문항)</div><p>문항별 정오답과 선택지별 상세 풀이입니다.</p>${reviews.join("")}`;box.scrollIntoView({behavior:"smooth"});
+ const head=["파이썬300E 코드 이해 평가 결과",`학번: ${sid}`,`이름: ${name}`,`점수: ${score}점 / 100점`,`정답 문항 수: ${correct} / 50`,`응시 시각: ${now.toLocaleString("ko-KR")}`,"============================================================"];
+ const blob=new Blob(["\uFEFF"+head.concat(lines).join("\r\n")],{type:"text/plain;charset=utf-8"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`${safe(sid)}_${safe(name)}_${score}점_파이썬300E_${stamp(now)}.txt`;a.click();URL.revokeObjectURL(a.href);
+}
+</script></body>
+</html>
