@@ -123,10 +123,8 @@ print(student.score)</code></pre>
     def __init__(self, name):
         self.name = name
 
-```
-def introduce(self):
-    print(f"안녕하세요. 저는 {self.name}입니다.")
-```
+    def introduce(self):
+        print(f"안녕하세요. 저는 {self.name}입니다.")
 
 student = Student("민수")
 student.introduce()</code></pre>
@@ -140,10 +138,8 @@ student.introduce()</code></pre>
         self.name = name
         self.score = score
 
-```
-def show_score(self):
-    print(f"{self.name}의 점수는 {self.score}점입니다.")
-```
+    def show_score(self):
+        print(f"{self.name}의 점수는 {self.score}점입니다.")
 
 student = Student("지민", 98)
 student.show_score()</code></pre>
@@ -171,14 +167,11 @@ print(student2.name)</code></pre>
         self.name = name
         self.score = score
 
-```
-def add_score(self, point):
-    self.score += point
-```
+    def add_score(self, point):
+        self.score += point
 
 student = Student("서연", 80)
 student.add_score(10)
-
 print(student.score)</code></pre>
 
 <div class="output"><strong>실행 결과</strong><br>90</div>
@@ -190,14 +183,11 @@ print(student.score)</code></pre>
         self.owner = owner
         self.balance = balance
 
-```
-def deposit(self, money):
-    self.balance += money
-```
+    def deposit(self, money):
+        self.balance += money
 
 account = Account("민수", 10000)
 account.deposit(5000)
-
 print(account.balance)</code></pre>
 
 <div class="output"><strong>실행 결과</strong><br>15000</div>
@@ -208,18 +198,15 @@ print(account.balance)</code></pre>
     def __init__(self, balance):
         self.balance = balance
 
-```
-def withdraw(self, money):
-    if money <= self.balance:
-        self.balance -= money
-        print("출금 완료")
-    else:
-        print("잔액이 부족합니다.")
-```
+    def withdraw(self, money):
+        if money &lt;= self.balance:
+            self.balance -= money
+            print("출금 완료")
+        else:
+            print("잔액이 부족합니다.")
 
 account = Account(10000)
 account.withdraw(3000)
-
 print(account.balance)</code></pre>
 
 <div class="output"><strong>실행 결과</strong><br>출금 완료<br>7000</div>
@@ -230,13 +217,10 @@ print(account.balance)</code></pre>
     def add(self, a, b):
         return a + b
 
-```
-def multiply(self, a, b):
-    return a * b
-```
+    def multiply(self, a, b):
+        return a * b
 
 calculator = Calculator()
-
 print(calculator.add(3, 4))
 print(calculator.multiply(3, 4))</code></pre>
 
@@ -248,12 +232,10 @@ print(calculator.multiply(3, 4))</code></pre>
     def __init__(self):
         self.value = 10
 
-```
-def show(self):
-    local_value = 20
-    print(self.value)
-    print(local_value)
-```
+    def show(self):
+        local_value = 20
+        print(self.value)
+        print(local_value)
 
 example = Example()
 example.show()</code></pre>
@@ -267,13 +249,10 @@ example.show()</code></pre>
         self.name = name
         self.score = score
 
-```
-def is_pass(self):
-    return self.score >= 80
-```
+    def is_pass(self):
+        return self.score &gt;= 80
 
 student = Student("지민", 85)
-
 print(student.is_pass())</code></pre>
 
 <div class="output"><strong>실행 결과</strong><br>True</div>
@@ -285,14 +264,9 @@ print(student.is_pass())</code></pre>
         self.name = name
         self.score = score
 
-students = [
-Student("민수", 80),
-Student("지민", 95),
-Student("서연", 88)
-]
-
+students = [Student("민수", 80), Student("지민", 95), Student("서연", 88)]
 for student in students:
-print(student.name, student.score)</code></pre>
+    print(student.name, student.score)</code></pre>
 
 <div class="output"><strong>실행 결과</strong><br>민수 80<br>지민 95<br>서연 88</div>
 <div class="explain"><strong>설명</strong><br>객체를 리스트에 저장하면 여러 개의 데이터를 구조적으로 관리할 수 있습니다.</div>
@@ -303,15 +277,9 @@ print(student.name, student.score)</code></pre>
         self.name = name
         self.score = score
 
-students = [
-Student("민수", 80),
-Student("지민", 95),
-Student("서연", 85)
-]
-
+students = [Student("민수", 80), Student("지민", 95), Student("서연", 85)]
 total = sum(student.score for student in students)
 average = total / len(students)
-
 print(average)</code></pre>
 
 <div class="output"><strong>실행 결과</strong><br>86.66666666666667</div>
@@ -324,10 +292,9 @@ print(average)</code></pre>
         self.score = score
 
 def create_student(name, score):
-return Student(name, score)
+    return Student(name, score)
 
 student = create_student("하늘", 92)
-
 print(student.name, student.score)</code></pre>
 
 <div class="output"><strong>실행 결과</strong><br>하늘 92</div>
@@ -338,15 +305,12 @@ print(student.name, student.score)</code></pre>
     def __init__(self):
         self.value = 0
 
-```
-def increase(self):
-    self.value += 1
-    return self
-```
+    def increase(self):
+        self.value += 1
+        return self
 
 counter = Counter()
 counter.increase().increase().increase()
-
 print(counter.value)</code></pre>
 
 <div class="output"><strong>실행 결과</strong><br>3</div>
@@ -357,15 +321,12 @@ print(counter.value)</code></pre>
     def __init__(self):
         self.todos = []
 
-```
-def add(self, todo):
-    self.todos.append(todo)
-```
+    def add(self, todo):
+        self.todos.append(todo)
 
 todo_list = TodoList()
 todo_list.add("파이썬 공부")
 todo_list.add("운동")
-
 print(todo_list.todos)</code></pre>
 
 <div class="output"><strong>실행 결과</strong><br>['파이썬 공부', '운동']</div>
@@ -407,7 +368,7 @@ print(isinstance(student, Student))</code></pre>
         print("먹습니다.")
 
 class Dog(Animal):
-pass
+    pass
 
 dog = Dog()
 dog.eat()</code></pre>
@@ -421,8 +382,8 @@ dog.eat()</code></pre>
         print("먹습니다.")
 
 class Dog(Animal):
-def bark(self):
-print("멍멍!")
+    def bark(self):
+        print("멍멍!")
 
 dog = Dog()
 dog.eat()
@@ -437,8 +398,8 @@ dog.bark()</code></pre>
         print("동물 소리")
 
 class Cat(Animal):
-def sound(self):
-print("야옹")
+    def sound(self):
+        print("야옹")
 
 cat = Cat()
 cat.sound()</code></pre>
@@ -452,12 +413,11 @@ cat.sound()</code></pre>
         self.name = name
 
 class Dog(Animal):
-def **init**(self, name, breed):
-super().**init**(name)
-self.breed = breed
+    def __init__(self, name, breed):
+        super().__init__(name)
+        self.breed = breed
 
 dog = Dog("초코", "푸들")
-
 print(dog.name)
 print(dog.breed)</code></pre>
 
@@ -468,14 +428,11 @@ print(dog.breed)</code></pre>
 <pre><code>class Student:
     school = "파이썬 중학교"
 
-```
-def __init__(self, name):
-    self.name = name
-```
+    def __init__(self, name):
+        self.name = name
 
 student1 = Student("민수")
 student2 = Student("지민")
-
 print(student1.school)
 print(student2.school)</code></pre>
 
@@ -486,15 +443,12 @@ print(student2.school)</code></pre>
 <pre><code>class Counter:
     count = 0
 
-```
-def __init__(self):
-    Counter.count += 1
-```
+    def __init__(self):
+        Counter.count += 1
 
 a = Counter()
 b = Counter()
 c = Counter()
-
 print(Counter.count)</code></pre>
 
 <div class="output"><strong>실행 결과</strong><br>3</div>
@@ -506,13 +460,10 @@ print(Counter.count)</code></pre>
         self.name = name
         self.score = score
 
-```
-def __str__(self):
-    return f"{self.name}: {self.score}점"
-```
+    def __str__(self):
+        return f"{self.name}: {self.score}점"
 
 student = Student("지민", 95)
-
 print(student)</code></pre>
 
 <div class="output"><strong>실행 결과</strong><br>지민: 95점</div>
@@ -523,13 +474,10 @@ print(student)</code></pre>
     def __init__(self, text):
         self.text = text
 
-```
-def __len__(self):
-    return len(self.text)
-```
+    def __len__(self):
+        return len(self.text)
 
 word = Word("Python")
-
 print(len(word))</code></pre>
 
 <div class="output"><strong>실행 결과</strong><br>6</div>
@@ -541,13 +489,12 @@ print(len(word))</code></pre>
         return "멍멍"
 
 class Cat:
-def sound(self):
-return "야옹"
+    def sound(self):
+        return "야옹"
 
 animals = [Dog(), Cat()]
-
 for animal in animals:
-print(animal.sound())</code></pre>
+    print(animal.sound())</code></pre>
 
 <div class="output"><strong>실행 결과</strong><br>멍멍<br>야옹</div>
 <div class="explain"><strong>설명</strong><br>서로 다른 클래스라도 같은 이름의 메서드를 사용하면 비슷한 방식으로 처리할 수 있습니다.</div>
@@ -557,17 +504,14 @@ print(animal.sound())</code></pre>
     def __init__(self, name):
         self.name = name
 
-```
-def introduce(self):
-    print(f"저는 {self.name}입니다.")
-```
+    def introduce(self):
+        print(f"저는 {self.name}입니다.")
 
 class Teacher(Person):
-def teach(self):
-print("수업을 진행합니다.")
+    def teach(self):
+        print("수업을 진행합니다.")
 
 teacher = Teacher("김선생님")
-
 teacher.introduce()
 teacher.teach()</code></pre>
 
@@ -652,27 +596,21 @@ finally:
 <h3>예제 239. raise로 예외 발생시키기</h3>
 <pre><code>age = -1
 
-if age < 0:
-raise ValueError("나이는 0 이상이어야 합니다.")</code></pre>
+if age &lt; 0:
+    raise ValueError("나이는 0 이상이어야 합니다.")</code></pre>
 
 <div class="warning"><strong>설명</strong><br><code>raise</code>는 프로그램에서 직접 예외를 발생시킬 때 사용합니다.</div>
 
 <h3>예제 240. 예외 처리 종합</h3>
 <pre><code>try:
     score = int(input("점수 입력: "))
-
-```
-if not 0 <= score <= 100:
-    raise ValueError("점수는 0~100 사이여야 합니다.")
-
-print("입력한 점수:", score)
-```
-
+    if not 0 &lt;= score &lt;= 100:
+        raise ValueError("점수는 0~100 사이여야 합니다.")
+    print("입력한 점수:", score)
 except ValueError as error:
-print("입력 오류:", error)
-
+    print("입력 오류:", error)
 finally:
-print("점수 입력을 종료합니다.")</code></pre>
+    print("점수 입력을 종료합니다.")</code></pre>
 
 <div class="explain"><strong>설명</strong><br>입력 변환, 범위 검사, 오류 메시지, 마무리 작업을 함께 구성한 예제입니다.</div>
 </section>
@@ -738,29 +676,21 @@ print(line)</code></pre>
 <div class="explain"><strong>설명</strong><br>파일 객체를 반복하면 한 줄씩 읽을 수 있습니다. <code>strip()</code>은 줄바꿈 문자를 제거합니다.</div>
 
 <h3>예제 248. writelines로 여러 줄 저장</h3>
-<pre><code>lines = [
-    "사과\n",
-    "바나나\n",
-    "포도\n"
-]
+<pre><code>lines = ["사과\n", "바나나\n", "포도\n"]
 
 with open("fruits.txt", "w", encoding="utf-8") as file:
-file.writelines(lines)</code></pre>
+    file.writelines(lines)</code></pre>
 
 <div class="explain"><strong>설명</strong><br><code>writelines()</code>는 문자열이 들어 있는 리스트를 파일에 여러 줄로 저장할 때 사용합니다.</div>
 
 <h3>예제 249. CSV 파일 쓰기</h3>
 <pre><code>import csv
 
-rows = [
-["이름", "점수"],
-["민수", 80],
-["지민", 95]
-]
+rows = [["이름", "점수"], ["민수", 80], ["지민", 95]]
 
 with open("scores.csv", "w", newline="", encoding="utf-8-sig") as file:
-writer = csv.writer(file)
-writer.writerows(rows)</code></pre>
+    writer = csv.writer(file)
+    writer.writerows(rows)</code></pre>
 
 <div class="explain"><strong>설명</strong><br><code>csv</code> 모듈을 사용하면 표 형태의 데이터를 CSV 파일로 저장할 수 있습니다. <code>utf-8-sig</code>은 스프레드시트 프로그램에서 한글이 깨지는 문제를 줄이는 데 도움이 됩니다.</div>
 
@@ -768,12 +698,10 @@ writer.writerows(rows)</code></pre>
 <pre><code>import csv
 
 with open("scores.csv", "r", encoding="utf-8-sig") as file:
-reader = csv.reader(file)
+    reader = csv.reader(file)
+    for row in reader:
+        print(row)</code></pre>
 
-```
-for row in reader:
-    print(row)</code></pre>
-```
 
 <div class="output"><strong>실행 결과 예시</strong><br>['이름', '점수']<br>['민수', '80']<br>['지민', '95']</div>
 <div class="explain"><strong>설명</strong><br><code>csv.reader()</code>는 CSV 파일의 각 행을 리스트 형태로 읽어 옵니다.</div>
