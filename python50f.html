@@ -141,15 +141,14 @@ print(pi)</code></pre>
 <div class="explain"><strong>설명</strong><br><code>from 모듈 import 이름</code>을 사용하면 필요한 기능만 직접 가져올 수 있습니다.</div>
 
 <h3>예제 259. 사용자 모듈 만들기</h3>
-<pre><code># my_module.py 파일
+<pre><code># my_module.py
 
 def add(a, b):
-return a + b
+    return a + b
 
-# main.py 파일
+# main.py
 
 import my_module
-
 print(my_module.add(10, 20))</code></pre>
 
 <div class="output"><strong>실행 결과</strong><br>30</div>
@@ -163,12 +162,11 @@ print(my_module.add(10, 20))</code></pre>
 # calculator.py
 
 def multiply(a, b):
-return a * b
+    return a * b
 
 # main.py
 
 from my_package.calculator import multiply
-
 print(multiply(3, 4))</code></pre>
 
 <div class="output"><strong>실행 결과</strong><br>12</div>
@@ -310,7 +308,7 @@ print(result)</code></pre>
 text = "Python is fun"
 
 if re.search("Python", text):
-print("찾았습니다.")</code></pre>
+    print("찾았습니다.")</code></pre>
 
 <div class="output"><strong>실행 결과</strong><br>찾았습니다.</div>
 <div class="explain"><strong>설명</strong><br>패턴을 찾으면 Match 객체가 반환되므로 조건문에서 True처럼 사용할 수 있습니다.</div>
@@ -378,10 +376,8 @@ print(result)</code></pre>
 <h3>예제 278. 이메일 형식 간단 검사</h3>
 <pre><code>import re
 
-email = "[student@example.com](mailto:student@example.com)"
-
-pattern = r"^[\w.-]+@[\w.-]+.[A-Za-z]{2,}$"
-
+email = "student@example.com"
+pattern = r"^[\w.-]+@[\w.-]+\.[A-Za-z]{2,}$"
 print(bool(re.match(pattern, email)))</code></pre>
 
 <div class="output"><strong>실행 결과</strong><br>True</div>
@@ -477,7 +473,7 @@ print("평균:", sum(scores) / len(scores))</code></pre>
 <pre><code>numbers = [10, 20, 30]
 
 for number in numbers:
-print(number)</code></pre>
+    print(number)</code></pre>
 
 <div class="output"><strong>실행 결과</strong><br>10<br>20<br>30</div>
 <div class="explain"><strong>설명</strong><br>리스트처럼 반복문에서 하나씩 꺼낼 수 있는 객체를 반복 가능한 객체라고 합니다.</div>
@@ -522,22 +518,18 @@ print(next(iterator))
         self.current = 1
         self.limit = limit
 
-```
-def __iter__(self):
-    return self
+    def __iter__(self):
+        return self
 
-def __next__(self):
-    if self.current > self.limit:
-        raise StopIteration
-
-    value = self.current
-    self.current += 1
-
-    return value
-```
+    def __next__(self):
+        if self.current &gt; self.limit:
+            raise StopIteration
+        value = self.current
+        self.current += 1
+        return value
 
 for number in CountUp(3):
-print(number)</code></pre>
+    print(number)</code></pre>
 
 <div class="output"><strong>실행 결과</strong><br>1<br>2<br>3</div>
 <div class="explain"><strong>설명</strong><br><code>__iter__()</code>와 <code>__next__()</code>를 정의하면 직접 이터레이터를 만들 수 있습니다.</div>
@@ -549,7 +541,7 @@ print(number)</code></pre>
     yield 3
 
 for number in generator():
-print(number)</code></pre>
+    print(number)</code></pre>
 
 <div class="output"><strong>실행 결과</strong><br>1<br>2<br>3</div>
 <div class="explain"><strong>설명</strong><br><code>yield</code>를 사용한 함수는 값을 한 번에 모두 만들지 않고 필요할 때 하나씩 생성합니다.</div>
@@ -573,7 +565,7 @@ print(next(g))</code></pre>
         yield number
 
 for number in count_up(5):
-print(number)</code></pre>
+    print(number)</code></pre>
 
 <div class="output"><strong>실행 결과</strong><br>1<br>2<br>3<br>4<br>5</div>
 <div class="explain"><strong>설명</strong><br>반복문 안에서 yield를 사용하면 순서대로 값을 생성할 수 있습니다.</div>
@@ -592,15 +584,11 @@ print(list(even_numbers(10)))</code></pre>
 <h3>예제 295. 무한 제너레이터</h3>
 <pre><code>def infinite_numbers():
     number = 1
-
-```
-while True:
-    yield number
-    number += 1
-```
+    while True:
+        yield number
+        number += 1
 
 g = infinite_numbers()
-
 print(next(g))
 print(next(g))
 print(next(g))</code></pre>
@@ -643,19 +631,16 @@ print(list(numbers()))</code></pre>
             yield line.strip()
 
 for line in read_lines("memo.txt"):
-print(line)</code></pre>
+    print(line)</code></pre>
 
 <div class="explain"><strong>설명</strong><br>큰 파일을 한 번에 모두 읽지 않고 한 줄씩 처리할 때 제너레이터가 유용합니다.</div>
 
 <h3>예제 300. 제너레이터 종합: 피보나치 수열</h3>
 <pre><code>def fibonacci(limit):
     a, b = 0, 1
-
-```
-for _ in range(limit):
-    yield a
-    a, b = b, a + b
-```
+    for _ in range(limit):
+        yield a
+        a, b = b, a + b
 
 print(list(fibonacci(10)))</code></pre>
 
