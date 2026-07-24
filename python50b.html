@@ -241,7 +241,7 @@ print(numbers)</code></pre>
 <pre><code>fruits = ["사과", "바나나", "포도"]
 
 for fruit in fruits:
-print(fruit)</code></pre>
+    print(fruit)</code></pre>
 
 <div class="output"><strong>실행 결과</strong><br>사과<br>바나나<br>포도</div>
 <div class="explain"><strong>설명</strong><br><code>for</code>문을 사용하면 리스트의 요소를 하나씩 꺼내어 반복할 수 있습니다.</div>
@@ -250,7 +250,7 @@ print(fruit)</code></pre>
 <pre><code>fruits = ["사과", "바나나", "포도"]
 
 for index, fruit in enumerate(fruits, start=1):
-print(index, fruit)</code></pre>
+    print(index, fruit)</code></pre>
 
 <div class="output"><strong>실행 결과</strong><br>1 사과<br>2 바나나<br>3 포도</div>
 <div class="explain"><strong>설명</strong><br><code>enumerate()</code>는 인덱스와 값을 함께 가져옵니다. <code>start=1</code>은 번호를 1부터 시작하게 합니다.</div>
@@ -440,7 +440,7 @@ print(student.items())</code></pre>
 <pre><code>student = {"이름": "지민", "점수": 95, "학년": 2}
 
 for key, value in student.items():
-print(key, ":", value)</code></pre>
+    print(key, ":", value)</code></pre>
 
 <div class="output"><strong>실행 결과</strong><br>이름 : 지민<br>점수 : 95<br>학년 : 2</div>
 <div class="explain"><strong>설명</strong><br><code>items()</code>와 반복문을 사용하면 키와 값을 함께 처리할 수 있습니다.</div>
@@ -515,7 +515,7 @@ print(class_a.union(class_b))</code></pre>
 <pre><code>class_a = {"민수", "지민", "서연"}
 class_b = {"지민", "도윤", "하늘"}
 
-print(class_a & class_b)
+print(class_a &amp; class_b)
 print(class_a - class_b)</code></pre>
 
 <div class="output"><strong>실행 결과 예시</strong><br>{'지민'}<br>{'민수', '서연'}</div>
