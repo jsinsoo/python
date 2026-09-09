@@ -1,0 +1,271 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Web VPython 분야별 게임 30개</title><style>*{box-sizing:border-box}body{margin:0;font-family:"Malgun Gothic",sans-serif;background:#f4f7fb;color:#172033;line-height:1.65}
+header{background:linear-gradient(135deg,#102a43,#2563eb);color:white;padding:46px 24px}.wrap{max-width:1400px;margin:auto}
+h1{font-size:42px;margin:8px 0}.lead{max-width:1000px;color:#dbeafe}.chips{display:flex;gap:8px;flex-wrap:wrap}.chip{padding:6px 10px;border-radius:999px;background:#ffffff18;border:1px solid #ffffff44;font-weight:bold}
+nav{position:sticky;top:0;z-index:20;background:#ffffffee;border-bottom:1px solid #dbe3ee}.tools{max-width:1400px;margin:auto;padding:10px 18px;display:flex;gap:8px;flex-wrap:wrap}
+select,input,button{font:inherit;padding:9px 11px;border:1px solid #dbe3ee;border-radius:10px;background:white}input{flex:1;min-width:240px}button{font-weight:bold;cursor:pointer}.blue{background:#2563eb;color:white}
+main{max-width:1400px;margin:auto;padding:22px 18px 70px}.intro{background:white;border:1px solid #dbe3ee;border-radius:18px;padding:18px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:18px}
+.card{background:white;border:1px solid #dbe3ee;border-radius:18px;overflow:hidden}.head{padding:14px 16px;background:#f8fbff;border-bottom:1px solid #dbe3ee;display:flex;gap:12px;align-items:center}.icon{width:42px;height:42px;border-radius:12px;background:#eaf2ff;display:grid;place-items:center;font-size:20px;font-weight:bold}.head h2{margin:0;font-size:18px;color:#173d68}.body{padding:15px 16px}.tag{display:inline-block;background:#ecfdf5;color:#0f766e;border-radius:999px;padding:3px 8px;font-size:12px;font-weight:bold}.body p{color:#526273;font-size:14px}
+pre{background:#0b1220;color:#e5eefc;border-radius:12px;padding:13px;overflow:auto;font:13px/1.5 Consolas,monospace;white-space:pre}.hidden{display:none}.count{font-size:13px;font-weight:bold;color:#64748b}
+@media(max-width:900px){.grid{grid-template-columns:1fr}h1{font-size:32px}}@media print{nav{display:none}.grid{grid-template-columns:1fr 1fr;gap:8px}.card{break-inside:avoid}pre{white-space:pre-wrap;font-size:8pt}}</style></head><body><header><div class="wrap"><b>정보과학 융합탐구 · Web VPython</b><h1>분야별 게임 프로그램 30개</h1><p class="lead">수학·물리학·화학·생명과학·지구과학·천문학·공학·의학·인문학·철학을 게임 요소와 결합한 Web VPython 학습자료입니다.</p><div class="chips"><span class="chip">10개 분야</span><span class="chip">30개 게임</span><span class="chip">Web VPython 3.2</span></div></div></header><nav><div class="tools"><select id="f" onchange="filterAll()"><option value="all">전체 분야</option><option>수학</option><option>물리학</option><option>화학</option><option>생명과학</option><option>지구과학</option><option>천문학</option><option>공학</option><option>의학</option><option>인문학</option><option>철학</option></select><input id="q" oninput="filterAll()" placeholder="게임명·개념 검색"><span class="count" id="cnt">30개 표시</span><button onclick="resetAll()">초기화</button><button class="blue" onclick="window.print()">인쇄 / PDF</button></div></nav><main><section class="intro"><h2>수업 활용</h2><p><b>변수 하나 바꾸기 → 결과 예측 → 실행 → 원인 설명</b> 순서로 탐구하면 좋습니다. 초기속도, 중력, 추적속도, 반감기, 목표 위치 등을 바꾸어 게임 난이도와 과학적 결과를 함께 분석할 수 있습니다.</p></section><div class="grid"><article class="card" data-field="수학" data-search="수학 좌표 사냥 게임 좌표·거리"><div class="head"><div class="icon">∑</div><div><small>GAME 01</small><h2>좌표 사냥 게임</h2></div></div><div class="body"><span class="tag">수학</span><p><b>핵심 개념</b> · 좌표·거리</p><pre>Web VPython 3.2
+scene.background=color.black
+scene.range=8
+p=sphere(pos=vector(-6,0,0),radius=.35,color=color.cyan)
+target=sphere(pos=vector(5,3,0),radius=.45,color=color.red)
+score=0; t=0
+while score&lt;5:
+    rate(60); t+=.03
+    p.pos=vector(6*cos(t),4*sin(1.5*t),0)
+    if mag(p.pos-target.pos)&lt;.8:
+        score+=1
+        target.pos=vector(6*cos(score*1.7),4*sin(score*2.1),0)
+        print(&quot;score =&quot;,score)</pre></div></article><article class="card" data-field="수학" data-search="수학 벡터 명중 게임 벡터의 크기·방향"><div class="head"><div class="icon">∑</div><div><small>GAME 02</small><h2>벡터 명중 게임</h2></div></div><div class="body"><span class="tag">수학</span><p><b>핵심 개념</b> · 벡터의 크기·방향</p><pre>Web VPython 3.2
+scene.background=color.white
+start=vector(-5,0,0); goal=vector(4,3,0)
+sphere(pos=goal,radius=.4,color=color.red)
+v=vector(9,3,0)
+arrow(pos=start,axis=v,color=color.blue,shaftwidth=.12)
+d=mag(start+v-goal)
+label(pos=vector(0,-2,0),text=&quot;오차 = &quot;+str(round(d,2)),box=False,color=color.black)</pre></div></article><article class="card" data-field="수학" data-search="수학 함수 그래프 통과 게임 함수·좌표"><div class="head"><div class="icon">∑</div><div><small>GAME 03</small><h2>함수 그래프 통과 게임</h2></div></div><div class="body"><span class="tag">수학</span><p><b>핵심 개념</b> · 함수·좌표</p><pre>Web VPython 3.2
+scene.background=color.black
+g=curve(color=color.yellow,radius=.025)
+for i in range(-100,101):
+    x=i/20
+    g.append(pos=vector(x,.15*x*x-2,0))
+ball=sphere(pos=vector(-5,2,0),radius=.25,color=color.cyan)
+while ball.pos.x&lt;5:
+    rate(60)
+    ball.pos.x+=.04
+    y=.15*ball.pos.x**2-2
+    ball.pos.y+=.02*(y-ball.pos.y)
+    if abs(ball.pos.y-y)&lt;.08: ball.color=color.green</pre></div></article><article class="card" data-field="물리학" data-search="물리학 포물선 농구 게임 포물선 운동"><div class="head"><div class="icon">⚛</div><div><small>GAME 04</small><h2>포물선 농구 게임</h2></div></div><div class="body"><span class="tag">물리학</span><p><b>핵심 개념</b> · 포물선 운동</p><pre>Web VPython 3.2
+scene.background=color.black
+scene.range=10
+ball=sphere(pos=vector(-7,0,0),radius=.3,color=color.orange,make_trail=True)
+rim=ring(pos=vector(6,3,0),axis=vector(0,1,0),radius=.7,thickness=.08,color=color.red)
+v=vector(8,8.3,0); g=vector(0,-9.8,0); dt=.01
+while ball.pos.y&gt;-1:
+    rate(100)
+    ball.pos+=v*dt; v+=g*dt
+    if mag(ball.pos-rim.pos)&lt;.8:
+        print(&quot;GOAL!&quot;); break</pre></div></article><article class="card" data-field="물리학" data-search="물리학 충돌 피하기 게임 상대속도·충돌"><div class="head"><div class="icon">⚛</div><div><small>GAME 05</small><h2>충돌 피하기 게임</h2></div></div><div class="body"><span class="tag">물리학</span><p><b>핵심 개념</b> · 상대속도·충돌</p><pre>Web VPython 3.2
+scene.background=color.black
+a=sphere(pos=vector(-5,0,0),radius=.4,color=color.cyan)
+b=sphere(pos=vector(5,2,0),radius=.4,color=color.red)
+a.v=vector(1.5,.3,0); b.v=vector(-1.2,-.1,0); dt=.02
+while True:
+    rate(60); a.pos+=a.v*dt; b.pos+=b.v*dt
+    if mag(a.pos-b.pos)&lt;.8:
+        print(&quot;COLLISION&quot;); break</pre></div></article><article class="card" data-field="물리학" data-search="물리학 중력 착륙 게임 중력·속도 제어"><div class="head"><div class="icon">⚛</div><div><small>GAME 06</small><h2>중력 착륙 게임</h2></div></div><div class="body"><span class="tag">물리학</span><p><b>핵심 개념</b> · 중력·속도 제어</p><pre>Web VPython 3.2
+scene.background=color.black
+ship=cone(pos=vector(0,7,0),axis=vector(0,1,0),radius=.5,color=color.cyan)
+box(pos=vector(0,-.2,0),size=vector(10,.4,5),color=color.green)
+v=-.2; g=-.18; thrust=.16; dt=.05
+while ship.pos.y&gt;.5:
+    rate(60)
+    if ship.pos.y&lt;3: v+=thrust*dt
+    v+=g*dt; ship.pos.y+=v*dt
+print(&quot;landing speed =&quot;,round(v,2))</pre></div></article><article class="card" data-field="화학" data-search="화학 분자 충돌 점수 게임 기체 분자 운동"><div class="head"><div class="icon">⚗</div><div><small>GAME 07</small><h2>분자 충돌 점수 게임</h2></div></div><div class="body"><span class="tag">화학</span><p><b>핵심 개념</b> · 기체 분자 운동</p><pre>Web VPython 3.2
+scene.background=color.black
+L=4; box(size=vector(8,8,1),opacity=.12)
+atoms=[]
+for i in range(12):
+    s=sphere(pos=vector(random()*6-3,random()*6-3,0),radius=.18,color=color.cyan)
+    s.v=vector(random()-.5,random()-.5,0)*5; atoms.append(s)
+score=0; dt=.02
+while score&lt;50:
+    rate(100)
+    for s in atoms:
+        s.pos+=s.v*dt
+        if abs(s.pos.x)&gt;L: s.v.x*=-1; score+=1
+        if abs(s.pos.y)&gt;L: s.v.y*=-1; score+=1
+print(&quot;score =&quot;,score)</pre></div></article><article class="card" data-field="화학" data-search="화학 반응속도 맞히기 게임 1차 반응"><div class="head"><div class="icon">⚗</div><div><small>GAME 08</small><h2>반응속도 맞히기 게임</h2></div></div><div class="body"><span class="tag">화학</span><p><b>핵심 개념</b> · 1차 반응</p><pre>Web VPython 3.2
+scene.background=color.white
+g=graph(title=&quot;Guess k&quot;,xtitle=&quot;time&quot;,ytitle=&quot;A&quot;)
+c=gcurve(color=color.blue)
+A=1; k=.45; dt=.03; t=0
+while t&lt;10:
+    rate(80); A+=(-k*A)*dt; c.plot(t,A); t+=dt
+print(&quot;Hidden k =&quot;,k)</pre></div></article><article class="card" data-field="화학" data-search="화학 결정 격자 보물찾기 3차원 결정 구조"><div class="head"><div class="icon">⚗</div><div><small>GAME 09</small><h2>결정 격자 보물찾기</h2></div></div><div class="body"><span class="tag">화학</span><p><b>핵심 개념</b> · 3차원 결정 구조</p><pre>Web VPython 3.2
+scene.background=color.black
+scene.range=5
+for x in range(-2,3):
+    for y in range(-2,3):
+        for z in range(-2,3):
+            hit=(x==1 and y==-1 and z==2)
+            sphere(pos=vector(x,y,z),radius=.25 if hit else .13,
+                   color=color.red if hit else color.cyan)</pre></div></article><article class="card" data-field="생명과학" data-search="생명과학 먹이사슬 생존 게임 포식자-피식자"><div class="head"><div class="icon">🧬</div><div><small>GAME 10</small><h2>먹이사슬 생존 게임</h2></div></div><div class="body"><span class="tag">생명과학</span><p><b>핵심 개념</b> · 포식자-피식자</p><pre>Web VPython 3.2
+scene.background=color.white
+prey=sphere(pos=vector(-4,0,0),radius=.35,color=color.green)
+pred=sphere(pos=vector(4,0,0),radius=.45,color=color.red)
+t=0
+while t&lt;20:
+    rate(60); t+=.05
+    prey.pos=vector(4*sin(t),2*sin(2*t),0)
+    pred.pos+=.03*(prey.pos-pred.pos)
+    if mag(prey.pos-pred.pos)&lt;.8:
+        print(&quot;caught!&quot;); break</pre></div></article><article class="card" data-field="생명과학" data-search="생명과학 dna 염기 짝 맞추기 상보적 염기쌍"><div class="head"><div class="icon">🧬</div><div><small>GAME 11</small><h2>DNA 염기 짝 맞추기</h2></div></div><div class="body"><span class="tag">생명과학</span><p><b>핵심 개념</b> · 상보적 염기쌍</p><pre>Web VPython 3.2
+scene.background=color.black
+pair={&quot;A&quot;:&quot;T&quot;,&quot;T&quot;:&quot;A&quot;,&quot;G&quot;:&quot;C&quot;,&quot;C&quot;:&quot;G&quot;}
+seq=[&quot;A&quot;,&quot;G&quot;,&quot;T&quot;,&quot;C&quot;,&quot;C&quot;,&quot;A&quot;]
+for i,b in enumerate(seq):
+    y=i-3
+    label(pos=vector(-2,y,0),text=b,box=False,color=color.yellow)
+    label(pos=vector(2,y,0),text=pair[b],box=False,color=color.cyan)
+    cylinder(pos=vector(-1.5,y,0),axis=vector(3,0,0),radius=.03,color=color.white)</pre></div></article><article class="card" data-field="생명과학" data-search="생명과학 백혈구 추적 게임 추적 알고리즘"><div class="head"><div class="icon">🧬</div><div><small>GAME 12</small><h2>백혈구 추적 게임</h2></div></div><div class="body"><span class="tag">생명과학</span><p><b>핵심 개념</b> · 추적 알고리즘</p><pre>Web VPython 3.2
+scene.background=color.black
+target=sphere(pos=vector(4,2,0),radius=.3,color=color.red)
+cell=sphere(pos=vector(-5,-2,0),radius=.45,color=color.white,make_trail=True)
+t=0
+while True:
+    rate(60); t+=.04
+    target.pos=vector(4*cos(t),3*sin(1.4*t),0)
+    cell.pos+=.03*(target.pos-cell.pos)
+    if mag(cell.pos-target.pos)&lt;.6:
+        print(&quot;target reached&quot;); break</pre></div></article><article class="card" data-field="지구과학" data-search="지구과학 지진파 도착 순서 게임 p파·s파"><div class="head"><div class="icon">🌍</div><div><small>GAME 13</small><h2>지진파 도착 순서 게임</h2></div></div><div class="body"><span class="tag">지구과학</span><p><b>핵심 개념</b> · P파·S파</p><pre>Web VPython 3.2
+scene.background=color.black
+P=sphere(pos=vector(-6,1,0),radius=.22,color=color.yellow)
+S=sphere(pos=vector(-6,-1,0),radius=.22,color=color.cyan)
+box(pos=vector(6,0,0),size=vector(.5,3,1),color=color.white)
+while P.pos.x&lt;6 or S.pos.x&lt;6:
+    rate(60)
+    if P.pos.x&lt;6: P.pos.x+=.11
+    if S.pos.x&lt;6: S.pos.x+=.065</pre></div></article><article class="card" data-field="지구과학" data-search="지구과학 화산 분출 피하기 게임 화산탄 포물선"><div class="head"><div class="icon">🌍</div><div><small>GAME 14</small><h2>화산 분출 피하기 게임</h2></div></div><div class="body"><span class="tag">지구과학</span><p><b>핵심 개념</b> · 화산탄 포물선</p><pre>Web VPython 3.2
+scene.background=color.black
+cone(pos=vector(0,-2,0),axis=vector(0,4,0),radius=2,color=color.gray(.5))
+rock=sphere(pos=vector(0,2,0),radius=.2,color=color.red,make_trail=True)
+v=vector(3,7,0); g=vector(0,-9.8,0); dt=.02
+while rock.pos.y&gt;-2:
+    rate(60); rock.pos+=v*dt; v+=g*dt</pre></div></article><article class="card" data-field="지구과학" data-search="지구과학 태풍 경로 추적 게임 태풍 이동 경로"><div class="head"><div class="icon">🌍</div><div><small>GAME 15</small><h2>태풍 경로 추적 게임</h2></div></div><div class="body"><span class="tag">지구과학</span><p><b>핵심 개념</b> · 태풍 이동 경로</p><pre>Web VPython 3.2
+scene.background=color.white
+eye=sphere(pos=vector(-5,-2,0),radius=.35,color=color.blue,make_trail=True)
+t=0
+while t&lt;15:
+    rate(60); t+=.04
+    eye.pos=vector(-5+.6*t,2*sin(.8*t),0)</pre></div></article><article class="card" data-field="천문학" data-search="천문학 소행성 피하기 게임 상대 위치·충돌"><div class="head"><div class="icon">✦</div><div><small>GAME 16</small><h2>소행성 피하기 게임</h2></div></div><div class="body"><span class="tag">천문학</span><p><b>핵심 개념</b> · 상대 위치·충돌</p><pre>Web VPython 3.2
+scene.background=color.black
+ship=cone(pos=vector(-6,0,0),axis=vector(.8,0,0),radius=.35,color=color.cyan)
+ast=sphere(pos=vector(6,2,0),radius=.55,color=color.gray(.7))
+ast.v=vector(-1.7,-.2,0); dt=.02
+while ast.pos.x&gt;-7:
+    rate(60); ast.pos+=ast.v*dt
+    ship.pos.y=2*sin(.8*ast.pos.x)
+    if mag(ship.pos-ast.pos)&lt;.9:
+        print(&quot;hit!&quot;); break</pre></div></article><article class="card" data-field="천문학" data-search="천문학 달 착륙 게임 달 중력·착륙"><div class="head"><div class="icon">✦</div><div><small>GAME 17</small><h2>달 착륙 게임</h2></div></div><div class="body"><span class="tag">천문학</span><p><b>핵심 개념</b> · 달 중력·착륙</p><pre>Web VPython 3.2
+scene.background=color.black
+box(pos=vector(0,-.3,0),size=vector(12,.6,6),color=color.gray(.6))
+lander=box(pos=vector(0,7,0),size=vector(.8,.8,.8),color=color.yellow)
+v=-.1; g=-1.62; dt=.02
+while lander.pos.y&gt;.5:
+    rate(60)
+    if lander.pos.y&lt;2.5: v+=.035
+    v+=g*dt; lander.pos.y+=v*dt
+print(&quot;speed =&quot;,round(v,2))</pre></div></article><article class="card" data-field="천문학" data-search="천문학 행성 궤도 경주 공전 주기"><div class="head"><div class="icon">✦</div><div><small>GAME 18</small><h2>행성 궤도 경주</h2></div></div><div class="body"><span class="tag">천문학</span><p><b>핵심 개념</b> · 공전 주기</p><pre>Web VPython 3.2
+scene.background=color.black
+sphere(radius=.8,color=color.yellow)
+p1=sphere(radius=.25,color=color.cyan,make_trail=True)
+p2=sphere(radius=.3,color=color.red,make_trail=True)
+t=0
+while t&lt;20:
+    rate(60); t+=.03
+    p1.pos=vector(3*cos(1.5*t),0,3*sin(1.5*t))
+    p2.pos=vector(5*cos(t),0,5*sin(t))</pre></div></article><article class="card" data-field="공학" data-search="공학 로봇 팔 집기 게임 2관절 로봇"><div class="head"><div class="icon">⚙</div><div><small>GAME 19</small><h2>로봇 팔 집기 게임</h2></div></div><div class="body"><span class="tag">공학</span><p><b>핵심 개념</b> · 2관절 로봇</p><pre>Web VPython 3.2
+scene.background=color.black
+target=sphere(pos=vector(4,2,0),radius=.35,color=color.red)
+L1=3; L2=2
+a1=cylinder(radius=.12,color=color.orange)
+a2=cylinder(radius=.1,color=color.cyan)
+t=0
+while t&lt;12:
+    rate(60); t+=.03
+    q1=.7*sin(t); q2=.8*sin(1.4*t)
+    p1=vector(L1*cos(q1),L1*sin(q1),0)
+    p2=p1+vector(L2*cos(q1+q2),L2*sin(q1+q2),0)
+    a1.axis=p1; a2.pos=p1; a2.axis=p2-p1
+    if mag(p2-target.pos)&lt;.4:
+        print(&quot;grab!&quot;); break</pre></div></article><article class="card" data-field="공학" data-search="공학 드론 장애물 통과 게임 경로 제어"><div class="head"><div class="icon">⚙</div><div><small>GAME 20</small><h2>드론 장애물 통과 게임</h2></div></div><div class="body"><span class="tag">공학</span><p><b>핵심 개념</b> · 경로 제어</p><pre>Web VPython 3.2
+scene.background=color.black
+drone=box(pos=vector(-6,0,0),size=vector(.8,.2,.8),color=color.cyan)
+for x,y in [(-2,2),(1,-2),(4,1)]:
+    box(pos=vector(x,y,0),size=vector(.7,2.5,2),color=color.red)
+t=0
+while drone.pos.x&lt;6:
+    rate(60); t+=.04
+    drone.pos.x+=.05; drone.pos.y=2.5*sin(.7*t)</pre></div></article><article class="card" data-field="공학" data-search="공학 자율주행 차선 유지 게임 피드백 제어"><div class="head"><div class="icon">⚙</div><div><small>GAME 21</small><h2>자율주행 차선 유지 게임</h2></div></div><div class="body"><span class="tag">공학</span><p><b>핵심 개념</b> · 피드백 제어</p><pre>Web VPython 3.2
+scene.background=color.white
+box(pos=vector(0,0,0),size=vector(14,.2,6),color=color.gray(.4))
+car=box(pos=vector(-6,.8,1.5),size=vector(1,.4,.6),color=color.blue)
+while car.pos.x&lt;6:
+    rate(60)
+    error=-car.pos.z
+    car.pos.z+=.05*error
+    car.pos.x+=.06</pre></div></article><article class="card" data-field="의학" data-search="의학 심박수 위험구간 찾기 이상값 탐지"><div class="head"><div class="icon">✚</div><div><small>GAME 22</small><h2>심박수 위험구간 찾기</h2></div></div><div class="body"><span class="tag">의학</span><p><b>핵심 개념</b> · 이상값 탐지</p><pre>Web VPython 3.2
+scene.background=color.white
+g=graph(title=&quot;Heart Rate&quot;,xtitle=&quot;time&quot;,ytitle=&quot;bpm&quot;)
+normal=gdots(color=color.blue,radius=4)
+danger=gdots(color=color.red,radius=6)
+data=[72,75,79,120,76,53,81,77]
+for i,v in enumerate(data):
+    if 55&lt;=v&lt;=100: normal.plot(i,v)
+    else: danger.plot(i,v)</pre></div></article><article class="card" data-field="의학" data-search="의학 약물 농도 안전구간 게임 반감기"><div class="head"><div class="icon">✚</div><div><small>GAME 23</small><h2>약물 농도 안전구간 게임</h2></div></div><div class="body"><span class="tag">의학</span><p><b>핵심 개념</b> · 반감기</p><pre>Web VPython 3.2
+scene.background=color.white
+g=graph(title=&quot;Drug Level&quot;,xtitle=&quot;time&quot;,ytitle=&quot;C&quot;)
+c=gcurve(color=color.blue)
+C0=100; half=3
+for i in range(300):
+    t=i*.05
+    C=C0*(.5)**(t/half)
+    c.plot(t,C)
+    if 20&lt;=C&lt;=60: pass</pre></div></article><article class="card" data-field="의학" data-search="의학 감염 확산 차단 게임 sir 모델"><div class="head"><div class="icon">✚</div><div><small>GAME 24</small><h2>감염 확산 차단 게임</h2></div></div><div class="body"><span class="tag">의학</span><p><b>핵심 개념</b> · SIR 모델</p><pre>Web VPython 3.2
+scene.background=color.white
+g=graph(title=&quot;SIR Game&quot;,xtitle=&quot;time&quot;,ytitle=&quot;I&quot;)
+ic=gcurve(color=color.red)
+S=.99; I=.01; R=0; beta=.55; gamma=.18; dt=.02; t=0
+while t&lt;35:
+    if t&gt;12: beta=.2
+    dS=-beta*S*I; dI=beta*S*I-gamma*I; dR=gamma*I
+    S+=dS*dt; I+=dI*dt; R+=dR*dt
+    ic.plot(t,I); t+=dt</pre></div></article><article class="card" data-field="인문학" data-search="인문학 단어 빈도 맞히기 게임 텍스트 데이터"><div class="head"><div class="icon">文</div><div><small>GAME 25</small><h2>단어 빈도 맞히기 게임</h2></div></div><div class="body"><span class="tag">인문학</span><p><b>핵심 개념</b> · 텍스트 데이터</p><pre>Web VPython 3.2
+scene.background=color.white
+words=[&quot;science&quot;,&quot;human&quot;,&quot;data&quot;,&quot;future&quot;]
+counts=[5,8,11,6]
+for i,c in enumerate(counts):
+    box(pos=vector(i*2-3,c/2,0),size=vector(1,c,1),color=color.blue)
+    label(pos=vector(i*2-3,-.8,0),text=words[i],box=False,color=color.black)</pre></div></article><article class="card" data-field="인문학" data-search="인문학 역사 연표 순서 게임 시간축·정렬"><div class="head"><div class="icon">文</div><div><small>GAME 26</small><h2>역사 연표 순서 게임</h2></div></div><div class="body"><span class="tag">인문학</span><p><b>핵심 개념</b> · 시간축·정렬</p><pre>Web VPython 3.2
+scene.background=color.white
+years=[1443,1592,1919,1945]
+names=[&quot;Hunmin&quot;,&quot;Imjin&quot;,&quot;March1&quot;,&quot;Liberation&quot;]
+for i,y in enumerate(years):
+    x=(y-1400)/100
+    sphere(pos=vector(x,0,0),radius=.25,color=color.orange)
+    label(pos=vector(x,.6,0),text=names[i],box=False,color=color.black)</pre></div></article><article class="card" data-field="인문학" data-search="인문학 서사 분기 선택 게임 트리 구조"><div class="head"><div class="icon">文</div><div><small>GAME 27</small><h2>서사 분기 선택 게임</h2></div></div><div class="body"><span class="tag">인문학</span><p><b>핵심 개념</b> · 트리 구조</p><pre>Web VPython 3.2
+scene.background=color.black
+P=[vector(0,3,0),vector(-2,1,0),vector(2,1,0),
+vector(-3,-1,0),vector(-1,-1,0),vector(1,-1,0),vector(3,-1,0)]
+for p in P: sphere(pos=p,radius=.25,color=color.cyan)
+for a,b in [(0,1),(0,2),(1,3),(1,4),(2,5),(2,6)]:
+    cylinder(pos=P[a],axis=P[b]-P[a],radius=.04,color=color.white)</pre></div></article><article class="card" data-field="철학" data-search="철학 결정론 vs 우연 게임 결정성·무작위성"><div class="head"><div class="icon">Φ</div><div><small>GAME 28</small><h2>결정론 vs 우연 게임</h2></div></div><div class="body"><span class="tag">철학</span><p><b>핵심 개념</b> · 결정성·무작위성</p><pre>Web VPython 3.2
+scene.background=color.black
+a=sphere(pos=vector(-4,0,0),radius=.25,color=color.cyan,make_trail=True)
+b=sphere(pos=vector(4,0,0),radius=.25,color=color.yellow,make_trail=True)
+t=0
+while t&lt;20:
+    rate(60); t+=.03
+    a.pos=vector(-4+2*cos(t),2*sin(t),0)
+    b.pos+=vector((random()-.5)*.15,(random()-.5)*.15,0)</pre></div></article><article class="card" data-field="철학" data-search="철학 선택의 갈림길 게임 의사결정 트리"><div class="head"><div class="icon">Φ</div><div><small>GAME 29</small><h2>선택의 갈림길 게임</h2></div></div><div class="body"><span class="tag">철학</span><p><b>핵심 개념</b> · 의사결정 트리</p><pre>Web VPython 3.2
+scene.background=color.white
+root=vector(0,3,0); A=vector(-2,1,0); B=vector(2,1,0)
+sphere(pos=root,radius=.3,color=color.orange)
+for p in [A,B]:
+    sphere(pos=p,radius=.3,color=color.cyan)
+    arrow(pos=root,axis=p-root,color=color.black,shaftwidth=.05)</pre></div></article><article class="card" data-field="철학" data-search="철학 무한 루프 탈출 게임 반복·종료조건"><div class="head"><div class="icon">Φ</div><div><small>GAME 30</small><h2>무한 루프 탈출 게임</h2></div></div><div class="body"><span class="tag">철학</span><p><b>핵심 개념</b> · 반복·종료조건</p><pre>Web VPython 3.2
+scene.background=color.black
+ball=sphere(pos=vector(-5,0,0),radius=.3,color=color.cyan)
+count=0
+while True:
+    rate(60); ball.pos.x+=.05; count+=1
+    if ball.pos.x&gt;=5:
+        print(&quot;escaped after&quot;,count,&quot;steps&quot;)
+        break</pre></div></article></div></main><script>
+function filterAll(){let f=document.getElementById('f').value,q=document.getElementById('q').value.toLowerCase().trim(),n=0;document.querySelectorAll('.card').forEach(x=>{let ok=(f==='all'||x.dataset.field===f)&&(!q||x.dataset.search.includes(q));x.classList.toggle('hidden',!ok);if(ok)n++});document.getElementById('cnt').textContent=n+'개 표시'}
+function resetAll(){document.getElementById('f').value='all';document.getElementById('q').value='';filterAll()}
+</script></body></html>
