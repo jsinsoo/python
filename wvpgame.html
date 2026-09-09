@@ -1,0 +1,1105 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Web VPython 실시간 참여형 분야별 게임 30개</title><style>
+:root{--navy:#0d223a;--blue:#2563eb;--ink:#172033;--muted:#5f6f82;--line:#dbe4ef;--bg:#f4f7fb;--paper:#fff;--code:#08111f}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;font-family:"Malgun Gothic","Noto Sans KR",sans-serif;background:var(--bg);color:var(--ink);line-height:1.7}
+.hero{background:radial-gradient(circle at 80% 10%,#335cff 0,#173b70 28%,#0d223a 70%);color:#fff;padding:52px 22px}
+.wrap,main,.tools{max-width:1450px;margin:auto}
+.kicker{font-weight:900;color:#bcd3ff;letter-spacing:.08em}.hero h1{font-size:clamp(32px,5vw,54px);margin:6px 0 10px}
+.hero p{max-width:1100px;color:#dce9ff;font-size:17px}
+.chips{display:flex;gap:8px;flex-wrap:wrap}.chip{border:1px solid #ffffff44;background:#ffffff16;padding:6px 10px;border-radius:999px;font-weight:800}
+nav{position:sticky;top:0;z-index:50;background:#fffffff2;backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.tools{padding:10px 16px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+select,input,button{font:inherit;padding:9px 11px;border:1px solid var(--line);border-radius:10px;background:white}
+input{flex:1;min-width:260px}button{font-weight:800;cursor:pointer}.primary{background:var(--blue);color:white;border-color:var(--blue)}
+main{padding:22px 16px 80px}.notice{background:white;border:1px solid var(--line);border-radius:18px;padding:20px}
+.notice h2{margin-top:0;color:#173b70}.flow{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-top:12px}
+.flow div{background:#eef5ff;border-radius:12px;padding:10px;text-align:center;font-weight:800;color:#174ea6}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px}
+.card{background:white;border:1px solid var(--line);border-radius:20px;overflow:hidden;box-shadow:0 10px 28px #173b7010}
+.cardhead{padding:16px 18px;background:linear-gradient(90deg,#f8fbff,#eef5ff);display:flex;gap:12px;align-items:center;border-bottom:1px solid var(--line)}
+.icon{width:46px;height:46px;display:grid;place-items:center;border-radius:13px;background:white;border:1px solid #d8e5fa;font-size:22px;font-weight:900;color:#174ea6}
+.cardhead small{color:#6b7c93;font-weight:800}.cardhead h2{margin:0;color:#173b70;font-size:20px}
+.body{padding:17px 18px}.tag{display:inline-block;background:#ecfdf5;color:#0f766e;border-radius:999px;padding:4px 9px;font-size:12px;font-weight:900;margin-right:6px}
+.control{display:inline-block;background:#fff7ed;color:#c2410c;border-radius:999px;padding:4px 9px;font-size:12px;font-weight:900}
+.info{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:12px 0}
+.ib{border:1px solid #e4ebf3;border-radius:12px;padding:10px;background:#fbfdff;font-size:13px}.ib b{display:block;color:#174ea6;margin-bottom:3px}
+pre{background:var(--code);color:#e5efff;border-radius:13px;padding:14px;overflow:auto;font:12.5px/1.55 Consolas,monospace;white-space:pre}
+.explain{margin-top:12px;background:#f7fbff;border-left:4px solid #2563eb;padding:11px 13px;border-radius:8px;font-size:13px}
+.challenge{margin-top:9px;background:#fff8e8;border:1px solid #f8e0a5;padding:10px 12px;border-radius:10px;font-size:13px}
+.hidden{display:none!important}.count{color:#64748b;font-size:13px;font-weight:900}
+@media(max-width:980px){.grid{grid-template-columns:1fr}.flow{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.info{grid-template-columns:1fr}.flow{grid-template-columns:1fr}}
+@media print{nav{display:none}.grid{grid-template-columns:1fr}.card{box-shadow:none;break-inside:avoid}pre{white-space:pre-wrap;font-size:8pt}}
+</style></head><body><header class="hero"><div class="wrap">
+<div class="kicker">INFORMATION SCIENCE × WEB VPYTHON × INTERACTIVE GAME</div>
+<h1>Web VPython 실시간 참여형 분야별 게임 30개</h1>
+<p>단순히 바라보는 시뮬레이션이 아니라 학생이 <b>마우스와 키보드로 직접 조종</b>하고, 점수·충돌·성공·실패·타이밍·전략을 경험하는 게임형 학습자료입니다. 수학·물리학·화학·생명과학·지구과학·천문학·공학·의학·인문학·철학을 정보과학의 이벤트 처리, 조건문, 반복문, 벡터, 시뮬레이션과 연결했습니다.</p>
+<div class="chips"><span class="chip">10개 분야</span><span class="chip">30개 게임</span><span class="chip">마우스·키보드 실시간 조작</span><span class="chip">상세 게임 방법</span><span class="chip">확장 탐구</span></div></div></header><nav><div class="tools"><select id="field" onchange="filterAll()"><option value="all">전체 분야</option><option value="수학">수학</option><option value="물리학">물리학</option><option value="화학">화학</option><option value="생명과학">생명과학</option><option value="지구과학">지구과학</option><option value="천문학">천문학</option><option value="공학">공학</option><option value="의학">의학</option><option value="인문학">인문학</option><option value="철학">철학</option></select><input id="q" oninput="filterAll()" placeholder="게임명·핵심개념·조작법 검색">
+<span id="count" class="count">30개 표시</span><button onclick="resetAll()">초기화</button><button class="primary" onclick="window.print()">인쇄 / PDF</button></div></nav><main><section class="notice"><h2>게임 실행 방법</h2>
+<p><b>Web VPython</b>에서 새 프로그램을 만든 뒤, 원하는 게임의 코드를 그대로 붙여 넣고 실행합니다. 실행 화면에 포커스를 둔 뒤 키보드 또는 마우스를 사용합니다. 일부 게임은 장면을 드래그하여 3D 시점을 회전할 수도 있습니다.</p>
+<div class="flow"><div>① 코드 붙여넣기</div><div>② Run 실행</div><div>③ 화면 클릭해 포커스</div><div>④ 마우스·키보드 참여</div></div>
+<p style="margin-bottom:0"><b>수업 추천:</b> 먼저 기본 게임을 플레이 → 핵심 변수 하나 변경 → 결과 예측 → 다시 플레이 → 난이도 조절 → 학생만의 규칙 추가 순서로 진행하면 정보과학 탐구 활동으로 자연스럽게 연결됩니다.</p>
+</section><div class="grid"><article class="card" data-field="수학" data-search="수학 좌표 보물찾기 좌표·거리·벡터 방향키 ← ↑ ↓ → 파란 플레이어를 움직여 빨간 보물 5개를 획득하세요.">
+<div class="cardhead"><div class="icon">∑</div><div><small>INTERACTIVE GAME 01</small><h2>좌표 보물찾기</h2></div></div>
+<div class="body"><span class="tag">수학</span><span class="control">조작: 방향키 ← ↑ ↓ →</span>
+<div class="info">
+<div class="ib"><b>🎯 게임 목표</b>파란 플레이어를 움직여 빨간 보물 5개를 획득하세요.</div>
+<div class="ib"><b>📘 핵심 개념</b>좌표·거리·벡터</div>
+<div class="ib"><b>🎮 게임 방법</b>방향키 ← ↑ ↓ →를 사용하여 실시간으로 참여합니다.</div>
+<div class="ib"><b>🏆 성공·판정 규칙</b>보물과의 거리가 0.7보다 작아지면 점수 +1, 보물은 새 위치로 이동합니다.</div>
+</div>
+<pre>Web VPython 3.2
+scene.background = color.black
+scene.range = 8
+
+player = sphere(pos=vector(0,0,0), radius=0.35, color=color.cyan)
+treasure = sphere(pos=vector(4,3,0), radius=0.4, color=color.red)
+score = 0
+
+def move(evt):
+    global score
+    step = 0.5
+    if evt.key == &#x27;left&#x27;:  player.pos.x -= step
+    if evt.key == &#x27;right&#x27;: player.pos.x += step
+    if evt.key == &#x27;up&#x27;:    player.pos.y += step
+    if evt.key == &#x27;down&#x27;:  player.pos.y -= step
+
+    if mag(player.pos-treasure.pos) &lt; 0.7:
+        score += 1
+        print(&quot;점수:&quot;, score)
+        treasure.pos = vector(random()*12-6, random()*10-5, 0)
+
+scene.bind(&#x27;keydown&#x27;, move)
+print(&quot;방향키로 빨간 보물을 5개 찾으세요!&quot;)</pre>
+<div class="explain"><b>🔎 코드·게임 상세 해설</b><br>키보드 이벤트가 발생할 때마다 player.pos의 x 또는 y 좌표를 바꿉니다. 두 점의 거리는 mag(player.pos-treasure.pos)로 계산합니다.</div>
+<div class="challenge"><b>🚀 확장 탐구 미션</b><br>장애물 3개를 추가하고 장애물과 충돌하면 점수가 1점 감소하도록 수정해 보세요.</div>
+</div></article><article class="card" data-field="수학" data-search="수학 벡터 슈팅 게임 벡터·방향·단위벡터 마우스 클릭 화면을 클릭하여 그 방향으로 공을 발사하고 빨간 목표물을 맞히세요.">
+<div class="cardhead"><div class="icon">∑</div><div><small>INTERACTIVE GAME 02</small><h2>벡터 슈팅 게임</h2></div></div>
+<div class="body"><span class="tag">수학</span><span class="control">조작: 마우스 클릭</span>
+<div class="info">
+<div class="ib"><b>🎯 게임 목표</b>화면을 클릭하여 그 방향으로 공을 발사하고 빨간 목표물을 맞히세요.</div>
+<div class="ib"><b>📘 핵심 개념</b>벡터·방향·단위벡터</div>
+<div class="ib"><b>🎮 게임 방법</b>마우스 클릭를 사용하여 실시간으로 참여합니다.</div>
+<div class="ib"><b>🏆 성공·판정 규칙</b>클릭 위치와 발사점의 차이를 단위벡터로 만들고, 목표와의 거리가 0.6보다 작으면 명중입니다.</div>
+</div>
+<pre>Web VPython 3.2
+scene.background = color.black
+scene.range = 8
+gun = sphere(pos=vector(-6,0,0), radius=0.35, color=color.cyan)
+target = sphere(pos=vector(5,2,0), radius=0.5, color=color.red)
+bullet = None
+v = vector(0,0,0)
+
+def fire(evt):
+    global bullet, v
+    if bullet == None:
+        bullet = sphere(pos=gun.pos, radius=0.15, color=color.yellow)
+        direction = evt.pos - gun.pos
+        v = 8*norm(direction)
+
+scene.bind(&#x27;click&#x27;, fire)
+
+while True:
+    rate(100)
+    if bullet != None:
+        bullet.pos += v*0.02
+        if mag(bullet.pos-target.pos) &lt; 0.6:
+            print(&quot;명중!&quot;)
+            bullet.visible = False
+            bullet = None
+            target.pos = vector(random()*8, random()*8-4, 0)
+        elif mag(bullet.pos) &gt; 12:
+            bullet.visible = False
+            bullet = None</pre>
+<div class="explain"><b>🔎 코드·게임 상세 해설</b><br>마우스로 클릭한 점 evt.pos와 발사점 gun.pos를 빼면 방향벡터가 됩니다. norm()은 길이가 1인 단위벡터를 만들고 8을 곱해 속도를 정합니다.</div>
+<div class="challenge"><b>🚀 확장 탐구 미션</b><br>점수·제한시간·이동 목표물을 추가해 보세요.</div>
+</div></article><article class="card" data-field="수학" data-search="수학 함수 그래프 레이싱 함수·미분 직관·그래프 w/s 또는 ↑/↓ 움직이는 공을 함수 그래프 가까이 유지하며 오른쪽 끝까지 도달하세요.">
+<div class="cardhead"><div class="icon">∑</div><div><small>INTERACTIVE GAME 03</small><h2>함수 그래프 레이싱</h2></div></div>
+<div class="body"><span class="tag">수학</span><span class="control">조작: W/S 또는 ↑/↓</span>
+<div class="info">
+<div class="ib"><b>🎯 게임 목표</b>움직이는 공을 함수 그래프 가까이 유지하며 오른쪽 끝까지 도달하세요.</div>
+<div class="ib"><b>📘 핵심 개념</b>함수·미분 직관·그래프</div>
+<div class="ib"><b>🎮 게임 방법</b>W/S 또는 ↑/↓를 사용하여 실시간으로 참여합니다.</div>
+<div class="ib"><b>🏆 성공·판정 규칙</b>공과 함수값의 차이가 0.8보다 크면 체력이 감소합니다.</div>
+</div>
+<pre>Web VPython 3.2
+scene.background = color.black
+scene.range = 7
+path = curve(color=color.yellow, radius=0.03)
+for i in range(-120,121):
+    x = i/20
+    y = 2*sin(x)
+    path.append(pos=vector(x,y,0))
+
+ball = sphere(pos=vector(-6,0,0), radius=0.25, color=color.cyan)
+vy = 0
+life = 100
+
+def key(evt):
+    global vy
+    if evt.key == &#x27;up&#x27; or evt.key == &#x27;w&#x27;: vy = 2
+    if evt.key == &#x27;down&#x27; or evt.key == &#x27;s&#x27;: vy = -2
+
+scene.bind(&#x27;keydown&#x27;, key)
+
+while ball.pos.x &lt; 6 and life &gt; 0:
+    rate(60)
+    ball.pos.x += 0.04
+    ball.pos.y += vy*0.02
+    vy *= 0.93
+    target_y = 2*sin(ball.pos.x)
+    if abs(ball.pos.y-target_y) &gt; 0.8:
+        life -= 1
+
+print(&quot;남은 체력:&quot;, life)</pre>
+<div class="explain"><b>🔎 코드·게임 상세 해설</b><br>현재 x에서 함수값 2sin(x)를 계산하고 공의 y값과 비교합니다. 사용자는 위아래 조작으로 오차를 최소화합니다.</div>
+<div class="challenge"><b>🚀 확장 탐구 미션</b><br>y=sin(2x), y=0.1x²-2 등 함수 종류를 바꾸어 난이도를 비교하세요.</div>
+</div></article><article class="card" data-field="물리학" data-search="물리학 포물선 농구 슈팅 포물선 운동·초기속도 마우스 클릭 클릭한 방향으로 공을 발사해 골대를 통과시키세요.">
+<div class="cardhead"><div class="icon">⚛</div><div><small>INTERACTIVE GAME 04</small><h2>포물선 농구 슈팅</h2></div></div>
+<div class="body"><span class="tag">물리학</span><span class="control">조작: 마우스 클릭</span>
+<div class="info">
+<div class="ib"><b>🎯 게임 목표</b>클릭한 방향으로 공을 발사해 골대를 통과시키세요.</div>
+<div class="ib"><b>📘 핵심 개념</b>포물선 운동·초기속도</div>
+<div class="ib"><b>🎮 게임 방법</b>마우스 클릭를 사용하여 실시간으로 참여합니다.</div>
+<div class="ib"><b>🏆 성공·판정 규칙</b>클릭 위치가 발사 방향과 세기를 결정하며 중력으로 포물선 궤적이 만들어집니다.</div>
+</div>
+<pre>Web VPython 3.2
+scene.background = color.black
+scene.range = 10
+ball0 = vector(-7,-3,0)
+rim = ring(pos=vector(6,2,0), axis=vector(0,0,1),
+           radius=0.7, thickness=0.08, color=color.red)
+ball = None
+v = vector(0,0,0)
+g = vector(0,-9.8,0)
+
+def shoot(evt):
+    global ball, v
+    if ball == None:
+        ball = sphere(pos=ball0, radius=0.28,
+                      color=color.orange, make_trail=True)
+        v = 1.3*(evt.pos-ball0)
+
+scene.bind(&#x27;click&#x27;, shoot)
+
+while True:
+    rate(100)
+    if ball != None:
+        ball.pos += v*0.01
+        v += g*0.01
+        if mag(ball.pos-rim.pos) &lt; 0.7:
+            print(&quot;GOAL!&quot;)
+            ball.visible = False
+            ball = None
+        elif ball.pos.y &lt; -6:
+            ball.visible = False
+            ball = None</pre>
+<div class="explain"><b>🔎 코드·게임 상세 해설</b><br>클릭한 지점이 높고 멀수록 초기 속도의 성분이 달라집니다. 매 시간 간격마다 v += g*dt가 적용되어 수직속도가 감소합니다.</div>
+<div class="challenge"><b>🚀 확장 탐구 미션</b><br>골대를 이동시키거나 중력을 달·화성 값으로 바꾸어 보세요.</div>
+</div></article><article class="card" data-field="물리학" data-search="물리학 우주선 중력 착륙 중력·가속도·추력 ↑ 추진, ←/→ 좌우 연료를 아끼면서 착륙선의 속도를 줄여 안전하게 착륙하세요.">
+<div class="cardhead"><div class="icon">⚛</div><div><small>INTERACTIVE GAME 05</small><h2>우주선 중력 착륙</h2></div></div>
+<div class="body"><span class="tag">물리학</span><span class="control">조작: ↑ 추진, ←/→ 좌우</span>
+<div class="info">
+<div class="ib"><b>🎯 게임 목표</b>연료를 아끼면서 착륙선의 속도를 줄여 안전하게 착륙하세요.</div>
+<div class="ib"><b>📘 핵심 개념</b>중력·가속도·추력</div>
+<div class="ib"><b>🎮 게임 방법</b>↑ 추진, ←/→ 좌우를 사용하여 실시간으로 참여합니다.</div>
+<div class="ib"><b>🏆 성공·판정 규칙</b>지면 접촉 시 |vy|&lt;1.5이면 성공, 그보다 빠르면 충돌입니다.</div>
+</div>
+<pre>Web VPython 3.2
+scene.background = color.black
+scene.range = 9
+ground = box(pos=vector(0,-5,0), size=vector(16,0.4,3), color=color.gray(0.5))
+ship = cone(pos=vector(0,5,0), axis=vector(0,1,0), radius=0.45, color=color.cyan)
+v = vector(0,0,0)
+g = vector(0,-1.62,0)
+fuel = 100
+
+def key(evt):
+    global v, fuel
+    if evt.key == &#x27;up&#x27; and fuel &gt; 0:
+        v.y += 0.35
+        fuel -= 2
+    if evt.key == &#x27;left&#x27; and fuel &gt; 0:
+        v.x -= 0.15
+        fuel -= 1
+    if evt.key == &#x27;right&#x27; and fuel &gt; 0:
+        v.x += 0.15
+        fuel -= 1
+
+scene.bind(&#x27;keydown&#x27;, key)
+
+while ship.pos.y &gt; -4.5:
+    rate(60)
+    v += g*0.02
+    ship.pos += v*0.02
+
+if abs(v.y) &lt; 1.5:
+    print(&quot;안전 착륙! 남은 연료:&quot;, fuel)
+else:
+    print(&quot;충돌! 착륙 속도:&quot;, v.y)</pre>
+<div class="explain"><b>🔎 코드·게임 상세 해설</b><br>키 입력으로 순간적인 추력을 주고, 그 사이에는 달 중력 g가 계속 작용합니다. 연료를 많이 쓰면 안전하지만 효율이 떨어집니다.</div>
+<div class="challenge"><b>🚀 확장 탐구 미션</b><br>연료 50 이하로 안전 착륙하기, 화성 중력(-3.71)으로 바꾸기 등을 시도하세요.</div>
+</div></article><article class="card" data-field="물리학" data-search="물리학 레이저 반사 퍼즐 반사의 법칙·벡터 마우스 클릭 거울의 위치를 클릭해 레이저가 목표에 닿도록 경로를 설계하세요.">
+<div class="cardhead"><div class="icon">⚛</div><div><small>INTERACTIVE GAME 06</small><h2>레이저 반사 퍼즐</h2></div></div>
+<div class="body"><span class="tag">물리학</span><span class="control">조작: 마우스 클릭</span>
+<div class="info">
+<div class="ib"><b>🎯 게임 목표</b>거울의 위치를 클릭해 레이저가 목표에 닿도록 경로를 설계하세요.</div>
+<div class="ib"><b>📘 핵심 개념</b>반사의 법칙·벡터</div>
+<div class="ib"><b>🎮 게임 방법</b>마우스 클릭를 사용하여 실시간으로 참여합니다.</div>
+<div class="ib"><b>🏆 성공·판정 규칙</b>입사벡터와 법선벡터를 이용해 반사벡터를 계산합니다.</div>
+</div>
+<pre>Web VPython 3.2
+scene.background = color.black
+scene.range = 8
+source = sphere(pos=vector(-6,-3,0), radius=0.25, color=color.red)
+target = sphere(pos=vector(5,3,0), radius=0.4, color=color.green)
+ray = None
+
+def place(evt):
+    global ray
+    m = evt.pos
+    if ray != None: ray.visible = False
+    ray = curve(color=color.red, radius=0.04)
+    ray.append(pos=source.pos)
+    ray.append(pos=m)
+    ray.append(pos=target.pos)
+    d = mag(m-source.pos) + mag(target.pos-m)
+    print(&quot;경로 길이:&quot;, round(d,2))
+
+scene.bind(&#x27;click&#x27;, place)
+print(&quot;마우스로 반사점을 선택하세요.&quot;)</pre>
+<div class="explain"><b>🔎 코드·게임 상세 해설</b><br>이 간단한 퍼즐은 클릭한 점을 반사점으로 보고 두 구간의 총 경로 길이를 표시합니다. 실제 반사의 법칙을 만족하는 점에서는 경로가 최소가 되는 성질을 탐구할 수 있습니다.</div>
+<div class="challenge"><b>🚀 확장 탐구 미션</b><br>수평 거울을 하나 정하고 입사각과 반사각을 수치로 계산하도록 확장하세요.</div>
+</div></article><article class="card" data-field="화학" data-search="화학 분자 피하기 게임 분자 운동·충돌 wasd 분자들이 무작위로 움직이는 상자 안에서 녹색 입자를 조종해 20초간 살아남으세요.">
+<div class="cardhead"><div class="icon">⚗</div><div><small>INTERACTIVE GAME 07</small><h2>분자 피하기 게임</h2></div></div>
+<div class="body"><span class="tag">화학</span><span class="control">조작: WASD</span>
+<div class="info">
+<div class="ib"><b>🎯 게임 목표</b>분자들이 무작위로 움직이는 상자 안에서 녹색 입자를 조종해 20초간 살아남으세요.</div>
+<div class="ib"><b>📘 핵심 개념</b>분자 운동·충돌</div>
+<div class="ib"><b>🎮 게임 방법</b>WASD를 사용하여 실시간으로 참여합니다.</div>
+<div class="ib"><b>🏆 성공·판정 규칙</b>적색 분자와 충돌하면 게임 종료입니다.</div>
+</div>
+<pre>Web VPython 3.2
+scene.background = color.black
+scene.range = 7
+player = sphere(pos=vector(0,0,0), radius=0.3, color=color.green)
+enemies = []
+for i in range(12):
+    s = sphere(pos=vector(random()*10-5,random()*10-5,0),
+               radius=0.25,color=color.red)
+    s.v = vector(random()*4-2,random()*4-2,0)
+    enemies.append(s)
+
+def key(evt):
+    if evt.key == &#x27;w&#x27;: player.pos.y += 0.5
+    if evt.key == &#x27;s&#x27;: player.pos.y -= 0.5
+    if evt.key == &#x27;a&#x27;: player.pos.x -= 0.5
+    if evt.key == &#x27;d&#x27;: player.pos.x += 0.5
+
+scene.bind(&#x27;keydown&#x27;, key)
+t = 0
+while t &lt; 20:
+    rate(60); t += 1/60
+    for s in enemies:
+        s.pos += s.v/60
+        if abs(s.pos.x)&gt;6: s.v.x *= -1
+        if abs(s.pos.y)&gt;6: s.v.y *= -1
+        if mag(s.pos-player.pos)&lt;0.55:
+            print(&quot;충돌! 생존시간:&quot;,round(t,1))
+            t = 20
+print(&quot;게임 종료&quot;)</pre>
+<div class="explain"><b>🔎 코드·게임 상세 해설</b><br>적색 분자의 속도는 벡터로 표현되고 벽에서 해당 성분의 부호를 바꾸어 반사시킵니다.</div>
+<div class="challenge"><b>🚀 확장 탐구 미션</b><br>분자 속도를 2배로 높여 &#x27;고온 상태&#x27;를 만들고 생존 난이도를 비교하세요.</div>
+</div></article><article class="card" data-field="화학" data-search="화학 반응속도 클릭 챌린지 반응속도·농도 스페이스바 농도가 목표 범위에 들어오는 순간 스페이스바를 눌러 반응을 멈추세요.">
+<div class="cardhead"><div class="icon">⚗</div><div><small>INTERACTIVE GAME 08</small><h2>반응속도 클릭 챌린지</h2></div></div>
+<div class="body"><span class="tag">화학</span><span class="control">조작: 스페이스바</span>
+<div class="info">
+<div class="ib"><b>🎯 게임 목표</b>농도가 목표 범위에 들어오는 순간 스페이스바를 눌러 반응을 멈추세요.</div>
+<div class="ib"><b>📘 핵심 개념</b>반응속도·농도</div>
+<div class="ib"><b>🎮 게임 방법</b>스페이스바를 사용하여 실시간으로 참여합니다.</div>
+<div class="ib"><b>🏆 성공·판정 규칙</b>목표 농도 0.35±0.03에 가장 가까울수록 높은 점수를 얻습니다.</div>
+</div>
+<pre>Web VPython 3.2
+scene.background = color.white
+g = graph(title=&quot;Reaction Challenge&quot;,xtitle=&quot;t&quot;,ytitle=&quot;A&quot;)
+c = gcurve(color=color.blue)
+A = 1.0
+k = 0.35
+t = 0
+stop = False
+
+def key(evt):
+    global stop
+    if evt.key == &#x27; &#x27;:
+        stop = True
+
+scene.bind(&#x27;keydown&#x27;, key)
+
+while not stop and A &gt; 0.05:
+    rate(30)
+    A = A - k*A*0.05
+    t += 0.05
+    c.plot(t,A)
+
+error = abs(A-0.35)
+score = max(0,100-int(error*300))
+print(&quot;정지 농도:&quot;,round(A,3),&quot;점수:&quot;,score)</pre>
+<div class="explain"><b>🔎 코드·게임 상세 해설</b><br>1차 반응식 dA/dt=-kA를 수치적으로 계산합니다. 학생은 그래프를 관찰하고 목표 농도 근처에서 반응을 정지시킵니다.</div>
+<div class="challenge"><b>🚀 확장 탐구 미션</b><br>k를 무작위로 만들어 매 게임마다 반응속도가 달라지게 해 보세요.</div>
+</div></article><article class="card" data-field="화학" data-search="화학 결정 격자 3d 클릭 찾기 결정 구조·3차원 좌표 마우스 클릭 수많은 원자 중 숨겨진 노란 원자를 찾아 클릭하세요.">
+<div class="cardhead"><div class="icon">⚗</div><div><small>INTERACTIVE GAME 09</small><h2>결정 격자 3D 클릭 찾기</h2></div></div>
+<div class="body"><span class="tag">화학</span><span class="control">조작: 마우스 클릭</span>
+<div class="info">
+<div class="ib"><b>🎯 게임 목표</b>수많은 원자 중 숨겨진 노란 원자를 찾아 클릭하세요.</div>
+<div class="ib"><b>📘 핵심 개념</b>결정 구조·3차원 좌표</div>
+<div class="ib"><b>🎮 게임 방법</b>마우스 클릭를 사용하여 실시간으로 참여합니다.</div>
+<div class="ib"><b>🏆 성공·판정 규칙</b>정답 원자를 클릭하면 성공 메시지가 출력됩니다.</div>
+</div>
+<pre>Web VPython 3.2
+scene.background = color.black
+scene.range = 5
+atoms = []
+secret = None
+
+for x in range(-2,3):
+    for y in range(-2,3):
+        for z in range(-2,3):
+            s = sphere(pos=vector(x,y,z),radius=0.16,color=color.cyan)
+            atoms.append(s)
+
+secret = atoms[73]
+secret.color = color.yellow
+
+def click(evt):
+    picked = scene.mouse.pick
+    if picked == secret:
+        print(&quot;정답! 좌표 =&quot;,secret.pos)
+        secret.color = color.green
+    elif picked != None:
+        print(&quot;다시 시도!&quot;)
+
+scene.bind(&#x27;click&#x27;,click)</pre>
+<div class="explain"><b>🔎 코드·게임 상세 해설</b><br>scene.mouse.pick을 이용하면 사용자가 클릭한 3D 객체를 알아낼 수 있습니다. 장면을 마우스로 회전하면서 3차원 공간을 탐색할 수 있습니다.</div>
+<div class="challenge"><b>🚀 확장 탐구 미션</b><br>정답 원자를 처음에는 청록색으로 숨긴 뒤 좌표 힌트만 제공해 보세요.</div>
+</div></article><article class="card" data-field="생명과학" data-search="생명과학 백혈구 세균 사냥 추적·면역반응 마우스 이동 마우스 위치로 백혈구를 조종해 빨간 세균을 잡으세요.">
+<div class="cardhead"><div class="icon">🧬</div><div><small>INTERACTIVE GAME 10</small><h2>백혈구 세균 사냥</h2></div></div>
+<div class="body"><span class="tag">생명과학</span><span class="control">조작: 마우스 이동</span>
+<div class="info">
+<div class="ib"><b>🎯 게임 목표</b>마우스 위치로 백혈구를 조종해 빨간 세균을 잡으세요.</div>
+<div class="ib"><b>📘 핵심 개념</b>추적·면역반응</div>
+<div class="ib"><b>🎮 게임 방법</b>마우스 이동를 사용하여 실시간으로 참여합니다.</div>
+<div class="ib"><b>🏆 성공·판정 규칙</b>세균에 접촉하면 점수 +1, 10점을 얻으면 성공합니다.</div>
+</div>
+<pre>Web VPython 3.2
+scene.background = color.black
+scene.range = 7
+cell = sphere(pos=vector(0,0,0),radius=0.45,color=color.white)
+bacteria = sphere(pos=vector(4,2,0),radius=0.28,color=color.red)
+score = 0
+
+while score &lt; 10:
+    rate(60)
+    target = scene.mouse.pos
+    cell.pos += 0.08*(target-cell.pos)
+    if mag(cell.pos-bacteria.pos)&lt;0.7:
+        score += 1
+        print(&quot;점수:&quot;,score)
+        bacteria.pos = vector(random()*10-5,random()*10-5,0)
+
+print(&quot;면역 방어 성공!&quot;)</pre>
+<div class="explain"><b>🔎 코드·게임 상세 해설</b><br>마우스 위치를 목표점으로 두고 현재 위치와 목표점의 차이벡터 일부만큼 이동하여 부드러운 추적 효과를 만듭니다.</div>
+<div class="challenge"><b>🚀 확장 탐구 미션</b><br>세균이 도망가도록 속도를 주거나 여러 종류의 세균을 추가하세요.</div>
+</div></article><article class="card" data-field="생명과학" data-search="생명과학 dna 염기 맞추기 상보적 염기쌍 a/t/g/c 키 화면에 제시되는 염기의 상보적 염기를 키보드로 입력하세요.">
+<div class="cardhead"><div class="icon">🧬</div><div><small>INTERACTIVE GAME 11</small><h2>DNA 염기 맞추기</h2></div></div>
+<div class="body"><span class="tag">생명과학</span><span class="control">조작: A/T/G/C 키</span>
+<div class="info">
+<div class="ib"><b>🎯 게임 목표</b>화면에 제시되는 염기의 상보적 염기를 키보드로 입력하세요.</div>
+<div class="ib"><b>📘 핵심 개념</b>상보적 염기쌍</div>
+<div class="ib"><b>🎮 게임 방법</b>A/T/G/C 키를 사용하여 실시간으로 참여합니다.</div>
+<div class="ib"><b>🏆 성공·판정 규칙</b>10문제 중 정답 개수를 점수로 기록합니다.</div>
+</div>
+<pre>Web VPython 3.2
+scene.background = color.black
+bases = [&#x27;A&#x27;,&#x27;T&#x27;,&#x27;G&#x27;,&#x27;C&#x27;]
+pair = {&#x27;A&#x27;:&#x27;T&#x27;,&#x27;T&#x27;:&#x27;A&#x27;,&#x27;G&#x27;:&#x27;C&#x27;,&#x27;C&#x27;:&#x27;G&#x27;}
+current = &#x27;A&#x27;
+score = 0
+count = 0
+txt = label(pos=vector(0,0,0),text=current,height=40,box=False)
+
+def key(evt):
+    global current, score, count
+    k = evt.key.upper()
+    if k in bases:
+        if k == pair[current]:
+            score += 1
+            print(&quot;정답!&quot;)
+        else:
+            print(&quot;오답! 정답:&quot;,pair[current])
+        count += 1
+        current = bases[int(random()*4)]
+        txt.text = current
+        if count == 10:
+            print(&quot;최종 점수:&quot;,score,&quot;/ 10&quot;)
+
+scene.bind(&#x27;keydown&#x27;,key)</pre>
+<div class="explain"><b>🔎 코드·게임 상세 해설</b><br>딕셔너리 pair가 생물학의 상보적 염기 규칙을 저장합니다. 이벤트의 키 값을 대문자로 바꾸어 A/T/G/C 중 하나인지 검사합니다.</div>
+<div class="challenge"><b>🚀 확장 탐구 미션</b><br>염기서열 5개를 연속으로 제시하고 전체 상보 서열을 입력하게 해 보세요.</div>
+</div></article><article class="card" data-field="생명과학" data-search="생명과학 포식자 탈출 게임 생태계·추적 wasd 먹이를 조종하여 자동으로 추적해 오는 포식자로부터 15초간 도망치세요.">
+<div class="cardhead"><div class="icon">🧬</div><div><small>INTERACTIVE GAME 12</small><h2>포식자 탈출 게임</h2></div></div>
+<div class="body"><span class="tag">생명과학</span><span class="control">조작: WASD</span>
+<div class="info">
+<div class="ib"><b>🎯 게임 목표</b>먹이를 조종하여 자동으로 추적해 오는 포식자로부터 15초간 도망치세요.</div>
+<div class="ib"><b>📘 핵심 개념</b>생태계·추적</div>
+<div class="ib"><b>🎮 게임 방법</b>WASD를 사용하여 실시간으로 참여합니다.</div>
+<div class="ib"><b>🏆 성공·판정 규칙</b>포식자와의 거리가 0.7보다 작아지면 잡힙니다.</div>
+</div>
+<pre>Web VPython 3.2
+scene.background = color.white
+scene.range = 7
+prey = sphere(pos=vector(-3,0,0),radius=0.3,color=color.green)
+pred = sphere(pos=vector(3,0,0),radius=0.4,color=color.red)
+
+def key(evt):
+    if evt.key==&#x27;w&#x27;: prey.pos.y += 0.5
+    if evt.key==&#x27;s&#x27;: prey.pos.y -= 0.5
+    if evt.key==&#x27;a&#x27;: prey.pos.x -= 0.5
+    if evt.key==&#x27;d&#x27;: prey.pos.x += 0.5
+
+scene.bind(&#x27;keydown&#x27;,key)
+t = 0
+while t &lt; 15:
+    rate(60); t += 1/60
+    pred.pos += 0.015*(prey.pos-pred.pos)
+    if mag(prey.pos-pred.pos)&lt;0.7:
+        print(&quot;잡혔습니다!&quot;); break
+
+if t &gt;= 15: print(&quot;생존 성공!&quot;)</pre>
+<div class="explain"><b>🔎 코드·게임 상세 해설</b><br>포식자는 매 프레임 먹이 방향벡터의 일정 비율만 이동합니다. 추적계수가 커질수록 포식자가 빠르게 접근합니다.</div>
+<div class="challenge"><b>🚀 확장 탐구 미션</b><br>은신처와 먹이 아이템을 넣어 생태계 전략 게임으로 확장하세요.</div>
+</div></article><article class="card" data-field="지구과학" data-search="지구과학 지진파 긴급 대피 p파·s파·시간차 스페이스바 p파를 감지한 뒤 s파가 도착하기 전에 스페이스바를 눌러 대피하세요.">
+<div class="cardhead"><div class="icon">🌍</div><div><small>INTERACTIVE GAME 13</small><h2>지진파 긴급 대피</h2></div></div>
+<div class="body"><span class="tag">지구과학</span><span class="control">조작: 스페이스바</span>
+<div class="info">
+<div class="ib"><b>🎯 게임 목표</b>P파를 감지한 뒤 S파가 도착하기 전에 스페이스바를 눌러 대피하세요.</div>
+<div class="ib"><b>📘 핵심 개념</b>P파·S파·시간차</div>
+<div class="ib"><b>🎮 게임 방법</b>스페이스바를 사용하여 실시간으로 참여합니다.</div>
+<div class="ib"><b>🏆 성공·판정 규칙</b>너무 일찍 누르면 오경보, S파 도착 후 누르면 실패입니다.</div>
+</div>
+<pre>Web VPython 3.2
+scene.background = color.black
+scene.range = 8
+station = box(pos=vector(6,0,0),size=vector(0.5,3,1),color=color.white)
+P = sphere(pos=vector(-6,1,0),radius=0.2,color=color.yellow)
+S = sphere(pos=vector(-6,-1,0),radius=0.2,color=color.red)
+evacuated = False
+P_arrived = False
+
+def key(evt):
+    global evacuated
+    if evt.key == &#x27; &#x27; and P_arrived and S.pos.x &lt; 6:
+        evacuated = True
+        print(&quot;대피 성공!&quot;)
+
+scene.bind(&#x27;keydown&#x27;,key)
+
+while S.pos.x &lt; 6:
+    rate(60)
+    P.pos.x += 0.09
+    S.pos.x += 0.055
+    if P.pos.x &gt;= 6 and not P_arrived:
+        P_arrived = True
+        print(&quot;P파 감지! 지금 대피하세요!&quot;)
+    if evacuated: break
+
+if not evacuated: print(&quot;S파 도착! 대피 실패&quot;)</pre>
+<div class="explain"><b>🔎 코드·게임 상세 해설</b><br>P파가 S파보다 빠르게 도착한다는 지진 조기경보 원리를 게임화했습니다. 두 파의 속도 차이가 실제 대응시간을 만듭니다.</div>
+<div class="challenge"><b>🚀 확장 탐구 미션</b><br>관측소 거리를 멀게 하거나 파 속도를 바꾸어 대피 가능시간을 계산하세요.</div>
+</div></article><article class="card" data-field="지구과학" data-search="지구과학 화산탄 회피 포물선 운동·위험예측 ←/→ 지면의 탐험가를 좌우로 움직여 떨어지는 화산탄을 피하세요.">
+<div class="cardhead"><div class="icon">🌍</div><div><small>INTERACTIVE GAME 14</small><h2>화산탄 회피</h2></div></div>
+<div class="body"><span class="tag">지구과학</span><span class="control">조작: ←/→</span>
+<div class="info">
+<div class="ib"><b>🎯 게임 목표</b>지면의 탐험가를 좌우로 움직여 떨어지는 화산탄을 피하세요.</div>
+<div class="ib"><b>📘 핵심 개념</b>포물선 운동·위험예측</div>
+<div class="ib"><b>🎮 게임 방법</b>←/→를 사용하여 실시간으로 참여합니다.</div>
+<div class="ib"><b>🏆 성공·판정 규칙</b>화산탄과 탐험가의 거리가 0.6보다 작으면 실패입니다.</div>
+</div>
+<pre>Web VPython 3.2
+scene.background = color.black
+scene.range = 8
+player = box(pos=vector(0,-4,0),size=vector(0.6,0.6,0.6),color=color.cyan)
+rock = sphere(pos=vector(-5,5,0),radius=0.25,color=color.red)
+v = vector(3,1,0)
+g = vector(0,-4,0)
+
+def key(evt):
+    if evt.key==&#x27;left&#x27;: player.pos.x -= 0.6
+    if evt.key==&#x27;right&#x27;: player.pos.x += 0.6
+
+scene.bind(&#x27;keydown&#x27;,key)
+
+while rock.pos.y &gt; -4:
+    rate(60)
+    rock.pos += v*0.03
+    v += g*0.03
+    if mag(rock.pos-player.pos)&lt;0.6:
+        print(&quot;충돌!&quot;); break
+else:
+    print(&quot;회피 성공!&quot;)</pre>
+<div class="explain"><b>🔎 코드·게임 상세 해설</b><br>화산탄은 중력에 의해 포물선 운동을 하고 탐험가는 사용자의 키 입력으로 수평 이동합니다.</div>
+<div class="challenge"><b>🚀 확장 탐구 미션</b><br>화산탄을 여러 개 생성하거나 분출 간격을 무작위화하세요.</div>
+</div></article><article class="card" data-field="지구과학" data-search="지구과학 태풍 경로 예측 클릭 태풍 경로·예측 마우스 클릭 태풍이 2초 뒤 있을 위치를 예측하여 미리 클릭하세요.">
+<div class="cardhead"><div class="icon">🌍</div><div><small>INTERACTIVE GAME 15</small><h2>태풍 경로 예측 클릭</h2></div></div>
+<div class="body"><span class="tag">지구과학</span><span class="control">조작: 마우스 클릭</span>
+<div class="info">
+<div class="ib"><b>🎯 게임 목표</b>태풍이 2초 뒤 있을 위치를 예측하여 미리 클릭하세요.</div>
+<div class="ib"><b>📘 핵심 개념</b>태풍 경로·예측</div>
+<div class="ib"><b>🎮 게임 방법</b>마우스 클릭를 사용하여 실시간으로 참여합니다.</div>
+<div class="ib"><b>🏆 성공·판정 규칙</b>실제 위치와 클릭 위치가 가까울수록 점수가 높습니다.</div>
+</div>
+<pre>Web VPython 3.2
+scene.background = color.white
+scene.range = 8
+eye = sphere(pos=vector(-6,0,0),radius=0.4,color=color.blue,make_trail=True)
+guess = None
+t = 0
+
+def click(evt):
+    global guess
+    guess = sphere(pos=evt.pos,radius=0.25,color=color.red)
+
+scene.bind(&#x27;click&#x27;,click)
+
+while t &lt; 8:
+    rate(60); t += 1/60
+    eye.pos = vector(-6+1.2*t, 2*sin(t), 0)
+
+if guess != None:
+    d = mag(guess.pos-eye.pos)
+    print(&quot;예측 오차:&quot;,round(d,2))</pre>
+<div class="explain"><b>🔎 코드·게임 상세 해설</b><br>태풍 중심은 직선 이동과 사인함수 진동이 합쳐진 경로를 따릅니다. 학생은 과거 경로를 보고 미래 위치를 예측합니다.</div>
+<div class="challenge"><b>🚀 확장 탐구 미션</b><br>속도를 숨긴 뒤 최근 3개 위치만 보여 주어 예측 난이도를 높여 보세요.</div>
+</div></article><article class="card" data-field="천문학" data-search="천문학 소행성 회피 우주선 상대운동·충돌 wasd 우주선을 움직여 계속 날아오는 소행성을 피하고 생존시간을 늘리세요.">
+<div class="cardhead"><div class="icon">✦</div><div><small>INTERACTIVE GAME 16</small><h2>소행성 회피 우주선</h2></div></div>
+<div class="body"><span class="tag">천문학</span><span class="control">조작: WASD</span>
+<div class="info">
+<div class="ib"><b>🎯 게임 목표</b>우주선을 움직여 계속 날아오는 소행성을 피하고 생존시간을 늘리세요.</div>
+<div class="ib"><b>📘 핵심 개념</b>상대운동·충돌</div>
+<div class="ib"><b>🎮 게임 방법</b>WASD를 사용하여 실시간으로 참여합니다.</div>
+<div class="ib"><b>🏆 성공·판정 규칙</b>소행성과 충돌하면 종료됩니다.</div>
+</div>
+<pre>Web VPython 3.2
+scene.background = color.black
+scene.range = 8
+ship = cone(pos=vector(-5,0,0),axis=vector(0.8,0,0),radius=0.35,color=color.cyan)
+ast = sphere(pos=vector(6,2,0),radius=0.45,color=color.gray(0.7))
+ast.v = vector(-2.5,0,0)
+
+def key(evt):
+    if evt.key==&#x27;w&#x27;: ship.pos.y += 0.6
+    if evt.key==&#x27;s&#x27;: ship.pos.y -= 0.6
+    if evt.key==&#x27;a&#x27;: ship.pos.x -= 0.4
+    if evt.key==&#x27;d&#x27;: ship.pos.x += 0.4
+
+scene.bind(&#x27;keydown&#x27;,key)
+score = 0
+
+while True:
+    rate(60)
+    ast.pos += ast.v/60
+    if ast.pos.x &lt; -7:
+        ast.pos = vector(7,random()*10-5,0)
+        score += 1
+        print(&quot;점수:&quot;,score)
+    if mag(ship.pos-ast.pos)&lt;0.8:
+        print(&quot;GAME OVER / 점수:&quot;,score)
+        break</pre>
+<div class="explain"><b>🔎 코드·게임 상세 해설</b><br>소행성은 왼쪽으로 일정 속도로 이동하고 화면을 벗어나면 새로운 y좌표에서 다시 등장합니다.</div>
+<div class="challenge"><b>🚀 확장 탐구 미션</b><br>점수가 올라갈수록 소행성 속도를 빠르게 만들어 난이도를 자동 증가시키세요.</div>
+</div></article><article class="card" data-field="천문학" data-search="천문학 달 착륙선 실시간 조종 달 중력·추력·연료 ↑ 추진, ←/→ 자세 이동 직접 추력을 조절하여 지정 착륙지점에 부드럽게 착륙하세요.">
+<div class="cardhead"><div class="icon">✦</div><div><small>INTERACTIVE GAME 17</small><h2>달 착륙선 실시간 조종</h2></div></div>
+<div class="body"><span class="tag">천문학</span><span class="control">조작: ↑ 추진, ←/→ 자세 이동</span>
+<div class="info">
+<div class="ib"><b>🎯 게임 목표</b>직접 추력을 조절하여 지정 착륙지점에 부드럽게 착륙하세요.</div>
+<div class="ib"><b>📘 핵심 개념</b>달 중력·추력·연료</div>
+<div class="ib"><b>🎮 게임 방법</b>↑ 추진, ←/→ 자세 이동를 사용하여 실시간으로 참여합니다.</div>
+<div class="ib"><b>🏆 성공·판정 규칙</b>속도와 위치가 모두 안전범위에 들어와야 성공입니다.</div>
+</div>
+<pre>Web VPython 3.2
+scene.background=color.black
+scene.range=9
+pad=box(pos=vector(0,-5,0),size=vector(3,0.3,2),color=color.green)
+ship=box(pos=vector(3,5,0),size=vector(0.7,0.7,0.7),color=color.yellow)
+v=vector(0,0,0); fuel=100
+g=vector(0,-1.62,0)
+
+def key(evt):
+    global v,fuel
+    if fuel&lt;=0: return
+    if evt.key==&#x27;up&#x27;: v.y+=0.3; fuel-=2
+    if evt.key==&#x27;left&#x27;: v.x-=0.12; fuel-=1
+    if evt.key==&#x27;right&#x27;: v.x+=0.12; fuel-=1
+
+scene.bind(&#x27;keydown&#x27;,key)
+
+while ship.pos.y&gt;-4.5:
+    rate(60)
+    v += g/60
+    ship.pos += v/60
+
+safe = abs(ship.pos.x)&lt;1.5 and abs(v.y)&lt;1.5
+print(&quot;성공!&quot; if safe else &quot;착륙 실패&quot;, &quot;연료:&quot;,fuel)</pre>
+<div class="explain"><b>🔎 코드·게임 상세 해설</b><br>위치뿐 아니라 착륙 순간의 속도까지 고려해야 하므로 제어전략이 필요합니다.</div>
+<div class="challenge"><b>🚀 확장 탐구 미션</b><br>연료 표시를 label로 실시간 갱신하거나 랜덤 착륙지점을 만들어 보세요.</div>
+</div></article><article class="card" data-field="천문학" data-search="천문학 행성 궤도 타이밍 게임 공전주기·각속도 스페이스바 행성이 기준선을 통과하는 순간 스페이스바를 누르세요.">
+<div class="cardhead"><div class="icon">✦</div><div><small>INTERACTIVE GAME 18</small><h2>행성 궤도 타이밍 게임</h2></div></div>
+<div class="body"><span class="tag">천문학</span><span class="control">조작: 스페이스바</span>
+<div class="info">
+<div class="ib"><b>🎯 게임 목표</b>행성이 기준선을 통과하는 순간 스페이스바를 누르세요.</div>
+<div class="ib"><b>📘 핵심 개념</b>공전주기·각속도</div>
+<div class="ib"><b>🎮 게임 방법</b>스페이스바를 사용하여 실시간으로 참여합니다.</div>
+<div class="ib"><b>🏆 성공·판정 규칙</b>각도 오차가 작을수록 높은 점수를 얻습니다.</div>
+</div>
+<pre>Web VPython 3.2
+scene.background=color.black
+scene.range=6
+sun=sphere(radius=0.6,color=color.yellow)
+planet=sphere(radius=0.25,color=color.cyan)
+line=curve(pos=[vector(0,0,0),vector(5,0,0)],color=color.red)
+t=0; stop=False
+
+def key(evt):
+    global stop
+    if evt.key==&#x27; &#x27;: stop=True
+
+scene.bind(&#x27;keydown&#x27;,key)
+
+while not stop:
+    rate(60)
+    t += 0.02
+    planet.pos=vector(4*cos(t),4*sin(t),0)
+
+angle=atan2(planet.pos.y,planet.pos.x)
+score=max(0,100-int(abs(angle)*40))
+print(&quot;점수:&quot;,score)</pre>
+<div class="explain"><b>🔎 코드·게임 상세 해설</b><br>행성의 위치는 cos(t), sin(t)로 표현한 원운동입니다. 기준선은 각도 0인 방향이므로 타이밍 오차를 각도로 평가합니다.</div>
+<div class="challenge"><b>🚀 확장 탐구 미션</b><br>서로 다른 공전주기의 행성 2개를 동시에 맞히는 게임으로 확장하세요.</div>
+</div></article><article class="card" data-field="공학" data-search="공학 드론 장애물 코스 제어·충돌판정 wasd 드론을 직접 조종해 빨간 장애물 사이를 통과하여 오른쪽 끝까지 가세요.">
+<div class="cardhead"><div class="icon">⚙</div><div><small>INTERACTIVE GAME 19</small><h2>드론 장애물 코스</h2></div></div>
+<div class="body"><span class="tag">공학</span><span class="control">조작: WASD</span>
+<div class="info">
+<div class="ib"><b>🎯 게임 목표</b>드론을 직접 조종해 빨간 장애물 사이를 통과하여 오른쪽 끝까지 가세요.</div>
+<div class="ib"><b>📘 핵심 개념</b>제어·충돌판정</div>
+<div class="ib"><b>🎮 게임 방법</b>WASD를 사용하여 실시간으로 참여합니다.</div>
+<div class="ib"><b>🏆 성공·판정 규칙</b>장애물과 충돌하면 실패, x&gt;6에 도달하면 성공입니다.</div>
+</div>
+<pre>Web VPython 3.2
+scene.background=color.black
+scene.range=8
+drone=box(pos=vector(-6,0,0),size=vector(0.8,0.25,0.8),color=color.cyan)
+obs=[]
+for x,y in [(-2,2),(1,-2),(4,1)]:
+    o=box(pos=vector(x,y,0),size=vector(0.8,2.5,1),color=color.red)
+    obs.append(o)
+
+def key(evt):
+    if evt.key==&#x27;w&#x27;: drone.pos.y+=0.5
+    if evt.key==&#x27;s&#x27;: drone.pos.y-=0.5
+    if evt.key==&#x27;a&#x27;: drone.pos.x-=0.5
+    if evt.key==&#x27;d&#x27;: drone.pos.x+=0.5
+
+scene.bind(&#x27;keydown&#x27;,key)
+
+while drone.pos.x&lt;6:
+    rate(60)
+    for o in obs:
+        if abs(drone.pos.x-o.pos.x)&lt;0.8 and abs(drone.pos.y-o.pos.y)&lt;1.5:
+            print(&quot;충돌!&quot;); drone.pos.x=10
+            break
+
+if drone.pos.x&lt;10: print(&quot;코스 통과 성공!&quot;)</pre>
+<div class="explain"><b>🔎 코드·게임 상세 해설</b><br>키보드 이벤트로 드론 위치를 직접 변경하고 축 정렬 경계상자 방식으로 간단한 충돌판정을 합니다.</div>
+<div class="challenge"><b>🚀 확장 탐구 미션</b><br>시간 제한과 통과 게이트를 추가하여 기록 경쟁 게임으로 만드세요.</div>
+</div></article><article class="card" data-field="공학" data-search="공학 로봇팔 목표 집기 순기구학·관절제어 q/a: 1번 관절, w/s: 2번 관절 두 관절을 조종하여 팔 끝을 빨간 목표물에 정확히 가져가세요.">
+<div class="cardhead"><div class="icon">⚙</div><div><small>INTERACTIVE GAME 20</small><h2>로봇팔 목표 집기</h2></div></div>
+<div class="body"><span class="tag">공학</span><span class="control">조작: Q/A: 1번 관절, W/S: 2번 관절</span>
+<div class="info">
+<div class="ib"><b>🎯 게임 목표</b>두 관절을 조종하여 팔 끝을 빨간 목표물에 정확히 가져가세요.</div>
+<div class="ib"><b>📘 핵심 개념</b>순기구학·관절제어</div>
+<div class="ib"><b>🎮 게임 방법</b>Q/A: 1번 관절, W/S: 2번 관절를 사용하여 실시간으로 참여합니다.</div>
+<div class="ib"><b>🏆 성공·판정 규칙</b>끝점과 목표 거리 &lt;0.35이면 성공입니다.</div>
+</div>
+<pre>Web VPython 3.2
+scene.background=color.black
+scene.range=6
+L1=3; L2=2
+q1=0; q2=0
+arm1=cylinder(radius=0.12,color=color.orange)
+arm2=cylinder(radius=0.1,color=color.cyan)
+target=sphere(pos=vector(3,3,0),radius=0.3,color=color.red)
+
+def update():
+    p1=vector(L1*cos(q1),L1*sin(q1),0)
+    p2=p1+vector(L2*cos(q1+q2),L2*sin(q1+q2),0)
+    arm1.pos=vector(0,0,0); arm1.axis=p1
+    arm2.pos=p1; arm2.axis=p2-p1
+    return p2
+
+def key(evt):
+    global q1,q2
+    if evt.key==&#x27;q&#x27;: q1+=0.1
+    if evt.key==&#x27;a&#x27;: q1-=0.1
+    if evt.key==&#x27;w&#x27;: q2+=0.1
+    if evt.key==&#x27;s&#x27;: q2-=0.1
+    p2=update()
+    if mag(p2-target.pos)&lt;0.35: print(&quot;집기 성공!&quot;)
+
+scene.bind(&#x27;keydown&#x27;,key)
+update()</pre>
+<div class="explain"><b>🔎 코드·게임 상세 해설</b><br>두 링크의 끝점 위치를 삼각함수로 계산하는 순기구학을 사용합니다. 학생은 각도를 직접 조절하며 목표 위치를 찾습니다.</div>
+<div class="challenge"><b>🚀 확장 탐구 미션</b><br>목표를 무작위 위치로 바꾸고 최소 키 입력 횟수 경쟁을 해 보세요.</div>
+</div></article><article class="card" data-field="공학" data-search="공학 자율주행 수동 개입 게임 피드백·센서·제어 ←/→ 자동 주행 중 외란으로 차가 흔들릴 때 방향키로 차선을 보정하세요.">
+<div class="cardhead"><div class="icon">⚙</div><div><small>INTERACTIVE GAME 21</small><h2>자율주행 수동 개입 게임</h2></div></div>
+<div class="body"><span class="tag">공학</span><span class="control">조작: ←/→</span>
+<div class="info">
+<div class="ib"><b>🎯 게임 목표</b>자동 주행 중 외란으로 차가 흔들릴 때 방향키로 차선을 보정하세요.</div>
+<div class="ib"><b>📘 핵심 개념</b>피드백·센서·제어</div>
+<div class="ib"><b>🎮 게임 방법</b>←/→를 사용하여 실시간으로 참여합니다.</div>
+<div class="ib"><b>🏆 성공·판정 규칙</b>차선 밖 |z|&gt;2.5가 되면 실패합니다.</div>
+</div>
+<pre>Web VPython 3.2
+scene.background=color.white
+road=box(pos=vector(0,0,0),size=vector(16,0.2,6),color=color.gray(0.4))
+car=box(pos=vector(-7,0.5,0),size=vector(1,0.4,0.7),color=color.blue)
+
+def key(evt):
+    if evt.key==&#x27;left&#x27;: car.pos.z-=0.4
+    if evt.key==&#x27;right&#x27;: car.pos.z+=0.4
+
+scene.bind(&#x27;keydown&#x27;,key)
+
+while car.pos.x&lt;7:
+    rate(60)
+    car.pos.x+=0.04
+    car.pos.z+=0.02*sin(car.pos.x*2)
+    if abs(car.pos.z)&gt;2.5:
+        print(&quot;차선 이탈!&quot;); break
+else:
+    print(&quot;주행 성공!&quot;)</pre>
+<div class="explain"><b>🔎 코드·게임 상세 해설</b><br>차량에 작은 주기적 외란을 계속 더하고 학생이 키보드로 이를 보정합니다.</div>
+<div class="challenge"><b>🚀 확장 탐구 미션</b><br>자동 P제어를 추가한 뒤 사람 조작과 자동제어의 성능을 비교하세요.</div>
+</div></article><article class="card" data-field="의학" data-search="의학 심박수 응급판정 게임 이상탐지·조건문 스페이스바 심박수가 위험 범위에 들어오는 순간 스페이스바를 눌러 경보를 울리세요.">
+<div class="cardhead"><div class="icon">✚</div><div><small>INTERACTIVE GAME 22</small><h2>심박수 응급판정 게임</h2></div></div>
+<div class="body"><span class="tag">의학</span><span class="control">조작: 스페이스바</span>
+<div class="info">
+<div class="ib"><b>🎯 게임 목표</b>심박수가 위험 범위에 들어오는 순간 스페이스바를 눌러 경보를 울리세요.</div>
+<div class="ib"><b>📘 핵심 개념</b>이상탐지·조건문</div>
+<div class="ib"><b>🎮 게임 방법</b>스페이스바를 사용하여 실시간으로 참여합니다.</div>
+<div class="ib"><b>🏆 성공·판정 규칙</b>정상 범위에서 누르면 오경보, 위험 상태를 놓치면 실패입니다.</div>
+</div>
+<pre>Web VPython 3.2
+scene.background=color.white
+g=graph(title=&quot;Heart Monitor&quot;,xtitle=&quot;time&quot;,ytitle=&quot;bpm&quot;)
+c=gcurve(color=color.red)
+alarm=False; bpm=75; t=0
+
+def key(evt):
+    global alarm
+    if evt.key==&#x27; &#x27;:
+        alarm=True
+        print(&quot;경보 버튼!&quot;)
+
+scene.bind(&#x27;keydown&#x27;,key)
+
+while t&lt;20:
+    rate(10)
+    t+=0.1
+    bpm=75+10*sin(t)
+    if 8&lt;t&lt;11: bpm=125
+    c.plot(t,bpm)
+    if alarm:
+        if bpm&gt;110: print(&quot;정확한 응급판정!&quot;)
+        else: print(&quot;오경보!&quot;)
+        break</pre>
+<div class="explain"><b>🔎 코드·게임 상세 해설</b><br>평소에는 심박수가 주기적으로 변하지만 특정 구간에서 급격히 상승합니다. 사용자는 데이터 흐름을 실시간 관찰하며 판정합니다.</div>
+<div class="challenge"><b>🚀 확장 탐구 미션</b><br>저심박(&lt;50) 상황도 추가하고 두 종류의 위험을 구분하도록 확장하세요.</div>
+</div></article><article class="card" data-field="의학" data-search="의학 약물 투여 타이밍 게임 반감기·치료범위 스페이스바 약물 농도가 너무 낮아지기 전에 스페이스바로 추가 투여하세요.">
+<div class="cardhead"><div class="icon">✚</div><div><small>INTERACTIVE GAME 23</small><h2>약물 투여 타이밍 게임</h2></div></div>
+<div class="body"><span class="tag">의학</span><span class="control">조작: 스페이스바</span>
+<div class="info">
+<div class="ib"><b>🎯 게임 목표</b>약물 농도가 너무 낮아지기 전에 스페이스바로 추가 투여하세요.</div>
+<div class="ib"><b>📘 핵심 개념</b>반감기·치료범위</div>
+<div class="ib"><b>🎮 게임 방법</b>스페이스바를 사용하여 실시간으로 참여합니다.</div>
+<div class="ib"><b>🏆 성공·판정 규칙</b>농도를 20~80 사이에 오래 유지하면 성공입니다.</div>
+</div>
+<pre>Web VPython 3.2
+scene.background=color.white
+g=graph(title=&quot;Drug Control&quot;,xtitle=&quot;time&quot;,ytitle=&quot;C&quot;)
+c=gcurve(color=color.blue)
+C=60; half=5; t=0; doses=0
+
+def key(evt):
+    global C,doses
+    if evt.key==&#x27; &#x27;:
+        C+=25
+        doses+=1
+        print(&quot;추가 투여&quot;,doses)
+
+scene.bind(&#x27;keydown&#x27;,key)
+
+while t&lt;30:
+    rate(20)
+    t+=0.05
+    C *= 0.5**(0.05/half)
+    c.plot(t,C)
+    if C&gt;80 or C&lt;20:
+        print(&quot;안전범위 이탈! 농도:&quot;,round(C,1))
+        break
+else:
+    print(&quot;치료범위 유지 성공!&quot;)</pre>
+<div class="explain"><b>🔎 코드·게임 상세 해설</b><br>약물 농도는 반감기에 따라 지수적으로 감소합니다. 사용자는 적절한 시점에 추가 용량을 투여해야 합니다.</div>
+<div class="challenge"><b>🚀 확장 탐구 미션</b><br>투여량을 키별로 10/20/30으로 나누어 전략 게임으로 확장하세요.</div>
+</div></article><article class="card" data-field="의학" data-search="의학 감염 확산 방역 게임 sir·접촉률 스페이스바 감염자 그래프가 급증하기 전에 스페이스바로 방역을 시작하세요.">
+<div class="cardhead"><div class="icon">✚</div><div><small>INTERACTIVE GAME 24</small><h2>감염 확산 방역 게임</h2></div></div>
+<div class="body"><span class="tag">의학</span><span class="control">조작: 스페이스바</span>
+<div class="info">
+<div class="ib"><b>🎯 게임 목표</b>감염자 그래프가 급증하기 전에 스페이스바로 방역을 시작하세요.</div>
+<div class="ib"><b>📘 핵심 개념</b>SIR·접촉률</div>
+<div class="ib"><b>🎮 게임 방법</b>스페이스바를 사용하여 실시간으로 참여합니다.</div>
+<div class="ib"><b>🏆 성공·판정 규칙</b>방역 후 beta가 감소하며 최종 감염 정점이 낮아집니다.</div>
+</div>
+<pre>Web VPython 3.2
+scene.background=color.white
+g=graph(title=&quot;Epidemic Control&quot;,xtitle=&quot;t&quot;,ytitle=&quot;I&quot;)
+ic=gcurve(color=color.red)
+S=.99; I=.01; R=0
+beta=.6; gamma=.18
+control=False; t=0
+
+def key(evt):
+    global control,beta
+    if evt.key==&#x27; &#x27; and not control:
+        control=True
+        beta=.22
+        print(&quot;방역 시작!&quot;)
+
+scene.bind(&#x27;keydown&#x27;,key)
+
+while t&lt;40:
+    rate(30)
+    dt=.05
+    dS=-beta*S*I
+    dI=beta*S*I-gamma*I
+    dR=gamma*I
+    S+=dS*dt; I+=dI*dt; R+=dR*dt
+    t+=dt
+    ic.plot(t,I)
+
+print(&quot;최종 감염 비율:&quot;,round(I,4))</pre>
+<div class="explain"><b>🔎 코드·게임 상세 해설</b><br>스페이스바를 누르는 순간 접촉률 beta가 낮아집니다. 개입 시점에 따라 감염곡선의 높이와 형태가 달라집니다.</div>
+<div class="challenge"><b>🚀 확장 탐구 미션</b><br>방역 비용 점수를 넣어 너무 빠른 개입과 너무 늦은 개입 사이의 최적점을 찾아보세요.</div>
+</div></article><article class="card" data-field="인문학" data-search="인문학 역사 사건 순서 맞히기 연표·정렬 1,2,3,4 키 제시된 사건 중 가장 이른 사건부터 번호를 입력하세요.">
+<div class="cardhead"><div class="icon">文</div><div><small>INTERACTIVE GAME 25</small><h2>역사 사건 순서 맞히기</h2></div></div>
+<div class="body"><span class="tag">인문학</span><span class="control">조작: 1,2,3,4 키</span>
+<div class="info">
+<div class="ib"><b>🎯 게임 목표</b>제시된 사건 중 가장 이른 사건부터 번호를 입력하세요.</div>
+<div class="ib"><b>📘 핵심 개념</b>연표·정렬</div>
+<div class="ib"><b>🎮 게임 방법</b>1,2,3,4 키를 사용하여 실시간으로 참여합니다.</div>
+<div class="ib"><b>🏆 성공·판정 규칙</b>올바른 순서로 입력하면 점수가 올라갑니다.</div>
+</div>
+<pre>Web VPython 3.2
+scene.background=color.white
+events=[&#x27;1945 광복&#x27;,&#x27;1443 훈민정음&#x27;,&#x27;1919 3·1운동&#x27;,&#x27;1592 임진왜란&#x27;]
+years=[1945,1443,1919,1592]
+labels=[]
+for i,e in enumerate(events):
+    labels.append(label(pos=vector(0,3-i*2,0),
+                        text=str(i+1)+&#x27;. &#x27;+e,box=False,color=color.black))
+
+answer=[2,4,3,1]
+step=0
+
+def key(evt):
+    global step
+    if evt.key in [&#x27;1&#x27;,&#x27;2&#x27;,&#x27;3&#x27;,&#x27;4&#x27;]:
+        n=int(evt.key)
+        if n==answer[step]:
+            print(&quot;정답!&quot;)
+            step+=1
+            if step==4: print(&quot;연표 완성!&quot;)
+        else:
+            print(&quot;순서를 다시 생각해 보세요.&quot;)
+
+scene.bind(&#x27;keydown&#x27;,key)</pre>
+<div class="explain"><b>🔎 코드·게임 상세 해설</b><br>사건 배열과 연도 배열을 따로 저장하고, 정답 순서를 번호 리스트로 표현합니다.</div>
+<div class="challenge"><b>🚀 확장 탐구 미션</b><br>사건 10개를 무작위로 섞고 자동 정렬 결과와 비교하게 해 보세요.</div>
+</div></article><article class="card" data-field="인문학" data-search="인문학 단어 빈도 타이밍 게임 텍스트 데이터·빈도 1~4 숫자키 막대그래프에서 가장 빈도가 높은 단어의 번호를 빠르게 누르세요.">
+<div class="cardhead"><div class="icon">文</div><div><small>INTERACTIVE GAME 26</small><h2>단어 빈도 타이밍 게임</h2></div></div>
+<div class="body"><span class="tag">인문학</span><span class="control">조작: 1~4 숫자키</span>
+<div class="info">
+<div class="ib"><b>🎯 게임 목표</b>막대그래프에서 가장 빈도가 높은 단어의 번호를 빠르게 누르세요.</div>
+<div class="ib"><b>📘 핵심 개념</b>텍스트 데이터·빈도</div>
+<div class="ib"><b>🎮 게임 방법</b>1~4 숫자키를 사용하여 실시간으로 참여합니다.</div>
+<div class="ib"><b>🏆 성공·판정 규칙</b>정답을 맞히면 성공입니다.</div>
+</div>
+<pre>Web VPython 3.2
+scene.background=color.white
+words=[&#x27;science&#x27;,&#x27;human&#x27;,&#x27;data&#x27;,&#x27;future&#x27;]
+counts=[5,8,11,6]
+
+for i in range(4):
+    box(pos=vector(i*2-3,counts[i]/2,0),
+        size=vector(1,counts[i],1),color=color.blue)
+    label(pos=vector(i*2-3,-1,0),text=str(i+1)+&#x27; &#x27;+words[i],
+          box=False,color=color.black)
+
+def key(evt):
+    if evt.key==&#x27;3&#x27;:
+        print(&quot;정답! data가 최빈 단어입니다.&quot;)
+    elif evt.key in [&#x27;1&#x27;,&#x27;2&#x27;,&#x27;4&#x27;]:
+        print(&quot;오답!&quot;)
+
+scene.bind(&#x27;keydown&#x27;,key)</pre>
+<div class="explain"><b>🔎 코드·게임 상세 해설</b><br>수치 데이터를 막대 높이로 변환해 시각적 판단 게임을 만듭니다.</div>
+<div class="challenge"><b>🚀 확장 탐구 미션</b><br>실제 문장을 입력받아 자동으로 단어 빈도를 계산하는 버전으로 확장하세요.</div>
+</div></article><article class="card" data-field="인문학" data-search="인문학 선택형 스토리 어드벤처 트리·분기 1 또는 2 이야기의 선택지를 고르며 서로 다른 결말에 도달하세요.">
+<div class="cardhead"><div class="icon">文</div><div><small>INTERACTIVE GAME 27</small><h2>선택형 스토리 어드벤처</h2></div></div>
+<div class="body"><span class="tag">인문학</span><span class="control">조작: 1 또는 2</span>
+<div class="info">
+<div class="ib"><b>🎯 게임 목표</b>이야기의 선택지를 고르며 서로 다른 결말에 도달하세요.</div>
+<div class="ib"><b>📘 핵심 개념</b>트리·분기</div>
+<div class="ib"><b>🎮 게임 방법</b>1 또는 2를 사용하여 실시간으로 참여합니다.</div>
+<div class="ib"><b>🏆 성공·판정 규칙</b>선택에 따라 현재 노드와 화면 텍스트가 달라집니다.</div>
+</div>
+<pre>Web VPython 3.2
+scene.background=color.black
+state=&#x27;start&#x27;
+txt=label(pos=vector(0,2,0),text=&#x27;1: 숲으로 / 2: 도시로&#x27;,
+          height=24,box=False,color=color.white)
+
+def key(evt):
+    global state
+    if state==&#x27;start&#x27;:
+        if evt.key==&#x27;1&#x27;:
+            state=&#x27;forest&#x27;
+            txt.text=&#x27;숲: 1 동굴 탐험 / 2 강을 따라가기&#x27;
+        elif evt.key==&#x27;2&#x27;:
+            state=&#x27;city&#x27;
+            txt.text=&#x27;도시: 1 연구소 / 2 도서관&#x27;
+    elif state==&#x27;forest&#x27;:
+        txt.text=&#x27;자연 생태계를 발견했습니다! END&#x27;
+        state=&#x27;end&#x27;
+    elif state==&#x27;city&#x27;:
+        txt.text=&#x27;미래 기술의 비밀을 찾았습니다! END&#x27;
+        state=&#x27;end&#x27;
+
+scene.bind(&#x27;keydown&#x27;,key)</pre>
+<div class="explain"><b>🔎 코드·게임 상세 해설</b><br>state 변수 하나로 현재 이야기 상태를 관리하는 상태기계 구조입니다. 키 입력에 따라 다음 상태로 전이합니다.</div>
+<div class="challenge"><b>🚀 확장 탐구 미션</b><br>선택지마다 점수·아이템·숨겨진 결말을 추가해 보세요.</div>
+</div></article><article class="card" data-field="철학" data-search="철학 결정론과 우연 선택 게임 결정성·무작위성 1 또는 2 1번은 규칙적 경로, 2번은 무작위 경로를 선택하여 결과를 비교하세요.">
+<div class="cardhead"><div class="icon">Φ</div><div><small>INTERACTIVE GAME 28</small><h2>결정론과 우연 선택 게임</h2></div></div>
+<div class="body"><span class="tag">철학</span><span class="control">조작: 1 또는 2</span>
+<div class="info">
+<div class="ib"><b>🎯 게임 목표</b>1번은 규칙적 경로, 2번은 무작위 경로를 선택하여 결과를 비교하세요.</div>
+<div class="ib"><b>📘 핵심 개념</b>결정성·무작위성</div>
+<div class="ib"><b>🎮 게임 방법</b>1 또는 2를 사용하여 실시간으로 참여합니다.</div>
+<div class="ib"><b>🏆 성공·판정 규칙</b>같은 조건에서 여러 번 실행하여 예측 가능성을 비교합니다.</div>
+</div>
+<pre>Web VPython 3.2
+scene.background=color.black
+ball=sphere(pos=vector(0,0,0),radius=0.3,color=color.cyan,make_trail=True)
+mode=0
+
+def key(evt):
+    global mode
+    if evt.key==&#x27;1&#x27;: mode=1
+    if evt.key==&#x27;2&#x27;: mode=2
+
+scene.bind(&#x27;keydown&#x27;,key)
+print(&quot;1 결정론적 경로 / 2 무작위 경로&quot;)
+
+t=0
+while t&lt;15:
+    rate(60); t+=0.03
+    if mode==1:
+        ball.pos=vector(4*cos(t),3*sin(t),0)
+    elif mode==2:
+        ball.pos+=vector(random()-.5,random()-.5,0)*0.15</pre>
+<div class="explain"><b>🔎 코드·게임 상세 해설</b><br>결정론적 모드는 시간 t에 의해 위치가 완전히 결정되고, 무작위 모드는 random()의 영향으로 매 실행 결과가 달라집니다.</div>
+<div class="challenge"><b>🚀 확장 탐구 미션</b><br>초기조건을 아주 조금 바꾼 두 결정론적 경로를 비교해 예측 가능성과 민감성을 토론하세요.</div>
+</div></article><article class="card" data-field="철학" data-search="철학 윤리 선택 시뮬레이션 의사결정·가중치 1 또는 2 두 선택 중 하나를 고르고 안전·효율·공정성 점수를 비교하세요.">
+<div class="cardhead"><div class="icon">Φ</div><div><small>INTERACTIVE GAME 29</small><h2>윤리 선택 시뮬레이션</h2></div></div>
+<div class="body"><span class="tag">철학</span><span class="control">조작: 1 또는 2</span>
+<div class="info">
+<div class="ib"><b>🎯 게임 목표</b>두 선택 중 하나를 고르고 안전·효율·공정성 점수를 비교하세요.</div>
+<div class="ib"><b>📘 핵심 개념</b>의사결정·가중치</div>
+<div class="ib"><b>🎮 게임 방법</b>1 또는 2를 사용하여 실시간으로 참여합니다.</div>
+<div class="ib"><b>🏆 성공·판정 규칙</b>선택 후 세 기준의 합산 점수가 표시됩니다.</div>
+</div>
+<pre>Web VPython 3.2
+scene.background=color.white
+label(pos=vector(0,2,0),
+      text=&#x27;1: 빠른 선택 / 2: 안전한 선택&#x27;,
+      height=22,box=False,color=color.black)
+
+def key(evt):
+    if evt.key==&#x27;1&#x27;:
+        safety=40; efficiency=95; fairness=55
+        total=safety+efficiency+fairness
+        print(&quot;선택1 총점:&quot;,total)
+    elif evt.key==&#x27;2&#x27;:
+        safety=90; efficiency=65; fairness=85
+        total=safety+efficiency+fairness
+        print(&quot;선택2 총점:&quot;,total)
+
+scene.bind(&#x27;keydown&#x27;,key)</pre>
+<div class="explain"><b>🔎 코드·게임 상세 해설</b><br>윤리적 판단을 단일 점수로 환원할 수 있는지 자체를 토론하기 위한 모델입니다. 세 가치의 가중치를 어떻게 정하느냐에 따라 결론이 달라질 수 있습니다.</div>
+<div class="challenge"><b>🚀 확장 탐구 미션</b><br>학생마다 safety/efficiency/fairness 가중치를 직접 정한 뒤 결과를 비교하세요.</div>
+</div></article><article class="card" data-field="철학" data-search="철학 무한 루프 탈출 퍼즐 반복·종료조건·논리 스페이스바 움직이는 공이 목표 영역에 들어오는 정확한 순간 스페이스바를 눌러 반복을 종료하세요.">
+<div class="cardhead"><div class="icon">Φ</div><div><small>INTERACTIVE GAME 30</small><h2>무한 루프 탈출 퍼즐</h2></div></div>
+<div class="body"><span class="tag">철학</span><span class="control">조작: 스페이스바</span>
+<div class="info">
+<div class="ib"><b>🎯 게임 목표</b>움직이는 공이 목표 영역에 들어오는 정확한 순간 스페이스바를 눌러 반복을 종료하세요.</div>
+<div class="ib"><b>📘 핵심 개념</b>반복·종료조건·논리</div>
+<div class="ib"><b>🎮 게임 방법</b>스페이스바를 사용하여 실시간으로 참여합니다.</div>
+<div class="ib"><b>🏆 성공·판정 규칙</b>목표 영역 밖에서 멈추면 실패입니다.</div>
+</div>
+<pre>Web VPython 3.2
+scene.background=color.black
+ball=sphere(pos=vector(-6,0,0),radius=0.3,color=color.cyan)
+goal=box(pos=vector(3,0,0),size=vector(1.5,1.5,1),opacity=0.3,color=color.green)
+stop=False
+
+def key(evt):
+    global stop
+    if evt.key==&#x27; &#x27;: stop=True
+
+scene.bind(&#x27;keydown&#x27;,key)
+
+while True:
+    rate(60)
+    ball.pos.x+=0.06
+    if ball.pos.x&gt;6: ball.pos.x=-6
+    if stop: break
+
+if abs(ball.pos.x-3)&lt;0.75:
+    print(&quot;탈출 성공!&quot;)
+else:
+    print(&quot;조건 불일치 - 실패&quot;)</pre>
+<div class="explain"><b>🔎 코드·게임 상세 해설</b><br>while True는 원래 끝나지 않지만 사용자의 입력이 stop=True를 만들고 break 조건을 만족시켜 종료됩니다.</div>
+<div class="challenge"><b>🚀 확장 탐구 미션</b><br>목표 구간을 점점 좁혀 타이밍 난이도를 높여 보세요.</div>
+</div></article></div></main>
+<script>
+function filterAll(){
+ const f=document.getElementById('field').value;
+ const q=document.getElementById('q').value.trim().toLowerCase();
+ let n=0;
+ document.querySelectorAll('.card').forEach(c=>{
+   const ok=(f==='all'||c.dataset.field===f)&&(!q||c.dataset.search.includes(q));
+   c.classList.toggle('hidden',!ok); if(ok)n++;
+ });
+ document.getElementById('count').textContent=n+'개 표시';
+}
+function resetAll(){document.getElementById('field').value='all';document.getElementById('q').value='';filterAll();}
+</script></body></html>
