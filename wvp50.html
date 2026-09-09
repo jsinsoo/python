@@ -1,0 +1,496 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>정보과학 융합탐구 · Web VPython 분야별 예시코드 50선</title><style>
+:root{--navy:#102a43;--blue:#2563eb;--ink:#172033;--muted:#64748b;--line:#dbe3ee;--bg:#f5f8fc;--paper:#fff;--soft:#eef6ff;--code:#0b1220}
+*{box-sizing:border-box} html{scroll-behavior:smooth}
+body{margin:0;font-family:"Pretendard","Noto Sans KR","Malgun Gothic",sans-serif;background:var(--bg);color:var(--ink);line-height:1.68}
+header{background:linear-gradient(135deg,#0f2742,#173d68 55%,#2563eb);color:white;padding:46px 24px}
+header .in,main,.bar-in{max-width:1400px;margin:auto}
+h1{font-size:clamp(30px,5vw,48px);margin:8px 0}.lead{max-width:980px;color:#dbeafe}
+.stats{display:flex;gap:8px;flex-wrap:wrap}.pill{border:1px solid #ffffff44;background:#ffffff16;border-radius:999px;padding:6px 11px;font-weight:700}
+.bar{position:sticky;top:0;z-index:50;background:#fffffff2;backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.bar-in{display:flex;gap:8px;align-items:center;padding:10px 18px;flex-wrap:wrap}
+select,input,button{font:inherit;border:1px solid var(--line);border-radius:10px;padding:9px 11px;background:white}
+input{flex:1;min-width:260px}button{cursor:pointer;font-weight:800}.primary{background:var(--blue);color:white;border-color:var(--blue)}
+main{padding:22px 18px 70px}.intro{background:white;border:1px solid var(--line);border-radius:18px;padding:20px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:18px}
+.field{background:white;border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:0 8px 24px #1e3a5f0c}
+.field-head{padding:16px 18px;background:#f8fbff;border-bottom:1px solid var(--line);display:flex;gap:12px;align-items:center}
+.icon{width:42px;height:42px;border-radius:12px;background:#eaf2ff;display:grid;place-items:center;font-weight:900;color:#174ea6;font-size:20px}
+.field h2{margin:0;color:#173d68}.example{padding:15px 18px;border-bottom:1px dashed var(--line)}.example:last-child{border-bottom:0}
+.example h3{margin:0 0 6px;font-size:16px}.example p{margin:0 0 10px;color:#526273;font-size:14px}
+pre{margin:0;background:var(--code);color:#e5eefc;border-radius:12px;padding:13px;overflow:auto;font:13px/1.55 Consolas,monospace;white-space:pre}
+.tag{display:inline-block;font-size:12px;font-weight:800;color:#0f766e;background:#ecfdf5;border-radius:999px;padding:3px 8px;margin-bottom:7px}
+.hidden{display:none!important}.count{font-size:13px;color:var(--muted);font-weight:800}
+.note{margin-top:12px;padding:12px 14px;background:#fff9e9;border-left:5px solid #f59e0b;border-radius:10px}
+@media(max-width:900px){.grid{grid-template-columns:1fr}}
+@media print{.bar{display:none}.grid{grid-template-columns:1fr 1fr;gap:8px}body{background:white}.field{box-shadow:none}.example{break-inside:avoid}pre{white-space:pre-wrap;font-size:8.5pt}}
+</style></head><body>
+<header><div class="in"><div style="font-weight:800">정보과학 × 융합탐구 × 3D 시뮬레이션</div>
+<h1>Web VPython 분야별 해석 예시코드 50선</h1>
+<p class="lead">수학·물리학·생명과학·지구과학·화학·천문학·공학·인문학·의학·철학의 탐구주제를 Web VPython으로 모델링하고 시각적으로 해석하는 수업용 자료입니다.</p>
+<div class="stats"><span class="pill">10개 분야</span><span class="pill">분야별 5개</span><span class="pill">총 50개 코드</span><span class="pill">브라우저 실행</span></div></div></header>
+<nav class="bar"><div class="bar-in">
+<select id="field" onchange="filterAll()"><option value="all">전체 분야</option><option value="수학">수학</option><option value="물리학">물리학</option><option value="생명과학">생명과학</option><option value="지구과학">지구과학</option><option value="화학">화학</option><option value="천문학">천문학</option><option value="공학">공학</option><option value="인문학">인문학</option><option value="의학">의학</option><option value="철학">철학</option></select><input id="q" oninput="filterAll()" placeholder="주제·해석 포인트 검색">
+<span class="count" id="count">50개 표시</span><button onclick="resetAll()">초기화</button><button class="primary" onclick="window.print()">인쇄 / PDF</button>
+</div></nav><main><section class="intro"><h2 style="margin:0;color:#102a43">활용 방법</h2>
+<p>① 분야와 탐구주제를 선택하고 ② 코드의 변수·초기조건을 바꿔 실행한 뒤 ③ 결과의 변화 원인을 해당 교과 개념으로 설명하고 ④ 정보과학 관점에서 모델의 가정·반복 구조·자료 표현·시각화 방식을 평가합니다.</p>
+<div class="note"><b>Web VPython 실행:</b> Web VPython 새 프로그램에 코드 전체를 붙여넣어 실행합니다. 첫 줄의 <code>Web VPython 3.2</code>도 함께 사용합니다.</div></section><div class="grid"><section class="field" data-field="수학" data-search="수학 3차원 나선곡선과 매개변수 변화 매개변수 방정식을 3차원 좌표로 바꾸고, 계수 변화에 따른 곡선의 형태를 비교한다. 리사주 곡선의 3차원 확장 서로 다른 진동수 비가 닫힌 곡선의 모양에 어떤 영향을 주는지 관찰한다. 벡터 내적과 두 벡터 사이의 각 두 벡터를 화살표로 나타내고 내적과 각도를 수치로 확인한다. 프랙탈 나무의 재귀 깊이 비교 재귀 깊이에 따라 가지 수와 화면 복잡도가 어떻게 증가하는지 비교한다. 함수 그래프와 접선의 기하적 의미 곡선 위 한 점의 수치미분으로 접선 방향을 만들어 미분의 의미를 시각화한다."><div class="field-head"><div class="icon">∑</div><div><h2>수학</h2><small>융합탐구 Web VPython 예시 5개</small></div></div><article class="example"><span class="tag">수학 · 예시 1</span><h3>3차원 나선곡선과 매개변수 변화</h3><p><b>해석 포인트</b> · 매개변수 방정식을 3차원 좌표로 바꾸고, 계수 변화에 따른 곡선의 형태를 비교한다.</p><pre>Web VPython 3.2
+scene.background = color.black
+scene.range = 6
+curve(color=color.cyan, radius=0.03)
+c = curve(color=color.cyan, radius=0.03)
+for i in range(600):
+    t = i*0.03
+    p = vector(3*cos(t), 3*sin(t), 0.08*t)
+    c.append(pos=p)</pre></article><article class="example"><span class="tag">수학 · 예시 2</span><h3>리사주 곡선의 3차원 확장</h3><p><b>해석 포인트</b> · 서로 다른 진동수 비가 닫힌 곡선의 모양에 어떤 영향을 주는지 관찰한다.</p><pre>Web VPython 3.2
+scene.background = color.black
+scene.range = 4
+c = curve(color=color.yellow, radius=0.025)
+for i in range(1200):
+    t = i*0.01
+    x = 3*sin(3*t)
+    y = 3*sin(4*t)
+    z = 1.5*sin(5*t)
+    c.append(pos=vector(x,y,z))</pre></article><article class="example"><span class="tag">수학 · 예시 3</span><h3>벡터 내적과 두 벡터 사이의 각</h3><p><b>해석 포인트</b> · 두 벡터를 화살표로 나타내고 내적과 각도를 수치로 확인한다.</p><pre>Web VPython 3.2
+scene.background = color.white
+a = vector(4,1,0)
+b = vector(2,3,0)
+arrow(pos=vector(0,0,0), axis=a, color=color.red)
+arrow(pos=vector(0,0,0), axis=b, color=color.blue)
+theta = acos(dot(a,b)/(mag(a)*mag(b)))
+label(pos=vector(0,-1,0), text=&quot;angle = &quot;+str(round(degrees(theta),2))+&quot; deg&quot;,
+      color=color.black, box=False)</pre></article><article class="example"><span class="tag">수학 · 예시 4</span><h3>프랙탈 나무의 재귀 깊이 비교</h3><p><b>해석 포인트</b> · 재귀 깊이에 따라 가지 수와 화면 복잡도가 어떻게 증가하는지 비교한다.</p><pre>Web VPython 3.2
+scene.background = color.black
+scene.range = 8
+def branch(p, v, depth):
+    if depth == 0: return
+    cylinder(pos=p, axis=v, radius=0.05*depth, color=color.green)
+    q = p + v
+    branch(q, rotate(v*0.72, angle=0.45, axis=vector(0,0,1)), depth-1)
+    branch(q, rotate(v*0.72, angle=-0.45, axis=vector(0,0,1)), depth-1)
+branch(vector(0,-6,0), vector(0,3,0), 6)</pre></article><article class="example"><span class="tag">수학 · 예시 5</span><h3>함수 그래프와 접선의 기하적 의미</h3><p><b>해석 포인트</b> · 곡선 위 한 점의 수치미분으로 접선 방향을 만들어 미분의 의미를 시각화한다.</p><pre>Web VPython 3.2
+scene.background = color.white
+scene.range = 5
+g = curve(color=color.blue, radius=0.02)
+for i in range(-200,201):
+    x=i/40
+    y=0.2*x*x
+    g.append(pos=vector(x,y,0))
+x0=2
+y0=0.2*x0*x0
+m=0.4*x0
+curve(pos=[vector(x0-2,y0-2*m,0), vector(x0+2,y0+2*m,0)],
+      color=color.red, radius=0.025)</pre></article></section><section class="field" data-field="물리학" data-search="물리학 포물선 운동 중력가속도 아래에서 위치와 속도를 시간에 따라 갱신하고 궤적을 추적한다. 단진자 운동 중력에 의해 진동하는 추의 운동을 수치적으로 계산한다. 탄성 충돌 운동량과 운동에너지 보존을 두 구의 충돌 전후 속도로 비교한다. 감쇠 진동 마찰 항이 있을 때 진폭이 감소하는 과정을 스프링-질량계로 관찰한다. 파동 전파 여러 점의 위상을 달리하여 횡파의 진행을 애니메이션으로 나타낸다."><div class="field-head"><div class="icon">⚛</div><div><h2>물리학</h2><small>융합탐구 Web VPython 예시 5개</small></div></div><article class="example"><span class="tag">물리학 · 예시 1</span><h3>포물선 운동</h3><p><b>해석 포인트</b> · 중력가속도 아래에서 위치와 속도를 시간에 따라 갱신하고 궤적을 추적한다.</p><pre>Web VPython 3.2
+scene.background = color.black
+ground=box(pos=vector(0,-0.1,0), size=vector(20,0.2,8), color=color.green)
+ball=sphere(pos=vector(-8,0.3,0), radius=0.3, color=color.yellow, make_trail=True)
+ball.v=vector(8,9,0)
+g=vector(0,-9.8,0)
+dt=0.01
+while ball.pos.y &gt;= 0:
+    rate(100)
+    ball.v += g*dt
+    ball.pos += ball.v*dt</pre></article><article class="example"><span class="tag">물리학 · 예시 2</span><h3>단진자 운동</h3><p><b>해석 포인트</b> · 중력에 의해 진동하는 추의 운동을 수치적으로 계산한다.</p><pre>Web VPython 3.2
+scene.background=color.black
+L=4
+theta=0.8
+omega=0
+g=9.8
+dt=0.01
+pivot=vector(0,3,0)
+bob=sphere(radius=0.3,color=color.yellow)
+rod=cylinder(pos=pivot,radius=0.05,color=color.white)
+while True:
+    rate(100)
+    alpha=-(g/L)*sin(theta)
+    omega += alpha*dt
+    theta += omega*dt
+    bob.pos=pivot+vector(L*sin(theta),-L*cos(theta),0)
+    rod.axis=bob.pos-pivot</pre></article><article class="example"><span class="tag">물리학 · 예시 3</span><h3>탄성 충돌</h3><p><b>해석 포인트</b> · 운동량과 운동에너지 보존을 두 구의 충돌 전후 속도로 비교한다.</p><pre>Web VPython 3.2
+scene.background=color.black
+a=sphere(pos=vector(-4,0,0),radius=0.5,color=color.red,make_trail=True)
+b=sphere(pos=vector(4,0,0),radius=0.5,color=color.blue,make_trail=True)
+a.v=vector(2,0,0); b.v=vector(-1,0,0)
+dt=0.01
+while True:
+    rate(100)
+    a.pos+=a.v*dt; b.pos+=b.v*dt
+    if mag(a.pos-b.pos) &lt;= 1 and dot(a.v-b.v,a.pos-b.pos) &lt; 0:
+        a.v,b.v=b.v,a.v</pre></article><article class="example"><span class="tag">물리학 · 예시 4</span><h3>감쇠 진동</h3><p><b>해석 포인트</b> · 마찰 항이 있을 때 진폭이 감소하는 과정을 스프링-질량계로 관찰한다.</p><pre>Web VPython 3.2
+scene.background=color.black
+m=1; k=4; c=0.35; dt=0.01
+x=3; v=0
+mass=box(pos=vector(x,0,0),size=vector(0.8,0.8,0.8),color=color.orange)
+spring=helix(pos=vector(-4,0,0),axis=mass.pos-vector(-4,0,0),radius=0.35)
+while True:
+    rate(100)
+    a=(-k*x-c*v)/m
+    v+=a*dt; x+=v*dt
+    mass.pos.x=x
+    spring.axis=mass.pos-vector(-4,0,0)</pre></article><article class="example"><span class="tag">물리학 · 예시 5</span><h3>파동 전파</h3><p><b>해석 포인트</b> · 여러 점의 위상을 달리하여 횡파의 진행을 애니메이션으로 나타낸다.</p><pre>Web VPython 3.2
+scene.background=color.black
+N=60
+pts=[sphere(pos=vector(i*0.2-6,0,0),radius=0.06,color=color.cyan) for i in range(N)]
+t=0
+while True:
+    rate(60)
+    t+=0.05
+    for i,p in enumerate(pts):
+        x=i*0.2-6
+        p.pos=vector(x, sin(2*x-3*t), 0)</pre></article></section><section class="field" data-field="생명과학" data-search="생명과학 개체군 로지스틱 성장 환경수용력 K가 개체 수 변화에 미치는 영향을 시간축으로 시각화한다. DNA 이중나선 모형 두 가닥의 위상차와 염기쌍 연결을 3차원 구조로 표현한다. 먹이사슬 네트워크 생물종을 노드로, 먹이 관계를 연결선으로 나타내 그래프 구조를 해석한다. 심장 박동 파형 주기적 신호와 잡음을 더해 생체 신호의 특징을 단순 모델로 관찰한다. 신경 신호 전달 뉴런 축삭을 따라 신호가 이동하는 과정을 이동 구체로 단순화한다."><div class="field-head"><div class="icon">🧬</div><div><h2>생명과학</h2><small>융합탐구 Web VPython 예시 5개</small></div></div><article class="example"><span class="tag">생명과학 · 예시 1</span><h3>개체군 로지스틱 성장</h3><p><b>해석 포인트</b> · 환경수용력 K가 개체 수 변화에 미치는 영향을 시간축으로 시각화한다.</p><pre>Web VPython 3.2
+scene.background=color.white
+g=graph(title=&quot;Logistic Growth&quot;, xtitle=&quot;time&quot;, ytitle=&quot;population&quot;)
+f=gcurve(color=color.green)
+N=10; r=0.8; K=100; dt=0.05; t=0
+while t&lt;15:
+    rate(100)
+    N += r*N*(1-N/K)*dt
+    f.plot(t,N)
+    t+=dt</pre></article><article class="example"><span class="tag">생명과학 · 예시 2</span><h3>DNA 이중나선 모형</h3><p><b>해석 포인트</b> · 두 가닥의 위상차와 염기쌍 연결을 3차원 구조로 표현한다.</p><pre>Web VPython 3.2
+scene.background=color.black
+scene.range=6
+for i in range(120):
+    t=i*0.18
+    p1=vector(2*cos(t),0.12*i-6,2*sin(t))
+    p2=vector(2*cos(t+pi),0.12*i-6,2*sin(t+pi))
+    sphere(pos=p1,radius=0.08,color=color.red)
+    sphere(pos=p2,radius=0.08,color=color.blue)
+    if i%6==0:
+        cylinder(pos=p1,axis=p2-p1,radius=0.025,color=color.white)</pre></article><article class="example"><span class="tag">생명과학 · 예시 3</span><h3>먹이사슬 네트워크</h3><p><b>해석 포인트</b> · 생물종을 노드로, 먹이 관계를 연결선으로 나타내 그래프 구조를 해석한다.</p><pre>Web VPython 3.2
+scene.background=color.white
+A=sphere(pos=vector(-3,0,0),radius=0.5,color=color.green)
+B=sphere(pos=vector(0,2,0),radius=0.5,color=color.orange)
+C=sphere(pos=vector(3,0,0),radius=0.5,color=color.red)
+for p,name in [(A,&quot;Plant&quot;),(B,&quot;Rabbit&quot;),(C,&quot;Fox&quot;)]:
+    label(pos=p.pos+vector(0,0.8,0),text=name,box=False,color=color.black)
+arrow(pos=A.pos,axis=B.pos-A.pos,color=color.black,shaftwidth=0.08)
+arrow(pos=B.pos,axis=C.pos-B.pos,color=color.black,shaftwidth=0.08)</pre></article><article class="example"><span class="tag">생명과학 · 예시 4</span><h3>심장 박동 파형</h3><p><b>해석 포인트</b> · 주기적 신호와 잡음을 더해 생체 신호의 특징을 단순 모델로 관찰한다.</p><pre>Web VPython 3.2
+scene.background=color.white
+g=graph(title=&quot;Heartbeat Model&quot;,xtitle=&quot;time&quot;,ytitle=&quot;signal&quot;)
+c=gcurve(color=color.red)
+t=0
+while t&lt;20:
+    rate(120)
+    y=0.25*sin(2*pi*1.2*t)
+    if (t%0.83)&lt;0.06: y+=1.2
+    c.plot(t,y)
+    t+=0.01</pre></article><article class="example"><span class="tag">생명과학 · 예시 5</span><h3>신경 신호 전달</h3><p><b>해석 포인트</b> · 뉴런 축삭을 따라 신호가 이동하는 과정을 이동 구체로 단순화한다.</p><pre>Web VPython 3.2
+scene.background=color.black
+axon=cylinder(pos=vector(-6,0,0),axis=vector(12,0,0),radius=0.12,color=color.white)
+signal=sphere(pos=vector(-6,0,0),radius=0.3,color=color.yellow,make_trail=True)
+while True:
+    rate(60)
+    signal.pos.x += 0.08
+    if signal.pos.x&gt;6: signal.pos.x=-6</pre></article></section><section class="field" data-field="지구과학" data-search="지구과학 지진파 P파와 S파 도달시간 비교 서로 다른 전파 속도를 이용해 두 파의 도달시간 차이를 애니메이션으로 확인한다. 행성 내부 층 구조 지각·맨틀·핵을 서로 다른 반지름의 구로 나타내 내부 구조를 3차원으로 이해한다. 판의 발산 경계 두 판이 반대 방향으로 이동하면서 중앙에서 새로운 지각이 형성되는 과정을 단순화한다. 대기압의 고도 변화 지수적으로 감소하는 대기압을 그래프로 그려 모델의 변화를 확인한다. 하천 분기 구조 재귀 분기를 이용해 자연의 하천망과 자기유사 구조를 시각화한다."><div class="field-head"><div class="icon">🌍</div><div><h2>지구과학</h2><small>융합탐구 Web VPython 예시 5개</small></div></div><article class="example"><span class="tag">지구과학 · 예시 1</span><h3>지진파 P파와 S파 도달시간 비교</h3><p><b>해석 포인트</b> · 서로 다른 전파 속도를 이용해 두 파의 도달시간 차이를 애니메이션으로 확인한다.</p><pre>Web VPython 3.2
+scene.background=color.black
+source=sphere(pos=vector(-6,0,0),radius=0.3,color=color.red)
+station=box(pos=vector(6,0,0),size=vector(0.4,1,1),color=color.white)
+P=sphere(pos=source.pos,radius=0.18,color=color.yellow)
+S=sphere(pos=source.pos,radius=0.18,color=color.cyan)
+vp=5.5; vs=3.2; dt=0.01
+while P.pos.x&lt;6 or S.pos.x&lt;6:
+    rate(100)
+    if P.pos.x&lt;6: P.pos.x+=vp*dt
+    if S.pos.x&lt;6: S.pos.x+=vs*dt</pre></article><article class="example"><span class="tag">지구과학 · 예시 2</span><h3>행성 내부 층 구조</h3><p><b>해석 포인트</b> · 지각·맨틀·핵을 서로 다른 반지름의 구로 나타내 내부 구조를 3차원으로 이해한다.</p><pre>Web VPython 3.2
+scene.background=color.black
+sphere(radius=3,color=color.blue,opacity=0.25)
+sphere(radius=2.5,color=color.orange,opacity=0.35)
+sphere(radius=1.4,color=color.red,opacity=0.55)
+sphere(radius=0.7,color=color.yellow)
+label(pos=vector(0,3.6,0),text=&quot;Earth Layers&quot;,box=False,color=color.white)</pre></article><article class="example"><span class="tag">지구과학 · 예시 3</span><h3>판의 발산 경계</h3><p><b>해석 포인트</b> · 두 판이 반대 방향으로 이동하면서 중앙에서 새로운 지각이 형성되는 과정을 단순화한다.</p><pre>Web VPython 3.2
+scene.background=color.black
+left=box(pos=vector(-2,0,0),size=vector(4,0.5,5),color=color.blue)
+right=box(pos=vector(2,0,0),size=vector(4,0.5,5),color=color.blue)
+magma=box(pos=vector(0,-0.5,0),size=vector(0.6,1,5),color=color.red)
+while True:
+    rate(60)
+    if left.pos.x&gt;-5: left.pos.x-=0.01
+    if right.pos.x&lt;5: right.pos.x+=0.01</pre></article><article class="example"><span class="tag">지구과학 · 예시 4</span><h3>대기압의 고도 변화</h3><p><b>해석 포인트</b> · 지수적으로 감소하는 대기압을 그래프로 그려 모델의 변화를 확인한다.</p><pre>Web VPython 3.2
+scene.background=color.white
+g=graph(title=&quot;Pressure vs Altitude&quot;,xtitle=&quot;Altitude(km)&quot;,ytitle=&quot;Pressure(relative)&quot;)
+f=gcurve(color=color.blue)
+for i in range(201):
+    h=i*0.05
+    P=exp(-h/8.5)
+    f.plot(h,P)</pre></article><article class="example"><span class="tag">지구과학 · 예시 5</span><h3>하천 분기 구조</h3><p><b>해석 포인트</b> · 재귀 분기를 이용해 자연의 하천망과 자기유사 구조를 시각화한다.</p><pre>Web VPython 3.2
+scene.background=color.white
+scene.range=7
+def river(p,v,d):
+    if d==0: return
+    cylinder(pos=p,axis=v,radius=0.03*d,color=color.blue)
+    q=p+v
+    river(q,rotate(v*0.72,angle=0.38,axis=vector(0,0,1)),d-1)
+    river(q,rotate(v*0.72,angle=-0.52,axis=vector(0,0,1)),d-1)
+river(vector(0,-5,0),vector(0,2.4,0),6)</pre></article></section><section class="field" data-field="화학" data-search="화학 기체 분자의 무작위 운동 상자 안에서 입자가 충돌하며 움직이는 모습을 통해 기체 운동론을 해석한다. 방사성 붕괴 반감기에 따른 원자 수의 지수 감소를 그래프로 나타낸다. 반응속도와 농도 감소 1차 반응의 농도 변화를 시간에 따라 수치 적분한다. 분자 진동 모형 두 원자를 스프링으로 연결하여 결합 길이의 진동을 단순 모델링한다. 결정 격자 규칙적인 3차원 격자에 원자를 배치하여 결정 구조의 반복성을 관찰한다."><div class="field-head"><div class="icon">⚗</div><div><h2>화학</h2><small>융합탐구 Web VPython 예시 5개</small></div></div><article class="example"><span class="tag">화학 · 예시 1</span><h3>기체 분자의 무작위 운동</h3><p><b>해석 포인트</b> · 상자 안에서 입자가 충돌하며 움직이는 모습을 통해 기체 운동론을 해석한다.</p><pre>Web VPython 3.2
+scene.background=color.black
+L=5
+box(pos=vector(0,0,0),size=vector(2*L,2*L,2*L),opacity=0.15)
+atoms=[]
+for i in range(25):
+    s=sphere(pos=vector(random()*6-3,random()*6-3,random()*6-3),radius=0.12,color=color.cyan)
+    s.v=vector(random()-0.5,random()-0.5,random()-0.5)*4
+    atoms.append(s)
+dt=0.01
+while True:
+    rate(100)
+    for s in atoms:
+        s.pos+=s.v*dt
+        for k in range(3):
+            if abs(s.pos[k])&gt;L: s.v[k]*=-1</pre></article><article class="example"><span class="tag">화학 · 예시 2</span><h3>방사성 붕괴</h3><p><b>해석 포인트</b> · 반감기에 따른 원자 수의 지수 감소를 그래프로 나타낸다.</p><pre>Web VPython 3.2
+scene.background=color.white
+g=graph(title=&quot;Radioactive Decay&quot;,xtitle=&quot;time&quot;,ytitle=&quot;N&quot;)
+c=gcurve(color=color.red)
+N0=1000; half=3
+for i in range(301):
+    t=i*0.05
+    N=N0*(0.5)**(t/half)
+    c.plot(t,N)</pre></article><article class="example"><span class="tag">화학 · 예시 3</span><h3>반응속도와 농도 감소</h3><p><b>해석 포인트</b> · 1차 반응의 농도 변화를 시간에 따라 수치 적분한다.</p><pre>Web VPython 3.2
+scene.background=color.white
+g=graph(title=&quot;First-order Reaction&quot;,xtitle=&quot;time&quot;,ytitle=&quot;Concentration&quot;)
+c=gcurve(color=color.green)
+A=1.0; k=0.35; dt=0.02; t=0
+while t&lt;15:
+    rate(100)
+    A += (-k*A)*dt
+    c.plot(t,A)
+    t+=dt</pre></article><article class="example"><span class="tag">화학 · 예시 4</span><h3>분자 진동 모형</h3><p><b>해석 포인트</b> · 두 원자를 스프링으로 연결하여 결합 길이의 진동을 단순 모델링한다.</p><pre>Web VPython 3.2
+scene.background=color.black
+a=sphere(pos=vector(-1,0,0),radius=0.5,color=color.red)
+b=sphere(pos=vector(1,0,0),radius=0.5,color=color.blue)
+bond=helix(pos=a.pos,axis=b.pos-a.pos,radius=0.18)
+t=0
+while True:
+    rate(60)
+    t+=0.05
+    x=1+0.3*sin(3*t)
+    a.pos.x=-x; b.pos.x=x
+    bond.pos=a.pos; bond.axis=b.pos-a.pos</pre></article><article class="example"><span class="tag">화학 · 예시 5</span><h3>결정 격자</h3><p><b>해석 포인트</b> · 규칙적인 3차원 격자에 원자를 배치하여 결정 구조의 반복성을 관찰한다.</p><pre>Web VPython 3.2
+scene.background=color.black
+scene.range=5
+for x in range(-2,3):
+    for y in range(-2,3):
+        for z in range(-2,3):
+            sphere(pos=vector(x,y,z),radius=0.13,color=color.cyan)</pre></article></section><section class="field" data-field="천문학" data-search="천문학 태양-지구-달 운동 지구 공전과 달의 공전을 동시에 갱신하여 계층적 궤도 운동을 관찰한다. 타원 궤도와 케플러 운동 타원 궤도를 따라 행성이 움직이는 단순 모델을 만들고 장반경·단반경의 영향을 비교한다. 쌍성계 공전 두 별이 공통 질량중심 주위를 도는 모습을 통해 질량비와 궤도 반경 관계를 해석한다. 은하 회전 모형 여러 별을 서로 다른 반경에 배치하고 각속도를 달리해 은하 회전을 단순화한다. 태양계 크기 비교 행성 반지름을 축척해 나열하면서 크기 차이를 시각적으로 비교한다."><div class="field-head"><div class="icon">✦</div><div><h2>천문학</h2><small>융합탐구 Web VPython 예시 5개</small></div></div><article class="example"><span class="tag">천문학 · 예시 1</span><h3>태양-지구-달 운동</h3><p><b>해석 포인트</b> · 지구 공전과 달의 공전을 동시에 갱신하여 계층적 궤도 운동을 관찰한다.</p><pre>Web VPython 3.2
+scene.background = color.black
+scene.range = 10
+sun=sphere(pos=vector(0,0,0),radius=1,color=color.yellow)
+earth=sphere(radius=0.4,color=color.blue,make_trail=True)
+moon=sphere(radius=0.15,color=color.white,make_trail=True)
+t=0
+while True:
+    rate(60)
+    t+=0.02
+    earth.pos=vector(6*cos(t),0,6*sin(t))
+    moon.pos=earth.pos+vector(1.2*cos(6*t),0,1.2*sin(6*t))</pre></article><article class="example"><span class="tag">천문학 · 예시 2</span><h3>타원 궤도와 케플러 운동</h3><p><b>해석 포인트</b> · 타원 궤도를 따라 행성이 움직이는 단순 모델을 만들고 장반경·단반경의 영향을 비교한다.</p><pre>Web VPython 3.2
+scene.background=color.black
+scene.range=8
+sun=sphere(pos=vector(-1.5,0,0),radius=0.6,color=color.yellow)
+planet=sphere(radius=0.25,color=color.cyan,make_trail=True)
+a=6; b=4; t=0
+while True:
+    rate(60)
+    t+=0.015
+    planet.pos=vector(a*cos(t),0,b*sin(t))</pre></article><article class="example"><span class="tag">천문학 · 예시 3</span><h3>쌍성계 공전</h3><p><b>해석 포인트</b> · 두 별이 공통 질량중심 주위를 도는 모습을 통해 질량비와 궤도 반경 관계를 해석한다.</p><pre>Web VPython 3.2
+scene.background=color.black
+A=sphere(radius=0.55,color=color.red,make_trail=True)
+B=sphere(radius=0.35,color=color.blue,make_trail=True)
+t=0
+while True:
+    rate(60)
+    t+=0.02
+    A.pos=vector(2*cos(t),0,2*sin(t))
+    B.pos=vector(-4*cos(t),0,-4*sin(t))</pre></article><article class="example"><span class="tag">천문학 · 예시 4</span><h3>은하 회전 모형</h3><p><b>해석 포인트</b> · 여러 별을 서로 다른 반경에 배치하고 각속도를 달리해 은하 회전을 단순화한다.</p><pre>Web VPython 3.2
+scene.background=color.black
+stars=[]
+for i in range(80):
+    r=1+5*random()
+    a=2*pi*random()
+    s=sphere(pos=vector(r*cos(a),0,r*sin(a)),radius=0.05,color=color.white)
+    stars.append([s,r,a])
+while True:
+    rate(60)
+    for item in stars:
+        s,r,a=item
+        a+=0.01/sqrt(r)
+        item[2]=a
+        s.pos=vector(r*cos(a),0,r*sin(a))</pre></article><article class="example"><span class="tag">천문학 · 예시 5</span><h3>태양계 크기 비교</h3><p><b>해석 포인트</b> · 행성 반지름을 축척해 나열하면서 크기 차이를 시각적으로 비교한다.</p><pre>Web VPython 3.2
+scene.background=color.black
+names=[&quot;Mercury&quot;,&quot;Venus&quot;,&quot;Earth&quot;,&quot;Mars&quot;,&quot;Jupiter&quot;]
+r=[0.19,0.47,0.5,0.27,2.0]
+x=-6
+for name,rr in zip(names,r):
+    sphere(pos=vector(x,0,0),radius=rr,color=color.cyan)
+    label(pos=vector(x,-2.6,0),text=name,box=False,color=color.white)
+    x+=3</pre></article></section><section class="field" data-field="공학" data-search="공학 PID 제어 개념 시뮬레이션 목표 위치와 현재 위치의 오차를 이용해 P·I·D 제어의 역할을 관찰한다. 로봇 팔 2관절 두 관절의 회전각을 변화시키며 끝점 위치가 어떻게 달라지는지 관찰한다. 교량 하중 분산 여러 지점에 작용하는 힘 벡터를 화살표로 표현하여 구조물 하중을 시각화한다. 드론 고도 제어 목표 고도를 향해 올라가고 감쇠하는 단순 피드백 제어를 구현한다. 프랙탈 안테나 재귀적 선분 배치를 이용해 자기유사 안테나 형상을 3차원 공간에 생성한다."><div class="field-head"><div class="icon">⚙</div><div><h2>공학</h2><small>융합탐구 Web VPython 예시 5개</small></div></div><article class="example"><span class="tag">공학 · 예시 1</span><h3>PID 제어 개념 시뮬레이션</h3><p><b>해석 포인트</b> · 목표 위치와 현재 위치의 오차를 이용해 P·I·D 제어의 역할을 관찰한다.</p><pre>Web VPython 3.2
+scene.background=color.white
+target=4
+x=0; v=0; e_old=0; integ=0
+kp=2.0; ki=0.15; kd=0.8; dt=0.01
+cart=box(pos=vector(x,0,0),size=vector(0.8,0.5,0.5),color=color.blue)
+while True:
+    rate(100)
+    e=target-x
+    integ+=e*dt
+    deriv=(e-e_old)/dt
+    u=kp*e+ki*integ+kd*deriv
+    v+=u*dt
+    x+=v*dt
+    cart.pos.x=x
+    e_old=e</pre></article><article class="example"><span class="tag">공학 · 예시 2</span><h3>로봇 팔 2관절</h3><p><b>해석 포인트</b> · 두 관절의 회전각을 변화시키며 끝점 위치가 어떻게 달라지는지 관찰한다.</p><pre>Web VPython 3.2
+scene.background=color.black
+L1=3; L2=2
+j1=cylinder(radius=0.12,color=color.orange)
+j2=cylinder(radius=0.1,color=color.cyan)
+t=0
+while True:
+    rate(60); t+=0.03
+    a=sin(t); b=1.2*sin(1.5*t)
+    p1=vector(L1*cos(a),L1*sin(a),0)
+    p2=p1+vector(L2*cos(a+b),L2*sin(a+b),0)
+    j1.pos=vector(0,0,0); j1.axis=p1
+    j2.pos=p1; j2.axis=p2-p1</pre></article><article class="example"><span class="tag">공학 · 예시 3</span><h3>교량 하중 분산</h3><p><b>해석 포인트</b> · 여러 지점에 작용하는 힘 벡터를 화살표로 표현하여 구조물 하중을 시각화한다.</p><pre>Web VPython 3.2
+scene.background=color.white
+bridge=box(pos=vector(0,0,0),size=vector(10,0.4,2),color=color.gray(0.7))
+for x in [-4,-2,0,2,4]:
+    arrow(pos=vector(x,2,0),axis=vector(0,-1.5,0),color=color.red,shaftwidth=0.12)
+box(pos=vector(-4,-1,0),size=vector(0.8,2,2),color=color.blue)
+box(pos=vector(4,-1,0),size=vector(0.8,2,2),color=color.blue)</pre></article><article class="example"><span class="tag">공학 · 예시 4</span><h3>드론 고도 제어</h3><p><b>해석 포인트</b> · 목표 고도를 향해 올라가고 감쇠하는 단순 피드백 제어를 구현한다.</p><pre>Web VPython 3.2
+scene.background=color.black
+drone=box(pos=vector(0,0,0),size=vector(1,0.2,1),color=color.cyan)
+target=5; v=0; dt=0.01
+while True:
+    rate(100)
+    error=target-drone.pos.y
+    a=1.8*error-1.2*v
+    v+=a*dt
+    drone.pos.y+=v*dt</pre></article><article class="example"><span class="tag">공학 · 예시 5</span><h3>프랙탈 안테나</h3><p><b>해석 포인트</b> · 재귀적 선분 배치를 이용해 자기유사 안테나 형상을 3차원 공간에 생성한다.</p><pre>Web VPython 3.2
+scene.background=color.black
+def antenna(p,v,d):
+    if d==0: return
+    cylinder(pos=p,axis=v,radius=0.035*d,color=color.yellow)
+    q=p+v
+    antenna(q,rotate(v*0.7,angle=pi/3,axis=vector(0,0,1)),d-1)
+    antenna(q,rotate(v*0.7,angle=-pi/3,axis=vector(0,0,1)),d-1)
+antenna(vector(0,-4,0),vector(0,2.2,0),6)</pre></article></section><section class="field" data-field="인문학" data-search="인문학 단어 빈도 막대 시각화 텍스트 분석 결과를 3차원 막대로 나타내어 디지털 인문학의 데이터 표현을 체험한다. 서사 분기 트리 이야기의 선택지를 트리 형태로 표현해 분기 구조와 탐색 개념을 연결한다. 왕조 계보 시각화 계층적 역사 자료를 트리 구조로 나타내 관계 중심의 해석을 시도한다. 철학 개념 관계망과 인문학 텍스트의 연결 핵심 개념을 노드, 관련성을 간선으로 나타내 개념지도를 공간화한다. 시의 반복 리듬 시각화 문장의 음절 또는 강세 패턴을 높이 변화로 나타내 반복 구조를 시각적으로 분석한다."><div class="field-head"><div class="icon">文</div><div><h2>인문학</h2><small>융합탐구 Web VPython 예시 5개</small></div></div><article class="example"><span class="tag">인문학 · 예시 1</span><h3>단어 빈도 막대 시각화</h3><p><b>해석 포인트</b> · 텍스트 분석 결과를 3차원 막대로 나타내어 디지털 인문학의 데이터 표현을 체험한다.</p><pre>Web VPython 3.2
+scene.background=color.white
+words=[&quot;AI&quot;,&quot;data&quot;,&quot;ethics&quot;,&quot;human&quot;]
+count=[8,5,7,4]
+for i in range(len(words)):
+    box(pos=vector(i*2-3,count[i]/2,0),size=vector(1,count[i],1),color=color.blue)
+    label(pos=vector(i*2-3,-0.7,0),text=words[i],box=False,color=color.black)</pre></article><article class="example"><span class="tag">인문학 · 예시 2</span><h3>서사 분기 트리</h3><p><b>해석 포인트</b> · 이야기의 선택지를 트리 형태로 표현해 분기 구조와 탐색 개념을 연결한다.</p><pre>Web VPython 3.2
+scene.background=color.white
+nodes=[vector(0,3,0),vector(-2,1,0),vector(2,1,0),
+       vector(-3,-1,0),vector(-1,-1,0),vector(1,-1,0),vector(3,-1,0)]
+for p in nodes: sphere(pos=p,radius=0.25,color=color.orange)
+for a,b in [(0,1),(0,2),(1,3),(1,4),(2,5),(2,6)]:
+    cylinder(pos=nodes[a],axis=nodes[b]-nodes[a],radius=0.04,color=color.black)</pre></article><article class="example"><span class="tag">인문학 · 예시 3</span><h3>왕조 계보 시각화</h3><p><b>해석 포인트</b> · 계층적 역사 자료를 트리 구조로 나타내 관계 중심의 해석을 시도한다.</p><pre>Web VPython 3.2
+scene.background=color.white
+levels=[[vector(0,3,0)],[vector(-2,1,0),vector(2,1,0)],
+        [vector(-3,-1,0),vector(-1,-1,0),vector(1,-1,0),vector(3,-1,0)]]
+for row in levels:
+    for p in row: sphere(pos=p,radius=0.22,color=color.cyan)</pre></article><article class="example"><span class="tag">인문학 · 예시 4</span><h3>철학 개념 관계망과 인문학 텍스트의 연결</h3><p><b>해석 포인트</b> · 핵심 개념을 노드, 관련성을 간선으로 나타내 개념지도를 공간화한다.</p><pre>Web VPython 3.2
+scene.background=color.black
+P=[vector(0,2,0),vector(-2,0,0),vector(2,0,0),vector(0,-2,0)]
+N=[&quot;Reason&quot;,&quot;Freedom&quot;,&quot;Ethics&quot;,&quot;Knowledge&quot;]
+for p,n in zip(P,N):
+    sphere(pos=p,radius=0.3,color=color.yellow)
+    label(pos=p+vector(0,0.6,0),text=n,box=False,color=color.white)
+for a,b in [(0,1),(0,2),(1,3),(2,3)]:
+    cylinder(pos=P[a],axis=P[b]-P[a],radius=0.035,color=color.white)</pre></article><article class="example"><span class="tag">인문학 · 예시 5</span><h3>시의 반복 리듬 시각화</h3><p><b>해석 포인트</b> · 문장의 음절 또는 강세 패턴을 높이 변화로 나타내 반복 구조를 시각적으로 분석한다.</p><pre>Web VPython 3.2
+scene.background=color.white
+pattern=[1,3,2,4,2,3,1,4]
+for i,h in enumerate(pattern):
+    cylinder(pos=vector(i-4,0,0),axis=vector(0,h,0),radius=0.12,color=color.magenta)</pre></article></section><section class="field" data-field="의학" data-search="의학 약물 농도 감소 반감기 모델을 이용해 체내 약물 농도의 시간 변화를 시각화한다. 심박수 이상 탐지 정상 범위를 벗어난 값을 다른 색의 점으로 표시하여 조건 판정 과정을 시각화한다. 체온 변화 시뮬레이션 체온이 목표값으로 회복되는 과정을 단순한 완화 모델로 표현한다. 혈류 속도 프로파일 혈관 단면에서 중심이 빠르고 벽면이 느린 포물선 속도 분포를 나타낸다. 전염병 확산 SIR 단순 모델 감염 가능자·감염자·회복자의 시간 변화를 세 곡선으로 비교한다."><div class="field-head"><div class="icon">✚</div><div><h2>의학</h2><small>융합탐구 Web VPython 예시 5개</small></div></div><article class="example"><span class="tag">의학 · 예시 1</span><h3>약물 농도 감소</h3><p><b>해석 포인트</b> · 반감기 모델을 이용해 체내 약물 농도의 시간 변화를 시각화한다.</p><pre>Web VPython 3.2
+scene.background=color.white
+g=graph(title=&quot;Drug Concentration&quot;,xtitle=&quot;time&quot;,ytitle=&quot;C&quot;)
+c=gcurve(color=color.blue)
+C0=100; half=4
+for i in range(401):
+    t=i*0.05
+    C=C0*(0.5)**(t/half)
+    c.plot(t,C)</pre></article><article class="example"><span class="tag">의학 · 예시 2</span><h3>심박수 이상 탐지</h3><p><b>해석 포인트</b> · 정상 범위를 벗어난 값을 다른 색의 점으로 표시하여 조건 판정 과정을 시각화한다.</p><pre>Web VPython 3.2
+scene.background=color.white
+g=graph(title=&quot;Heart Rate&quot;,xtitle=&quot;time&quot;,ytitle=&quot;bpm&quot;)
+normal=gdots(color=color.blue,radius=3)
+abnormal=gdots(color=color.red,radius=5)
+data=[72,75,78,74,110,76,73,48,77,80]
+for i,v in enumerate(data):
+    if 55&lt;=v&lt;=100: normal.plot(i,v)
+    else: abnormal.plot(i,v)</pre></article><article class="example"><span class="tag">의학 · 예시 3</span><h3>체온 변화 시뮬레이션</h3><p><b>해석 포인트</b> · 체온이 목표값으로 회복되는 과정을 단순한 완화 모델로 표현한다.</p><pre>Web VPython 3.2
+scene.background=color.white
+g=graph(title=&quot;Body Temperature&quot;,xtitle=&quot;time&quot;,ytitle=&quot;C&quot;)
+c=gcurve(color=color.red)
+T=39.5; normal=36.5; dt=0.05; t=0
+while t&lt;20:
+    T += -0.18*(T-normal)*dt
+    c.plot(t,T)
+    t+=dt</pre></article><article class="example"><span class="tag">의학 · 예시 4</span><h3>혈류 속도 프로파일</h3><p><b>해석 포인트</b> · 혈관 단면에서 중심이 빠르고 벽면이 느린 포물선 속도 분포를 나타낸다.</p><pre>Web VPython 3.2
+scene.background=color.black
+R=3
+for i in range(-30,31):
+    r=i/10
+    if abs(r)&lt;=R:
+        v=1-(r/R)**2
+        arrow(pos=vector(r,0,0),axis=vector(0,2*v,0),color=color.red,shaftwidth=0.04)</pre></article><article class="example"><span class="tag">의학 · 예시 5</span><h3>전염병 확산 SIR 단순 모델</h3><p><b>해석 포인트</b> · 감염 가능자·감염자·회복자의 시간 변화를 세 곡선으로 비교한다.</p><pre>Web VPython 3.2
+scene.background=color.white
+g=graph(title=&quot;SIR Model&quot;,xtitle=&quot;time&quot;,ytitle=&quot;ratio&quot;)
+s1=gcurve(color=color.blue); s2=gcurve(color=color.red); s3=gcurve(color=color.green)
+S=0.99; I=0.01; R=0; beta=0.6; gamma=0.18; dt=0.02; t=0
+while t&lt;40:
+    dS=-beta*S*I; dI=beta*S*I-gamma*I; dR=gamma*I
+    S+=dS*dt; I+=dI*dt; R+=dR*dt
+    s1.plot(t,S); s2.plot(t,I); s3.plot(t,R)
+    t+=dt</pre></article></section><section class="field" data-field="철학" data-search="철학 결정론적 규칙과 무작위성 비교 같은 초기값과 규칙을 갖는 운동과 무작위 운동을 나란히 두어 결정성과 우연성을 비교한다. 무한 반복과 종료 조건 종료 조건이 있는 반복과 없는 반복의 차이를 시각적 상태 변화로 이해한다. 자기참조와 재귀 구조 재귀적으로 작은 구조가 다시 같은 형태를 만드는 자기참조적 패턴을 관찰한다. 선택과 분기 각 단계의 선택이 다른 경로를 만드는 의사결정 트리를 공간적으로 표현한다. 규칙 기반 세계의 예측 가능성 단순한 운동 규칙에서 초기조건 변화가 결과 경로를 어떻게 바꾸는지 비교한다."><div class="field-head"><div class="icon">Φ</div><div><h2>철학</h2><small>융합탐구 Web VPython 예시 5개</small></div></div><article class="example"><span class="tag">철학 · 예시 1</span><h3>결정론적 규칙과 무작위성 비교</h3><p><b>해석 포인트</b> · 같은 초기값과 규칙을 갖는 운동과 무작위 운동을 나란히 두어 결정성과 우연성을 비교한다.</p><pre>Web VPython 3.2
+scene.background=color.black
+a=sphere(pos=vector(-4,0,0),radius=0.25,color=color.cyan,make_trail=True)
+b=sphere(pos=vector(4,0,0),radius=0.25,color=color.yellow,make_trail=True)
+t=0
+while True:
+    rate(60); t+=0.03
+    a.pos=vector(-4+2*cos(t),2*sin(t),0)
+    b.pos += vector((random()-0.5)*0.15,(random()-0.5)*0.15,0)</pre></article><article class="example"><span class="tag">철학 · 예시 2</span><h3>무한 반복과 종료 조건</h3><p><b>해석 포인트</b> · 종료 조건이 있는 반복과 없는 반복의 차이를 시각적 상태 변화로 이해한다.</p><pre>Web VPython 3.2
+scene.background=color.white
+ball=sphere(pos=vector(-5,0,0),radius=0.3,color=color.blue)
+while ball.pos.x &lt; 5:
+    rate(60)
+    ball.pos.x += 0.05
+label(pos=vector(0,-1,0),text=&quot;Stopped by condition&quot;,box=False,color=color.black)</pre></article><article class="example"><span class="tag">철학 · 예시 3</span><h3>자기참조와 재귀 구조</h3><p><b>해석 포인트</b> · 재귀적으로 작은 구조가 다시 같은 형태를 만드는 자기참조적 패턴을 관찰한다.</p><pre>Web VPython 3.2
+scene.background=color.black
+def self_ref(p,s,d):
+    if d==0:return
+    box(pos=p,size=vector(s,s,s),opacity=0.25,color=color.cyan)
+    self_ref(p+vector(s*0.6,s*0.6,0),s*0.55,d-1)
+self_ref(vector(-2,-2,0),3,7)</pre></article><article class="example"><span class="tag">철학 · 예시 4</span><h3>선택과 분기</h3><p><b>해석 포인트</b> · 각 단계의 선택이 다른 경로를 만드는 의사결정 트리를 공간적으로 표현한다.</p><pre>Web VPython 3.2
+scene.background=color.white
+root=vector(0,3,0)
+children=[vector(-2,1,0),vector(2,1,0)]
+sphere(pos=root,radius=0.3,color=color.orange)
+for p in children:
+    sphere(pos=p,radius=0.3,color=color.cyan)
+    arrow(pos=root,axis=p-root,color=color.black,shaftwidth=0.05)</pre></article><article class="example"><span class="tag">철학 · 예시 5</span><h3>규칙 기반 세계의 예측 가능성</h3><p><b>해석 포인트</b> · 단순한 운동 규칙에서 초기조건 변화가 결과 경로를 어떻게 바꾸는지 비교한다.</p><pre>Web VPython 3.2
+scene.background=color.black
+balls=[]
+for i,vx in enumerate([1.0,1.02,1.04]):
+    b=sphere(pos=vector(-5,i-1,0),radius=0.18,color=color.cyan,make_trail=True)
+    b.v=vector(vx,0.6+0.02*i,0)
+    balls.append(b)
+dt=0.02
+while True:
+    rate(60)
+    for b in balls:
+        b.pos+=b.v*dt
+        b.v.y-=0.3*dt</pre></article></section></div></main><script>
+function filterAll(){
+ const f=document.getElementById('field').value;
+ const q=document.getElementById('q').value.trim().toLowerCase();
+ let n=0;
+ document.querySelectorAll('.field').forEach(el=>{
+   const okF=(f==='all'||el.dataset.field===f);
+   const okQ=(!q||el.dataset.search.toLowerCase().includes(q));
+   el.classList.toggle('hidden',!(okF&&okQ));
+   if(okF&&okQ) n += el.querySelectorAll('.example').length;
+ });
+ document.getElementById('count').textContent=n+'개 표시';
+}
+function resetAll(){document.getElementById('field').value='all';document.getElementById('q').value='';filterAll();}
+</script></body></html>
