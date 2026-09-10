@@ -1,0 +1,1722 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Web VPython 고급 미적분 - 움직이는 정적분 그래프 30선</title>
+<style>
+:root {
+  --bg:#f5f7fb; --card:#fff; --ink:#172033; --muted:#5e6b82; --line:#d9e0ea;
+  --accent:#315efb; --accent2:#eef2ff; --code:#101827; --codeink:#eaf0ff;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:"Malgun Gothic","Apple SD Gothic Neo",system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.65}
+header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.96);border-bottom:1px solid var(--line);backdrop-filter:blur(10px)}
+.top{max-width:1180px;margin:auto;padding:14px 20px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.top strong{font-size:18px;margin-right:auto}
+select,button{font:inherit;border:1px solid var(--line);border-radius:10px;padding:9px 12px;background:#fff}
+button{cursor:pointer;background:var(--accent);color:#fff;border-color:var(--accent);font-weight:700}
+button.secondary{background:#fff;color:var(--accent)}
+main{max-width:1180px;margin:24px auto 80px;padding:0 20px}
+.hero{background:linear-gradient(135deg,#1b2b64,#315efb);color:#fff;border-radius:22px;padding:32px;margin-bottom:24px;box-shadow:0 14px 40px rgba(40,70,150,.18)}
+.hero h1{margin:0 0 10px;font-size:clamp(26px,4vw,42px)}
+.hero p{max-width:900px;margin:8px 0}
+.hero .mini{opacity:.88;font-size:14px}
+.gridnote{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin:18px 0 28px}
+.note{background:#fff;border:1px solid var(--line);border-radius:14px;padding:15px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;margin:18px 0;box-shadow:0 5px 18px rgba(26,45,80,.06);scroll-margin-top:90px}
+.badge{display:inline-block;background:var(--accent2);color:var(--accent);border-radius:999px;padding:4px 10px;font-weight:800;font-size:13px}
+h2{margin:10px 0 4px;font-size:23px}
+.formula{font-family:Cambria,"Times New Roman",serif;font-size:20px;background:#f8fafc;border-left:4px solid var(--accent);padding:10px 13px;border-radius:8px;margin:10px 0}
+.concept{color:var(--muted)}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+pre{margin:10px 0 0;background:var(--code);color:var(--codeink);border-radius:14px;padding:18px;overflow:auto;max-height:560px;border:1px solid #22304b}
+code{font-family:Consolas,"Courier New",monospace}
+details{margin-top:14px;border-top:1px dashed var(--line);padding-top:12px}
+summary{cursor:pointer;font-weight:800;color:#30415f}
+.explain{padding:8px 4px}
+footer{max-width:1180px;margin:auto;padding:30px 20px 60px;color:var(--muted)}
+.search{min-width:220px;flex:0 1 280px}
+.mark{background:#fff3a6}
+@media print {
+ header,.actions{display:none!important} body{background:#fff} .card{break-inside:avoid;box-shadow:none}
+ pre{max-height:none;white-space:pre-wrap}
+}
+@media(max-width:650px){
+ .top strong{width:100%} select,.search{width:100%} .hero{padding:23px} .card{padding:16px}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="top">
+    <strong>Web VPython · 고급 미적분 정적분 30선</strong>
+    <input class="search" id="search" placeholder="예: 리만합, Simpson, 확률" oninput="filterCards()">
+    <select id="jump" onchange="jumpToExample()">
+      <option value="">예제 바로가기</option>
+      <option value="ex01">01. x²의 누적 정적분</option>
+<option value="ex02">02. sin(x)의 부호 있는 넓이</option>
+<option value="ex03">03. cos(x)의 누적 정적분</option>
+<option value="ex04">04. e^(-x)의 누적 넓이</option>
+<option value="ex05">05. 가우스 함수</option>
+<option value="ex06">06. 1/(1+x²)</option>
+<option value="ex07">07. √x의 누적 넓이</option>
+<option value="ex08">08. x³-x의 부호 넓이</option>
+<option value="ex09">09. |x|의 정적분</option>
+<option value="ex10">10. sinc 함수</option>
+<option value="ex11">11. sin(x²) 프레넬형 적분</option>
+<option value="ex12">12. 감쇠진동</option>
+<option value="ex13">13. 움직이는 구간 [a,b] 적분</option>
+<option value="ex14">14. 리만합 n 증가</option>
+<option value="ex15">15. 좌·우·중점 리만합 비교</option>
+<option value="ex16">16. 사다리꼴 공식 수렴</option>
+<option value="ex17">17. 심프슨 공식 수렴</option>
+<option value="ex18">18. 미적분학의 기본정리</option>
+<option value="ex19">19. 곡선 사이 넓이</option>
+<option value="ex20">20. 평균값 정리와 함수 평균</option>
+<option value="ex21">21. 원판법 회전체 부피 누적</option>
+<option value="ex22">22. 원통껍질법 부피</option>
+<option value="ex23">23. 정규분포 누적확률</option>
+<option value="ex24">24. 로지스틱 함수 누적</option>
+<option value="ex25">25. 매개변수 a 변화</option>
+<option value="ex26">26. 주파수 k 변화</option>
+<option value="ex27">27. 적분 오차 비교</option>
+<option value="ex28">28. 이동평균 적분</option>
+<option value="ex29">29. 컨볼루션형 적분</option>
+<option value="ex30">30. 적분으로 정의된 함수의 접선</option>
+    </select>
+    <button class="secondary" onclick="window.print()">인쇄 / PDF</button>
+  </div>
+</header>
+<main>
+<section class="hero">
+  <h1>움직이는 정적분 함수 그래프 30개</h1>
+  <p>Web VPython 3.2에서 그대로 붙여 넣어 실행할 수 있는 고급 미적분 애니메이션 예제입니다. 함수 그래프, 누적 정적분, 수치적분, 부호 있는 넓이, 곡선 사이 넓이, 회전체 부피, 확률, 매개변수 적분까지 단계적으로 구성했습니다.</p>
+  <p class="mini">실행: 아래 코드 복사 → Web VPython 새 프로그램 → 붙여넣기 → Run. 각 코드는 독립 실행형입니다.</p>
+</section>
+
+<div class="gridnote">
+  <div class="note"><b>① 그래프 애니메이션</b><br><code>rate()</code>로 시간 흐름을 만들고 점·곡선·막대를 계속 갱신합니다.</div>
+  <div class="note"><b>② 정적분 계산</b><br><code>area += f(x)*dx</code> 형태로 리만합을 누적합니다.</div>
+  <div class="note"><b>③ 고급 주제</b><br>FTC, Simpson, 이동구간, CDF, convolution, 회전체 부피를 포함합니다.</div>
+  <div class="note"><b>④ 탐구 활동</b><br><code>dx</code>, 구간, 함수, 매개변수를 바꾸며 오차와 형태를 비교합니다.</div>
+</div>
+
+
+<section class="card" id="ex01">
+  <div class="badge">예제 01</div>
+  <h2>01. x²의 누적 정적분</h2>
+  <div class="formula">F(b)=∫₀ᵇx²dx</div>
+  <p class="concept"><b>핵심:</b> 미적분학의 기본정리와 누적함수</p>
+  <div class="actions">
+    <button onclick="copyCode('code01', this)">코드 복사</button>
+    <button class="secondary" onclick="openWebVPython()">Web VPython 열기</button>
+  </div>
+  <pre><code id="code01">Web VPython 3.2
+scene.width = 900
+scene.height = 420
+scene.background = color.black
+scene.title = &quot;01. x²의 누적 정적분\nF(b)=∫₀ᵇx²dx\n&quot;
+
+a = 0
+bmax = 4
+dx = 0.02
+
+# 함수 정의
+def f(x):
+    return x**2
+
+# 좌표 범위를 계산하기 위한 표본값
+xs = arange(a, bmax+dx, dx)
+ys = [f(x) for x in xs]
+ymin = min(min(ys), -0.5)
+ymax = max(max(ys), 0.5)
+scene.center = vec((a+bmax)/2, (ymin+ymax)/2, 0)
+scene.range = max(bmax-a, ymax-ymin)*0.58
+scene.autoscale = False
+
+# 축
+curve(pos=[vec(a,0,0), vec(bmax,0,0)], color=color.white)
+curve(pos=[vec(0,ymin,0), vec(0,ymax,0)], color=color.white)
+
+# 함수 그래프
+fc = curve(color=color.cyan, radius=0.012)
+for x in xs:
+    fc.append(pos=vec(x, f(x), 0))
+
+# 누적 적분을 나타낼 막대
+bars = []
+marker = sphere(pos=vec(a,f(a),0), radius=0.06, color=color.yellow)
+info = label(pos=vec((a+bmax)/2, ymax*0.9, 0), text=&quot;&quot;, box=False, color=color.white)
+
+area = 0
+x = a
+while x &lt; bmax:
+    rate(45)
+    y = f(x)
+    area += y*dx
+
+    # 넓이 막대: 양수는 초록, 음수는 빨강
+    c = color.green if y &gt;= 0 else color.red
+    h = abs(y)
+    bar = box(pos=vec(x+dx/2, y/2, -0.05),
+              size=vec(dx*0.88, h, 0.05),
+              color=c, opacity=0.45)
+    bars.append(bar)
+
+    marker.pos = vec(x, y, 0.05)
+    info.text = &quot;b = &quot; + str(round(x,2)) + &quot;    integral ≈ &quot; + str(round(area,5))
+    x += dx</code></pre>
+  <details>
+    <summary>수업용 상세 해설</summary>
+    <div class="explain">
+      <p><b>관찰 포인트 1.</b> <code>rate()</code>가 반복문의 진행 속도를 제한하여 그래프나 적분값이 시간에 따라 변하는 모습을 보여 줍니다.</p>
+      <p><b>관찰 포인트 2.</b> 정적분은 작은 구간의 넓이 <code>f(x)*dx</code>를 계속 더하는 방식으로 수치적으로 근사합니다.</p>
+      <p><b>관찰 포인트 3.</b> 함수가 x축 아래에 있으면 부호 있는 넓이는 음수이므로 누적값이 감소할 수 있습니다.</p>
+      <p><b>탐구 과제.</b> 구간, 함수식, <code>dx</code>, 애니메이션 속도를 바꾸고 근삿값이 어떻게 달라지는지 비교해 보세요.</p>
+    </div>
+  </details>
+</section>
+<section class="card" id="ex02">
+  <div class="badge">예제 02</div>
+  <h2>02. sin(x)의 부호 있는 넓이</h2>
+  <div class="formula">F(b)=∫₀ᵇsin(x)dx</div>
+  <p class="concept"><b>핵심:</b> 양의 넓이와 음의 넓이가 상쇄되는 과정을 관찰</p>
+  <div class="actions">
+    <button onclick="copyCode('code02', this)">코드 복사</button>
+    <button class="secondary" onclick="openWebVPython()">Web VPython 열기</button>
+  </div>
+  <pre><code id="code02">Web VPython 3.2
+scene.width = 900
+scene.height = 420
+scene.background = color.black
+scene.title = &quot;02. sin(x)의 부호 있는 넓이\nF(b)=∫₀ᵇsin(x)dx\n&quot;
+
+a = 0
+bmax = 2*pi
+dx = 0.03
+
+# 함수 정의
+def f(x):
+    return sin(x)
+
+# 좌표 범위를 계산하기 위한 표본값
+xs = arange(a, bmax+dx, dx)
+ys = [f(x) for x in xs]
+ymin = min(min(ys), -0.5)
+ymax = max(max(ys), 0.5)
+scene.center = vec((a+bmax)/2, (ymin+ymax)/2, 0)
+scene.range = max(bmax-a, ymax-ymin)*0.58
+scene.autoscale = False
+
+# 축
+curve(pos=[vec(a,0,0), vec(bmax,0,0)], color=color.white)
+curve(pos=[vec(0,ymin,0), vec(0,ymax,0)], color=color.white)
+
+# 함수 그래프
+fc = curve(color=color.cyan, radius=0.012)
+for x in xs:
+    fc.append(pos=vec(x, f(x), 0))
+
+# 누적 적분을 나타낼 막대
+bars = []
+marker = sphere(pos=vec(a,f(a),0), radius=0.06, color=color.yellow)
+info = label(pos=vec((a+bmax)/2, ymax*0.9, 0), text=&quot;&quot;, box=False, color=color.white)
+
+area = 0
+x = a
+while x &lt; bmax:
+    rate(45)
+    y = f(x)
+    area += y*dx
+
+    # 넓이 막대: 양수는 초록, 음수는 빨강
+    c = color.green if y &gt;= 0 else color.red
+    h = abs(y)
+    bar = box(pos=vec(x+dx/2, y/2, -0.05),
+              size=vec(dx*0.88, h, 0.05),
+              color=c, opacity=0.45)
+    bars.append(bar)
+
+    marker.pos = vec(x, y, 0.05)
+    info.text = &quot;b = &quot; + str(round(x,2)) + &quot;    integral ≈ &quot; + str(round(area,5))
+    x += dx</code></pre>
+  <details>
+    <summary>수업용 상세 해설</summary>
+    <div class="explain">
+      <p><b>관찰 포인트 1.</b> <code>rate()</code>가 반복문의 진행 속도를 제한하여 그래프나 적분값이 시간에 따라 변하는 모습을 보여 줍니다.</p>
+      <p><b>관찰 포인트 2.</b> 정적분은 작은 구간의 넓이 <code>f(x)*dx</code>를 계속 더하는 방식으로 수치적으로 근사합니다.</p>
+      <p><b>관찰 포인트 3.</b> 함수가 x축 아래에 있으면 부호 있는 넓이는 음수이므로 누적값이 감소할 수 있습니다.</p>
+      <p><b>탐구 과제.</b> 구간, 함수식, <code>dx</code>, 애니메이션 속도를 바꾸고 근삿값이 어떻게 달라지는지 비교해 보세요.</p>
+    </div>
+  </details>
+</section>
+<section class="card" id="ex03">
+  <div class="badge">예제 03</div>
+  <h2>03. cos(x)의 누적 정적분</h2>
+  <div class="formula">F(b)=∫₀ᵇcos(x)dx</div>
+  <p class="concept"><b>핵심:</b> F(b)=sin(b)의 움직임 비교</p>
+  <div class="actions">
+    <button onclick="copyCode('code03', this)">코드 복사</button>
+    <button class="secondary" onclick="openWebVPython()">Web VPython 열기</button>
+  </div>
+  <pre><code id="code03">Web VPython 3.2
+scene.width = 900
+scene.height = 420
+scene.background = color.black
+scene.title = &quot;03. cos(x)의 누적 정적분\nF(b)=∫₀ᵇcos(x)dx\n&quot;
+
+a = 0
+bmax = 2*pi
+dx = 0.03
+
+# 함수 정의
+def f(x):
+    return cos(x)
+
+# 좌표 범위를 계산하기 위한 표본값
+xs = arange(a, bmax+dx, dx)
+ys = [f(x) for x in xs]
+ymin = min(min(ys), -0.5)
+ymax = max(max(ys), 0.5)
+scene.center = vec((a+bmax)/2, (ymin+ymax)/2, 0)
+scene.range = max(bmax-a, ymax-ymin)*0.58
+scene.autoscale = False
+
+# 축
+curve(pos=[vec(a,0,0), vec(bmax,0,0)], color=color.white)
+curve(pos=[vec(0,ymin,0), vec(0,ymax,0)], color=color.white)
+
+# 함수 그래프
+fc = curve(color=color.cyan, radius=0.012)
+for x in xs:
+    fc.append(pos=vec(x, f(x), 0))
+
+# 누적 적분을 나타낼 막대
+bars = []
+marker = sphere(pos=vec(a,f(a),0), radius=0.06, color=color.yellow)
+info = label(pos=vec((a+bmax)/2, ymax*0.9, 0), text=&quot;&quot;, box=False, color=color.white)
+
+area = 0
+x = a
+while x &lt; bmax:
+    rate(45)
+    y = f(x)
+    area += y*dx
+
+    # 넓이 막대: 양수는 초록, 음수는 빨강
+    c = color.green if y &gt;= 0 else color.red
+    h = abs(y)
+    bar = box(pos=vec(x+dx/2, y/2, -0.05),
+              size=vec(dx*0.88, h, 0.05),
+              color=c, opacity=0.45)
+    bars.append(bar)
+
+    marker.pos = vec(x, y, 0.05)
+    info.text = &quot;b = &quot; + str(round(x,2)) + &quot;    integral ≈ &quot; + str(round(area,5))
+    x += dx</code></pre>
+  <details>
+    <summary>수업용 상세 해설</summary>
+    <div class="explain">
+      <p><b>관찰 포인트 1.</b> <code>rate()</code>가 반복문의 진행 속도를 제한하여 그래프나 적분값이 시간에 따라 변하는 모습을 보여 줍니다.</p>
+      <p><b>관찰 포인트 2.</b> 정적분은 작은 구간의 넓이 <code>f(x)*dx</code>를 계속 더하는 방식으로 수치적으로 근사합니다.</p>
+      <p><b>관찰 포인트 3.</b> 함수가 x축 아래에 있으면 부호 있는 넓이는 음수이므로 누적값이 감소할 수 있습니다.</p>
+      <p><b>탐구 과제.</b> 구간, 함수식, <code>dx</code>, 애니메이션 속도를 바꾸고 근삿값이 어떻게 달라지는지 비교해 보세요.</p>
+    </div>
+  </details>
+</section>
+<section class="card" id="ex04">
+  <div class="badge">예제 04</div>
+  <h2>04. e^(-x)의 누적 넓이</h2>
+  <div class="formula">F(b)=∫₀ᵇe^(-x)dx</div>
+  <p class="concept"><b>핵심:</b> 무한구간 적분의 수렴을 유한 구간에서 관찰</p>
+  <div class="actions">
+    <button onclick="copyCode('code04', this)">코드 복사</button>
+    <button class="secondary" onclick="openWebVPython()">Web VPython 열기</button>
+  </div>
+  <pre><code id="code04">Web VPython 3.2
+scene.width = 900
+scene.height = 420
+scene.background = color.black
+scene.title = &quot;04. e^(-x)의 누적 넓이\nF(b)=∫₀ᵇe^(-x)dx\n&quot;
+
+a = 0
+bmax = 6
+dx = 0.03
+
+# 함수 정의
+def f(x):
+    return exp(-x)
+
+# 좌표 범위를 계산하기 위한 표본값
+xs = arange(a, bmax+dx, dx)
+ys = [f(x) for x in xs]
+ymin = min(min(ys), -0.5)
+ymax = max(max(ys), 0.5)
+scene.center = vec((a+bmax)/2, (ymin+ymax)/2, 0)
+scene.range = max(bmax-a, ymax-ymin)*0.58
+scene.autoscale = False
+
+# 축
+curve(pos=[vec(a,0,0), vec(bmax,0,0)], color=color.white)
+curve(pos=[vec(0,ymin,0), vec(0,ymax,0)], color=color.white)
+
+# 함수 그래프
+fc = curve(color=color.cyan, radius=0.012)
+for x in xs:
+    fc.append(pos=vec(x, f(x), 0))
+
+# 누적 적분을 나타낼 막대
+bars = []
+marker = sphere(pos=vec(a,f(a),0), radius=0.06, color=color.yellow)
+info = label(pos=vec((a+bmax)/2, ymax*0.9, 0), text=&quot;&quot;, box=False, color=color.white)
+
+area = 0
+x = a
+while x &lt; bmax:
+    rate(45)
+    y = f(x)
+    area += y*dx
+
+    # 넓이 막대: 양수는 초록, 음수는 빨강
+    c = color.green if y &gt;= 0 else color.red
+    h = abs(y)
+    bar = box(pos=vec(x+dx/2, y/2, -0.05),
+              size=vec(dx*0.88, h, 0.05),
+              color=c, opacity=0.45)
+    bars.append(bar)
+
+    marker.pos = vec(x, y, 0.05)
+    info.text = &quot;b = &quot; + str(round(x,2)) + &quot;    integral ≈ &quot; + str(round(area,5))
+    x += dx</code></pre>
+  <details>
+    <summary>수업용 상세 해설</summary>
+    <div class="explain">
+      <p><b>관찰 포인트 1.</b> <code>rate()</code>가 반복문의 진행 속도를 제한하여 그래프나 적분값이 시간에 따라 변하는 모습을 보여 줍니다.</p>
+      <p><b>관찰 포인트 2.</b> 정적분은 작은 구간의 넓이 <code>f(x)*dx</code>를 계속 더하는 방식으로 수치적으로 근사합니다.</p>
+      <p><b>관찰 포인트 3.</b> 함수가 x축 아래에 있으면 부호 있는 넓이는 음수이므로 누적값이 감소할 수 있습니다.</p>
+      <p><b>탐구 과제.</b> 구간, 함수식, <code>dx</code>, 애니메이션 속도를 바꾸고 근삿값이 어떻게 달라지는지 비교해 보세요.</p>
+    </div>
+  </details>
+</section>
+<section class="card" id="ex05">
+  <div class="badge">예제 05</div>
+  <h2>05. 가우스 함수</h2>
+  <div class="formula">F(b)=∫₀ᵇe^(-x²)dx</div>
+  <p class="concept"><b>핵심:</b> 초등함수로 원시함수를 쓰기 어려운 대표 예</p>
+  <div class="actions">
+    <button onclick="copyCode('code05', this)">코드 복사</button>
+    <button class="secondary" onclick="openWebVPython()">Web VPython 열기</button>
+  </div>
+  <pre><code id="code05">Web VPython 3.2
+scene.width = 900
+scene.height = 420
+scene.background = color.black
+scene.title = &quot;05. 가우스 함수\nF(b)=∫₀ᵇe^(-x²)dx\n&quot;
+
+a = 0
+bmax = 3
+dx = 0.02
+
+# 함수 정의
+def f(x):
+    return exp(-x*x)
+
+# 좌표 범위를 계산하기 위한 표본값
+xs = arange(a, bmax+dx, dx)
+ys = [f(x) for x in xs]
+ymin = min(min(ys), -0.5)
+ymax = max(max(ys), 0.5)
+scene.center = vec((a+bmax)/2, (ymin+ymax)/2, 0)
+scene.range = max(bmax-a, ymax-ymin)*0.58
+scene.autoscale = False
+
+# 축
+curve(pos=[vec(a,0,0), vec(bmax,0,0)], color=color.white)
+curve(pos=[vec(0,ymin,0), vec(0,ymax,0)], color=color.white)
+
+# 함수 그래프
+fc = curve(color=color.cyan, radius=0.012)
+for x in xs:
+    fc.append(pos=vec(x, f(x), 0))
+
+# 누적 적분을 나타낼 막대
+bars = []
+marker = sphere(pos=vec(a,f(a),0), radius=0.06, color=color.yellow)
+info = label(pos=vec((a+bmax)/2, ymax*0.9, 0), text=&quot;&quot;, box=False, color=color.white)
+
+area = 0
+x = a
+while x &lt; bmax:
+    rate(45)
+    y = f(x)
+    area += y*dx
+
+    # 넓이 막대: 양수는 초록, 음수는 빨강
+    c = color.green if y &gt;= 0 else color.red
+    h = abs(y)
+    bar = box(pos=vec(x+dx/2, y/2, -0.05),
+              size=vec(dx*0.88, h, 0.05),
+              color=c, opacity=0.45)
+    bars.append(bar)
+
+    marker.pos = vec(x, y, 0.05)
+    info.text = &quot;b = &quot; + str(round(x,2)) + &quot;    integral ≈ &quot; + str(round(area,5))
+    x += dx</code></pre>
+  <details>
+    <summary>수업용 상세 해설</summary>
+    <div class="explain">
+      <p><b>관찰 포인트 1.</b> <code>rate()</code>가 반복문의 진행 속도를 제한하여 그래프나 적분값이 시간에 따라 변하는 모습을 보여 줍니다.</p>
+      <p><b>관찰 포인트 2.</b> 정적분은 작은 구간의 넓이 <code>f(x)*dx</code>를 계속 더하는 방식으로 수치적으로 근사합니다.</p>
+      <p><b>관찰 포인트 3.</b> 함수가 x축 아래에 있으면 부호 있는 넓이는 음수이므로 누적값이 감소할 수 있습니다.</p>
+      <p><b>탐구 과제.</b> 구간, 함수식, <code>dx</code>, 애니메이션 속도를 바꾸고 근삿값이 어떻게 달라지는지 비교해 보세요.</p>
+    </div>
+  </details>
+</section>
+<section class="card" id="ex06">
+  <div class="badge">예제 06</div>
+  <h2>06. 1/(1+x²)</h2>
+  <div class="formula">F(b)=∫₀ᵇ1/(1+x²)dx</div>
+  <p class="concept"><b>핵심:</b> arctan과 정적분의 관계</p>
+  <div class="actions">
+    <button onclick="copyCode('code06', this)">코드 복사</button>
+    <button class="secondary" onclick="openWebVPython()">Web VPython 열기</button>
+  </div>
+  <pre><code id="code06">Web VPython 3.2
+scene.width = 900
+scene.height = 420
+scene.background = color.black
+scene.title = &quot;06. 1/(1+x²)\nF(b)=∫₀ᵇ1/(1+x²)dx\n&quot;
+
+a = 0
+bmax = 5
+dx = 0.03
+
+# 함수 정의
+def f(x):
+    return 1/(1+x*x)
+
+# 좌표 범위를 계산하기 위한 표본값
+xs = arange(a, bmax+dx, dx)
+ys = [f(x) for x in xs]
+ymin = min(min(ys), -0.5)
+ymax = max(max(ys), 0.5)
+scene.center = vec((a+bmax)/2, (ymin+ymax)/2, 0)
+scene.range = max(bmax-a, ymax-ymin)*0.58
+scene.autoscale = False
+
+# 축
+curve(pos=[vec(a,0,0), vec(bmax,0,0)], color=color.white)
+curve(pos=[vec(0,ymin,0), vec(0,ymax,0)], color=color.white)
+
+# 함수 그래프
+fc = curve(color=color.cyan, radius=0.012)
+for x in xs:
+    fc.append(pos=vec(x, f(x), 0))
+
+# 누적 적분을 나타낼 막대
+bars = []
+marker = sphere(pos=vec(a,f(a),0), radius=0.06, color=color.yellow)
+info = label(pos=vec((a+bmax)/2, ymax*0.9, 0), text=&quot;&quot;, box=False, color=color.white)
+
+area = 0
+x = a
+while x &lt; bmax:
+    rate(45)
+    y = f(x)
+    area += y*dx
+
+    # 넓이 막대: 양수는 초록, 음수는 빨강
+    c = color.green if y &gt;= 0 else color.red
+    h = abs(y)
+    bar = box(pos=vec(x+dx/2, y/2, -0.05),
+              size=vec(dx*0.88, h, 0.05),
+              color=c, opacity=0.45)
+    bars.append(bar)
+
+    marker.pos = vec(x, y, 0.05)
+    info.text = &quot;b = &quot; + str(round(x,2)) + &quot;    integral ≈ &quot; + str(round(area,5))
+    x += dx</code></pre>
+  <details>
+    <summary>수업용 상세 해설</summary>
+    <div class="explain">
+      <p><b>관찰 포인트 1.</b> <code>rate()</code>가 반복문의 진행 속도를 제한하여 그래프나 적분값이 시간에 따라 변하는 모습을 보여 줍니다.</p>
+      <p><b>관찰 포인트 2.</b> 정적분은 작은 구간의 넓이 <code>f(x)*dx</code>를 계속 더하는 방식으로 수치적으로 근사합니다.</p>
+      <p><b>관찰 포인트 3.</b> 함수가 x축 아래에 있으면 부호 있는 넓이는 음수이므로 누적값이 감소할 수 있습니다.</p>
+      <p><b>탐구 과제.</b> 구간, 함수식, <code>dx</code>, 애니메이션 속도를 바꾸고 근삿값이 어떻게 달라지는지 비교해 보세요.</p>
+    </div>
+  </details>
+</section>
+<section class="card" id="ex07">
+  <div class="badge">예제 07</div>
+  <h2>07. √x의 누적 넓이</h2>
+  <div class="formula">F(b)=∫₀ᵇ√x dx</div>
+  <p class="concept"><b>핵심:</b> 거듭제곱 함수의 정적분</p>
+  <div class="actions">
+    <button onclick="copyCode('code07', this)">코드 복사</button>
+    <button class="secondary" onclick="openWebVPython()">Web VPython 열기</button>
+  </div>
+  <pre><code id="code07">Web VPython 3.2
+scene.width = 900
+scene.height = 420
+scene.background = color.black
+scene.title = &quot;07. √x의 누적 넓이\nF(b)=∫₀ᵇ√x dx\n&quot;
+
+a = 0
+bmax = 5
+dx = 0.03
+
+# 함수 정의
+def f(x):
+    return sqrt(x)
+
+# 좌표 범위를 계산하기 위한 표본값
+xs = arange(a, bmax+dx, dx)
+ys = [f(x) for x in xs]
+ymin = min(min(ys), -0.5)
+ymax = max(max(ys), 0.5)
+scene.center = vec((a+bmax)/2, (ymin+ymax)/2, 0)
+scene.range = max(bmax-a, ymax-ymin)*0.58
+scene.autoscale = False
+
+# 축
+curve(pos=[vec(a,0,0), vec(bmax,0,0)], color=color.white)
+curve(pos=[vec(0,ymin,0), vec(0,ymax,0)], color=color.white)
+
+# 함수 그래프
+fc = curve(color=color.cyan, radius=0.012)
+for x in xs:
+    fc.append(pos=vec(x, f(x), 0))
+
+# 누적 적분을 나타낼 막대
+bars = []
+marker = sphere(pos=vec(a,f(a),0), radius=0.06, color=color.yellow)
+info = label(pos=vec((a+bmax)/2, ymax*0.9, 0), text=&quot;&quot;, box=False, color=color.white)
+
+area = 0
+x = a
+while x &lt; bmax:
+    rate(45)
+    y = f(x)
+    area += y*dx
+
+    # 넓이 막대: 양수는 초록, 음수는 빨강
+    c = color.green if y &gt;= 0 else color.red
+    h = abs(y)
+    bar = box(pos=vec(x+dx/2, y/2, -0.05),
+              size=vec(dx*0.88, h, 0.05),
+              color=c, opacity=0.45)
+    bars.append(bar)
+
+    marker.pos = vec(x, y, 0.05)
+    info.text = &quot;b = &quot; + str(round(x,2)) + &quot;    integral ≈ &quot; + str(round(area,5))
+    x += dx</code></pre>
+  <details>
+    <summary>수업용 상세 해설</summary>
+    <div class="explain">
+      <p><b>관찰 포인트 1.</b> <code>rate()</code>가 반복문의 진행 속도를 제한하여 그래프나 적분값이 시간에 따라 변하는 모습을 보여 줍니다.</p>
+      <p><b>관찰 포인트 2.</b> 정적분은 작은 구간의 넓이 <code>f(x)*dx</code>를 계속 더하는 방식으로 수치적으로 근사합니다.</p>
+      <p><b>관찰 포인트 3.</b> 함수가 x축 아래에 있으면 부호 있는 넓이는 음수이므로 누적값이 감소할 수 있습니다.</p>
+      <p><b>탐구 과제.</b> 구간, 함수식, <code>dx</code>, 애니메이션 속도를 바꾸고 근삿값이 어떻게 달라지는지 비교해 보세요.</p>
+    </div>
+  </details>
+</section>
+<section class="card" id="ex08">
+  <div class="badge">예제 08</div>
+  <h2>08. x³-x의 부호 넓이</h2>
+  <div class="formula">F(b)=∫₋₂ᵇ(x³-x)dx</div>
+  <p class="concept"><b>핵심:</b> 영점 통과 때 누적값이 어떻게 변하는지 관찰</p>
+  <div class="actions">
+    <button onclick="copyCode('code08', this)">코드 복사</button>
+    <button class="secondary" onclick="openWebVPython()">Web VPython 열기</button>
+  </div>
+  <pre><code id="code08">Web VPython 3.2
+scene.width = 900
+scene.height = 420
+scene.background = color.black
+scene.title = &quot;08. x³-x의 부호 넓이\nF(b)=∫₋₂ᵇ(x³-x)dx\n&quot;
+
+a = -2
+bmax = 2
+dx = 0.02
+
+# 함수 정의
+def f(x):
+    return x**3-x
+
+# 좌표 범위를 계산하기 위한 표본값
+xs = arange(a, bmax+dx, dx)
+ys = [f(x) for x in xs]
+ymin = min(min(ys), -0.5)
+ymax = max(max(ys), 0.5)
+scene.center = vec((a+bmax)/2, (ymin+ymax)/2, 0)
+scene.range = max(bmax-a, ymax-ymin)*0.58
+scene.autoscale = False
+
+# 축
+curve(pos=[vec(a,0,0), vec(bmax,0,0)], color=color.white)
+curve(pos=[vec(0,ymin,0), vec(0,ymax,0)], color=color.white)
+
+# 함수 그래프
+fc = curve(color=color.cyan, radius=0.012)
+for x in xs:
+    fc.append(pos=vec(x, f(x), 0))
+
+# 누적 적분을 나타낼 막대
+bars = []
+marker = sphere(pos=vec(a,f(a),0), radius=0.06, color=color.yellow)
+info = label(pos=vec((a+bmax)/2, ymax*0.9, 0), text=&quot;&quot;, box=False, color=color.white)
+
+area = 0
+x = a
+while x &lt; bmax:
+    rate(45)
+    y = f(x)
+    area += y*dx
+
+    # 넓이 막대: 양수는 초록, 음수는 빨강
+    c = color.green if y &gt;= 0 else color.red
+    h = abs(y)
+    bar = box(pos=vec(x+dx/2, y/2, -0.05),
+              size=vec(dx*0.88, h, 0.05),
+              color=c, opacity=0.45)
+    bars.append(bar)
+
+    marker.pos = vec(x, y, 0.05)
+    info.text = &quot;b = &quot; + str(round(x,2)) + &quot;    integral ≈ &quot; + str(round(area,5))
+    x += dx</code></pre>
+  <details>
+    <summary>수업용 상세 해설</summary>
+    <div class="explain">
+      <p><b>관찰 포인트 1.</b> <code>rate()</code>가 반복문의 진행 속도를 제한하여 그래프나 적분값이 시간에 따라 변하는 모습을 보여 줍니다.</p>
+      <p><b>관찰 포인트 2.</b> 정적분은 작은 구간의 넓이 <code>f(x)*dx</code>를 계속 더하는 방식으로 수치적으로 근사합니다.</p>
+      <p><b>관찰 포인트 3.</b> 함수가 x축 아래에 있으면 부호 있는 넓이는 음수이므로 누적값이 감소할 수 있습니다.</p>
+      <p><b>탐구 과제.</b> 구간, 함수식, <code>dx</code>, 애니메이션 속도를 바꾸고 근삿값이 어떻게 달라지는지 비교해 보세요.</p>
+    </div>
+  </details>
+</section>
+<section class="card" id="ex09">
+  <div class="badge">예제 09</div>
+  <h2>09. |x|의 정적분</h2>
+  <div class="formula">F(b)=∫₋₃ᵇ|x|dx</div>
+  <p class="concept"><b>핵심:</b> 절댓값 함수의 구간별 적분</p>
+  <div class="actions">
+    <button onclick="copyCode('code09', this)">코드 복사</button>
+    <button class="secondary" onclick="openWebVPython()">Web VPython 열기</button>
+  </div>
+  <pre><code id="code09">Web VPython 3.2
+scene.width = 900
+scene.height = 420
+scene.background = color.black
+scene.title = &quot;09. |x|의 정적분\nF(b)=∫₋₃ᵇ|x|dx\n&quot;
+
+a = -3
+bmax = 3
+dx = 0.03
+
+# 함수 정의
+def f(x):
+    return abs(x)
+
+# 좌표 범위를 계산하기 위한 표본값
+xs = arange(a, bmax+dx, dx)
+ys = [f(x) for x in xs]
+ymin = min(min(ys), -0.5)
+ymax = max(max(ys), 0.5)
+scene.center = vec((a+bmax)/2, (ymin+ymax)/2, 0)
+scene.range = max(bmax-a, ymax-ymin)*0.58
+scene.autoscale = False
+
+# 축
+curve(pos=[vec(a,0,0), vec(bmax,0,0)], color=color.white)
+curve(pos=[vec(0,ymin,0), vec(0,ymax,0)], color=color.white)
+
+# 함수 그래프
+fc = curve(color=color.cyan, radius=0.012)
+for x in xs:
+    fc.append(pos=vec(x, f(x), 0))
+
+# 누적 적분을 나타낼 막대
+bars = []
+marker = sphere(pos=vec(a,f(a),0), radius=0.06, color=color.yellow)
+info = label(pos=vec((a+bmax)/2, ymax*0.9, 0), text=&quot;&quot;, box=False, color=color.white)
+
+area = 0
+x = a
+while x &lt; bmax:
+    rate(45)
+    y = f(x)
+    area += y*dx
+
+    # 넓이 막대: 양수는 초록, 음수는 빨강
+    c = color.green if y &gt;= 0 else color.red
+    h = abs(y)
+    bar = box(pos=vec(x+dx/2, y/2, -0.05),
+              size=vec(dx*0.88, h, 0.05),
+              color=c, opacity=0.45)
+    bars.append(bar)
+
+    marker.pos = vec(x, y, 0.05)
+    info.text = &quot;b = &quot; + str(round(x,2)) + &quot;    integral ≈ &quot; + str(round(area,5))
+    x += dx</code></pre>
+  <details>
+    <summary>수업용 상세 해설</summary>
+    <div class="explain">
+      <p><b>관찰 포인트 1.</b> <code>rate()</code>가 반복문의 진행 속도를 제한하여 그래프나 적분값이 시간에 따라 변하는 모습을 보여 줍니다.</p>
+      <p><b>관찰 포인트 2.</b> 정적분은 작은 구간의 넓이 <code>f(x)*dx</code>를 계속 더하는 방식으로 수치적으로 근사합니다.</p>
+      <p><b>관찰 포인트 3.</b> 함수가 x축 아래에 있으면 부호 있는 넓이는 음수이므로 누적값이 감소할 수 있습니다.</p>
+      <p><b>탐구 과제.</b> 구간, 함수식, <code>dx</code>, 애니메이션 속도를 바꾸고 근삿값이 어떻게 달라지는지 비교해 보세요.</p>
+    </div>
+  </details>
+</section>
+<section class="card" id="ex10">
+  <div class="badge">예제 10</div>
+  <h2>10. sinc 함수</h2>
+  <div class="formula">F(b)=∫₀.₀₅ᵇ sin(x)/x dx</div>
+  <p class="concept"><b>핵심:</b> 진동하며 수렴하는 적분의 직관</p>
+  <div class="actions">
+    <button onclick="copyCode('code10', this)">코드 복사</button>
+    <button class="secondary" onclick="openWebVPython()">Web VPython 열기</button>
+  </div>
+  <pre><code id="code10">Web VPython 3.2
+scene.width = 900
+scene.height = 420
+scene.background = color.black
+scene.title = &quot;10. sinc 함수\nF(b)=∫₀.₀₅ᵇ sin(x)/x dx\n&quot;
+
+a = 0.05
+bmax = 18
+dx = 0.05
+
+# 함수 정의
+def f(x):
+    return sin(x)/x
+
+# 좌표 범위를 계산하기 위한 표본값
+xs = arange(a, bmax+dx, dx)
+ys = [f(x) for x in xs]
+ymin = min(min(ys), -0.5)
+ymax = max(max(ys), 0.5)
+scene.center = vec((a+bmax)/2, (ymin+ymax)/2, 0)
+scene.range = max(bmax-a, ymax-ymin)*0.58
+scene.autoscale = False
+
+# 축
+curve(pos=[vec(a,0,0), vec(bmax,0,0)], color=color.white)
+curve(pos=[vec(0,ymin,0), vec(0,ymax,0)], color=color.white)
+
+# 함수 그래프
+fc = curve(color=color.cyan, radius=0.012)
+for x in xs:
+    fc.append(pos=vec(x, f(x), 0))
+
+# 누적 적분을 나타낼 막대
+bars = []
+marker = sphere(pos=vec(a,f(a),0), radius=0.06, color=color.yellow)
+info = label(pos=vec((a+bmax)/2, ymax*0.9, 0), text=&quot;&quot;, box=False, color=color.white)
+
+area = 0
+x = a
+while x &lt; bmax:
+    rate(45)
+    y = f(x)
+    area += y*dx
+
+    # 넓이 막대: 양수는 초록, 음수는 빨강
+    c = color.green if y &gt;= 0 else color.red
+    h = abs(y)
+    bar = box(pos=vec(x+dx/2, y/2, -0.05),
+              size=vec(dx*0.88, h, 0.05),
+              color=c, opacity=0.45)
+    bars.append(bar)
+
+    marker.pos = vec(x, y, 0.05)
+    info.text = &quot;b = &quot; + str(round(x,2)) + &quot;    integral ≈ &quot; + str(round(area,5))
+    x += dx</code></pre>
+  <details>
+    <summary>수업용 상세 해설</summary>
+    <div class="explain">
+      <p><b>관찰 포인트 1.</b> <code>rate()</code>가 반복문의 진행 속도를 제한하여 그래프나 적분값이 시간에 따라 변하는 모습을 보여 줍니다.</p>
+      <p><b>관찰 포인트 2.</b> 정적분은 작은 구간의 넓이 <code>f(x)*dx</code>를 계속 더하는 방식으로 수치적으로 근사합니다.</p>
+      <p><b>관찰 포인트 3.</b> 함수가 x축 아래에 있으면 부호 있는 넓이는 음수이므로 누적값이 감소할 수 있습니다.</p>
+      <p><b>탐구 과제.</b> 구간, 함수식, <code>dx</code>, 애니메이션 속도를 바꾸고 근삿값이 어떻게 달라지는지 비교해 보세요.</p>
+    </div>
+  </details>
+</section>
+<section class="card" id="ex11">
+  <div class="badge">예제 11</div>
+  <h2>11. sin(x²) 프레넬형 적분</h2>
+  <div class="formula">F(b)=∫₀ᵇsin(x²)dx</div>
+  <p class="concept"><b>핵심:</b> 진동수가 증가하는 함수의 누적 적분</p>
+  <div class="actions">
+    <button onclick="copyCode('code11', this)">코드 복사</button>
+    <button class="secondary" onclick="openWebVPython()">Web VPython 열기</button>
+  </div>
+  <pre><code id="code11">Web VPython 3.2
+scene.width = 900
+scene.height = 420
+scene.background = color.black
+scene.title = &quot;11. sin(x²) 프레넬형 적분\nF(b)=∫₀ᵇsin(x²)dx\n&quot;
+
+a = 0
+bmax = 5
+dx = 0.02
+
+# 함수 정의
+def f(x):
+    return sin(x*x)
+
+# 좌표 범위를 계산하기 위한 표본값
+xs = arange(a, bmax+dx, dx)
+ys = [f(x) for x in xs]
+ymin = min(min(ys), -0.5)
+ymax = max(max(ys), 0.5)
+scene.center = vec((a+bmax)/2, (ymin+ymax)/2, 0)
+scene.range = max(bmax-a, ymax-ymin)*0.58
+scene.autoscale = False
+
+# 축
+curve(pos=[vec(a,0,0), vec(bmax,0,0)], color=color.white)
+curve(pos=[vec(0,ymin,0), vec(0,ymax,0)], color=color.white)
+
+# 함수 그래프
+fc = curve(color=color.cyan, radius=0.012)
+for x in xs:
+    fc.append(pos=vec(x, f(x), 0))
+
+# 누적 적분을 나타낼 막대
+bars = []
+marker = sphere(pos=vec(a,f(a),0), radius=0.06, color=color.yellow)
+info = label(pos=vec((a+bmax)/2, ymax*0.9, 0), text=&quot;&quot;, box=False, color=color.white)
+
+area = 0
+x = a
+while x &lt; bmax:
+    rate(45)
+    y = f(x)
+    area += y*dx
+
+    # 넓이 막대: 양수는 초록, 음수는 빨강
+    c = color.green if y &gt;= 0 else color.red
+    h = abs(y)
+    bar = box(pos=vec(x+dx/2, y/2, -0.05),
+              size=vec(dx*0.88, h, 0.05),
+              color=c, opacity=0.45)
+    bars.append(bar)
+
+    marker.pos = vec(x, y, 0.05)
+    info.text = &quot;b = &quot; + str(round(x,2)) + &quot;    integral ≈ &quot; + str(round(area,5))
+    x += dx</code></pre>
+  <details>
+    <summary>수업용 상세 해설</summary>
+    <div class="explain">
+      <p><b>관찰 포인트 1.</b> <code>rate()</code>가 반복문의 진행 속도를 제한하여 그래프나 적분값이 시간에 따라 변하는 모습을 보여 줍니다.</p>
+      <p><b>관찰 포인트 2.</b> 정적분은 작은 구간의 넓이 <code>f(x)*dx</code>를 계속 더하는 방식으로 수치적으로 근사합니다.</p>
+      <p><b>관찰 포인트 3.</b> 함수가 x축 아래에 있으면 부호 있는 넓이는 음수이므로 누적값이 감소할 수 있습니다.</p>
+      <p><b>탐구 과제.</b> 구간, 함수식, <code>dx</code>, 애니메이션 속도를 바꾸고 근삿값이 어떻게 달라지는지 비교해 보세요.</p>
+    </div>
+  </details>
+</section>
+<section class="card" id="ex12">
+  <div class="badge">예제 12</div>
+  <h2>12. 감쇠진동</h2>
+  <div class="formula">F(b)=∫₀ᵇe^(-0.2x)sin(3x)dx</div>
+  <p class="concept"><b>핵심:</b> 진동과 감쇠가 누적값에 미치는 영향</p>
+  <div class="actions">
+    <button onclick="copyCode('code12', this)">코드 복사</button>
+    <button class="secondary" onclick="openWebVPython()">Web VPython 열기</button>
+  </div>
+  <pre><code id="code12">Web VPython 3.2
+scene.width = 900
+scene.height = 420
+scene.background = color.black
+scene.title = &quot;12. 감쇠진동\nF(b)=∫₀ᵇe^(-0.2x)sin(3x)dx\n&quot;
+
+a = 0
+bmax = 12
+dx = 0.03
+
+# 함수 정의
+def f(x):
+    return exp(-0.2*x)*sin(3*x)
+
+# 좌표 범위를 계산하기 위한 표본값
+xs = arange(a, bmax+dx, dx)
+ys = [f(x) for x in xs]
+ymin = min(min(ys), -0.5)
+ymax = max(max(ys), 0.5)
+scene.center = vec((a+bmax)/2, (ymin+ymax)/2, 0)
+scene.range = max(bmax-a, ymax-ymin)*0.58
+scene.autoscale = False
+
+# 축
+curve(pos=[vec(a,0,0), vec(bmax,0,0)], color=color.white)
+curve(pos=[vec(0,ymin,0), vec(0,ymax,0)], color=color.white)
+
+# 함수 그래프
+fc = curve(color=color.cyan, radius=0.012)
+for x in xs:
+    fc.append(pos=vec(x, f(x), 0))
+
+# 누적 적분을 나타낼 막대
+bars = []
+marker = sphere(pos=vec(a,f(a),0), radius=0.06, color=color.yellow)
+info = label(pos=vec((a+bmax)/2, ymax*0.9, 0), text=&quot;&quot;, box=False, color=color.white)
+
+area = 0
+x = a
+while x &lt; bmax:
+    rate(45)
+    y = f(x)
+    area += y*dx
+
+    # 넓이 막대: 양수는 초록, 음수는 빨강
+    c = color.green if y &gt;= 0 else color.red
+    h = abs(y)
+    bar = box(pos=vec(x+dx/2, y/2, -0.05),
+              size=vec(dx*0.88, h, 0.05),
+              color=c, opacity=0.45)
+    bars.append(bar)
+
+    marker.pos = vec(x, y, 0.05)
+    info.text = &quot;b = &quot; + str(round(x,2)) + &quot;    integral ≈ &quot; + str(round(area,5))
+    x += dx</code></pre>
+  <details>
+    <summary>수업용 상세 해설</summary>
+    <div class="explain">
+      <p><b>관찰 포인트 1.</b> <code>rate()</code>가 반복문의 진행 속도를 제한하여 그래프나 적분값이 시간에 따라 변하는 모습을 보여 줍니다.</p>
+      <p><b>관찰 포인트 2.</b> 정적분은 작은 구간의 넓이 <code>f(x)*dx</code>를 계속 더하는 방식으로 수치적으로 근사합니다.</p>
+      <p><b>관찰 포인트 3.</b> 함수가 x축 아래에 있으면 부호 있는 넓이는 음수이므로 누적값이 감소할 수 있습니다.</p>
+      <p><b>탐구 과제.</b> 구간, 함수식, <code>dx</code>, 애니메이션 속도를 바꾸고 근삿값이 어떻게 달라지는지 비교해 보세요.</p>
+    </div>
+  </details>
+</section>
+<section class="card" id="ex13">
+  <div class="badge">예제 13</div>
+  <h2>13. 움직이는 구간 [a,b] 적분</h2>
+  <div class="formula">I(t)=∫ₜᵗ⁺² sin(x)dx</div>
+  <p class="concept"><b>핵심:</b> 적분구간 자체가 이동하는 Leibniz형 예제</p>
+  <div class="actions">
+    <button onclick="copyCode('code13', this)">코드 복사</button>
+    <button class="secondary" onclick="openWebVPython()">Web VPython 열기</button>
+  </div>
+  <pre><code id="code13">Web VPython 3.2
+scene.width=900
+scene.height=420
+scene.background=color.black
+scene.title=&quot;움직이는 구간 [t,t+2]에서 sin(x)의 정적분\n&quot;
+scene.center=vec(3,0,0)
+scene.range=6
+scene.autoscale=False
+
+curve(pos=[vec(-2,0,0),vec(8,0,0)],color=color.white)
+fc=curve(color=color.cyan,radius=0.012)
+for x in arange(-2,8.01,0.02):
+    fc.append(pos=vec(x,sin(x),0))
+
+left=box(pos=vec(0,0,0),size=vec(0.04,2.4,0.04),color=color.yellow)
+right=box(pos=vec(2,0,0),size=vec(0.04,2.4,0.04),color=color.orange)
+info=label(pos=vec(3,1.8,0),text=&quot;&quot;,box=False)
+
+t=-1.5
+while True:
+    rate(40)
+    if t&gt;5.5: t=-1.5
+    a=t
+    b=t+2
+    dx=0.01
+    s=0
+    x=a
+    while x&lt;b:
+        s += sin(x)*dx
+        x += dx
+    left.pos.x=a
+    right.pos.x=b
+    info.text=&quot;t=&quot;+str(round(t,2))+&quot;   integral≈&quot;+str(round(s,5))
+    t += 0.03</code></pre>
+  <details>
+    <summary>수업용 상세 해설</summary>
+    <div class="explain">
+      <p><b>관찰 포인트 1.</b> <code>rate()</code>가 반복문의 진행 속도를 제한하여 그래프나 적분값이 시간에 따라 변하는 모습을 보여 줍니다.</p>
+      <p><b>관찰 포인트 2.</b> 정적분은 작은 구간의 넓이 <code>f(x)*dx</code>를 계속 더하는 방식으로 수치적으로 근사합니다.</p>
+      <p><b>관찰 포인트 3.</b> 함수가 x축 아래에 있으면 부호 있는 넓이는 음수이므로 누적값이 감소할 수 있습니다.</p>
+      <p><b>탐구 과제.</b> 구간, 함수식, <code>dx</code>, 애니메이션 속도를 바꾸고 근삿값이 어떻게 달라지는지 비교해 보세요.</p>
+    </div>
+  </details>
+</section>
+<section class="card" id="ex14">
+  <div class="badge">예제 14</div>
+  <h2>14. 리만합 n 증가</h2>
+  <div class="formula">∫₀³x²dx ≈ Σ f(xᵢ*)Δx</div>
+  <p class="concept"><b>핵심:</b> 분할 수가 증가하며 근사값이 9에 접근</p>
+  <div class="actions">
+    <button onclick="copyCode('code14', this)">코드 복사</button>
+    <button class="secondary" onclick="openWebVPython()">Web VPython 열기</button>
+  </div>
+  <pre><code id="code14">Web VPython 3.2
+scene.width=900
+scene.height=430
+scene.background=color.black
+scene.title=&quot;리만합: n이 증가할수록 ∫0^3 x² dx = 9 에 접근\n&quot;
+scene.center=vec(1.5,4.5,0)
+scene.range=5
+scene.autoscale=False
+curve(pos=[vec(0,0,0),vec(3.3,0,0)],color=color.white)
+fc=curve(color=color.cyan,radius=0.015)
+for x in arange(0,3.01,0.02):
+    fc.append(pos=vec(x,x*x,0))
+info=label(pos=vec(1.5,10,0),text=&quot;&quot;,box=False)
+
+for n in range(2,61):
+    rate(3)
+    dx=3/n
+    rects=[]
+    s=0
+    for i in range(n):
+        x=(i+0.5)*dx
+        y=x*x
+        s += y*dx
+        rects.append(box(pos=vec(x,y/2,-0.04), size=vec(dx*0.94,y,0.04),
+                         color=color.green,opacity=0.38))
+    info.text=&quot;n=&quot;+str(n)+&quot;   midpoint sum=&quot;+str(round(s,6))+&quot;   error=&quot;+str(round(abs(9-s),6))
+    sleep(0.08)
+    for r in rects:
+        r.visible=False</code></pre>
+  <details>
+    <summary>수업용 상세 해설</summary>
+    <div class="explain">
+      <p><b>관찰 포인트 1.</b> <code>rate()</code>가 반복문의 진행 속도를 제한하여 그래프나 적분값이 시간에 따라 변하는 모습을 보여 줍니다.</p>
+      <p><b>관찰 포인트 2.</b> 정적분은 작은 구간의 넓이 <code>f(x)*dx</code>를 계속 더하는 방식으로 수치적으로 근사합니다.</p>
+      <p><b>관찰 포인트 3.</b> 함수가 x축 아래에 있으면 부호 있는 넓이는 음수이므로 누적값이 감소할 수 있습니다.</p>
+      <p><b>탐구 과제.</b> 구간, 함수식, <code>dx</code>, 애니메이션 속도를 바꾸고 근삿값이 어떻게 달라지는지 비교해 보세요.</p>
+    </div>
+  </details>
+</section>
+<section class="card" id="ex15">
+  <div class="badge">예제 15</div>
+  <h2>15. 좌·우·중점 리만합 비교</h2>
+  <div class="formula">∫₀²eˣdx</div>
+  <p class="concept"><b>핵심:</b> 표본점 선택에 따른 오차 비교</p>
+  <div class="actions">
+    <button onclick="copyCode('code15', this)">코드 복사</button>
+    <button class="secondary" onclick="openWebVPython()">Web VPython 열기</button>
+  </div>
+  <pre><code id="code15">Web VPython 3.2
+g=graph(title=&quot;Left / Right / Midpoint Riemann Sum Error&quot;, xtitle=&quot;n&quot;, ytitle=&quot;absolute error&quot;)
+L=gcurve(color=color.red,label=&quot;Left&quot;)
+R=gcurve(color=color.orange,label=&quot;Right&quot;)
+M=gcurve(color=color.green,label=&quot;Midpoint&quot;)
+exact=exp(2)-1
+
+for n in range(2,101):
+    rate(20)
+    dx=2/n
+    sl=0
+    sr=0
+    sm=0
+    for i in range(n):
+        sl += exp(i*dx)*dx
+        sr += exp((i+1)*dx)*dx
+        sm += exp((i+0.5)*dx)*dx
+    L.plot(n,abs(exact-sl))
+    R.plot(n,abs(exact-sr))
+    M.plot(n,abs(exact-sm))</code></pre>
+  <details>
+    <summary>수업용 상세 해설</summary>
+    <div class="explain">
+      <p><b>관찰 포인트 1.</b> <code>rate()</code>가 반복문의 진행 속도를 제한하여 그래프나 적분값이 시간에 따라 변하는 모습을 보여 줍니다.</p>
+      <p><b>관찰 포인트 2.</b> 정적분은 작은 구간의 넓이 <code>f(x)*dx</code>를 계속 더하는 방식으로 수치적으로 근사합니다.</p>
+      <p><b>관찰 포인트 3.</b> 함수가 x축 아래에 있으면 부호 있는 넓이는 음수이므로 누적값이 감소할 수 있습니다.</p>
+      <p><b>탐구 과제.</b> 구간, 함수식, <code>dx</code>, 애니메이션 속도를 바꾸고 근삿값이 어떻게 달라지는지 비교해 보세요.</p>
+    </div>
+  </details>
+</section>
+<section class="card" id="ex16">
+  <div class="badge">예제 16</div>
+  <h2>16. 사다리꼴 공식 수렴</h2>
+  <div class="formula">∫₀^π sin(x)dx=2</div>
+  <p class="concept"><b>핵심:</b> 사다리꼴 공식의 수렴을 오차 그래프로 관찰</p>
+  <div class="actions">
+    <button onclick="copyCode('code16', this)">코드 복사</button>
+    <button class="secondary" onclick="openWebVPython()">Web VPython 열기</button>
+  </div>
+  <pre><code id="code16">Web VPython 3.2
+g=graph(title=&quot;Trapezoidal Rule: ∫0^π sin(x) dx&quot;, xtitle=&quot;n&quot;, ytitle=&quot;approximation&quot;)
+approx=gcurve(color=color.cyan,label=&quot;trapezoid&quot;)
+exact=gcurve(color=color.yellow,label=&quot;exact = 2&quot;)
+
+for n in range(2,121):
+    rate(25)
+    dx=pi/n
+    s=0.5*sin(0)+0.5*sin(pi)
+    for i in range(1,n):
+        s += sin(i*dx)
+    T=s*dx
+    approx.plot(n,T)
+    exact.plot(n,2)</code></pre>
+  <details>
+    <summary>수업용 상세 해설</summary>
+    <div class="explain">
+      <p><b>관찰 포인트 1.</b> <code>rate()</code>가 반복문의 진행 속도를 제한하여 그래프나 적분값이 시간에 따라 변하는 모습을 보여 줍니다.</p>
+      <p><b>관찰 포인트 2.</b> 정적분은 작은 구간의 넓이 <code>f(x)*dx</code>를 계속 더하는 방식으로 수치적으로 근사합니다.</p>
+      <p><b>관찰 포인트 3.</b> 함수가 x축 아래에 있으면 부호 있는 넓이는 음수이므로 누적값이 감소할 수 있습니다.</p>
+      <p><b>탐구 과제.</b> 구간, 함수식, <code>dx</code>, 애니메이션 속도를 바꾸고 근삿값이 어떻게 달라지는지 비교해 보세요.</p>
+    </div>
+  </details>
+</section>
+<section class="card" id="ex17">
+  <div class="badge">예제 17</div>
+  <h2>17. 심프슨 공식 수렴</h2>
+  <div class="formula">∫₀^π sin(x)dx=2</div>
+  <p class="concept"><b>핵심:</b> 짝수 n에서 Simpson 1/3 공식의 빠른 수렴</p>
+  <div class="actions">
+    <button onclick="copyCode('code17', this)">코드 복사</button>
+    <button class="secondary" onclick="openWebVPython()">Web VPython 열기</button>
+  </div>
+  <pre><code id="code17">Web VPython 3.2
+g=graph(title=&quot;Simpson Rule Convergence&quot;,xtitle=&quot;n&quot;,ytitle=&quot;absolute error&quot;)
+err=gcurve(color=color.magenta,label=&quot;Simpson error&quot;)
+
+for n in range(2,82,2):
+    rate(12)
+    h=pi/n
+    s=sin(0)+sin(pi)
+    for i in range(1,n):
+        if i%2==1:
+            s += 4*sin(i*h)
+        else:
+            s += 2*sin(i*h)
+    S=s*h/3
+    err.plot(n,abs(2-S))</code></pre>
+  <details>
+    <summary>수업용 상세 해설</summary>
+    <div class="explain">
+      <p><b>관찰 포인트 1.</b> <code>rate()</code>가 반복문의 진행 속도를 제한하여 그래프나 적분값이 시간에 따라 변하는 모습을 보여 줍니다.</p>
+      <p><b>관찰 포인트 2.</b> 정적분은 작은 구간의 넓이 <code>f(x)*dx</code>를 계속 더하는 방식으로 수치적으로 근사합니다.</p>
+      <p><b>관찰 포인트 3.</b> 함수가 x축 아래에 있으면 부호 있는 넓이는 음수이므로 누적값이 감소할 수 있습니다.</p>
+      <p><b>탐구 과제.</b> 구간, 함수식, <code>dx</code>, 애니메이션 속도를 바꾸고 근삿값이 어떻게 달라지는지 비교해 보세요.</p>
+    </div>
+  </details>
+</section>
+<section class="card" id="ex18">
+  <div class="badge">예제 18</div>
+  <h2>18. 미적분학의 기본정리</h2>
+  <div class="formula">F(x)=∫₀ˣcos(t)dt,  F&#x27;(x)=cos(x)</div>
+  <p class="concept"><b>핵심:</b> 누적함수 F와 원함수 f의 변화율 관계</p>
+  <div class="actions">
+    <button onclick="copyCode('code18', this)">코드 복사</button>
+    <button class="secondary" onclick="openWebVPython()">Web VPython 열기</button>
+  </div>
+  <pre><code id="code18">Web VPython 3.2
+g=graph(title=&quot;FTC: F(x)=∫0^x cos(t)dt and f(x)=cos(x)&quot;,xtitle=&quot;x&quot;,ytitle=&quot;value&quot;)
+fcurve=gcurve(color=color.cyan,label=&quot;f(x)=cos(x)&quot;)
+Fcurve=gcurve(color=color.yellow,label=&quot;F(x) numerical&quot;)
+
+dx=0.01
+area=0
+x=0
+while x&lt;=2*pi:
+    rate(60)
+    area += cos(x)*dx
+    fcurve.plot(x,cos(x))
+    Fcurve.plot(x,area)
+    x += dx</code></pre>
+  <details>
+    <summary>수업용 상세 해설</summary>
+    <div class="explain">
+      <p><b>관찰 포인트 1.</b> <code>rate()</code>가 반복문의 진행 속도를 제한하여 그래프나 적분값이 시간에 따라 변하는 모습을 보여 줍니다.</p>
+      <p><b>관찰 포인트 2.</b> 정적분은 작은 구간의 넓이 <code>f(x)*dx</code>를 계속 더하는 방식으로 수치적으로 근사합니다.</p>
+      <p><b>관찰 포인트 3.</b> 함수가 x축 아래에 있으면 부호 있는 넓이는 음수이므로 누적값이 감소할 수 있습니다.</p>
+      <p><b>탐구 과제.</b> 구간, 함수식, <code>dx</code>, 애니메이션 속도를 바꾸고 근삿값이 어떻게 달라지는지 비교해 보세요.</p>
+    </div>
+  </details>
+</section>
+<section class="card" id="ex19">
+  <div class="badge">예제 19</div>
+  <h2>19. 곡선 사이 넓이</h2>
+  <div class="formula">A(b)=∫₀ᵇ[(2x+2)-x²]dx</div>
+  <p class="concept"><b>핵심:</b> 위 함수와 아래 함수의 차이를 적분</p>
+  <div class="actions">
+    <button onclick="copyCode('code19', this)">코드 복사</button>
+    <button class="secondary" onclick="openWebVPython()">Web VPython 열기</button>
+  </div>
+  <pre><code id="code19">Web VPython 3.2
+scene.width=900
+scene.height=430
+scene.background=color.black
+scene.title=&quot;Area between y=2x+2 and y=x²\n&quot;
+scene.center=vec(1.5,2.5,0)
+scene.range=4
+scene.autoscale=False
+top=curve(color=color.yellow,radius=0.012)
+bot=curve(color=color.cyan,radius=0.012)
+for x in arange(0,3.01,0.02):
+    top.append(pos=vec(x,2*x+2,0))
+    bot.append(pos=vec(x,x*x,0))
+info=label(pos=vec(1.5,7,0),text=&quot;&quot;,box=False)
+A=0
+dx=0.02
+x=0
+while x&lt;=2:
+    rate(35)
+    y1=2*x+2
+    y2=x*x
+    A += (y1-y2)*dx
+    box(pos=vec(x,(y1+y2)/2,-0.04),size=vec(dx*0.9,y1-y2,0.04),
+        color=color.green,opacity=0.4)
+    info.text=&quot;b=&quot;+str(round(x,2))+&quot;   area≈&quot;+str(round(A,5))
+    x += dx</code></pre>
+  <details>
+    <summary>수업용 상세 해설</summary>
+    <div class="explain">
+      <p><b>관찰 포인트 1.</b> <code>rate()</code>가 반복문의 진행 속도를 제한하여 그래프나 적분값이 시간에 따라 변하는 모습을 보여 줍니다.</p>
+      <p><b>관찰 포인트 2.</b> 정적분은 작은 구간의 넓이 <code>f(x)*dx</code>를 계속 더하는 방식으로 수치적으로 근사합니다.</p>
+      <p><b>관찰 포인트 3.</b> 함수가 x축 아래에 있으면 부호 있는 넓이는 음수이므로 누적값이 감소할 수 있습니다.</p>
+      <p><b>탐구 과제.</b> 구간, 함수식, <code>dx</code>, 애니메이션 속도를 바꾸고 근삿값이 어떻게 달라지는지 비교해 보세요.</p>
+    </div>
+  </details>
+</section>
+<section class="card" id="ex20">
+  <div class="badge">예제 20</div>
+  <h2>20. 평균값 정리와 함수 평균</h2>
+  <div class="formula">f_avg=(1/(b-a))∫ₐᵇf(x)dx</div>
+  <p class="concept"><b>핵심:</b> 평균 높이와 같은 넓이의 직사각형</p>
+  <div class="actions">
+    <button onclick="copyCode('code20', this)">코드 복사</button>
+    <button class="secondary" onclick="openWebVPython()">Web VPython 열기</button>
+  </div>
+  <pre><code id="code20">Web VPython 3.2
+scene.width=900
+scene.height=430
+scene.background=color.black
+scene.title=&quot;Integral average value of f(x)=1+sin(x) on [0,b]\n&quot;
+scene.center=vec(3.2,1,0)
+scene.range=4.5
+scene.autoscale=False
+fc=curve(color=color.cyan,radius=0.012)
+for x in arange(0,2*pi+0.01,0.02):
+    fc.append(pos=vec(x,1+sin(x),0))
+avgline=curve(pos=[vec(0,0,0),vec(0,0,0)],color=color.yellow,radius=0.018)
+info=label(pos=vec(pi,2.8,0),text=&quot;&quot;,box=False)
+
+dx=0.01
+A=0
+b=0.05
+while b&lt;=2*pi:
+    rate(50)
+    A += (1+sin(b))*dx
+    avg=A/b
+    avgline.clear()
+    avgline.append(pos=vec(0,avg,0.05))
+    avgline.append(pos=vec(b,avg,0.05))
+    info.text=&quot;b=&quot;+str(round(b,2))+&quot;   average≈&quot;+str(round(avg,4))
+    b += dx</code></pre>
+  <details>
+    <summary>수업용 상세 해설</summary>
+    <div class="explain">
+      <p><b>관찰 포인트 1.</b> <code>rate()</code>가 반복문의 진행 속도를 제한하여 그래프나 적분값이 시간에 따라 변하는 모습을 보여 줍니다.</p>
+      <p><b>관찰 포인트 2.</b> 정적분은 작은 구간의 넓이 <code>f(x)*dx</code>를 계속 더하는 방식으로 수치적으로 근사합니다.</p>
+      <p><b>관찰 포인트 3.</b> 함수가 x축 아래에 있으면 부호 있는 넓이는 음수이므로 누적값이 감소할 수 있습니다.</p>
+      <p><b>탐구 과제.</b> 구간, 함수식, <code>dx</code>, 애니메이션 속도를 바꾸고 근삿값이 어떻게 달라지는지 비교해 보세요.</p>
+    </div>
+  </details>
+</section>
+<section class="card" id="ex21">
+  <div class="badge">예제 21</div>
+  <h2>21. 원판법 회전체 부피 누적</h2>
+  <div class="formula">V(b)=π∫₀ᵇ(√x)²dx</div>
+  <p class="concept"><b>핵심:</b> 정적분으로 회전체 부피를 누적</p>
+  <div class="actions">
+    <button onclick="copyCode('code21', this)">코드 복사</button>
+    <button class="secondary" onclick="openWebVPython()">Web VPython 열기</button>
+  </div>
+  <pre><code id="code21">Web VPython 3.2
+scene.width=900
+scene.height=430
+scene.background=color.black
+scene.title=&quot;Disk method: rotate y=sqrt(x) about x-axis\n&quot;
+scene.center=vec(2,0,0)
+scene.range=4
+scene.autoscale=False
+curve(pos=[vec(0,0,0),vec(4.3,0,0)],color=color.white)
+info=label(pos=vec(2,2.7,0),text=&quot;&quot;,box=False)
+
+dx=0.04
+V=0
+x=0.02
+while x&lt;=4:
+    rate(30)
+    r=sqrt(x)
+    V += pi*r*r*dx
+    cylinder(pos=vec(x,0,0),axis=vec(dx,0,0),radius=r,
+             color=color.cyan,opacity=0.15)
+    info.text=&quot;b=&quot;+str(round(x,2))+&quot;   volume≈&quot;+str(round(V,4))
+    x += dx</code></pre>
+  <details>
+    <summary>수업용 상세 해설</summary>
+    <div class="explain">
+      <p><b>관찰 포인트 1.</b> <code>rate()</code>가 반복문의 진행 속도를 제한하여 그래프나 적분값이 시간에 따라 변하는 모습을 보여 줍니다.</p>
+      <p><b>관찰 포인트 2.</b> 정적분은 작은 구간의 넓이 <code>f(x)*dx</code>를 계속 더하는 방식으로 수치적으로 근사합니다.</p>
+      <p><b>관찰 포인트 3.</b> 함수가 x축 아래에 있으면 부호 있는 넓이는 음수이므로 누적값이 감소할 수 있습니다.</p>
+      <p><b>탐구 과제.</b> 구간, 함수식, <code>dx</code>, 애니메이션 속도를 바꾸고 근삿값이 어떻게 달라지는지 비교해 보세요.</p>
+    </div>
+  </details>
+</section>
+<section class="card" id="ex22">
+  <div class="badge">예제 22</div>
+  <h2>22. 원통껍질법 부피</h2>
+  <div class="formula">V=2π∫₀²x(4-x²)dx</div>
+  <p class="concept"><b>핵심:</b> shell method를 3D 원통껍질로 표현</p>
+  <div class="actions">
+    <button onclick="copyCode('code22', this)">코드 복사</button>
+    <button class="secondary" onclick="openWebVPython()">Web VPython 열기</button>
+  </div>
+  <pre><code id="code22">Web VPython 3.2
+scene.width=900
+scene.height=430
+scene.background=color.black
+scene.title=&quot;Cylindrical shell method: y=4-x², 0≤x≤2\n&quot;
+scene.center=vec(0,2,0)
+scene.range=4.5
+scene.autoscale=False
+info=label(pos=vec(0,5,0),text=&quot;&quot;,box=False)
+
+dx=0.04
+V=0
+x=dx
+while x&lt;=2:
+    rate(18)
+    h=4-x*x
+    dV=2*pi*x*h*dx
+    V += dV
+    cylinder(pos=vec(0,0,0),axis=vec(0,h,0),radius=x,
+             thickness=dx, color=color.orange,opacity=0.22)
+    info.text=&quot;radius=&quot;+str(round(x,2))+&quot;   accumulated V≈&quot;+str(round(V,4))
+    x += dx</code></pre>
+  <details>
+    <summary>수업용 상세 해설</summary>
+    <div class="explain">
+      <p><b>관찰 포인트 1.</b> <code>rate()</code>가 반복문의 진행 속도를 제한하여 그래프나 적분값이 시간에 따라 변하는 모습을 보여 줍니다.</p>
+      <p><b>관찰 포인트 2.</b> 정적분은 작은 구간의 넓이 <code>f(x)*dx</code>를 계속 더하는 방식으로 수치적으로 근사합니다.</p>
+      <p><b>관찰 포인트 3.</b> 함수가 x축 아래에 있으면 부호 있는 넓이는 음수이므로 누적값이 감소할 수 있습니다.</p>
+      <p><b>탐구 과제.</b> 구간, 함수식, <code>dx</code>, 애니메이션 속도를 바꾸고 근삿값이 어떻게 달라지는지 비교해 보세요.</p>
+    </div>
+  </details>
+</section>
+<section class="card" id="ex23">
+  <div class="badge">예제 23</div>
+  <h2>23. 정규분포 누적확률</h2>
+  <div class="formula">P(0≤X≤b)=∫₀ᵇ φ(x)dx</div>
+  <p class="concept"><b>핵심:</b> 정적분과 누적분포함수(CDF)의 관계</p>
+  <div class="actions">
+    <button onclick="copyCode('code23', this)">코드 복사</button>
+    <button class="secondary" onclick="openWebVPython()">Web VPython 열기</button>
+  </div>
+  <pre><code id="code23">Web VPython 3.2
+g=graph(title=&quot;Standard normal: density and accumulated probability&quot;,xtitle=&quot;x&quot;,ytitle=&quot;value&quot;)
+pdf=gcurve(color=color.cyan,label=&quot;pdf&quot;)
+cdf=gcurve(color=color.yellow,label=&quot;∫0^x pdf&quot;)
+
+def phi(x):
+    return exp(-x*x/2)/sqrt(2*pi)
+
+dx=0.01
+A=0
+x=0
+while x&lt;=4:
+    rate(70)
+    A += phi(x)*dx
+    pdf.plot(x,phi(x))
+    cdf.plot(x,A)
+    x += dx</code></pre>
+  <details>
+    <summary>수업용 상세 해설</summary>
+    <div class="explain">
+      <p><b>관찰 포인트 1.</b> <code>rate()</code>가 반복문의 진행 속도를 제한하여 그래프나 적분값이 시간에 따라 변하는 모습을 보여 줍니다.</p>
+      <p><b>관찰 포인트 2.</b> 정적분은 작은 구간의 넓이 <code>f(x)*dx</code>를 계속 더하는 방식으로 수치적으로 근사합니다.</p>
+      <p><b>관찰 포인트 3.</b> 함수가 x축 아래에 있으면 부호 있는 넓이는 음수이므로 누적값이 감소할 수 있습니다.</p>
+      <p><b>탐구 과제.</b> 구간, 함수식, <code>dx</code>, 애니메이션 속도를 바꾸고 근삿값이 어떻게 달라지는지 비교해 보세요.</p>
+    </div>
+  </details>
+</section>
+<section class="card" id="ex24">
+  <div class="badge">예제 24</div>
+  <h2>24. 로지스틱 함수 누적</h2>
+  <div class="formula">F(b)=∫₋₆ᵇ L(x)dx</div>
+  <p class="concept"><b>핵심:</b> S자 함수의 누적량을 움직이며 관찰</p>
+  <div class="actions">
+    <button onclick="copyCode('code24', this)">코드 복사</button>
+    <button class="secondary" onclick="openWebVPython()">Web VPython 열기</button>
+  </div>
+  <pre><code id="code24">Web VPython 3.2
+g=graph(title=&quot;Integral of logistic function&quot;,xtitle=&quot;x&quot;,ytitle=&quot;value&quot;)
+f=gcurve(color=color.cyan,label=&quot;L(x)&quot;)
+F=gcurve(color=color.green,label=&quot;accumulated integral&quot;)
+def L(x):
+    return 1/(1+exp(-x))
+dx=0.02
+A=0
+x=-6
+while x&lt;=6:
+    rate(60)
+    A += L(x)*dx
+    f.plot(x,L(x))
+    F.plot(x,A)
+    x += dx</code></pre>
+  <details>
+    <summary>수업용 상세 해설</summary>
+    <div class="explain">
+      <p><b>관찰 포인트 1.</b> <code>rate()</code>가 반복문의 진행 속도를 제한하여 그래프나 적분값이 시간에 따라 변하는 모습을 보여 줍니다.</p>
+      <p><b>관찰 포인트 2.</b> 정적분은 작은 구간의 넓이 <code>f(x)*dx</code>를 계속 더하는 방식으로 수치적으로 근사합니다.</p>
+      <p><b>관찰 포인트 3.</b> 함수가 x축 아래에 있으면 부호 있는 넓이는 음수이므로 누적값이 감소할 수 있습니다.</p>
+      <p><b>탐구 과제.</b> 구간, 함수식, <code>dx</code>, 애니메이션 속도를 바꾸고 근삿값이 어떻게 달라지는지 비교해 보세요.</p>
+    </div>
+  </details>
+</section>
+<section class="card" id="ex25">
+  <div class="badge">예제 25</div>
+  <h2>25. 매개변수 a 변화</h2>
+  <div class="formula">I(a)=∫₀³e^(-ax)dx</div>
+  <p class="concept"><b>핵심:</b> 매개변수 변화가 정적분 값에 미치는 영향</p>
+  <div class="actions">
+    <button onclick="copyCode('code25', this)">코드 복사</button>
+    <button class="secondary" onclick="openWebVPython()">Web VPython 열기</button>
+  </div>
+  <pre><code id="code25">Web VPython 3.2
+g=graph(title=&quot;Parameter integral I(a)=∫0^3 exp(-a x) dx&quot;,xtitle=&quot;a&quot;,ytitle=&quot;I(a)&quot;)
+gc=gcurve(color=color.yellow,label=&quot;numerical I(a)&quot;)
+a=0.1
+while a&lt;=4:
+    rate(20)
+    dx=0.005
+    x=0
+    s=0
+    while x&lt;=3:
+        s += exp(-a*x)*dx
+        x += dx
+    gc.plot(a,s)
+    a += 0.03</code></pre>
+  <details>
+    <summary>수업용 상세 해설</summary>
+    <div class="explain">
+      <p><b>관찰 포인트 1.</b> <code>rate()</code>가 반복문의 진행 속도를 제한하여 그래프나 적분값이 시간에 따라 변하는 모습을 보여 줍니다.</p>
+      <p><b>관찰 포인트 2.</b> 정적분은 작은 구간의 넓이 <code>f(x)*dx</code>를 계속 더하는 방식으로 수치적으로 근사합니다.</p>
+      <p><b>관찰 포인트 3.</b> 함수가 x축 아래에 있으면 부호 있는 넓이는 음수이므로 누적값이 감소할 수 있습니다.</p>
+      <p><b>탐구 과제.</b> 구간, 함수식, <code>dx</code>, 애니메이션 속도를 바꾸고 근삿값이 어떻게 달라지는지 비교해 보세요.</p>
+    </div>
+  </details>
+</section>
+<section class="card" id="ex26">
+  <div class="badge">예제 26</div>
+  <h2>26. 주파수 k 변화</h2>
+  <div class="formula">I(k)=∫₀^π sin(kx)dx</div>
+  <p class="concept"><b>핵심:</b> 고주파 진동에서 상쇄가 커지는 현상</p>
+  <div class="actions">
+    <button onclick="copyCode('code26', this)">코드 복사</button>
+    <button class="secondary" onclick="openWebVPython()">Web VPython 열기</button>
+  </div>
+  <pre><code id="code26">Web VPython 3.2
+g=graph(title=&quot;Oscillatory integral I(k)=∫0^π sin(kx) dx&quot;,xtitle=&quot;k&quot;,ytitle=&quot;I(k)&quot;)
+gc=gcurve(color=color.cyan,label=&quot;I(k)&quot;)
+k=0.2
+while k&lt;=12:
+    rate(25)
+    dx=0.002
+    x=0
+    s=0
+    while x&lt;=pi:
+        s += sin(k*x)*dx
+        x += dx
+    gc.plot(k,s)
+    k += 0.05</code></pre>
+  <details>
+    <summary>수업용 상세 해설</summary>
+    <div class="explain">
+      <p><b>관찰 포인트 1.</b> <code>rate()</code>가 반복문의 진행 속도를 제한하여 그래프나 적분값이 시간에 따라 변하는 모습을 보여 줍니다.</p>
+      <p><b>관찰 포인트 2.</b> 정적분은 작은 구간의 넓이 <code>f(x)*dx</code>를 계속 더하는 방식으로 수치적으로 근사합니다.</p>
+      <p><b>관찰 포인트 3.</b> 함수가 x축 아래에 있으면 부호 있는 넓이는 음수이므로 누적값이 감소할 수 있습니다.</p>
+      <p><b>탐구 과제.</b> 구간, 함수식, <code>dx</code>, 애니메이션 속도를 바꾸고 근삿값이 어떻게 달라지는지 비교해 보세요.</p>
+    </div>
+  </details>
+</section>
+<section class="card" id="ex27">
+  <div class="badge">예제 27</div>
+  <h2>27. 적분 오차 비교</h2>
+  <div class="formula">Left vs Trapezoid vs Simpson</div>
+  <p class="concept"><b>핵심:</b> 세 수치적분법의 오차 감소 속도 비교</p>
+  <div class="actions">
+    <button onclick="copyCode('code27', this)">코드 복사</button>
+    <button class="secondary" onclick="openWebVPython()">Web VPython 열기</button>
+  </div>
+  <pre><code id="code27">Web VPython 3.2
+g=graph(title=&quot;Numerical integration errors for ∫0^1 exp(x) dx&quot;,xtitle=&quot;n&quot;,ytitle=&quot;absolute error&quot;)
+L=gcurve(color=color.red,label=&quot;Left&quot;)
+T=gcurve(color=color.orange,label=&quot;Trapezoid&quot;)
+S=gcurve(color=color.green,label=&quot;Simpson&quot;)
+exact=exp(1)-1
+
+for n in range(2,82,2):
+    rate(10)
+    h=1/n
+    left=0
+    for i in range(n):
+        left += exp(i*h)*h
+    trap=0.5*(exp(0)+exp(1))
+    for i in range(1,n):
+        trap += exp(i*h)
+    trap *= h
+    sim=exp(0)+exp(1)
+    for i in range(1,n):
+        sim += (4 if i%2==1 else 2)*exp(i*h)
+    sim *= h/3
+    L.plot(n,abs(exact-left))
+    T.plot(n,abs(exact-trap))
+    S.plot(n,abs(exact-sim))</code></pre>
+  <details>
+    <summary>수업용 상세 해설</summary>
+    <div class="explain">
+      <p><b>관찰 포인트 1.</b> <code>rate()</code>가 반복문의 진행 속도를 제한하여 그래프나 적분값이 시간에 따라 변하는 모습을 보여 줍니다.</p>
+      <p><b>관찰 포인트 2.</b> 정적분은 작은 구간의 넓이 <code>f(x)*dx</code>를 계속 더하는 방식으로 수치적으로 근사합니다.</p>
+      <p><b>관찰 포인트 3.</b> 함수가 x축 아래에 있으면 부호 있는 넓이는 음수이므로 누적값이 감소할 수 있습니다.</p>
+      <p><b>탐구 과제.</b> 구간, 함수식, <code>dx</code>, 애니메이션 속도를 바꾸고 근삿값이 어떻게 달라지는지 비교해 보세요.</p>
+    </div>
+  </details>
+</section>
+<section class="card" id="ex28">
+  <div class="badge">예제 28</div>
+  <h2>28. 이동평균 적분</h2>
+  <div class="formula">M(t)=1/2∫ₜ₋₁ᵗ⁺¹ sin(x²)dx</div>
+  <p class="concept"><b>핵심:</b> 적분을 이용한 smoothing/이동평균</p>
+  <div class="actions">
+    <button onclick="copyCode('code28', this)">코드 복사</button>
+    <button class="secondary" onclick="openWebVPython()">Web VPython 열기</button>
+  </div>
+  <pre><code id="code28">Web VPython 3.2
+g=graph(title=&quot;Moving-average integral of sin(x²)&quot;,xtitle=&quot;t&quot;,ytitle=&quot;value&quot;)
+raw=gcurve(color=color.cyan,label=&quot;sin(t²)&quot;)
+avg=gcurve(color=color.yellow,label=&quot;moving average&quot;)
+t=-3
+while t&lt;=3:
+    rate(30)
+    dx=0.01
+    x=t-1
+    s=0
+    while x&lt;=t+1:
+        s += sin(x*x)*dx
+        x += dx
+    raw.plot(t,sin(t*t))
+    avg.plot(t,s/2)
+    t += 0.03</code></pre>
+  <details>
+    <summary>수업용 상세 해설</summary>
+    <div class="explain">
+      <p><b>관찰 포인트 1.</b> <code>rate()</code>가 반복문의 진행 속도를 제한하여 그래프나 적분값이 시간에 따라 변하는 모습을 보여 줍니다.</p>
+      <p><b>관찰 포인트 2.</b> 정적분은 작은 구간의 넓이 <code>f(x)*dx</code>를 계속 더하는 방식으로 수치적으로 근사합니다.</p>
+      <p><b>관찰 포인트 3.</b> 함수가 x축 아래에 있으면 부호 있는 넓이는 음수이므로 누적값이 감소할 수 있습니다.</p>
+      <p><b>탐구 과제.</b> 구간, 함수식, <code>dx</code>, 애니메이션 속도를 바꾸고 근삿값이 어떻게 달라지는지 비교해 보세요.</p>
+    </div>
+  </details>
+</section>
+<section class="card" id="ex29">
+  <div class="badge">예제 29</div>
+  <h2>29. 컨볼루션형 적분</h2>
+  <div class="formula">C(t)=∫e^(-x²)e^(-(t-x)²)dx</div>
+  <p class="concept"><b>핵심:</b> 두 함수가 겹치는 정도를 이동시키며 측정</p>
+  <div class="actions">
+    <button onclick="copyCode('code29', this)">코드 복사</button>
+    <button class="secondary" onclick="openWebVPython()">Web VPython 열기</button>
+  </div>
+  <pre><code id="code29">Web VPython 3.2
+g=graph(title=&quot;Convolution-like integral of two Gaussians&quot;,xtitle=&quot;t&quot;,ytitle=&quot;C(t)&quot;)
+gc=gcurve(color=color.magenta,label=&quot;overlap integral&quot;)
+t=-4
+while t&lt;=4:
+    rate(30)
+    dx=0.02
+    x=-5
+    s=0
+    while x&lt;=5:
+        s += exp(-x*x)*exp(-(t-x)*(t-x))*dx
+        x += dx
+    gc.plot(t,s)
+    t += 0.04</code></pre>
+  <details>
+    <summary>수업용 상세 해설</summary>
+    <div class="explain">
+      <p><b>관찰 포인트 1.</b> <code>rate()</code>가 반복문의 진행 속도를 제한하여 그래프나 적분값이 시간에 따라 변하는 모습을 보여 줍니다.</p>
+      <p><b>관찰 포인트 2.</b> 정적분은 작은 구간의 넓이 <code>f(x)*dx</code>를 계속 더하는 방식으로 수치적으로 근사합니다.</p>
+      <p><b>관찰 포인트 3.</b> 함수가 x축 아래에 있으면 부호 있는 넓이는 음수이므로 누적값이 감소할 수 있습니다.</p>
+      <p><b>탐구 과제.</b> 구간, 함수식, <code>dx</code>, 애니메이션 속도를 바꾸고 근삿값이 어떻게 달라지는지 비교해 보세요.</p>
+    </div>
+  </details>
+</section>
+<section class="card" id="ex30">
+  <div class="badge">예제 30</div>
+  <h2>30. 적분으로 정의된 함수의 접선</h2>
+  <div class="formula">F(x)=∫₀ˣ e^(-t²)dt</div>
+  <p class="concept"><b>핵심:</b> F&#x27;(x)=e^(-x²)를 수치적으로 확인</p>
+  <div class="actions">
+    <button onclick="copyCode('code30', this)">코드 복사</button>
+    <button class="secondary" onclick="openWebVPython()">Web VPython 열기</button>
+  </div>
+  <pre><code id="code30">Web VPython 3.2
+g=graph(title=&quot;Integral-defined function and numerical derivative&quot;,xtitle=&quot;x&quot;,ytitle=&quot;value&quot;)
+Fcurve=gcurve(color=color.yellow,label=&quot;F(x)&quot;)
+Dcurve=gcurve(color=color.green,label=&quot;numerical F&#x27;(x)&quot;)
+fcurve=gcurve(color=color.cyan,label=&quot;e^(-x²)&quot;)
+dx=0.01
+A=0
+prevA=0
+x=0
+while x&lt;=3:
+    rate(60)
+    prevA=A
+    A += exp(-x*x)*dx
+    derivative=(A-prevA)/dx
+    Fcurve.plot(x,A)
+    Dcurve.plot(x,derivative)
+    fcurve.plot(x,exp(-x*x))
+    x += dx</code></pre>
+  <details>
+    <summary>수업용 상세 해설</summary>
+    <div class="explain">
+      <p><b>관찰 포인트 1.</b> <code>rate()</code>가 반복문의 진행 속도를 제한하여 그래프나 적분값이 시간에 따라 변하는 모습을 보여 줍니다.</p>
+      <p><b>관찰 포인트 2.</b> 정적분은 작은 구간의 넓이 <code>f(x)*dx</code>를 계속 더하는 방식으로 수치적으로 근사합니다.</p>
+      <p><b>관찰 포인트 3.</b> 함수가 x축 아래에 있으면 부호 있는 넓이는 음수이므로 누적값이 감소할 수 있습니다.</p>
+      <p><b>탐구 과제.</b> 구간, 함수식, <code>dx</code>, 애니메이션 속도를 바꾸고 근삿값이 어떻게 달라지는지 비교해 보세요.</p>
+    </div>
+  </details>
+</section>
+</main>
+<footer>
+  <b>사용 팁:</b> Web VPython은 브라우저에서 실행되며, 그래프에는 <code>gcurve</code>와 <code>plot()</code>을 사용할 수 있습니다. 이 자료의 코드는 외부 Python 모듈 없이 Web VPython의 기본 수학 함수만 사용하도록 구성했습니다.
+</footer>
+<script>
+function jumpToExample(){
+  const id=document.getElementById('jump').value;
+  if(id) document.getElementById(id).scrollIntoView({behavior:'smooth'});
+}
+async function copyCode(id,btn){
+  const text=document.getElementById(id).innerText;
+  try {
+    await navigator.clipboard.writeText(text);
+    const old=btn.textContent; btn.textContent='복사 완료';
+    setTimeout(()=>btn.textContent=old,1200);
+  } catch(e) {
+    const r=document.createRange(); r.selectNodeContents(document.getElementById(id));
+    const s=window.getSelection(); s.removeAllRanges(); s.addRange(r);
+  }
+}
+function openWebVPython(){
+  window.open('https://www.glowscript.org/','_blank');
+}
+function filterCards(){
+  const q=document.getElementById('search').value.trim().toLowerCase();
+  document.querySelectorAll('.card').forEach(card=>{
+    card.style.display = (!q || card.innerText.toLowerCase().includes(q)) ? '' : 'none';
+  });
+}
+</script>
+</body>
+</html>
