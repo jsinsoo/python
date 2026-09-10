@@ -1,0 +1,655 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Web VPython 쿼리도 컴퓨터 말 이동 수정판</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f4f7fb;color:#172033;font-family:"Malgun Gothic",sans-serif;line-height:1.75}
+header{background:linear-gradient(135deg,#071a2f,#174b7b,#315de5);color:white;padding:48px 22px}
+.wrap,main{max-width:1400px;margin:auto}
+h1{font-size:clamp(30px,5vw,48px);margin:5px 0 10px}
+main{padding:24px 16px 70px}
+.card{background:#fff;border:1px solid #dbe4ef;border-radius:18px;padding:20px;margin-bottom:16px}
+h2{margin-top:0;color:#173e70}
+.good{background:#ecfdf5;border:1px solid #a7f3d0;padding:13px;border-radius:12px}
+.warn{background:#fff7ed;border:1px solid #fed7aa;padding:13px;border-radius:12px}
+pre{background:#07111f;color:#eaf2ff;padding:20px;border-radius:14px;overflow:auto;white-space:pre!important;word-break:normal!important;overflow-wrap:normal!important;font:13px/1.65 Consolas,"Courier New",monospace}
+.copy{background:#0f766e;color:white;border:0;border-radius:9px;padding:9px 13px;font-weight:bold;cursor:pointer}
+.codehead{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+</style>
+</head>
+<body>
+<header>
+<div class="wrap">
+<div style="font-weight:900;color:#bdd5ff">WEB VPYTHON 3.2 · CPU DIRECT MOVE FIX</div>
+<h1>쿼리도 · 컴퓨터 말 이동 확실한 수정판</h1>
+<p>이번에는 컴퓨터 이동에서 BFS 선택을 제거하고, 매 턴 <b>아래쪽 → 왼쪽 → 오른쪽 → 위쪽</b> 순서로 직접 한 칸 이동하도록 단순화했습니다. 따라서 첫 수에서 컴퓨터 말은 반드시 (0,4)에서 (1,4)로 움직입니다.</p>
+</div>
+</header>
+
+<main>
+
+<section class="card">
+<h2>✅ 가장 먼저 확인할 것</h2>
+<div class="good">
+실행 직후 사람 위치는 <b>(8,4)</b>, 컴퓨터 위치는 <b>(0,4)</b>입니다.<br>
+사람이 <b>UP</b> 버튼을 한 번 누르면 사람은 <b>(7,4)</b>로 이동하고,<br>
+곧바로 컴퓨터는 <b>(1,4)</b>로 이동해야 합니다.
+</div>
+</section>
+
+<section class="card">
+<h2>🔧 이번 수정 핵심</h2>
+<p>이전 버전에서는 컴퓨터가 후보 이동을 만든 뒤 BFS로 가장 좋은 후보를 선택했습니다. 이번에는 그 구조를 제거했습니다. 컴퓨터는 자신의 목표가 아래쪽이므로 우선 아래로 한 칸 이동하고, 앞이 막혔을 때만 좌우 또는 위쪽을 시도합니다.</p>
+<div class="warn">즉, 이번 버전은 먼저 <b>“컴퓨터 말이 확실히 움직이는가?”</b>를 검증하는 안정판입니다. 이동이 정상 확인된 뒤 BFS AI와 방해벽 전략을 다시 단계적으로 붙이는 것이 안전합니다.</div>
+</section>
+
+<section class="card">
+<div class="codehead">
+<h2 style="margin:0">💻 Web VPython 3.2 전체 코드</h2>
+<button class="copy" onclick="copyCode()">전체 코드 복사</button>
+</div>
+<pre id="code">Web VPython 3.2
+
+# ============================================================
+# QUORIDOR - 사람(파랑) vs 컴퓨터(빨강)
+# 컴퓨터 말 확실히 이동하는 안정판
+#
+# 핵심:
+# 1) 사람은 버튼으로 직접 이동
+# 2) 컴퓨터는 매 턴 목표 방향(+row)으로 직접 이동 시도
+# 3) 앞이 막히면 좌/우, 그다음 위쪽을 시도
+# 4) 복잡한 BFS 이동 선택을 제거해 CPU가 반드시 움직이도록 단순화
+# ============================================================
+
+N = 9
+HALF = 4
+
+human = [8,4]
+cpu = [0,4]
+
+human_walls = 10
+cpu_walls = 10
+
+h_walls = []
+v_walls = []
+
+mode = &quot;MOVE&quot;
+game_over = False
+
+cursor_r = 3
+cursor_c = 3
+
+scene.width = 900
+scene.height = 680
+scene.background = vector(0.06,0.08,0.12)
+scene.center = vector(0,0,0)
+scene.range = 6
+scene.forward = vector(0,-0.9,-0.55)
+
+def pof(r,c):
+    return vector(c-HALF,0,r-HALF)
+
+# ------------------------------------------------------------
+# 보드
+# ------------------------------------------------------------
+base = box(
+    pos=vector(0,-0.2,0),
+    size=vector(9.5,0.25,9.5),
+    color=vector(0.20,0.14,0.08)
+)
+
+cells = []
+
+for r in range(N):
+    row = []
+
+    for c in range(N):
+        p = pof(r,c)
+
+        sq = box(
+            pos=vector(p.x,0,p.z),
+            size=vector(0.86,0.08,0.86),
+            color=vector(0.68,0.48,0.27)
+        )
+
+        row.append(sq)
+
+    cells.append(row)
+
+# ------------------------------------------------------------
+# 말
+# ------------------------------------------------------------
+human_piece = cylinder(
+    pos=pof(human[0],human[1])+vector(0,0.05,0),
+    axis=vector(0,0.50,0),
+    radius=0.30,
+    color=color.cyan
+)
+
+cpu_piece = cylinder(
+    pos=pof(cpu[0],cpu[1])+vector(0,0.05,0),
+    axis=vector(0,0.50,0),
+    radius=0.30,
+    color=color.red
+)
+
+wall_cursor = box(
+    pos=vector(0,0.45,0),
+    size=vector(1.9,0.10,0.12),
+    color=color.yellow,
+    opacity=0
+)
+
+scene.append_to_caption(&quot;\n&quot;)
+status = wtext(text=&quot;상태: 시작&quot;)
+scene.append_to_caption(&quot;\n&quot;)
+debug = wtext(text=&quot;사람 위치: (8,4) / 컴퓨터 위치: (0,4)&quot;)
+scene.append_to_caption(&quot;\n&quot;)
+wallinfo = wtext(text=&quot;내 벽: 10 / 컴퓨터 벽: 10&quot;)
+scene.append_to_caption(&quot;\n\n&quot;)
+
+# ------------------------------------------------------------
+# 화면 갱신
+# ------------------------------------------------------------
+def redraw():
+    human_piece.pos = pof(human[0],human[1]) + vector(0,0.05,0)
+    cpu_piece.pos = pof(cpu[0],cpu[1]) + vector(0,0.05,0)
+
+    debug.text = (
+        &quot;사람 위치: (&quot; + str(human[0]) + &quot;,&quot; + str(human[1]) +
+        &quot;) / 컴퓨터 위치: (&quot; + str(cpu[0]) + &quot;,&quot; + str(cpu[1]) + &quot;)&quot;
+    )
+
+    wallinfo.text = (
+        &quot;내 벽: &quot; + str(human_walls) +
+        &quot; / 컴퓨터 벽: &quot; + str(cpu_walls)
+    )
+
+# ------------------------------------------------------------
+# 벽 판정
+# ------------------------------------------------------------
+def blocked(r1,c1,r2,c2):
+
+    # 위/아래 이동 -&gt; 가로벽 검사
+    if c1 == c2:
+
+        top = r1
+        if r2 &lt; r1:
+            top = r2
+
+        for w in h_walls:
+            if w[0] == top:
+                if w[1] == c1 or w[1]+1 == c1:
+                    return True
+
+    # 좌/우 이동 -&gt; 세로벽 검사
+    if r1 == r2:
+
+        left = c1
+        if c2 &lt; c1:
+            left = c2
+
+        for w in v_walls:
+            if w[1] == left:
+                if w[0] == r1 or w[0]+1 == r1:
+                    return True
+
+    return False
+
+# ------------------------------------------------------------
+# 칸 색 표시
+# ------------------------------------------------------------
+def clear_colors():
+
+    for r in range(N):
+        for c in range(N):
+            cells[r][c].color = vector(0.68,0.48,0.27)
+
+def show_human_moves():
+
+    clear_colors()
+
+    dirs = [
+        [-1,0],
+        [1,0],
+        [0,-1],
+        [0,1]
+    ]
+
+    for d in dirs:
+
+        nr = human[0] + d[0]
+        nc = human[1] + d[1]
+
+        if nr &gt;= 0 and nr &lt; N and nc &gt;= 0 and nc &lt; N:
+            if not blocked(human[0],human[1],nr,nc):
+                cells[nr][nc].color = color.yellow
+
+# ------------------------------------------------------------
+# 사람 직접 이동
+# ------------------------------------------------------------
+def direct_human_move(dr,dc):
+
+    global human
+    global game_over
+
+    if game_over:
+        return
+
+    if mode != &quot;MOVE&quot;:
+        status.text = &quot;상태: MOVE 버튼을 먼저 누르세요.&quot;
+        return
+
+    r = human[0]
+    c = human[1]
+
+    nr = r + dr
+    nc = c + dc
+
+    if nr &lt; 0 or nr &gt;= N or nc &lt; 0 or nc &gt;= N:
+        status.text = &quot;상태: 보드 밖으로 갈 수 없습니다.&quot;
+        return
+
+    if blocked(r,c,nr,nc):
+        status.text = &quot;상태: 벽 때문에 이동할 수 없습니다.&quot;
+        return
+
+    # 컴퓨터 말과 같은 칸이면 한 칸 더 점프 시도
+    if nr == cpu[0] and nc == cpu[1]:
+
+        jr = nr + dr
+        jc = nc + dc
+
+        if jr &lt; 0 or jr &gt;= N or jc &lt; 0 or jc &gt;= N:
+            status.text = &quot;상태: 상대 뒤가 보드 끝입니다.&quot;
+            return
+
+        if blocked(nr,nc,jr,jc):
+            status.text = &quot;상태: 상대 뒤가 벽이라 점프할 수 없습니다.&quot;
+            return
+
+        human = [jr,jc]
+
+    else:
+        human = [nr,nc]
+
+    redraw()
+    clear_colors()
+
+    if human[0] == 0:
+        game_over = True
+        status.text = &quot;상태: 당신의 승리!&quot;
+        return
+
+    status.text = &quot;상태: 컴퓨터 차례&quot;
+    cpu_turn()
+
+# ------------------------------------------------------------
+# 컴퓨터가 한 칸 갈 수 있는지
+# ------------------------------------------------------------
+def cpu_can_go(nr,nc):
+
+    if nr &lt; 0 or nr &gt;= N or nc &lt; 0 or nc &gt;= N:
+        return False
+
+    if blocked(cpu[0],cpu[1],nr,nc):
+        return False
+
+    # 사람 말이 있으면 그 칸으로 직접 못 감
+    if nr == human[0] and nc == human[1]:
+        return False
+
+    return True
+
+# ------------------------------------------------------------
+# 컴퓨터 직접 이동
+# 목표는 row 8
+# 우선순위: 아래 -&gt; 왼쪽 -&gt; 오른쪽 -&gt; 위
+# ------------------------------------------------------------
+def cpu_move_direct():
+
+    global cpu
+
+    r = cpu[0]
+    c = cpu[1]
+
+    # 1. 아래로
+    if cpu_can_go(r+1,c):
+        cpu = [r+1,c]
+        return True
+
+    # 2. 왼쪽
+    if cpu_can_go(r,c-1):
+        cpu = [r,c-1]
+        return True
+
+    # 3. 오른쪽
+    if cpu_can_go(r,c+1):
+        cpu = [r,c+1]
+        return True
+
+    # 4. 위로
+    if cpu_can_go(r-1,c):
+        cpu = [r-1,c]
+        return True
+
+    return False
+
+# ------------------------------------------------------------
+# 컴퓨터 턴
+# ------------------------------------------------------------
+def cpu_turn():
+
+    global game_over
+
+    if game_over:
+        return
+
+    moved = cpu_move_direct()
+
+    redraw()
+
+    if moved:
+        status.text = (
+            &quot;상태: 컴퓨터 이동 완료 -&gt; (&quot; +
+            str(cpu[0]) + &quot;,&quot; + str(cpu[1]) + &quot;)&quot;
+        )
+
+    else:
+        status.text = &quot;상태: 컴퓨터가 움직일 수 없습니다.&quot;
+
+    if cpu[0] == 8:
+        game_over = True
+        clear_colors()
+        status.text = &quot;상태: 컴퓨터 승리&quot;
+        return
+
+    # 사람이 다시 움직일 수 있게 표시
+    show_human_moves()
+
+# ------------------------------------------------------------
+# 이동 모드
+# ------------------------------------------------------------
+def enter_move_mode():
+
+    global mode
+
+    if game_over:
+        return
+
+    mode = &quot;MOVE&quot;
+    wall_cursor.opacity = 0
+
+    show_human_moves()
+
+    status.text = &quot;상태: MOVE | 방향 버튼으로 이동&quot;
+
+# ------------------------------------------------------------
+# 벽 커서
+# ------------------------------------------------------------
+def update_cursor():
+
+    global cursor_r
+    global cursor_c
+
+    if cursor_r &lt; 0:
+        cursor_r = 0
+
+    if cursor_r &gt; 7:
+        cursor_r = 7
+
+    if cursor_c &lt; 0:
+        cursor_c = 0
+
+    if cursor_c &gt; 7:
+        cursor_c = 7
+
+    p = pof(cursor_r,cursor_c)
+
+    wall_cursor.opacity = 0.8
+    wall_cursor.pos = vector(p.x+0.5,0.45,p.z+0.5)
+
+    if mode == &quot;H&quot;:
+        wall_cursor.size = vector(1.9,0.10,0.12)
+
+    elif mode == &quot;V&quot;:
+        wall_cursor.size = vector(0.12,0.10,1.9)
+
+# ------------------------------------------------------------
+# 벽 설치 가능 여부
+# ------------------------------------------------------------
+def wall_same(kind,r,c):
+
+    if kind == &quot;H&quot;:
+
+        for w in h_walls:
+            if w[0] == r and w[1] == c:
+                return True
+
+    else:
+
+        for w in v_walls:
+            if w[0] == r and w[1] == c:
+                return True
+
+    return False
+
+def can_wall(kind,r,c):
+
+    if r &lt; 0 or r &gt; 7 or c &lt; 0 or c &gt; 7:
+        return False
+
+    if wall_same(kind,r,c):
+        return False
+
+    if kind == &quot;H&quot;:
+
+        for w in v_walls:
+            if w[0] == r and w[1] == c:
+                return False
+
+    else:
+
+        for w in h_walls:
+            if w[0] == r and w[1] == c:
+                return False
+
+    return True
+
+def draw_wall(kind,r,c,col):
+
+    p = pof(r,c)
+
+    if kind == &quot;H&quot;:
+
+        box(
+            pos=vector(p.x+0.5,0.34,p.z+0.5),
+            size=vector(1.9,0.65,0.12),
+            color=col
+        )
+
+    else:
+
+        box(
+            pos=vector(p.x+0.5,0.34,p.z+0.5),
+            size=vector(0.12,0.65,1.9),
+            color=col
+        )
+
+# ------------------------------------------------------------
+# 방향 버튼
+# ------------------------------------------------------------
+def up_btn(b):
+
+    global cursor_r
+
+    if mode == &quot;MOVE&quot;:
+        direct_human_move(-1,0)
+
+    else:
+        cursor_r = cursor_r-1
+        update_cursor()
+
+def down_btn(b):
+
+    global cursor_r
+
+    if mode == &quot;MOVE&quot;:
+        direct_human_move(1,0)
+
+    else:
+        cursor_r = cursor_r+1
+        update_cursor()
+
+def left_btn(b):
+
+    global cursor_c
+
+    if mode == &quot;MOVE&quot;:
+        direct_human_move(0,-1)
+
+    else:
+        cursor_c = cursor_c-1
+        update_cursor()
+
+def right_btn(b):
+
+    global cursor_c
+
+    if mode == &quot;MOVE&quot;:
+        direct_human_move(0,1)
+
+    else:
+        cursor_c = cursor_c+1
+        update_cursor()
+
+# ------------------------------------------------------------
+# 모드 버튼
+# ------------------------------------------------------------
+def move_btn(b):
+    enter_move_mode()
+
+def h_btn(b):
+
+    global mode
+
+    if game_over:
+        return
+
+    mode = &quot;H&quot;
+    clear_colors()
+    update_cursor()
+
+    status.text = &quot;상태: H-WALL | 방향 버튼으로 노란 벽 이동&quot;
+
+def v_btn(b):
+
+    global mode
+
+    if game_over:
+        return
+
+    mode = &quot;V&quot;
+    clear_colors()
+    update_cursor()
+
+    status.text = &quot;상태: V-WALL | 방향 버튼으로 노란 벽 이동&quot;
+
+# ------------------------------------------------------------
+# 벽 설치
+# ------------------------------------------------------------
+def place_btn(b):
+
+    global human_walls
+
+    if game_over:
+        return
+
+    if mode != &quot;H&quot; and mode != &quot;V&quot;:
+        status.text = &quot;상태: H-WALL 또는 V-WALL을 먼저 선택하세요.&quot;
+        return
+
+    if human_walls &lt;= 0:
+        status.text = &quot;상태: 남은 벽이 없습니다.&quot;
+        return
+
+    if not can_wall(mode,cursor_r,cursor_c):
+        status.text = &quot;상태: 이 위치에는 벽을 놓을 수 없습니다.&quot;
+        return
+
+    if mode == &quot;H&quot;:
+        h_walls.append([cursor_r,cursor_c])
+    else:
+        v_walls.append([cursor_r,cursor_c])
+
+    draw_wall(mode,cursor_r,cursor_c,color.cyan)
+
+    human_walls = human_walls-1
+    wall_cursor.opacity = 0
+
+    redraw()
+
+    status.text = &quot;상태: 벽 설치 완료 / 컴퓨터 차례&quot;
+
+    cpu_turn()
+
+# ------------------------------------------------------------
+# 버튼 배치
+# ------------------------------------------------------------
+button(text=&quot;UP&quot;,bind=up_btn)
+scene.append_to_caption(&quot;  &quot;)
+
+button(text=&quot;DOWN&quot;,bind=down_btn)
+scene.append_to_caption(&quot;  &quot;)
+
+button(text=&quot;LEFT&quot;,bind=left_btn)
+scene.append_to_caption(&quot;  &quot;)
+
+button(text=&quot;RIGHT&quot;,bind=right_btn)
+
+scene.append_to_caption(&quot;\n\n&quot;)
+
+button(text=&quot;MOVE&quot;,bind=move_btn)
+scene.append_to_caption(&quot;  &quot;)
+
+button(text=&quot;H-WALL&quot;,bind=h_btn)
+scene.append_to_caption(&quot;  &quot;)
+
+button(text=&quot;V-WALL&quot;,bind=v_btn)
+scene.append_to_caption(&quot;  &quot;)
+
+button(text=&quot;PLACE WALL&quot;,bind=place_btn)
+
+scene.append_to_caption(&quot;\n\n&quot;)
+
+# ------------------------------------------------------------
+# 시작
+# ------------------------------------------------------------
+redraw()
+enter_move_mode()
+
+print(&quot;======================================&quot;)
+print(&quot;QUORIDOR 컴퓨터 말 직접 이동 안정판&quot;)
+print(&quot;======================================&quot;)
+print(&quot;사람 시작 = (8,4)&quot;)
+print(&quot;컴퓨터 시작 = (0,4)&quot;)
+print(&quot;사람이 UP 버튼을 누르면&quot;)
+print(&quot;사람 -&gt; (7,4)&quot;)
+print(&quot;컴퓨터 -&gt; (1,4)&quot;)
+print(&quot;가 되어야 정상입니다.&quot;)
+</pre>
+</section>
+
+</main>
+
+<script>
+function copyCode(){
+ navigator.clipboard.writeText(document.getElementById('code').innerText)
+ .then(()=>alert('전체 코드가 복사되었습니다.'));
+}
+</script>
+</body>
+</html>
